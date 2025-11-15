@@ -4,13 +4,12 @@ import pokemon from "@/lib/pokemon-species.js";
 import { useState, useEffect, useMemo } from 'react'
 import Grid from "./the-grid.js";
 import Card from "./card.js";
+import { DndContext } from '@dnd-kit/core';
 
 export default function TheBoard() {
     const [cardsToDeal, setCardsToDeal] = useState([]);
     const [cellsOccupied, setCellsOccupied] = useState(0);
-    const statModifier = 20;
-
-    let cells = {
+    const [cells, setCells] = useState({
         A1: {
             class: "border-r-0 border-b-0",
             pokemonCardRef: null,
@@ -65,7 +64,9 @@ export default function TheBoard() {
             element: null,
             adjacentCells: ["C2", "B3", null, null],
         },
-    };
+    });
+
+    const statModifier = 20;
 
     const decrementRandomStat = (stats) => {
         const randomIndex = Math.floor(Math.random() * stats.length);
@@ -148,21 +149,71 @@ export default function TheBoard() {
         setRandomCards();
         setRandomElementalTiles();
     }, []);
-    // grid grid-rows-[1fr_3fr_1fr]
+
+    console.log(dealCards)
+
+
+    function handleDragEnd(event) {
+        const { active, over } = event;
+        let attackingPokemonCardAttributes;
+        let cellTarget;
+
+        if (!over) return; // Dropped outside a droppable area
+
+        console.log('Dragged:', active.id, active.data.current);
+        console.log('Dropped on:', over.id, over.data.current);
+
+        cellTarget = over.id; // A1
+        attackingPokemonCardAttributes = active.data.current.pokemonCard.stats; // [10, 8, 7, 5]
+
+        const draggedCard = active.data.current.pokemonCard;
+        const sourceIndex = active.data.current.index;
+
+        // Update cells to place the card
+        setCells(prev => ({
+            ...prev,
+            [cellTarget]: {
+                ...prev[cellTarget],
+                pokemonCardRef: draggedCard
+            }
+        }));
+
+        console.log(active.data.current.index)
+        console.log(cardsToDeal)
+
+        // Remove card from hand
+        setCardsToDeal(prev => prev.map((card, index) => index === sourceIndex ? null : card));
+
+        // Here you would:
+        // 1. Update the cells state to place the card
+        // 2. Remove the card from the hand
+        // 3. Trigger any game logic (flipping adjacent cards, etc.)
+    }
+
     return (
-        < section className="h-full flex flex-col justify-between gap-8" >
-            <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
-                {dealCards[0].map((pokemonCard, index) => (
-                    <Card key={index} pokemonCard={pokemonCard} isPlayerCard={true} index={index} />
-                ))}
-            </div>
-            <Grid cells={cells} ref="grid" />
-            <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
-                {dealCards[1].map((pokemonCard, index) => (
-                    <Card key={index} pokemonCard={pokemonCard} isPlayerCard={false} index={index} />
-                ))}
-            </div>
-            {/* <Reveal /> */}
-        </section >
+        <DndContext onDragEnd={handleDragEnd}>
+            < section className="h-full flex flex-col justify-between gap-8" >
+                <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
+                    {dealCards[0].map((pokemonCard, index) => {
+                        if (!pokemonCard) return <div key={index} className="aspect-square" />;
+
+                        return (
+                            <Card key={index} pokemonCard={pokemonCard} isPlayerCard={true} index={index} />
+                        )
+                    })}
+                </div>
+                <Grid cells={cells} ref="grid" />
+                <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
+                    {dealCards[1].map((pokemonCard, index) => {
+                        if (!pokemonCard) return <div key={index} className="aspect-square" />;
+
+                        return (
+                            <Card key={index} pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={false} />
+                        )
+                    })}
+                </div>
+                {/* <Reveal /> */}
+            </section >
+        </DndContext>
     )
 }
