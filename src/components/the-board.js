@@ -12,55 +12,55 @@ export default function TheBoard() {
     const [cells, setCells] = useState({
         A1: {
             class: "border-r-0 border-b-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: [null, null, "A2", "B1"],
         },
         A2: {
             class: "border-r-0 border-b-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: ["A1", null, "A3", "B2"],
         },
         A3: {
             class: "border-b-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: ["A2", null, null, "B3"],
         },
         B1: {
             class: "border-b-0 border-r-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: [null, "A1", "B2", "C1"],
         },
         B2: {
             class: "border-b-0 border-r-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: ["B1", "A2", "B3", "C2"],
         },
         B3: {
             class: "border-b-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: ["B2", "A3", null, "C3"],
         },
         C1: {
             class: "border-r-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: [null, "B1", "C2", null],
         },
         C2: {
             class: "border-r-0",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: ["C1", "B2", "C3", null],
         },
         C3: {
             class: "",
-            pokemonCardRef: null,
+            pokemonCard: null,
             element: null,
             adjacentCells: ["C2", "B3", null, null],
         },
@@ -150,44 +150,72 @@ export default function TheBoard() {
         setRandomElementalTiles();
     }, []);
 
-    console.log(dealCards)
+    const determineElementalTileStatModifiers = (cellTarget) => {
+        const cell = cells[cellTarget];
 
+        console.log(cell)
 
-    function handleDragEnd(event) {
-        const { active, over } = event;
-        let attackingPokemonCardAttributes;
-        let cellTarget;
+        if (cell.pokemonCard.types.some((type) => type === "normal")) {
+            return; // normal pokemon are not affected by elemental tiles
+        }
 
-        if (!over) return; // Dropped outside a droppable area
+        const updateStatOnElementalTile = (stat) => {
+            if (cell.pokemonCard.types.includes(cell.element) && stat < 10) {
+                // stat cannot be increased above 10
+                return stat + 1;
+            } else if (cell.element && stat > 1) {
+                // stat cannot be decreased below 1
+                return stat - 1;
+            }
+            return stat; // No change
+        };
 
-        console.log('Dragged:', active.id, active.data.current);
-        console.log('Dropped on:', over.id, over.data.current);
+        const updatedStats = cell.pokemonCard.stats.map(updateStatOnElementalTile);
 
-        cellTarget = over.id; // A1
-        attackingPokemonCardAttributes = active.data.current.pokemonCard.stats; // [10, 8, 7, 5]
-
-        const draggedCard = active.data.current.pokemonCard;
-        const sourceIndex = active.data.current.index;
-
-        // Update cells to place the card
+        // Update cells with the modified stats
         setCells(prev => ({
             ...prev,
             [cellTarget]: {
                 ...prev[cellTarget],
-                pokemonCardRef: draggedCard
+                pokemonCard: {
+                    ...prev[cellTarget].pokemonCard,
+                    stats: updatedStats
+                }
+            }
+        }));
+    };
+
+
+
+    function handleDragEnd(event) {
+        const { active, over } = event;
+        let cellTarget;
+
+        if (!over) return; // Dropped outside a droppable area
+
+        cellTarget = over.id; // e.g. A1
+
+        const draggedCard = active.data.current.pokemonCard;
+        const sourceIndex = active.data.current.index;
+
+        // Update cells to identify where the card is placed (logic handled in the-grid.js)
+        setCells(prev => ({
+            ...prev,
+            [cellTarget]: {
+                ...prev[cellTarget],
+                pokemonCard: draggedCard
             }
         }));
 
-        console.log(active.data.current.index)
-        console.log(cardsToDeal)
+        const cellTargetObject = cells[cellTarget];
 
-        // Remove card from hand
+        // Remove card from hand when placed
         setCardsToDeal(prev => prev.map((card, index) => index === sourceIndex ? null : card));
 
-        // Here you would:
-        // 1. Update the cells state to place the card
-        // 2. Remove the card from the hand
-        // 3. Trigger any game logic (flipping adjacent cards, etc.)
+        // the following doesn't work because the state is slower to update than this function runs todo
+        if (cellTargetObject.element) {
+            determineElementalTileStatModifiers(cellTarget); // add or remove stats on placement of attacking card on elemental tile
+        }
     }
 
     return (

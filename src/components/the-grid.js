@@ -12,17 +12,17 @@ function DroppableCell({ cellKey, cellData }) {
         }
     });
 
-    const style = {
-        backgroundColor: isOver ? 'rgba(0, 255, 0, 0.2)' : undefined,
-    };
-
     return (
         <div
             ref={setNodeRef}
-            style={style}
             className={`relative dropzone aspect-square border-2 border-black p-2 ${cellData.class} ${cellData.element ? typeBackgrounds[cellData.element] : 'bg-white/30'}`}
             data-cell={cellKey}
         >
+            {/* Hover overlay */}
+            {isOver && (
+                <div className="absolute inset-0 bg-green-500/20 pointer-events-none z-10" />
+            )}
+
             {cellData.element && (
                 <Image
                     draggable={false}
@@ -34,10 +34,10 @@ function DroppableCell({ cellKey, cellData }) {
                 />
             )}
 
-            {cellData.pokemonCardRef && (
+            {cellData.pokemonCard && (
                 <div className="absolute inset-0 p-2">
                     <Card
-                        pokemonCard={cellData.pokemonCardRef}
+                        pokemonCard={cellData.pokemonCard}
                         isPlayerCard={true}
                         index={0}
                         isDraggable={false}
@@ -51,7 +51,7 @@ function DroppableCell({ cellKey, cellData }) {
 
 export default function TheGrid({ cells }) {
     return (
-        <div className="grid shadow grid-cols-3 mx-12" id="grid">
+        <div className="grid shadow grid-cols-3 w-3/5 mx-auto" id="grid">
             {Object.entries(cells).map(([key, value]) => (
                 <DroppableCell key={key} cellKey={key} cellData={value} />
             ))}

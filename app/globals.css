@@ -294,6 +294,26 @@ body {
   @apply bg-yellow-500;
 }
 
+.border-common {
+  @apply border-white/80;
+}
+
+.border-uncommon {
+  @apply border-green-400/80;
+}
+
+.border-rare {
+  @apply border-blue-400/80;
+}
+
+.border-epic {
+  @apply border-violet-400/80;
+}
+
+.border-legendary {
+  @apply border-yellow-400/80;
+}
+
 .border-front {
   @apply bg-gradient-to-br from-yellow-400 to-yellow-600;
 }

@@ -45,21 +45,21 @@ export default function Card({ pokemonCard, isPlayerCard, index, isDraggable = t
     }, []);
 
     return (
-        <div className={`relative select-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"}`} ref={setNodeRef}
+        <div className={`relative select-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
             style={style}
             {...listeners}
             {...attributes}
         >
-            <div className={`p-3 border-front rounded-md aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
-                <div className={`${bgGradient} relative w-full aspect-square border border-1 border-black overflow-hidden`}>
-                    <div className="relative h-full flex flex-col items-center justify-center shadow-inner">
+            <div className={`p-2.5 border-front rounded-md aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
+                <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-3 border-${pokemonCard.rarity} overflow-hidden`}>
+                    <div className="relative h-full flex flex-col items-center justify-center shadow-inner/30">
                         <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
                         <ElementalTypes types={pokemonCard.types} />
                         <Image draggable={false} loading="eager" width={96} height={96} className="mt-2 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`} />
                         <div className='absolute bottom-0'>
                             <svg className="w-full rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
-                            <div className={`pt-6 px-2 py-1.5 text-center text-white text-xs font-bold truncate text-black bg-black w-full uppercase text-shadow-md ${isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`}>
-                                <span className={`${pokemonCard.rarity} px-2 py-0.5 rounded-full shadow-md tracking-widest`}>{pokemonCard.name}</span>
+                            <div className={`pt-6 px-2 py-1.5 text-center text-white text-xs font-bold truncate text-black bg-black w-full uppercase text-shadow-sm/30 ${isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`}>
+                                <span className={`${pokemonCard.rarity} px-2 py-0.5 rounded-full shadow-sm/30 tracking-widest`}>{pokemonCard.name}</span>
                             </div>
                         </div>
                     </div>
