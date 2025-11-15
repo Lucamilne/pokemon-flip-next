@@ -254,6 +254,8 @@
   --color-theme-red-50: #f93a3a;
   --color-theme-red-100: #c20a0a;
   --color-theme-red-200: #901a22;
+  --color-theme-red-accent: #ff6d64;
+  --color-theme-blue-accent: #7dbdff;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -272,20 +274,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.common {
+  @apply bg-white/25;
+}
+
 .uncommon {
-  @apply bg-green-500 border-t border-black;
+  @apply bg-green-500;
 }
 
 .rare {
-  @apply bg-blue-500 border-t border-black;
+  @apply bg-blue-500;
 }
 
 .epic {
-  @apply bg-violet-500 border-t border-black;
+  @apply bg-violet-500;
 }
 
 .legendary {
-  @apply bg-yellow-500 border-t border-black;
+  @apply bg-yellow-500;
 }
 
 .border-front {
