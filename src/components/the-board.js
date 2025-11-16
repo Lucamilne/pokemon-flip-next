@@ -222,21 +222,21 @@ export default function TheBoard() {
         <DndContext onDragEnd={handleDragEnd}>
             < section className="h-full flex flex-col justify-between gap-8" >
                 <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
-                    {dealCards[0].map((pokemonCard, index) => {
-                        if (!pokemonCard) return <div key={index} className="aspect-square" />;
-
-                        return (
-                            <Card key={index} pokemonCard={pokemonCard} isPlayerCard={true} index={index} />
-                        )
-                    })}
-                </div>
-                <Grid cells={cells} ref="grid" />
-                <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
                     {dealCards[1].map((pokemonCard, index) => {
                         if (!pokemonCard) return <div key={index} className="aspect-square" />;
 
                         return (
                             <Card key={index} pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={false} />
+                        )
+                    })}
+                </div>
+                <Grid cells={cells} ref="grid" />
+                <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
+                    {dealCards[0].map((pokemonCard, index) => {
+                        if (!pokemonCard) return <div key={index} className="aspect-square" />;
+
+                        return (
+                            <Card key={index} pokemonCard={pokemonCard} isPlayerCard={true} index={index} />
                         )
                     })}
                 </div>
