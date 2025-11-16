@@ -38,7 +38,6 @@ function DroppableCell({ cellKey, cellData }) {
                 <div className="absolute inset-0 p-2">
                     <Card
                         pokemonCard={cellData.pokemonCard}
-                        isPlayerCard={true}
                         index={0}
                         isDraggable={false}
                         initIsFlipped={true}

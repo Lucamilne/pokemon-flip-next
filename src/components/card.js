@@ -5,7 +5,7 @@ import ElementalTypes from './elemental-types.js';
 import Stats from './stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
-export default function Card({ pokemonCard, isPlayerCard, index, isDraggable = true, initIsFlipped = false }) {
+export default function Card({ pokemonCard, index, isDraggable = true, initIsFlipped = false }) {
     const [isFlipped, setIsFlipped] = useState(initIsFlipped);
 
     if (!pokemonCard) {
@@ -17,7 +17,6 @@ export default function Card({ pokemonCard, isPlayerCard, index, isDraggable = t
         disabled: !isDraggable,
         data: {
             pokemonCard,
-            isPlayerCard,
             index
         }
     });
@@ -29,10 +28,10 @@ export default function Card({ pokemonCard, isPlayerCard, index, isDraggable = t
 
 
     const bgGradient = useMemo(() => {
-        return isPlayerCard
+        return pokemonCard.isPlayerCard
             ? 'bg-gradient-to-br from-theme-blue to-theme-blue-100'
             : 'bg-gradient-to-br from-theme-red to-theme-red-100';
-    }, [isPlayerCard]);
+    }, [pokemonCard.isPlayerCard]);
 
     useEffect(() => {
         if (initIsFlipped) return; // Don't animate if already flipped
@@ -41,7 +40,7 @@ export default function Card({ pokemonCard, isPlayerCard, index, isDraggable = t
 
         setTimeout(() => {
             setIsFlipped(!isFlipped)
-        }, index * animationDelay + (isPlayerCard ? 0 : animationDelay * 5));
+        }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
     }, []);
 
     const getBgStyle = () => {
@@ -75,8 +74,8 @@ export default function Card({ pokemonCard, isPlayerCard, index, isDraggable = t
                         <ElementalTypes types={pokemonCard.types} />
                         <Image draggable={false} loading="eager" width={96} height={96} className="mt-2 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`} />
                         <div className='absolute bottom-0'>
-                            <svg className="w-full -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
-                            <div className={`pt-10 text-center w-full ${isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`} />
+                            <svg className="w-full -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
+                            <div className={`pt-10 text-center w-full ${pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`} />
                             <div className="px-2 py-1 w-full text-center uppercase text-white text-xs font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
                         </div>
                     </div>
