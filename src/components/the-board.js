@@ -7,8 +7,8 @@ import Card from "./card.js";
 import { DndContext } from '@dnd-kit/core';
 
 export default function TheBoard() {
-    const [cardsToDeal, setCardsToDeal] = useState([]);
-    const [cellsOccupied, setCellsOccupied] = useState(0);
+    const [cpuHand, setCpuHand] = useState([]);
+    const [playerHand, setPlayerHand] = useState([]);
     const [cells, setCells] = useState({
         A1: {
             class: "border-r-0 border-b-0",
@@ -94,37 +94,42 @@ export default function TheBoard() {
         return statsToReturn;
     };
 
-    const setRandomCards = () => {
+    const createCard = (pokemonName, isPlayerCard = false) => {
+        const stats = allocateStatsByPokemon(pokemonName);
+        const statsSum = stats.reduce((acc, cur) => acc + cur, 0);
+        let rarity = 'common';
+
+        if (statsSum >= 30) {
+            rarity = 'legendary';
+        } else if (statsSum >= 26) {
+            rarity = 'epic';
+        } else if (statsSum >= 22) {
+            rarity = 'rare';
+        } else if (statsSum >= 18) {
+            rarity = 'uncommon';
+        }
+
+        return {
+            name: pokemonName,
+            types: pokemon.data[pokemonName].types,
+            id: pokemon.data[pokemonName].id,
+            stats: stats,
+            originalStats: stats, // A copy of stats is kept to track modifications
+            rarity: rarity,
+            playerOwned: false, // this is an unimplemented feature as of writing
+            isPlayerCard: isPlayerCard
+        };
+    };
+
+    const allocateRandomCpuCards = () => {
         const shuffledArray = Object.keys(pokemon.data).sort(() => Math.random() - 0.5);
 
-        const createCard = (pokemonName, index) => {
-            const stats = allocateStatsByPokemon(pokemonName);
-            const statsSum = stats.reduce((acc, cur) => acc + cur, 0);
-            let rarity = 'common';
+        setCpuHand(shuffledArray.slice(0, 5).map((el) => createCard(el)));
+    }
 
-            if (statsSum >= 30) {
-                rarity = 'legendary';
-            } else if (statsSum >= 26) {
-                rarity = 'epic';
-            } else if (statsSum >= 22) {
-                rarity = 'rare';
-            } else if (statsSum >= 18) {
-                rarity = 'uncommon';
-            }
-
-            return {
-                name: pokemonName,
-                types: pokemon.data[pokemonName].types,
-                id: pokemon.data[pokemonName].id,
-                stats: stats,
-                originalStats: stats, // A copy of stats is kept to track modifications
-                rarity: rarity,
-                playerOwned: false, // this is an unimplemented feature as of writing
-                isPlayerCard: index < 5 ? true : false
-            };
-        };
-
-        setCardsToDeal(shuffledArray.slice(0, 10).map((el, index) => createCard(el, index)));
+    const allocateStarterDeck = () => {
+        const starterPokemon = Object.keys(pokemon.data).filter((pokemonName) => pokemon.data[pokemonName].starter);
+        setPlayerHand(starterPokemon.map((el) => createCard(el, true)));
     }
 
     const setRandomElementalTiles = () => {
@@ -141,13 +146,10 @@ export default function TheBoard() {
         });
     };
 
-    const dealCards = useMemo(() => {
-        return [cardsToDeal.slice(0, 5), cardsToDeal.slice(5, 10)];
-    }, [cardsToDeal]);
-
     //on mount
     useEffect(() => {
-        setRandomCards();
+        allocateStarterDeck(); // if a user is new, todo
+        allocateRandomCpuCards();
         setRandomElementalTiles();
     }, []);
 
@@ -181,6 +183,17 @@ export default function TheBoard() {
         let attackingCard = active.data.current.pokemonCard;
         const cellTargetObject = cells[cellTarget];
 
+        const sourceIndex = active.data.current.index;
+        const isPlayerCard = active.data.current.pokemonCard.isPlayerCard;
+
+        // Remove card from the appropriate hand
+        if (isPlayerCard) {
+            setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
+        } else {
+            // CPU cards have index + 5, so subtract 5 to get the cpuHand index
+            setCpuHand(prev => prev.map((card, index) => index === (sourceIndex) ? null : card));
+        }
+
         if (cellTargetObject.element) {
             attackingCard.stats = applyTileStatModifiers(attackingCard, cellTargetObject); // add or remove stats on placement of attacking card on tile
         }
@@ -194,12 +207,12 @@ export default function TheBoard() {
             const defendingStat = defendingCard.stats[defendingStatIndex];
             const attackingStat = attackingCard.stats[statIndex];
 
-            // check if attackingCared and defendingCard belong to different players
+            // check if attackingCard and defendingCard belong to different players
             if (
                 attackingStat > defendingStat &&
                 defendingCard.isPlayerCard !== attackingCard.isPlayerCard
             ) {
-            defendingCard.isPlayerCard = attackingCard.isPlayerCard; // capture the defending card
+                defendingCard.isPlayerCard = attackingCard.isPlayerCard; // capture the defending card
             }
         });
 
@@ -211,29 +224,23 @@ export default function TheBoard() {
                 pokemonCard: attackingCard
             }
         }));
-
-
-        // todo broken
-
-        // const sourceIndex = active.data.current.index;
-        // setCardsToDeal(prev => prev.map((card, index) => index === sourceIndex ? null : card)); // Remove card from hand when placed
     }
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
             < section className="h-full flex flex-col justify-between gap-8" >
                 <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
-                    {dealCards[1].map((pokemonCard, index) => {
+                    {cpuHand.map((pokemonCard, index) => {
                         if (!pokemonCard) return <div key={index} className="aspect-square" />;
 
                         return (
-                            <Card key={index} pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                            <Card key={index} pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={true} />
                         )
                     })}
                 </div>
                 <Grid cells={cells} ref="grid" />
                 <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
-                    {dealCards[0].map((pokemonCard, index) => {
+                    {playerHand.map((pokemonCard, index) => {
                         if (!pokemonCard) return <div key={index} className="aspect-square" />;
 
                         return (

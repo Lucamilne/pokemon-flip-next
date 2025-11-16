@@ -28,7 +28,8 @@ pokemon.data = {
             "poison"
         ],
         "stats": 318,
-        "effort_value": 1
+        "effort_value": 1,
+        "starter": true
     },
     "charmander": {
         "id": 4,
@@ -36,7 +37,8 @@ pokemon.data = {
             "fire"
         ],
         "stats": 309,
-        "effort_value": 1
+        "effort_value": 1,
+        "starter": true
     },
     "squirtle": {
         "id": 7,
@@ -44,7 +46,8 @@ pokemon.data = {
             "water"
         ],
         "stats": 314,
-        "effort_value": 1
+        "effort_value": 1,
+        "starter": true
     },
     "caterpie": {
         "id": 10,
@@ -69,7 +72,8 @@ pokemon.data = {
             "flying"
         ],
         "stats": 251,
-        "effort_value": 1
+        "effort_value": 1,
+        "starter": true
     },
     "rattata": {
         "id": 19,
@@ -720,7 +724,8 @@ pokemon.data = {
             "electric"
         ],
         "stats": 320,
-        "effort_value": 2
+        "effort_value": 2,
+        "starter": true
     },
     "raichu": {
         "id": 26,
