@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image'
 import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
 import ElementalTypes from './elemental-types.js';
@@ -7,10 +7,15 @@ import { useDraggable } from '@dnd-kit/core';
 
 export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false }) {
     const [isFlipped, setIsFlipped] = useState(isPlacedInGrid);
+    const cardRef = useRef(null);
 
     if (!pokemonCard) {
         return null;
     }
+
+    const sumUpNumbersInArray = (array) => {
+        return array.reduce((acc, val) => acc + val, 0);
+    };
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: `${pokemonCard.id.toString()}-${pokemonCard.isPlayerCard ? "-player" : "-cpu"}`, // it's possible that the cpu may have the same card as a player, we need to distinguish IDs
@@ -33,16 +38,40 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
             : 'bg-gradient-to-br from-theme-red to-theme-red-100';
     }, [pokemonCard.isPlayerCard]);
 
+    const weakenCard = () => {
+        if (cardRef.current) {
+            cardRef.current.classList.add('wobble-hor-bottom')
+        }
+    };
+
+    const strengthenCard = () => {
+        if (cardRef.current) {
+            cardRef.current.classList.add('jello-horizontal')
+        }
+    };
+
     useEffect(() => {
-        if (isPlacedInGrid) return; // Don't animate if placed
+        if (isPlacedInGrid) {
+            const totalStats = sumUpNumbersInArray(pokemonCard.stats);
+            const totalOriginalStats = sumUpNumbersInArray(
+                pokemonCard.originalStats
+            );
 
-        const animationDelay = 150;
+            if (totalStats < totalOriginalStats) {
+                weakenCard();
+            } else if (totalStats > totalOriginalStats) {
+                strengthenCard();
+            }
+        } else {
+            const animationDelay = 150;
 
-        setTimeout(() => {
-            setIsFlipped(!isFlipped)
-        }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
-    }, []);
+            setTimeout(() => {
+                setIsFlipped(!isFlipped)
+            }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
+        }
+    }, [isPlacedInGrid])
 
+    // used for rarity border, unused currently
     const getBgStyle = () => {
         if (pokemonCard.types.length === 1) {
             return { backgroundColor: `var(--color-${pokemonCard.types[0]}-500)` };
@@ -67,7 +96,7 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
             {...listeners}
             {...attributes}
         >
-            <div className={`p-2.5 border-front ${isPlacedInGrid ? "" : "rounded-md"} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
+            <div ref={cardRef} className={`p-2.5 border-front ${isPlacedInGrid ? "" : "rounded-md"} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
                 <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                     <div className="relative h-full flex flex-col items-center justify-center">
                         <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
