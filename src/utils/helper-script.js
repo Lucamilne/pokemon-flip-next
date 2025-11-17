@@ -21,6 +21,21 @@ for (const pokemon of pokemonList) {
         })
 }
 
+    const allocateStatsByPokemon = (pokemonName) => {
+        const currentPokemon = pokemon.data[pokemonName];
+        let statSum = Math.round(currentPokemon.stats / statModifier);
+        let statsToReturn = [10, 10, 10, 10];
+
+        let numberOfIterations =
+            statsToReturn.reduce((total, value) => total + value, 0) - statSum;
+
+        for (let i = 0; i < numberOfIterations; i++) {
+            decrementRandomStat(statsToReturn);
+        }
+
+        return statsToReturn;
+    }; // an old function I used to allocate stats. Retired but I may want to return to a random element
+
 // {
 //     "overgrow":3, increases random stats by 1 when flipped once per game
 //     "blaze":3, increases random stats by 1 when flipped once per game

@@ -15,12 +15,13 @@ function DroppableCell({ cellKey, cellData }) {
     return (
         <div
             ref={setNodeRef}
-            className={`relative dropzone aspect-square border-2 border-black p-2 ${cellData.class} ${cellData.element ? typeBackgrounds[cellData.element] : 'bg-white/30'}`}
+            className={`relative aspect-square p-2 ${cellData.element ? `${cellData.element}-tile` : 'default-tile'}`}
             data-cell={cellKey}
+            title={cellData.element ? `${cellData.element.toUpperCase()}` : ""}
         >
             {/* Hover overlay */}
             {isOver && (
-                <div className="absolute inset-0 bg-green-500/20 pointer-events-none z-10" />
+                <div className="absolute inset-0 bg-blue-500/3isPlacedInGrid0 pointer-events-none z-10" />
             )}
 
             {cellData.element && (
@@ -35,12 +36,12 @@ function DroppableCell({ cellKey, cellData }) {
             )}
 
             {cellData.pokemonCard && (
-                <div className="absolute inset-0 p-2">
+                <div className="absolute inset-0 p-2 aspect-square">
                     <Card
                         pokemonCard={cellData.pokemonCard}
                         index={0}
                         isDraggable={false}
-                        initIsFlipped={true}
+                        isPlacedInGrid={true}
                     />
                 </div>
             )}
@@ -50,10 +51,14 @@ function DroppableCell({ cellKey, cellData }) {
 
 export default function TheGrid({ cells }) {
     return (
-        <div className="grid shadow grid-cols-3 w-3/5 mx-auto" id="grid">
+        <div className="relative grid grid-cols-[repeat(3,124px)] sm:grid-cols-[repeat(3,158px)] bg-black gap-1.5 border-6 border-black mx-auto overflow-hidden aspect-square" id="grid">
             {Object.entries(cells).map(([key, value]) => (
                 <DroppableCell key={key} cellKey={key} cellData={value} />
             ))}
+            {/* <div className="absolute -top-32 -left-8 grid grid-cols-[30px_120px] gap-4 rotate-35" aria-hidden="true">
+                <div className='w-full h-128 bg-white/30' />
+                <div className='w-full h-128 bg-white/30' />
+            </div> */}
         </div>
     );
 }

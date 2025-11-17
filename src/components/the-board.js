@@ -1,7 +1,7 @@
 "use client"
 
-import pokemon from "@/lib/pokemon-species.js";
-import { useState, useEffect, useMemo } from 'react'
+import pokemon from "@/data/game-data.json";
+import { useState, useEffect } from 'react'
 import Grid from "./the-grid.js";
 import Card from "./card.js";
 import { DndContext } from '@dnd-kit/core';
@@ -11,55 +11,46 @@ export default function TheBoard() {
     const [playerHand, setPlayerHand] = useState([]);
     const [cells, setCells] = useState({
         A1: {
-            class: "border-r-0 border-b-0",
             pokemonCard: null,
             element: null,
             adjacentCells: [null, null, "A2", "B1"],
         },
         A2: {
-            class: "border-r-0 border-b-0",
             pokemonCard: null,
             element: null,
             adjacentCells: ["A1", null, "A3", "B2"],
         },
         A3: {
-            class: "border-b-0",
             pokemonCard: null,
             element: null,
             adjacentCells: ["A2", null, null, "B3"],
         },
         B1: {
-            class: "border-b-0 border-r-0",
             pokemonCard: null,
             element: null,
             adjacentCells: [null, "A1", "B2", "C1"],
         },
         B2: {
-            class: "border-b-0 border-r-0",
             pokemonCard: null,
             element: null,
             adjacentCells: ["B1", "A2", "B3", "C2"],
         },
         B3: {
-            class: "border-b-0",
             pokemonCard: null,
             element: null,
             adjacentCells: ["B2", "A3", null, "C3"],
         },
         C1: {
-            class: "border-r-0",
             pokemonCard: null,
             element: null,
             adjacentCells: [null, "B1", "C2", null],
         },
         C2: {
-            class: "border-r-0",
             pokemonCard: null,
             element: null,
             adjacentCells: ["C1", "B2", "C3", null],
         },
         C3: {
-            class: "",
             pokemonCard: null,
             element: null,
             adjacentCells: ["C2", "B3", null, null],
@@ -79,56 +70,27 @@ export default function TheBoard() {
         }
     };
 
-    const allocateStatsByPokemon = (pokemonName) => {
-        const currentPokemon = pokemon.data[pokemonName];
-        let statSum = Math.round(currentPokemon.stats / statModifier);
-        let statsToReturn = [10, 10, 10, 10];
-
-        let numberOfIterations =
-            statsToReturn.reduce((total, value) => total + value, 0) - statSum;
-
-        for (let i = 0; i < numberOfIterations; i++) {
-            decrementRandomStat(statsToReturn);
-        }
-
-        return statsToReturn;
-    };
-
     const createCard = (pokemonName, isPlayerCard = false) => {
-        const stats = allocateStatsByPokemon(pokemonName);
-        const statsSum = stats.reduce((acc, cur) => acc + cur, 0);
-        let rarity = 'common';
-
-        if (statsSum >= 30) {
-            rarity = 'legendary';
-        } else if (statsSum >= 26) {
-            rarity = 'epic';
-        } else if (statsSum >= 22) {
-            rarity = 'rare';
-        } else if (statsSum >= 18) {
-            rarity = 'uncommon';
-        }
-
         return {
             name: pokemonName,
-            types: pokemon.data[pokemonName].types,
-            id: pokemon.data[pokemonName].id,
-            stats: stats,
-            originalStats: stats, // A copy of stats is kept to track modifications
-            rarity: rarity,
-            playerOwned: false, // this is an unimplemented feature as of writing
+            types: pokemon.cards[pokemonName].types,
+            id: pokemon.cards[pokemonName].id,
+            stats: pokemon.cards[pokemonName].stats,
+            originalStats: pokemon.cards[pokemonName].originalStats, // A copy of stats is kept to track modifications
+            rarity: pokemon.cards[pokemonName].rarity,
+            playerOwned: pokemon.cards[pokemonName].starter, // this is an unimplemented feature as of writing
             isPlayerCard: isPlayerCard
         };
     };
 
     const allocateRandomCpuCards = () => {
-        const shuffledArray = Object.keys(pokemon.data).sort(() => Math.random() - 0.5);
+        const shuffledArray = Object.keys(pokemon.cards).sort(() => Math.random() - 0.5);
 
         setCpuHand(shuffledArray.slice(0, 5).map((el) => createCard(el)));
     }
 
     const allocateStarterDeck = () => {
-        const starterPokemon = Object.keys(pokemon.data).filter((pokemonName) => pokemon.data[pokemonName].starter);
+        const starterPokemon = Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].starter);
         setPlayerHand(starterPokemon.map((el) => createCard(el, true)));
     }
 
@@ -137,10 +99,10 @@ export default function TheBoard() {
         const arrayOfPokemonTypes = pokemon.types.filter((type) => type !== "normal");
 
         gridCells.forEach((cell) => {
-            if (Math.random() < 0.25 && arrayOfPokemonTypes.length > 0) {
+            if (Math.random() < 0.15 && arrayOfPokemonTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * arrayOfPokemonTypes.length);
                 const randomElement = arrayOfPokemonTypes[randomIndex];
-                cells[cell].element = randomElement; // cells may not be reactive
+                cells[cell].element = randomElement;
                 arrayOfPokemonTypes.splice(randomIndex, 1); // Remove the element at the randomIndex
             }
         });
@@ -171,8 +133,6 @@ export default function TheBoard() {
 
         return attackingCard.stats.map(updateStatOnElementalTile);
     };
-
-
 
     function handleDragEnd(event) {
         const { active, over } = event;
@@ -228,23 +188,33 @@ export default function TheBoard() {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            < section className="h-full flex flex-col justify-between gap-8" >
-                <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
+            <section className="h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
+                <div className="grid grid-cols-[repeat(5,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-top-container pb-8 p-4">
                     {cpuHand.map((pokemonCard, index) => {
-                        if (!pokemonCard) return <div key={index} className="aspect-square" />;
-
                         return (
-                            <Card key={index} pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={true} />
+                            <div className="relative aspect-square" key={index}>
+                                <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
+
+                                {pokemonCard && (
+                                    <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={true} />
+                                )}
+                            </div>
                         )
                     })}
                 </div>
-                <Grid cells={cells} ref="grid" />
-                <div className="grid grid-cols-5 items-center gap-4 bg-black/15 rounded p-4">
+                <div className="relative arena-backdrop grow flex items-center justify-center">
+                    <Grid cells={cells} ref="grid" />
+                </div>
+                <div className="grid grid-cols-[repeat(5,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-bottom-container pt-8 p-4">
                     {playerHand.map((pokemonCard, index) => {
-                        if (!pokemonCard) return <div key={index} className="aspect-square" />;
-
                         return (
-                            <Card key={index} pokemonCard={pokemonCard} index={index} />
+                            <div className="relative aspect-square" key={index}>
+                                <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
+
+                                {pokemonCard && (
+                                    <Card pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                )}
+                            </div>
                         )
                     })}
                 </div>

@@ -5,15 +5,15 @@ import ElementalTypes from './elemental-types.js';
 import Stats from './stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
-export default function Card({ pokemonCard, index, isDraggable = true, initIsFlipped = false }) {
-    const [isFlipped, setIsFlipped] = useState(initIsFlipped);
+export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false }) {
+    const [isFlipped, setIsFlipped] = useState(isPlacedInGrid);
 
     if (!pokemonCard) {
         return null;
     }
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: pokemonCard.id.toString(),
+        id: `${pokemonCard.id.toString()}-${pokemonCard.isPlayerCard ? "-player" : "-cpu"}`, // it's possible that the cpu may have the same card as a player, we need to distinguish IDs
         disabled: !isDraggable,
         data: {
             pokemonCard,
@@ -34,7 +34,7 @@ export default function Card({ pokemonCard, index, isDraggable = true, initIsFli
     }, [pokemonCard.isPlayerCard]);
 
     useEffect(() => {
-        if (initIsFlipped) return; // Don't animate if already flipped
+        if (isPlacedInGrid) return; // Don't animate if placed
 
         const animationDelay = 150;
 
@@ -67,26 +67,25 @@ export default function Card({ pokemonCard, index, isDraggable = true, initIsFli
             {...listeners}
             {...attributes}
         >
-            <div className={`p-2.5 border-front rounded-md aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
+            <div className={`p-2.5 border-front ${isPlacedInGrid ? "" : "rounded-md"} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
                 <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                     <div className="relative h-full flex flex-col items-center justify-center">
                         <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
                         <ElementalTypes types={pokemonCard.types} />
-                        <Image draggable={false} loading="eager" width={96} height={96} className="mt-2 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`} />
+                        <Image draggable={false} loading="eager" width={96} height={96} className="drop-shadow-md/30 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`} />
                         <div className='absolute bottom-0'>
-                            <svg className="w-full -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
+                            <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
                             <div className={`pt-10 text-center w-full ${pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`} />
                             <div className="px-2 py-1 w-full text-center uppercase text-white text-xs font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
                         </div>
                     </div>
                 </div>
+                {pokemonCard.playerOwned && <Image width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={PokemonBallSprite} />}
             </div>
             <div className={`border-back absolute top-0 left-0 w-full rounded-md p-3 select-none aspect-square shadow ${!isFlipped ? 'card-shown' : 'card-hidden'}`}>
                 <div className="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
                 </div>
             </div>
-
-            {pokemonCard.playerOwned && <Image width={24} height={24} className="absolute bottom-0 left-0" src={PokemonBallSprite} />}
         </div>
     );
 }

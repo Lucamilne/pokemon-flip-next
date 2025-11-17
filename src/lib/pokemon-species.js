@@ -1,5 +1,7 @@
 let pokemon = {};
 
+// this file is retired 
+
 pokemon.types = [
     "bug",
     "dragon",
