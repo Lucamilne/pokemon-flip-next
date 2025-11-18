@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image'
 import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
-import ElementalTypes from './elemental-types.js';
-import Stats from './stats.js';
+import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
+import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
 export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false }) {

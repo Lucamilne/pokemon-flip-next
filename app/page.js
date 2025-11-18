@@ -1,6 +1,6 @@
-import TheBoard from "@/components/the-board.js";
-import HowToPlay from "@/components/how-to-play.js";
-import GoogleSignInButton from "@/components/GoogleSignInButton";
+import Board from "@/components/Board/Board.js";
+import HowToPlay from "@/components/HowToPlay/HowToPlay.js";
+import GoogleSignInButton from "@/components/GoogleSignInButton/GoogleSignInButton.js";
 
 export default function Home() {
   return (
@@ -10,10 +10,10 @@ export default function Home() {
           <GoogleSignInButton />
         </div> */}
         <div className="h-screen lg:h-[calc(100vh-64px)] shadow-lg/50 overflow-hidden">
-          <TheBoard />
+          <Board />
         </div>
       </main>
-      <HowToPlay />
+      {/* <HowToPlay /> */}
     </div>
   );
 }

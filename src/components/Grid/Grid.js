@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { typeTiles } from '@/utils/typeIcons'
 import { useDroppable } from '@dnd-kit/core';
-import Card from './card.js';
+import Card from '../Card/Card.js';
 
 function DroppableCell({ cellKey, cellData }) {
     const { isOver, setNodeRef } = useDroppable({
@@ -48,7 +48,7 @@ function DroppableCell({ cellKey, cellData }) {
     );
 }
 
-export default function TheGrid({ cells }) {
+export default function Grid({ cells }) {
     return (
         <div className="relative grid grid-cols-[repeat(3,140px)] sm:grid-cols-[repeat(3,174px)] bg-black gap-1.5 border-6 border-black mx-auto overflow-hidden aspect-square" id="grid">
             {Object.entries(cells).map(([key, value]) => (

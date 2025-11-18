@@ -2,11 +2,11 @@
 
 import pokemon from "@/data/game-data.json";
 import { useState, useEffect } from 'react'
-import Grid from "./the-grid.js";
-import Card from "./card.js";
+import Grid from "../Grid/Grid.js";
+import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
 
-export default function TheBoard() {
+export default function Board() {
     const [cpuHand, setCpuHand] = useState([]);
     const [playerHand, setPlayerHand] = useState([]);
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
