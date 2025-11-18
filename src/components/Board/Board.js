@@ -133,25 +133,8 @@ export default function Board() {
         return attackingCard.stats.map(updateStatOnElementalTile);
     };
 
-    function handleDragEnd(event) {
-        const { active, over } = event;
-        if (!over) return; // Dropped outside a droppable area
-
-        let cellTarget = over.id; // e.g. A1
-
-        let attackingCard = active.data.current.pokemonCard;
+    const attack = (cellTarget, attackingCard) => {
         const cellTargetObject = cells[cellTarget];
-
-        const sourceIndex = active.data.current.index;
-        const isPlayerCard = active.data.current.pokemonCard.isPlayerCard;
-
-        // Remove card from the appropriate hand
-        if (isPlayerCard) {
-            setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
-        } else {
-            // CPU cards have index + 5, so subtract 5 to get the cpuHand index
-            setCpuHand(prev => prev.map((card, index) => index === (sourceIndex) ? null : card));
-        }
 
         if (cellTargetObject.element) {
             attackingCard.stats = applyTileStatModifiers(attackingCard, cellTargetObject); // add or remove stats on placement of attacking card on tile
@@ -174,6 +157,21 @@ export default function Board() {
                 defendingCard.isPlayerCard = attackingCard.isPlayerCard; // capture the defending card
             }
         });
+    }
+
+    function handleDragEnd(event) {
+        const { active, over } = event;
+        if (!over) return; // Dropped outside a droppable area
+
+        let cellTarget = over.id; // e.g. A1
+
+        let attackingCard = active.data.current.pokemonCard;
+
+        const sourceIndex = active.data.current.index;
+        // Remove card from the player hand
+        setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
+
+        attack(cellTarget, attackingCard)
 
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
         setCells(prev => ({
@@ -187,7 +185,6 @@ export default function Board() {
         // end the turn!
         setIsPlayerTurn(false)
     }
-
 
     // CPU scripting
     useEffect(() => {
@@ -207,26 +204,34 @@ export default function Board() {
             }
         });
 
-        if (arrayOfCellsToPlace.length === 0 || cpuHand.length === 0) {
+        // Filter out null cards from CPU hand
+        const availableCpuCards = cpuHand.filter(card => card !== null);
+
+        if (arrayOfCellsToPlace.length === 0 || availableCpuCards.length === 0) {
             // end game here
             return;
         }
 
         // Randomly select a cell to place a card
         const randomCellIndex = Math.floor(Math.random() * arrayOfCellsToPlace.length);
-        const selectedCell = arrayOfCellsToPlace[randomCellIndex];
+        const cellTarget = arrayOfCellsToPlace[randomCellIndex];
 
-        const selectedCardIndex = Math.floor(Math.random() * cpuHand.length);
-        const selectedCard = cpuHand[selectedCardIndex];
+        const randomCardIndex = Math.floor(Math.random() * availableCpuCards.length);
+        const attackingCard = availableCpuCards[randomCardIndex];
 
-        setCpuHand(prev => prev.map((card, index) => index === (selectedCardIndex) ? null : card));
+        // Find the original index in cpuHand
+        const originalIndex = cpuHand.findIndex(card => card === attackingCard);
+
+        setCpuHand(prev => prev.map((card, index) => index === originalIndex ? null : card));
+
+        attack(cellTarget, attackingCard);
 
         // Place the card in the selected cell
         setCells(prevCells => ({
             ...prevCells,
-            [selectedCell]: {
-                ...prevCells[selectedCell],
-                pokemonCard: selectedCard
+            [cellTarget]: {
+                ...prevCells[cellTarget],
+                pokemonCard: attackingCard
             }
         }));
 
