@@ -185,8 +185,66 @@ export default function Board() {
         }));
 
         // end the turn!
-        setIsPlayerTurn(!isPlayerTurn)
+        setIsPlayerTurn(false)
     }
+
+
+    // CPU scripting
+    useEffect(() => {
+        if (isPlayerTurn) return;
+
+        let arrayOfCellsToPlace = [];
+        let arrayOfPlayerOccupiedCells = [];
+        let arrayOfCpuOccupiedCells = [];
+
+        Object.entries(cells).forEach(([cell, { pokemonCard }]) => {
+            if (!pokemonCard) {
+                arrayOfCellsToPlace.push(cell);
+            } else if (pokemonCard.isPlayerCard) {
+                arrayOfPlayerOccupiedCells.push(cell);
+            } else {
+                arrayOfCpuOccupiedCells.push(cell);
+            }
+        });
+
+        if (arrayOfCellsToPlace.length === 0 || cpuHand.length === 0) {
+            // end game here
+            return;
+        }
+
+        // Randomly select a cell to place a card
+        const randomCellIndex = Math.floor(Math.random() * arrayOfCellsToPlace.length);
+        const selectedCell = arrayOfCellsToPlace[randomCellIndex];
+
+        const selectedCardIndex = Math.floor(Math.random() * cpuHand.length);
+        const selectedCard = cpuHand[selectedCardIndex];
+
+        setCpuHand(prev => prev.map((card, index) => index === (selectedCardIndex) ? null : card));
+
+        // Place the card in the selected cell
+        setCells(prevCells => ({
+            ...prevCells,
+            [selectedCell]: {
+                ...prevCells[selectedCell],
+                pokemonCard: selectedCard
+            }
+        }));
+
+        setIsPlayerTurn(true); // end the turn!
+
+        // consider placement of elemental tiles
+        // scan CPU hand, adjust weighting
+        // identify direction which CPU is strongest
+        // scan opponent hand, adjust weighting
+        // identify direction which player is weakest
+        // identify players weakest exposed stats, adjust weighting
+        // placing in the center (cell B2) on turn 1 should be disabled
+        // check if it's possible to take two cards
+        // if none of the above, act defensive
+
+
+
+    }, [isPlayerTurn])
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
