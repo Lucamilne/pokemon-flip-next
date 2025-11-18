@@ -519,6 +519,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Utility class to apply just the Press Start 2P font */
+.font-press-start {
+  font-family: var(--font-press-start), monospace;
+}
+
 .hand-top-container,
 .hand-bottom-container {
   background-color: var(--pokedex-red);
@@ -1143,23 +1148,23 @@ body {
 }
 
 .slide-in-bck-top {
-  -webkit-animation: slide-in-bck-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
   animation: slide-in-bck-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 }
 
 .wobble-hor-bottom {
-  -webkit-animation: wobble-hor-bottom 0.5s both;
   animation: wobble-hor-bottom 0.5s both;
 }
 
 .jello-horizontal {
-  -webkit-animation: jello-horizontal 0.9s both;
   animation: jello-horizontal 0.9s both;
 }
 
 .rotate-diagonal-1 {
-  -webkit-animation: rotate-diagonal-1 0.4s linear both;
   animation: rotate-diagonal-1 0.4s linear both;
+}
+
+.puff-in-center {
+  animation: puff-in-center 0.15s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
 }
 
 /* slide in */
@@ -1335,5 +1340,41 @@ body {
   100% {
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
+  }
+}
+
+@-webkit-keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes puff-in-center {
+  0% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-filter: blur(4px);
+    filter: blur(4px);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
   }
 }

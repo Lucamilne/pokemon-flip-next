@@ -29,7 +29,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 318,
+        "statWeight": 318,
         "effort_value": 1,
         "starter": true
     },
@@ -38,7 +38,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 309,
+        "statWeight": 309,
         "effort_value": 1,
         "starter": true
     },
@@ -47,7 +47,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 314,
+        "statWeight": 314,
         "effort_value": 1,
         "starter": true
     },
@@ -56,7 +56,7 @@ pokemon.data = {
         "types": [
             "bug"
         ],
-        "stats": 195,
+        "statWeight": 195,
         "effort_value": 1
     },
     "weedle": {
@@ -65,7 +65,7 @@ pokemon.data = {
             "bug",
             "poison"
         ],
-        "stats": 195,
+        "statWeight": 195,
         "effort_value": 1
     },
     "pidgey": {
@@ -73,7 +73,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 251,
+        "statWeight": 251,
         "effort_value": 1,
         "starter": true
     },
@@ -82,7 +82,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 253,
+        "statWeight": 253,
         "effort_value": 1
     },
     "spearow": {
@@ -90,7 +90,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 262,
+        "statWeight": 262,
         "effort_value": 1
     },
     "ekans": {
@@ -98,7 +98,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 288,
+        "statWeight": 288,
         "effort_value": 1
     },
     "sandshrew": {
@@ -106,7 +106,7 @@ pokemon.data = {
         "types": [
             "ground"
         ],
-        "stats": 300,
+        "statWeight": 300,
         "effort_value": 1
     },
     "nidoran-f": {
@@ -114,7 +114,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 275,
+        "statWeight": 275,
         "effort_value": 1
     },
     "nidoran-m": {
@@ -122,7 +122,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 273,
+        "statWeight": 273,
         "effort_value": 1
     },
     "vulpix": {
@@ -130,7 +130,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 299,
+        "statWeight": 299,
         "effort_value": 1
     },
     "zubat": {
@@ -139,7 +139,7 @@ pokemon.data = {
             "poison",
             "flying"
         ],
-        "stats": 245,
+        "statWeight": 245,
         "effort_value": 1
     },
     "oddish": {
@@ -148,7 +148,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 320,
+        "statWeight": 320,
         "effort_value": 1
     },
     "paras": {
@@ -157,7 +157,7 @@ pokemon.data = {
             "bug",
             "grass"
         ],
-        "stats": 285,
+        "statWeight": 285,
         "effort_value": 1
     },
     "venonat": {
@@ -166,7 +166,7 @@ pokemon.data = {
             "bug",
             "poison"
         ],
-        "stats": 305,
+        "statWeight": 305,
         "effort_value": 1
     },
     "diglett": {
@@ -174,7 +174,7 @@ pokemon.data = {
         "types": [
             "ground"
         ],
-        "stats": 265,
+        "statWeight": 265,
         "effort_value": 1
     },
     "meowth": {
@@ -182,7 +182,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 290,
+        "statWeight": 290,
         "effort_value": 1
     },
     "psyduck": {
@@ -190,7 +190,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 320,
+        "statWeight": 320,
         "effort_value": 1
     },
     "mankey": {
@@ -198,7 +198,7 @@ pokemon.data = {
         "types": [
             "fighting"
         ],
-        "stats": 305,
+        "statWeight": 305,
         "effort_value": 1
     },
     "growlithe": {
@@ -206,7 +206,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 350,
+        "statWeight": 350,
         "effort_value": 1
     },
     "poliwag": {
@@ -214,7 +214,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 300,
+        "statWeight": 300,
         "effort_value": 1
     },
     "abra": {
@@ -222,7 +222,7 @@ pokemon.data = {
         "types": [
             "psychic"
         ],
-        "stats": 310,
+        "statWeight": 310,
         "effort_value": 1
     },
     "machop": {
@@ -230,7 +230,7 @@ pokemon.data = {
         "types": [
             "fighting"
         ],
-        "stats": 305,
+        "statWeight": 305,
         "effort_value": 1
     },
     "bellsprout": {
@@ -239,7 +239,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 300,
+        "statWeight": 300,
         "effort_value": 1
     },
     "tentacool": {
@@ -248,7 +248,7 @@ pokemon.data = {
             "water",
             "poison"
         ],
-        "stats": 335,
+        "statWeight": 335,
         "effort_value": 1
     },
     "geodude": {
@@ -257,7 +257,7 @@ pokemon.data = {
             "rock",
             "ground"
         ],
-        "stats": 300,
+        "statWeight": 300,
         "effort_value": 1
     },
     "ponyta": {
@@ -265,7 +265,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 410,
+        "statWeight": 410,
         "effort_value": 1
     },
     "slowpoke": {
@@ -274,7 +274,7 @@ pokemon.data = {
             "water",
             "psychic"
         ],
-        "stats": 315,
+        "statWeight": 315,
         "effort_value": 1
     },
     "magnemite": {
@@ -283,7 +283,7 @@ pokemon.data = {
             "electric",
             "steel"
         ],
-        "stats": 325,
+        "statWeight": 325,
         "effort_value": 1
     },
     "farfetchd": {
@@ -291,7 +291,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 377,
+        "statWeight": 377,
         "effort_value": 1
     },
     "doduo": {
@@ -299,7 +299,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 310,
+        "statWeight": 310,
         "effort_value": 1
     },
     "seel": {
@@ -307,7 +307,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 325,
+        "statWeight": 325,
         "effort_value": 1
     },
     "grimer": {
@@ -315,7 +315,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 325,
+        "statWeight": 325,
         "effort_value": 1
     },
     "shellder": {
@@ -323,7 +323,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 305,
+        "statWeight": 305,
         "effort_value": 1
     },
     "gastly": {
@@ -332,7 +332,7 @@ pokemon.data = {
             "ghost",
             "poison"
         ],
-        "stats": 310,
+        "statWeight": 310,
         "effort_value": 1
     },
     "onix": {
@@ -341,7 +341,7 @@ pokemon.data = {
             "rock",
             "ground"
         ],
-        "stats": 385,
+        "statWeight": 385,
         "effort_value": 1
     },
     "drowzee": {
@@ -349,7 +349,7 @@ pokemon.data = {
         "types": [
             "psychic"
         ],
-        "stats": 328,
+        "statWeight": 328,
         "effort_value": 1
     },
     "krabby": {
@@ -357,7 +357,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 325,
+        "statWeight": 325,
         "effort_value": 1
     },
     "voltorb": {
@@ -365,7 +365,7 @@ pokemon.data = {
         "types": [
             "electric"
         ],
-        "stats": 330,
+        "statWeight": 330,
         "effort_value": 1
     },
     "exeggcute": {
@@ -374,7 +374,7 @@ pokemon.data = {
             "grass",
             "psychic"
         ],
-        "stats": 325,
+        "statWeight": 325,
         "effort_value": 1
     },
     "cubone": {
@@ -382,7 +382,7 @@ pokemon.data = {
         "types": [
             "ground"
         ],
-        "stats": 320,
+        "statWeight": 320,
         "effort_value": 1
     },
     "lickitung": {
@@ -390,7 +390,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 385,
+        "statWeight": 385,
         "effort_value": 2
     },
     "koffing": {
@@ -398,7 +398,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 340,
+        "statWeight": 340,
         "effort_value": 1
     },
     "rhyhorn": {
@@ -407,7 +407,7 @@ pokemon.data = {
             "ground",
             "rock"
         ],
-        "stats": 345,
+        "statWeight": 345,
         "effort_value": 1
     },
     "tangela": {
@@ -415,7 +415,7 @@ pokemon.data = {
         "types": [
             "grass"
         ],
-        "stats": 435,
+        "statWeight": 435,
         "effort_value": 1
     },
     "kangaskhan": {
@@ -423,7 +423,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 2
     },
     "horsea": {
@@ -431,7 +431,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 295,
+        "statWeight": 295,
         "effort_value": 1
     },
     "goldeen": {
@@ -439,7 +439,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 320,
+        "statWeight": 320,
         "effort_value": 1
     },
     "staryu": {
@@ -447,7 +447,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 340,
+        "statWeight": 340,
         "effort_value": 1
     },
     "scyther": {
@@ -456,7 +456,7 @@ pokemon.data = {
             "bug",
             "flying"
         ],
-        "stats": 500,
+        "statWeight": 500,
         "effort_value": 1
     },
     "pinsir": {
@@ -464,7 +464,7 @@ pokemon.data = {
         "types": [
             "bug"
         ],
-        "stats": 500,
+        "statWeight": 500,
         "effort_value": 2
     },
     "tauros": {
@@ -472,7 +472,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 2
     },
     "magikarp": {
@@ -480,7 +480,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 200,
+        "statWeight": 200,
         "effort_value": 1
     },
     "lapras": {
@@ -489,7 +489,7 @@ pokemon.data = {
             "water",
             "ice"
         ],
-        "stats": 535,
+        "statWeight": 535,
         "effort_value": 2
     },
     "ditto": {
@@ -497,7 +497,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 288,
+        "statWeight": 288,
         "effort_value": 1
     },
     "eevee": {
@@ -505,7 +505,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 325,
+        "statWeight": 325,
         "effort_value": 1
     },
     "porygon": {
@@ -513,7 +513,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 395,
+        "statWeight": 395,
         "effort_value": 1
     },
     "omanyte": {
@@ -522,7 +522,7 @@ pokemon.data = {
             "rock",
             "water"
         ],
-        "stats": 355,
+        "statWeight": 355,
         "effort_value": 1
     },
     "kabuto": {
@@ -531,7 +531,7 @@ pokemon.data = {
             "rock",
             "water"
         ],
-        "stats": 355,
+        "statWeight": 355,
         "effort_value": 1
     },
     "aerodactyl": {
@@ -540,7 +540,7 @@ pokemon.data = {
             "rock",
             "flying"
         ],
-        "stats": 515,
+        "statWeight": 515,
         "effort_value": 2
     },
     "articuno": {
@@ -549,7 +549,7 @@ pokemon.data = {
             "ice",
             "flying"
         ],
-        "stats": 580,
+        "statWeight": 580,
         "effort_value": 3
     },
     "zapdos": {
@@ -558,7 +558,7 @@ pokemon.data = {
             "electric",
             "flying"
         ],
-        "stats": 580,
+        "statWeight": 580,
         "effort_value": 3
     },
     "moltres": {
@@ -567,7 +567,7 @@ pokemon.data = {
             "fire",
             "flying"
         ],
-        "stats": 580,
+        "statWeight": 580,
         "effort_value": 3
     },
     "dratini": {
@@ -575,7 +575,7 @@ pokemon.data = {
         "types": [
             "dragon"
         ],
-        "stats": 300,
+        "statWeight": 300,
         "effort_value": 1
     },
     "mewtwo": {
@@ -583,7 +583,7 @@ pokemon.data = {
         "types": [
             "psychic"
         ],
-        "stats": 680,
+        "statWeight": 680,
         "effort_value": 3
     },
     "mew": {
@@ -591,7 +591,7 @@ pokemon.data = {
         "types": [
             "psychic"
         ],
-        "stats": 600,
+        "statWeight": 600,
         "effort_value": 3
     },
     "ivysaur": {
@@ -600,7 +600,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 405,
+        "statWeight": 405,
         "effort_value": 2
     },
     "venusaur": {
@@ -609,7 +609,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 525,
+        "statWeight": 525,
         "effort_value": 3
     },
     "charmeleon": {
@@ -617,7 +617,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 405,
+        "statWeight": 405,
         "effort_value": 2
     },
     "charizard": {
@@ -626,7 +626,7 @@ pokemon.data = {
             "fire",
             "flying"
         ],
-        "stats": 534,
+        "statWeight": 534,
         "effort_value": 3
     },
     "wartortle": {
@@ -634,7 +634,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 405,
+        "statWeight": 405,
         "effort_value": 2
     },
     "blastoise": {
@@ -642,7 +642,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 530,
+        "statWeight": 530,
         "effort_value": 3
     },
     "metapod": {
@@ -650,7 +650,7 @@ pokemon.data = {
         "types": [
             "bug"
         ],
-        "stats": 205,
+        "statWeight": 205,
         "effort_value": 2
     },
     "butterfree": {
@@ -659,7 +659,7 @@ pokemon.data = {
             "bug",
             "flying"
         ],
-        "stats": 395,
+        "statWeight": 395,
         "effort_value": 3
     },
     "kakuna": {
@@ -668,7 +668,7 @@ pokemon.data = {
             "bug",
             "poison"
         ],
-        "stats": 205,
+        "statWeight": 205,
         "effort_value": 2
     },
     "beedrill": {
@@ -677,7 +677,7 @@ pokemon.data = {
             "bug",
             "poison"
         ],
-        "stats": 395,
+        "statWeight": 395,
         "effort_value": 3
     },
     "pidgeotto": {
@@ -685,7 +685,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 349,
+        "statWeight": 349,
         "effort_value": 2
     },
     "pidgeot": {
@@ -693,7 +693,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 479,
+        "statWeight": 479,
         "effort_value": 3
     },
     "raticate": {
@@ -701,7 +701,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 413,
+        "statWeight": 413,
         "effort_value": 2
     },
     "fearow": {
@@ -709,7 +709,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 442,
+        "statWeight": 442,
         "effort_value": 2
     },
     "arbok": {
@@ -717,7 +717,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 448,
+        "statWeight": 448,
         "effort_value": 2
     },
     "pikachu": {
@@ -725,7 +725,7 @@ pokemon.data = {
         "types": [
             "electric"
         ],
-        "stats": 320,
+        "statWeight": 320,
         "effort_value": 2,
         "starter": true
     },
@@ -734,7 +734,7 @@ pokemon.data = {
         "types": [
             "electric"
         ],
-        "stats": 485,
+        "statWeight": 485,
         "effort_value": 3
     },
     "sandslash": {
@@ -742,7 +742,7 @@ pokemon.data = {
         "types": [
             "ground"
         ],
-        "stats": 450,
+        "statWeight": 450,
         "effort_value": 2
     },
     "nidorina": {
@@ -750,7 +750,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 365,
+        "statWeight": 365,
         "effort_value": 2
     },
     "nidoqueen": {
@@ -759,7 +759,7 @@ pokemon.data = {
             "poison",
             "ground"
         ],
-        "stats": 505,
+        "statWeight": 505,
         "effort_value": 3
     },
     "nidorino": {
@@ -767,7 +767,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 365,
+        "statWeight": 365,
         "effort_value": 2
     },
     "nidoking": {
@@ -776,7 +776,7 @@ pokemon.data = {
             "poison",
             "ground"
         ],
-        "stats": 505,
+        "statWeight": 505,
         "effort_value": 3
     },
     "clefairy": {
@@ -784,7 +784,7 @@ pokemon.data = {
         "types": [
             "fairy"
         ],
-        "stats": 323,
+        "statWeight": 323,
         "effort_value": 2
     },
     "clefable": {
@@ -792,7 +792,7 @@ pokemon.data = {
         "types": [
             "fairy"
         ],
-        "stats": 483,
+        "statWeight": 483,
         "effort_value": 3
     },
     "ninetales": {
@@ -800,7 +800,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 505,
+        "statWeight": 505,
         "effort_value": 2
     },
     "jigglypuff": {
@@ -808,7 +808,7 @@ pokemon.data = {
         "types": [
             "fairy"
         ],
-        "stats": 270,
+        "statWeight": 270,
         "effort_value": 2
     },
     "wigglytuff": {
@@ -816,7 +816,7 @@ pokemon.data = {
         "types": [
             "fairy"
         ],
-        "stats": 435,
+        "statWeight": 435,
         "effort_value": 3
     },
     "golbat": {
@@ -825,7 +825,7 @@ pokemon.data = {
             "poison",
             "flying"
         ],
-        "stats": 455,
+        "statWeight": 455,
         "effort_value": 2
     },
     "gloom": {
@@ -834,7 +834,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 395,
+        "statWeight": 395,
         "effort_value": 2
     },
     "vileplume": {
@@ -843,7 +843,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 3
     },
     "parasect": {
@@ -852,7 +852,7 @@ pokemon.data = {
             "bug",
             "grass"
         ],
-        "stats": 405,
+        "statWeight": 405,
         "effort_value": 3
     },
     "venomoth": {
@@ -861,7 +861,7 @@ pokemon.data = {
             "bug",
             "poison"
         ],
-        "stats": 450,
+        "statWeight": 450,
         "effort_value": 2
     },
     "dugtrio": {
@@ -869,7 +869,7 @@ pokemon.data = {
         "types": [
             "ground"
         ],
-        "stats": 425,
+        "statWeight": 425,
         "effort_value": 2
     },
     "persian": {
@@ -877,7 +877,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 440,
+        "statWeight": 440,
         "effort_value": 2
     },
     "golduck": {
@@ -885,7 +885,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 500,
+        "statWeight": 500,
         "effort_value": 2
     },
     "primeape": {
@@ -893,7 +893,7 @@ pokemon.data = {
         "types": [
             "fighting"
         ],
-        "stats": 455,
+        "statWeight": 455,
         "effort_value": 2
     },
     "arcanine": {
@@ -901,7 +901,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 555,
+        "statWeight": 555,
         "effort_value": 2
     },
     "poliwhirl": {
@@ -909,7 +909,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 385,
+        "statWeight": 385,
         "effort_value": 2
     },
     "poliwrath": {
@@ -918,7 +918,7 @@ pokemon.data = {
             "water",
             "fighting"
         ],
-        "stats": 510,
+        "statWeight": 510,
         "effort_value": 3
     },
     "kadabra": {
@@ -926,7 +926,7 @@ pokemon.data = {
         "types": [
             "psychic"
         ],
-        "stats": 400,
+        "statWeight": 400,
         "effort_value": 2
     },
     "alakazam": {
@@ -934,7 +934,7 @@ pokemon.data = {
         "types": [
             "psychic"
         ],
-        "stats": 500,
+        "statWeight": 500,
         "effort_value": 3
     },
     "machoke": {
@@ -942,7 +942,7 @@ pokemon.data = {
         "types": [
             "fighting"
         ],
-        "stats": 405,
+        "statWeight": 405,
         "effort_value": 2
     },
     "machamp": {
@@ -950,7 +950,7 @@ pokemon.data = {
         "types": [
             "fighting"
         ],
-        "stats": 505,
+        "statWeight": 505,
         "effort_value": 3
     },
     "weepinbell": {
@@ -959,7 +959,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 390,
+        "statWeight": 390,
         "effort_value": 2
     },
     "victreebel": {
@@ -968,7 +968,7 @@ pokemon.data = {
             "grass",
             "poison"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 3
     },
     "tentacruel": {
@@ -977,7 +977,7 @@ pokemon.data = {
             "water",
             "poison"
         ],
-        "stats": 515,
+        "statWeight": 515,
         "effort_value": 2
     },
     "graveler": {
@@ -986,7 +986,7 @@ pokemon.data = {
             "rock",
             "ground"
         ],
-        "stats": 390,
+        "statWeight": 390,
         "effort_value": 2
     },
     "golem": {
@@ -995,7 +995,7 @@ pokemon.data = {
             "rock",
             "ground"
         ],
-        "stats": 495,
+        "statWeight": 495,
         "effort_value": 3
     },
     "rapidash": {
@@ -1003,7 +1003,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 500,
+        "statWeight": 500,
         "effort_value": 2
     },
     "slowbro": {
@@ -1012,7 +1012,7 @@ pokemon.data = {
             "water",
             "psychic"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 2
     },
     "magneton": {
@@ -1021,7 +1021,7 @@ pokemon.data = {
             "electric",
             "steel"
         ],
-        "stats": 465,
+        "statWeight": 465,
         "effort_value": 2
     },
     "dodrio": {
@@ -1029,7 +1029,7 @@ pokemon.data = {
         "types": [
             "flying"
         ],
-        "stats": 470,
+        "statWeight": 470,
         "effort_value": 2
     },
     "dewgong": {
@@ -1038,7 +1038,7 @@ pokemon.data = {
             "water",
             "ice"
         ],
-        "stats": 475,
+        "statWeight": 475,
         "effort_value": 2
     },
     "muk": {
@@ -1046,7 +1046,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 500,
+        "statWeight": 500,
         "effort_value": 2
     },
     "cloyster": {
@@ -1055,7 +1055,7 @@ pokemon.data = {
             "water",
             "ice"
         ],
-        "stats": 525,
+        "statWeight": 525,
         "effort_value": 2
     },
     "haunter": {
@@ -1064,7 +1064,7 @@ pokemon.data = {
             "ghost",
             "poison"
         ],
-        "stats": 405,
+        "statWeight": 405,
         "effort_value": 2
     },
     "gengar": {
@@ -1073,7 +1073,7 @@ pokemon.data = {
             "ghost",
             "poison"
         ],
-        "stats": 500,
+        "statWeight": 500,
         "effort_value": 3
     },
     "hypno": {
@@ -1081,7 +1081,7 @@ pokemon.data = {
         "types": [
             "psychic"
         ],
-        "stats": 483,
+        "statWeight": 483,
         "effort_value": 2
     },
     "kingler": {
@@ -1089,7 +1089,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 475,
+        "statWeight": 475,
         "effort_value": 2
     },
     "electrode": {
@@ -1097,7 +1097,7 @@ pokemon.data = {
         "types": [
             "electric"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 2
     },
     "exeggutor": {
@@ -1106,7 +1106,7 @@ pokemon.data = {
             "grass",
             "psychic"
         ],
-        "stats": 530,
+        "statWeight": 530,
         "effort_value": 2
     },
     "marowak": {
@@ -1114,7 +1114,7 @@ pokemon.data = {
         "types": [
             "ground"
         ],
-        "stats": 425,
+        "statWeight": 425,
         "effort_value": 2
     },
     "hitmonlee": {
@@ -1122,7 +1122,7 @@ pokemon.data = {
         "types": [
             "fighting"
         ],
-        "stats": 455,
+        "statWeight": 455,
         "effort_value": 2
     },
     "hitmonchan": {
@@ -1130,7 +1130,7 @@ pokemon.data = {
         "types": [
             "fighting"
         ],
-        "stats": 455,
+        "statWeight": 455,
         "effort_value": 2
     },
     "weezing": {
@@ -1138,7 +1138,7 @@ pokemon.data = {
         "types": [
             "poison"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 2
     },
     "rhydon": {
@@ -1147,7 +1147,7 @@ pokemon.data = {
             "ground",
             "rock"
         ],
-        "stats": 485,
+        "statWeight": 485,
         "effort_value": 2
     },
     "chansey": {
@@ -1155,7 +1155,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 450,
+        "statWeight": 450,
         "effort_value": 2
     },
     "seadra": {
@@ -1163,7 +1163,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 440,
+        "statWeight": 440,
         "effort_value": 2
     },
     "seaking": {
@@ -1171,7 +1171,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 450,
+        "statWeight": 450,
         "effort_value": 2
     },
     "starmie": {
@@ -1180,7 +1180,7 @@ pokemon.data = {
             "water",
             "psychic"
         ],
-        "stats": 520,
+        "statWeight": 520,
         "effort_value": 2
     },
     "mr-mime": {
@@ -1189,7 +1189,7 @@ pokemon.data = {
             "psychic",
             "fairy"
         ],
-        "stats": 460,
+        "statWeight": 460,
         "effort_value": 2
     },
     "jynx": {
@@ -1198,7 +1198,7 @@ pokemon.data = {
             "ice",
             "psychic"
         ],
-        "stats": 455,
+        "statWeight": 455,
         "effort_value": 2
     },
     "electabuzz": {
@@ -1206,7 +1206,7 @@ pokemon.data = {
         "types": [
             "electric"
         ],
-        "stats": 490,
+        "statWeight": 490,
         "effort_value": 2
     },
     "magmar": {
@@ -1214,7 +1214,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 495,
+        "statWeight": 495,
         "effort_value": 2
     },
     "gyarados": {
@@ -1223,7 +1223,7 @@ pokemon.data = {
             "water",
             "flying"
         ],
-        "stats": 540,
+        "statWeight": 540,
         "effort_value": 2
     },
     "vaporeon": {
@@ -1231,7 +1231,7 @@ pokemon.data = {
         "types": [
             "water"
         ],
-        "stats": 525,
+        "statWeight": 525,
         "effort_value": 2
     },
     "jolteon": {
@@ -1239,7 +1239,7 @@ pokemon.data = {
         "types": [
             "electric"
         ],
-        "stats": 525,
+        "statWeight": 525,
         "effort_value": 2
     },
     "flareon": {
@@ -1247,7 +1247,7 @@ pokemon.data = {
         "types": [
             "fire"
         ],
-        "stats": 525,
+        "statWeight": 525,
         "effort_value": 2
     },
     "omastar": {
@@ -1256,7 +1256,7 @@ pokemon.data = {
             "rock",
             "water"
         ],
-        "stats": 495,
+        "statWeight": 495,
         "effort_value": 2
     },
     "kabutops": {
@@ -1265,7 +1265,7 @@ pokemon.data = {
             "rock",
             "water"
         ],
-        "stats": 495,
+        "statWeight": 495,
         "effort_value": 2
     },
     "snorlax": {
@@ -1273,7 +1273,7 @@ pokemon.data = {
         "types": [
             "normal"
         ],
-        "stats": 540,
+        "statWeight": 540,
         "effort_value": 2
     },
     "dragonair": {
@@ -1281,7 +1281,7 @@ pokemon.data = {
         "types": [
             "dragon"
         ],
-        "stats": 420,
+        "statWeight": 420,
         "effort_value": 2
     },
     "dragonite": {
@@ -1290,7 +1290,7 @@ pokemon.data = {
             "dragon",
             "flying"
         ],
-        "stats": 600,
+        "statWeight": 600,
         "effort_value": 3
     }
 }

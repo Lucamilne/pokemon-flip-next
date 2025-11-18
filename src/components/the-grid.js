@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { typeTiles } from '@/utils/typeIcons'
-import { typeBackgrounds } from '@/utils/typeBackgrounds'
 import { useDroppable } from '@dnd-kit/core';
 import Card from './card.js';
 
@@ -21,7 +20,7 @@ function DroppableCell({ cellKey, cellData }) {
         >
             {/* Hover overlay */}
             {isOver && (
-                <div className="absolute inset-0 bg-blue-500/3isPlacedInGrid0 pointer-events-none z-10" />
+                <div className="absolute inset-0 bg-blue-500/30 pointer-events-none z-10" />
             )}
 
             {cellData.element && (
@@ -51,7 +50,7 @@ function DroppableCell({ cellKey, cellData }) {
 
 export default function TheGrid({ cells }) {
     return (
-        <div className="relative grid grid-cols-[repeat(3,124px)] sm:grid-cols-[repeat(3,158px)] bg-black gap-1.5 border-6 border-black mx-auto overflow-hidden aspect-square" id="grid">
+        <div className="relative grid grid-cols-[repeat(3,140px)] sm:grid-cols-[repeat(3,174px)] bg-black gap-1.5 border-6 border-black mx-auto overflow-hidden aspect-square" id="grid">
             {Object.entries(cells).map(([key, value]) => (
                 <DroppableCell key={key} cellKey={key} cellData={value} />
             ))}

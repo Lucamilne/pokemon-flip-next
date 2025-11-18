@@ -39,7 +39,8 @@
         4,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 318
     },
     "charmander": {
       "id": 4,
@@ -60,7 +61,8 @@
         2,
         6
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 309
     },
     "squirtle": {
       "id": 7,
@@ -81,7 +83,8 @@
         6,
         2
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 314
     },
     "caterpie": {
       "id": 10,
@@ -101,7 +104,8 @@
         1,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 195
     },
     "weedle": {
       "id": 13,
@@ -122,7 +126,8 @@
         1,
         6
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 195
     },
     "pidgey": {
       "id": 16,
@@ -143,7 +148,8 @@
         1,
         7
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 251
     },
     "rattata": {
       "id": 19,
@@ -163,7 +169,8 @@
         5,
         4
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 253
     },
     "spearow": {
       "id": 21,
@@ -183,7 +190,8 @@
         5,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 262
     },
     "ekans": {
       "id": 23,
@@ -203,7 +211,8 @@
         3,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 288
     },
     "sandshrew": {
       "id": 27,
@@ -223,7 +232,8 @@
         1,
         9
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 300
     },
     "nidoran-f": {
       "id": 29,
@@ -243,7 +253,8 @@
         2,
         5
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 275
     },
     "nidoran-m": {
       "id": 32,
@@ -263,7 +274,8 @@
         3,
         5
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 273
     },
     "vulpix": {
       "id": 37,
@@ -283,7 +295,8 @@
         3,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 299
     },
     "zubat": {
       "id": 41,
@@ -304,7 +317,8 @@
         1,
         2
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 245
     },
     "oddish": {
       "id": 43,
@@ -325,7 +339,8 @@
         2,
         4
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 320
     },
     "paras": {
       "id": 46,
@@ -346,7 +361,8 @@
         4,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 285
     },
     "venonat": {
       "id": 48,
@@ -367,7 +383,8 @@
         2,
         7
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 305
     },
     "diglett": {
       "id": 50,
@@ -387,7 +404,8 @@
         4,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 265
     },
     "meowth": {
       "id": 52,
@@ -407,7 +425,8 @@
         5,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 290
     },
     "psyduck": {
       "id": 54,
@@ -427,7 +446,8 @@
         2,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 320
     },
     "mankey": {
       "id": 56,
@@ -447,7 +467,8 @@
         4,
         4
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 305
     },
     "growlithe": {
       "id": 58,
@@ -467,7 +488,8 @@
         4,
         6
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 350
     },
     "poliwag": {
       "id": 60,
@@ -487,7 +509,8 @@
         2,
         6
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 300
     },
     "abra": {
       "id": 63,
@@ -507,7 +530,8 @@
         4,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 310
     },
     "machop": {
       "id": 66,
@@ -527,7 +551,8 @@
         1,
         9
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 305
     },
     "bellsprout": {
       "id": 69,
@@ -548,7 +573,8 @@
         2,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 300
     },
     "tentacool": {
       "id": 72,
@@ -569,7 +595,8 @@
         2,
         6
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 335
     },
     "geodude": {
       "id": 74,
@@ -590,7 +617,8 @@
         7,
         5
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 300
     },
     "ponyta": {
       "id": 77,
@@ -610,7 +638,8 @@
         5,
         7
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 410
     },
     "slowpoke": {
       "id": 79,
@@ -631,7 +660,8 @@
         5,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 315
     },
     "magnemite": {
       "id": 81,
@@ -652,7 +682,8 @@
         1,
         8
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 325
     },
     "farfetchd": {
       "id": 83,
@@ -672,7 +703,8 @@
         7,
         1
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 377
     },
     "doduo": {
       "id": 84,
@@ -692,7 +724,8 @@
         5,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 310
     },
     "seel": {
       "id": 86,
@@ -712,7 +745,8 @@
         1,
         5
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 325
     },
     "grimer": {
       "id": 88,
@@ -732,7 +766,8 @@
         6,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 325
     },
     "shellder": {
       "id": 90,
@@ -752,7 +787,8 @@
         5,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 305
     },
     "gastly": {
       "id": 92,
@@ -773,7 +809,8 @@
         4,
         6
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 310
     },
     "onix": {
       "id": 95,
@@ -794,7 +831,8 @@
         7,
         4
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 385
     },
     "drowzee": {
       "id": 96,
@@ -814,7 +852,8 @@
         2,
         2
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 328
     },
     "krabby": {
       "id": 98,
@@ -834,7 +873,8 @@
         7,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 325
     },
     "voltorb": {
       "id": 100,
@@ -854,7 +894,8 @@
         5,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 330
     },
     "exeggcute": {
       "id": 102,
@@ -875,7 +916,8 @@
         2,
         6
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 325
     },
     "cubone": {
       "id": 104,
@@ -895,7 +937,8 @@
         4,
         5
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 320
     },
     "lickitung": {
       "id": 108,
@@ -915,7 +958,8 @@
         2,
         1
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 385
     },
     "koffing": {
       "id": 109,
@@ -935,7 +979,8 @@
         4,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 340
     },
     "rhyhorn": {
       "id": 111,
@@ -956,7 +1001,8 @@
         4,
         3
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 345
     },
     "tangela": {
       "id": 114,
@@ -976,7 +1022,8 @@
         8,
         4
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 435
     },
     "kangaskhan": {
       "id": 115,
@@ -996,7 +1043,8 @@
         7,
         5
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "horsea": {
       "id": 116,
@@ -1016,7 +1064,8 @@
         7,
         4
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 295
     },
     "goldeen": {
       "id": 118,
@@ -1036,7 +1085,8 @@
         3,
         5
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 320
     },
     "staryu": {
       "id": 120,
@@ -1056,7 +1106,8 @@
         4,
         8
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 340
     },
     "scyther": {
       "id": 123,
@@ -1077,7 +1128,8 @@
         4,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 500
     },
     "pinsir": {
       "id": 127,
@@ -1097,7 +1149,8 @@
         8,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 500
     },
     "tauros": {
       "id": 128,
@@ -1117,7 +1170,8 @@
         5,
         10
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "magikarp": {
       "id": 129,
@@ -1137,7 +1191,8 @@
         2,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 200
     },
     "lapras": {
       "id": 131,
@@ -1158,7 +1213,8 @@
         9,
         6
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 535
     },
     "ditto": {
       "id": 132,
@@ -1178,7 +1234,8 @@
         4,
         4
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 288
     },
     "eevee": {
       "id": 133,
@@ -1198,7 +1255,8 @@
         3,
         5
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 325
     },
     "porygon": {
       "id": 137,
@@ -1218,7 +1276,8 @@
         6,
         5
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 395
     },
     "omanyte": {
       "id": 138,
@@ -1239,7 +1298,8 @@
         6,
         6
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 355
     },
     "kabuto": {
       "id": 140,
@@ -1260,7 +1320,8 @@
         1,
         9
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 355
     },
     "aerodactyl": {
       "id": 142,
@@ -1281,7 +1342,8 @@
         4,
         9
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 515
     },
     "articuno": {
       "id": 144,
@@ -1302,7 +1364,8 @@
         9,
         7
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 580
     },
     "zapdos": {
       "id": 145,
@@ -1323,7 +1386,8 @@
         9,
         6
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 580
     },
     "moltres": {
       "id": 146,
@@ -1344,7 +1408,8 @@
         8,
         7
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 580
     },
     "dratini": {
       "id": 147,
@@ -1364,7 +1429,8 @@
         2,
         2
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 300
     },
     "mewtwo": {
       "id": 150,
@@ -1384,7 +1450,8 @@
         9,
         6
       ],
-      "rarity": "legendary"
+      "rarity": "legendary",
+      "statWeight": 680
     },
     "mew": {
       "id": 151,
@@ -1394,17 +1461,18 @@
       "stats": [
         9,
         8,
-        7,
-        6
+        8,
+        8
       ],
       "effort_value": 3,
       "originalStats": [
         9,
         8,
-        7,
-        6
+        8,
+        8
       ],
-      "rarity": "legendary"
+      "rarity": "legendary",
+      "statWeight": 600
     },
     "ivysaur": {
       "id": 2,
@@ -1425,7 +1493,8 @@
         1,
         7
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 405
     },
     "venusaur": {
       "id": 3,
@@ -1446,7 +1515,8 @@
         6,
         8
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 525
     },
     "charmeleon": {
       "id": 5,
@@ -1466,7 +1536,8 @@
         5,
         5
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 405
     },
     "charizard": {
       "id": 6,
@@ -1487,7 +1558,8 @@
         9,
         6
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 534
     },
     "wartortle": {
       "id": 8,
@@ -1507,7 +1579,8 @@
         4,
         5
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 405
     },
     "blastoise": {
       "id": 9,
@@ -1527,7 +1600,8 @@
         5,
         6
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 530
     },
     "metapod": {
       "id": 11,
@@ -1547,7 +1621,8 @@
         2,
         2
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 205
     },
     "butterfree": {
       "id": 12,
@@ -1568,7 +1643,8 @@
         6,
         2
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 395
     },
     "kakuna": {
       "id": 14,
@@ -1589,7 +1665,8 @@
         2,
         1
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 205
     },
     "beedrill": {
       "id": 15,
@@ -1610,7 +1687,8 @@
         3,
         7
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 395
     },
     "pidgeotto": {
       "id": 17,
@@ -1630,7 +1708,8 @@
         6,
         7
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 349
     },
     "pidgeot": {
       "id": 18,
@@ -1650,7 +1729,8 @@
         4,
         8
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 479
     },
     "raticate": {
       "id": 20,
@@ -1670,7 +1750,8 @@
         7,
         3
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 413
     },
     "fearow": {
       "id": 22,
@@ -1690,7 +1771,8 @@
         4,
         8
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 442
     },
     "arbok": {
       "id": 24,
@@ -1710,7 +1792,8 @@
         6,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 448
     },
     "pikachu": {
       "id": 25,
@@ -1731,7 +1814,8 @@
         6,
         4
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 320
     },
     "raichu": {
       "id": 26,
@@ -1751,7 +1835,8 @@
         6,
         3
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 485
     },
     "sandslash": {
       "id": 28,
@@ -1771,7 +1856,8 @@
         6,
         5
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 450
     },
     "nidorina": {
       "id": 30,
@@ -1791,7 +1877,8 @@
         2,
         4
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 365
     },
     "nidoqueen": {
       "id": 31,
@@ -1812,7 +1899,8 @@
         6,
         8
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 505
     },
     "nidorino": {
       "id": 33,
@@ -1832,7 +1920,8 @@
         6,
         5
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 365
     },
     "nidoking": {
       "id": 34,
@@ -1853,7 +1942,8 @@
         6,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 505
     },
     "clefairy": {
       "id": 35,
@@ -1873,7 +1963,8 @@
         4,
         2
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 323
     },
     "clefable": {
       "id": 36,
@@ -1893,7 +1984,8 @@
         8,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 483
     },
     "ninetales": {
       "id": 38,
@@ -1913,7 +2005,8 @@
         4,
         5
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 505
     },
     "jigglypuff": {
       "id": 39,
@@ -1933,7 +2026,8 @@
         3,
         4
       ],
-      "rarity": "common"
+      "rarity": "common",
+      "statWeight": 270
     },
     "wigglytuff": {
       "id": 40,
@@ -1953,7 +2047,8 @@
         7,
         4
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 435
     },
     "golbat": {
       "id": 42,
@@ -1974,7 +2069,8 @@
         4,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 455
     },
     "gloom": {
       "id": 44,
@@ -1995,7 +2091,8 @@
         8,
         2
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 395
     },
     "vileplume": {
       "id": 45,
@@ -2016,7 +2113,8 @@
         5,
         5
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "parasect": {
       "id": 47,
@@ -2037,7 +2135,8 @@
         6,
         6
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 405
     },
     "venomoth": {
       "id": 49,
@@ -2058,7 +2157,8 @@
         5,
         3
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 450
     },
     "dugtrio": {
       "id": 51,
@@ -2078,7 +2178,8 @@
         4,
         4
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 425
     },
     "persian": {
       "id": 53,
@@ -2098,7 +2199,8 @@
         7,
         5
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 440
     },
     "golduck": {
       "id": 55,
@@ -2118,7 +2220,8 @@
         6,
         8
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 500
     },
     "primeape": {
       "id": 57,
@@ -2138,7 +2241,8 @@
         6,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 455
     },
     "arcanine": {
       "id": 59,
@@ -2158,7 +2262,8 @@
         6,
         5
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 555
     },
     "poliwhirl": {
       "id": 61,
@@ -2178,7 +2283,8 @@
         5,
         5
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 385
     },
     "poliwrath": {
       "id": 62,
@@ -2199,7 +2305,8 @@
         8,
         8
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 510
     },
     "kadabra": {
       "id": 64,
@@ -2219,7 +2326,8 @@
         5,
         1
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 400
     },
     "alakazam": {
       "id": 65,
@@ -2239,7 +2347,8 @@
         8,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 500
     },
     "machoke": {
       "id": 67,
@@ -2259,7 +2368,8 @@
         6,
         2
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 405
     },
     "machamp": {
       "id": 68,
@@ -2279,7 +2389,8 @@
         4,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 505
     },
     "weepinbell": {
       "id": 70,
@@ -2300,7 +2411,8 @@
         3,
         8
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 390
     },
     "victreebel": {
       "id": 71,
@@ -2321,7 +2433,8 @@
         6,
         5
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "tentacruel": {
       "id": 73,
@@ -2342,7 +2455,8 @@
         6,
         5
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 515
     },
     "graveler": {
       "id": 75,
@@ -2363,7 +2477,8 @@
         7,
         2
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 390
     },
     "golem": {
       "id": 76,
@@ -2384,7 +2499,8 @@
         6,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 495
     },
     "rapidash": {
       "id": 78,
@@ -2404,7 +2520,8 @@
         6,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 500
     },
     "slowbro": {
       "id": 80,
@@ -2425,7 +2542,8 @@
         7,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "magneton": {
       "id": 82,
@@ -2446,7 +2564,8 @@
         8,
         1
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 465
     },
     "dodrio": {
       "id": 85,
@@ -2466,7 +2585,8 @@
         5,
         3
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 470
     },
     "dewgong": {
       "id": 87,
@@ -2487,7 +2607,8 @@
         7,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 475
     },
     "muk": {
       "id": 89,
@@ -2507,7 +2628,8 @@
         2,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 500
     },
     "cloyster": {
       "id": 91,
@@ -2528,7 +2650,8 @@
         3,
         8
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 525
     },
     "haunter": {
       "id": 93,
@@ -2549,7 +2672,8 @@
         4,
         9
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 405
     },
     "gengar": {
       "id": 94,
@@ -2570,7 +2694,8 @@
         8,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 500
     },
     "hypno": {
       "id": 97,
@@ -2590,7 +2715,8 @@
         8,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 483
     },
     "kingler": {
       "id": 99,
@@ -2610,7 +2736,8 @@
         4,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 475
     },
     "electrode": {
       "id": 101,
@@ -2630,7 +2757,8 @@
         6,
         9
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "exeggutor": {
       "id": 103,
@@ -2651,7 +2779,8 @@
         9,
         5
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 530
     },
     "marowak": {
       "id": 105,
@@ -2671,7 +2800,8 @@
         5,
         6
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 425
     },
     "hitmonlee": {
       "id": 106,
@@ -2691,7 +2821,8 @@
         4,
         5
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 455
     },
     "hitmonchan": {
       "id": 107,
@@ -2711,7 +2842,8 @@
         4,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 455
     },
     "weezing": {
       "id": 110,
@@ -2731,7 +2863,8 @@
         9,
         4
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "rhydon": {
       "id": 112,
@@ -2752,7 +2885,8 @@
         3,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 485
     },
     "chansey": {
       "id": 113,
@@ -2772,7 +2906,8 @@
         6,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 450
     },
     "seadra": {
       "id": 117,
@@ -2792,7 +2927,8 @@
         4,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 440
     },
     "seaking": {
       "id": 119,
@@ -2812,7 +2948,8 @@
         4,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 450
     },
     "starmie": {
       "id": 121,
@@ -2833,7 +2970,8 @@
         7,
         6
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 520
     },
     "mr-mime": {
       "id": 122,
@@ -2854,7 +2992,8 @@
         5,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 460
     },
     "jynx": {
       "id": 124,
@@ -2875,7 +3014,8 @@
         6,
         7
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 455
     },
     "electabuzz": {
       "id": 125,
@@ -2895,7 +3035,8 @@
         8,
         4
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 490
     },
     "magmar": {
       "id": 126,
@@ -2915,7 +3056,8 @@
         4,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 495
     },
     "gyarados": {
       "id": 130,
@@ -2936,7 +3078,8 @@
         7,
         8
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 540
     },
     "vaporeon": {
       "id": 134,
@@ -2956,7 +3099,8 @@
         7,
         7
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 525
     },
     "jolteon": {
       "id": 135,
@@ -2976,7 +3120,8 @@
         4,
         8
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 525
     },
     "flareon": {
       "id": 136,
@@ -2996,7 +3141,8 @@
         5,
         7
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 525
     },
     "omastar": {
       "id": 139,
@@ -3017,7 +3163,8 @@
         3,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 495
     },
     "kabutops": {
       "id": 141,
@@ -3038,7 +3185,8 @@
         7,
         6
       ],
-      "rarity": "rare"
+      "rarity": "rare",
+      "statWeight": 495
     },
     "snorlax": {
       "id": 143,
@@ -3058,7 +3206,8 @@
         6,
         10
       ],
-      "rarity": "epic"
+      "rarity": "epic",
+      "statWeight": 540
     },
     "dragonair": {
       "id": 148,
@@ -3078,7 +3227,8 @@
         5,
         3
       ],
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "statWeight": 420
     },
     "dragonite": {
       "id": 149,
@@ -3099,7 +3249,8 @@
         8,
         9
       ],
-      "rarity": "legendary"
+      "rarity": "legendary",
+      "statWeight": 600
     }
   }
 }

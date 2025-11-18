@@ -9,6 +9,7 @@ import { DndContext } from '@dnd-kit/core';
 export default function TheBoard() {
     const [cpuHand, setCpuHand] = useState([]);
     const [playerHand, setPlayerHand] = useState([]);
+    const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [cells, setCells] = useState({
         A1: {
             pokemonCard: null,
@@ -56,8 +57,6 @@ export default function TheBoard() {
             adjacentCells: ["C2", "B3", null, null],
         },
     });
-
-    const statModifier = 20;
 
     const decrementRandomStat = (stats) => {
         const randomIndex = Math.floor(Math.random() * stats.length);
@@ -184,19 +183,22 @@ export default function TheBoard() {
                 pokemonCard: attackingCard
             }
         }));
+
+        // end the turn!
+        setIsPlayerTurn(!isPlayerTurn)
     }
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
             <section className="h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
-                <div className="grid grid-cols-[repeat(5,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-top-container pb-8 p-4">
+                <div className="grid grid-cols-[repeat(3,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
                     {cpuHand.map((pokemonCard, index) => {
                         return (
                             <div className="relative aspect-square" key={index}>
                                 <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
 
                                 {pokemonCard && (
-                                    <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={true} />
+                                    <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} />
                                 )}
                             </div>
                         )
@@ -205,14 +207,14 @@ export default function TheBoard() {
                 <div className="relative arena-backdrop grow flex items-center justify-center">
                     <Grid cells={cells} ref="grid" />
                 </div>
-                <div className="grid grid-cols-[repeat(5,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-bottom-container pt-8 p-4">
+                <div className="grid grid-cols-[repeat(3,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                     {playerHand.map((pokemonCard, index) => {
                         return (
                             <div className="relative aspect-square" key={index}>
                                 <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
 
                                 {pokemonCard && (
-                                    <Card pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                    <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
                                 )}
                             </div>
                         )
