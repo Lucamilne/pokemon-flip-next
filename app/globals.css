@@ -1156,7 +1156,7 @@ body {
 }
 
 .jello-horizontal {
-  animation: jello-horizontal 0.9s both;
+  animation: jello-horizontal 0.5s both;
 }
 
 .rotate-diagonal-1 {
@@ -1164,7 +1164,7 @@ body {
 }
 
 .puff-in-center {
-  animation: puff-in-center 0.15s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+  animation: puff-in-center 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
 }
 
 /* slide in */

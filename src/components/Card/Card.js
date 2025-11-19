@@ -39,29 +39,56 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
     }, [pokemonCard.isPlayerCard]);
 
     const weakenCard = () => {
-        if (cardRef.current) {
-            cardRef.current.classList.add('wobble-hor-bottom')
-        }
+        return new Promise((resolve) => {
+            if (cardRef.current) {
+                cardRef.current.classList.add('wobble-hor-bottom')
+                setTimeout(resolve, 500);
+            } else {
+                resolve();
+            }
+        });
     };
 
     const strengthenCard = () => {
-        if (cardRef.current) {
-            cardRef.current.classList.add('jello-horizontal')
+        return new Promise((resolve) => {
+            if (cardRef.current) {
+                cardRef.current.classList.add('jello-horizontal')
+                setTimeout(resolve, 500);
+            } else {
+                resolve();
+            }
+        });
+    };
+
+    const dropCard = () => {
+        return new Promise((resolve) => {
+            if (cardRef.current) {
+                cardRef.current.classList.add('slide-in-bck-top')
+                setTimeout(resolve, 300);
+            } else {
+                resolve();
+            }
+        });
+    };
+
+    const runAnimations = async () => {
+        if (!pokemonCard.isPlayerCard) {
+            await dropCard(); // Wait for drop to finish
+        }
+
+        const totalStats = sumUpNumbersInArray(pokemonCard.stats);
+        const totalOriginalStats = sumUpNumbersInArray(pokemonCard.originalStats);
+
+        if (totalStats < totalOriginalStats) {
+            weakenCard();
+        } else if (totalStats > totalOriginalStats) {
+            strengthenCard();
         }
     };
 
     useEffect(() => {
         if (isPlacedInGrid) {
-            const totalStats = sumUpNumbersInArray(pokemonCard.stats);
-            const totalOriginalStats = sumUpNumbersInArray(
-                pokemonCard.originalStats
-            );
-
-            if (totalStats < totalOriginalStats) {
-                weakenCard();
-            } else if (totalStats > totalOriginalStats) {
-                strengthenCard();
-            }
+            runAnimations();
         } else {
             const animationDelay = 150;
 
@@ -105,7 +132,7 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
                         <div className='absolute bottom-0'>
                             <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
                             <div className={`pt-10 text-center w-full ${pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`} />
-                            <div className="px-2 py-1 w-full text-center uppercase text-white text-xs font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
+                            <div className="px-2 py-1 w-full text-center uppercase text-white text-[10px] lg:text-xs font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
                         </div>
                     </div>
                 </div>

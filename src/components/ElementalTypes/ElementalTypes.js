@@ -2,10 +2,12 @@ import Image from 'next/image'
 import { typeIcons } from '@/utils/typeIcons'
 
 export default function ElementalTypes({ types }) {
+    // w-10 = 40px
+    
     return (
         <div className="absolute top-1 right-1 z-10">
             {types.map(type => (
-                <Image draggable={false} key={type} width={48} height={18} src={typeIcons[type]} alt={`${type} type`} />
+                <Image draggable={false} key={type} width={48} height={18} src={typeIcons[type]} className="w-10 lg:w-[48px]" alt={`${type} type`} />
             ))}
         </div>
     );

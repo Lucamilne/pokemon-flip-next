@@ -42,6 +42,50 @@
       "rarity": "common",
       "statWeight": 318
     },
+    "ivysaur": {
+      "id": 2,
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "stats": [
+        7,
+        5,
+        1,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        5,
+        1,
+        7
+      ],
+      "rarity": "uncommon",
+      "statWeight": 405
+    },
+    "venusaur": {
+      "id": 3,
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "stats": [
+        8,
+        4,
+        6,
+        8
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        8,
+        4,
+        6,
+        8
+      ],
+      "rarity": "epic",
+      "statWeight": 525
+    },
     "charmander": {
       "id": 4,
       "types": [
@@ -63,6 +107,49 @@
       ],
       "rarity": "common",
       "statWeight": 309
+    },
+    "charmeleon": {
+      "id": 5,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        7,
+        3,
+        5,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        3,
+        5,
+        5
+      ],
+      "rarity": "uncommon",
+      "statWeight": 405
+    },
+    "charizard": {
+      "id": 6,
+      "types": [
+        "fire",
+        "flying"
+      ],
+      "stats": [
+        5,
+        7,
+        9,
+        6
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        5,
+        7,
+        9,
+        6
+      ],
+      "rarity": "epic",
+      "statWeight": 534
     },
     "squirtle": {
       "id": 7,
@@ -86,6 +173,48 @@
       "rarity": "common",
       "statWeight": 314
     },
+    "wartortle": {
+      "id": 8,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        3,
+        8,
+        4,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        3,
+        8,
+        4,
+        5
+      ],
+      "rarity": "uncommon",
+      "statWeight": 405
+    },
+    "blastoise": {
+      "id": 9,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        9,
+        7,
+        5,
+        6
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        9,
+        7,
+        5,
+        6
+      ],
+      "rarity": "epic",
+      "statWeight": 530
+    },
     "caterpie": {
       "id": 10,
       "types": [
@@ -106,6 +235,49 @@
       ],
       "rarity": "common",
       "statWeight": 195
+    },
+    "metapod": {
+      "id": 11,
+      "types": [
+        "bug"
+      ],
+      "stats": [
+        1,
+        5,
+        2,
+        2
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        1,
+        5,
+        2,
+        2
+      ],
+      "rarity": "common",
+      "statWeight": 205
+    },
+    "butterfree": {
+      "id": 12,
+      "types": [
+        "bug",
+        "flying"
+      ],
+      "stats": [
+        5,
+        7,
+        6,
+        2
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        5,
+        7,
+        6,
+        2
+      ],
+      "rarity": "uncommon",
+      "statWeight": 395
     },
     "weedle": {
       "id": 13,
@@ -129,6 +301,50 @@
       "rarity": "common",
       "statWeight": 195
     },
+    "kakuna": {
+      "id": 14,
+      "types": [
+        "bug",
+        "poison"
+      ],
+      "stats": [
+        1,
+        6,
+        2,
+        1
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        1,
+        6,
+        2,
+        1
+      ],
+      "rarity": "common",
+      "statWeight": 205
+    },
+    "beedrill": {
+      "id": 15,
+      "types": [
+        "bug",
+        "poison"
+      ],
+      "stats": [
+        3,
+        7,
+        3,
+        7
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        3,
+        7,
+        3,
+        7
+      ],
+      "rarity": "uncommon",
+      "statWeight": 395
+    },
     "pidgey": {
       "id": 16,
       "types": [
@@ -151,6 +367,48 @@
       "rarity": "common",
       "statWeight": 251
     },
+    "pidgeotto": {
+      "id": 17,
+      "types": [
+        "flying"
+      ],
+      "stats": [
+        2,
+        2,
+        6,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        2,
+        2,
+        6,
+        7
+      ],
+      "rarity": "common",
+      "statWeight": 349
+    },
+    "pidgeot": {
+      "id": 18,
+      "types": [
+        "flying"
+      ],
+      "stats": [
+        6,
+        6,
+        4,
+        8
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        6,
+        6,
+        4,
+        8
+      ],
+      "rarity": "rare",
+      "statWeight": 479
+    },
     "rattata": {
       "id": 19,
       "types": [
@@ -171,6 +429,27 @@
       ],
       "rarity": "common",
       "statWeight": 253
+    },
+    "raticate": {
+      "id": 20,
+      "types": [
+        "normal"
+      ],
+      "stats": [
+        4,
+        7,
+        7,
+        3
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        4,
+        7,
+        7,
+        3
+      ],
+      "rarity": "uncommon",
+      "statWeight": 413
     },
     "spearow": {
       "id": 21,
@@ -193,6 +472,27 @@
       "rarity": "common",
       "statWeight": 262
     },
+    "fearow": {
+      "id": 22,
+      "types": [
+        "flying"
+      ],
+      "stats": [
+        6,
+        4,
+        4,
+        8
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        4,
+        4,
+        8
+      ],
+      "rarity": "rare",
+      "statWeight": 442
+    },
     "ekans": {
       "id": 23,
       "types": [
@@ -213,6 +513,70 @@
       ],
       "rarity": "common",
       "statWeight": 288
+    },
+    "arbok": {
+      "id": 24,
+      "types": [
+        "poison"
+      ],
+      "stats": [
+        3,
+        7,
+        6,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        3,
+        7,
+        6,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 448
+    },
+    "pikachu": {
+      "id": 25,
+      "types": [
+        "electric"
+      ],
+      "stats": [
+        4,
+        2,
+        6,
+        4
+      ],
+      "effort_value": 2,
+      "starter": true,
+      "originalStats": [
+        4,
+        2,
+        6,
+        4
+      ],
+      "rarity": "common",
+      "statWeight": 320
+    },
+    "raichu": {
+      "id": 26,
+      "types": [
+        "electric"
+      ],
+      "stats": [
+        7,
+        8,
+        6,
+        3
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        7,
+        8,
+        6,
+        3
+      ],
+      "rarity": "rare",
+      "statWeight": 485
     },
     "sandshrew": {
       "id": 27,
@@ -235,6 +599,27 @@
       "rarity": "common",
       "statWeight": 300
     },
+    "sandslash": {
+      "id": 28,
+      "types": [
+        "ground"
+      ],
+      "stats": [
+        6,
+        6,
+        6,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        6,
+        6,
+        5
+      ],
+      "rarity": "rare",
+      "statWeight": 450
+    },
     "nidoran-f": {
       "id": 29,
       "types": [
@@ -255,6 +640,49 @@
       ],
       "rarity": "common",
       "statWeight": 275
+    },
+    "nidorina": {
+      "id": 30,
+      "types": [
+        "poison"
+      ],
+      "stats": [
+        3,
+        9,
+        2,
+        4
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        3,
+        9,
+        2,
+        4
+      ],
+      "rarity": "uncommon",
+      "statWeight": 365
+    },
+    "nidoqueen": {
+      "id": 31,
+      "types": [
+        "poison",
+        "ground"
+      ],
+      "stats": [
+        4,
+        7,
+        6,
+        8
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        4,
+        7,
+        6,
+        8
+      ],
+      "rarity": "rare",
+      "statWeight": 505
     },
     "nidoran-m": {
       "id": 32,
@@ -277,6 +705,91 @@
       "rarity": "common",
       "statWeight": 273
     },
+    "nidorino": {
+      "id": 33,
+      "types": [
+        "poison"
+      ],
+      "stats": [
+        3,
+        4,
+        6,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        3,
+        4,
+        6,
+        5
+      ],
+      "rarity": "uncommon",
+      "statWeight": 365
+    },
+    "nidoking": {
+      "id": 34,
+      "types": [
+        "poison",
+        "ground"
+      ],
+      "stats": [
+        7,
+        6,
+        6,
+        6
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        7,
+        6,
+        6,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 505
+    },
+    "clefairy": {
+      "id": 35,
+      "types": [
+        "fairy"
+      ],
+      "stats": [
+        7,
+        3,
+        4,
+        2
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        3,
+        4,
+        2
+      ],
+      "rarity": "common",
+      "statWeight": 323
+    },
+    "clefable": {
+      "id": 36,
+      "types": [
+        "fairy"
+      ],
+      "stats": [
+        6,
+        4,
+        8,
+        6
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        6,
+        4,
+        8,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 483
+    },
     "vulpix": {
       "id": 37,
       "types": [
@@ -297,6 +810,69 @@
       ],
       "rarity": "common",
       "statWeight": 299
+    },
+    "ninetales": {
+      "id": 38,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        10,
+        6,
+        4,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        10,
+        6,
+        4,
+        5
+      ],
+      "rarity": "rare",
+      "statWeight": 505
+    },
+    "jigglypuff": {
+      "id": 39,
+      "types": [
+        "fairy"
+      ],
+      "stats": [
+        2,
+        5,
+        3,
+        4
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        2,
+        5,
+        3,
+        4
+      ],
+      "rarity": "common",
+      "statWeight": 270
+    },
+    "wigglytuff": {
+      "id": 40,
+      "types": [
+        "fairy"
+      ],
+      "stats": [
+        5,
+        6,
+        7,
+        4
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        5,
+        6,
+        7,
+        4
+      ],
+      "rarity": "rare",
+      "statWeight": 435
     },
     "zubat": {
       "id": 41,
@@ -320,6 +896,28 @@
       "rarity": "common",
       "statWeight": 245
     },
+    "golbat": {
+      "id": 42,
+      "types": [
+        "poison",
+        "flying"
+      ],
+      "stats": [
+        5,
+        7,
+        4,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        7,
+        4,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 455
+    },
     "oddish": {
       "id": 43,
       "types": [
@@ -341,6 +939,50 @@
       ],
       "rarity": "common",
       "statWeight": 320
+    },
+    "gloom": {
+      "id": 44,
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "stats": [
+        6,
+        4,
+        8,
+        2
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        4,
+        8,
+        2
+      ],
+      "rarity": "uncommon",
+      "statWeight": 395
+    },
+    "vileplume": {
+      "id": 45,
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "stats": [
+        7,
+        8,
+        5,
+        5
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        7,
+        8,
+        5,
+        5
+      ],
+      "rarity": "rare",
+      "statWeight": 490
     },
     "paras": {
       "id": 46,
@@ -364,6 +1006,28 @@
       "rarity": "common",
       "statWeight": 285
     },
+    "parasect": {
+      "id": 47,
+      "types": [
+        "bug",
+        "grass"
+      ],
+      "stats": [
+        5,
+        3,
+        6,
+        6
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        5,
+        3,
+        6,
+        6
+      ],
+      "rarity": "uncommon",
+      "statWeight": 405
+    },
     "venonat": {
       "id": 48,
       "types": [
@@ -386,6 +1050,28 @@
       "rarity": "common",
       "statWeight": 305
     },
+    "venomoth": {
+      "id": 49,
+      "types": [
+        "bug",
+        "poison"
+      ],
+      "stats": [
+        9,
+        6,
+        5,
+        3
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        9,
+        6,
+        5,
+        3
+      ],
+      "rarity": "rare",
+      "statWeight": 450
+    },
     "diglett": {
       "id": 50,
       "types": [
@@ -406,6 +1092,27 @@
       ],
       "rarity": "common",
       "statWeight": 265
+    },
+    "dugtrio": {
+      "id": 51,
+      "types": [
+        "ground"
+      ],
+      "stats": [
+        7,
+        6,
+        4,
+        4
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        6,
+        4,
+        4
+      ],
+      "rarity": "uncommon",
+      "statWeight": 425
     },
     "meowth": {
       "id": 52,
@@ -428,6 +1135,27 @@
       "rarity": "common",
       "statWeight": 290
     },
+    "persian": {
+      "id": 53,
+      "types": [
+        "normal"
+      ],
+      "stats": [
+        5,
+        5,
+        7,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        5,
+        7,
+        5
+      ],
+      "rarity": "rare",
+      "statWeight": 440
+    },
     "psyduck": {
       "id": 54,
       "types": [
@@ -448,6 +1176,27 @@
       ],
       "rarity": "common",
       "statWeight": 320
+    },
+    "golduck": {
+      "id": 55,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        5,
+        6,
+        6,
+        8
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        6,
+        6,
+        8
+      ],
+      "rarity": "rare",
+      "statWeight": 500
     },
     "mankey": {
       "id": 56,
@@ -470,6 +1219,27 @@
       "rarity": "common",
       "statWeight": 305
     },
+    "primeape": {
+      "id": 57,
+      "types": [
+        "fighting"
+      ],
+      "stats": [
+        7,
+        4,
+        6,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        4,
+        6,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 455
+    },
     "growlithe": {
       "id": 58,
       "types": [
@@ -490,6 +1260,27 @@
       ],
       "rarity": "uncommon",
       "statWeight": 350
+    },
+    "arcanine": {
+      "id": 59,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        7,
+        10,
+        6,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        10,
+        6,
+        5
+      ],
+      "rarity": "epic",
+      "statWeight": 555
     },
     "poliwag": {
       "id": 60,
@@ -512,6 +1303,49 @@
       "rarity": "common",
       "statWeight": 300
     },
+    "poliwhirl": {
+      "id": 61,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "rarity": "uncommon",
+      "statWeight": 385
+    },
+    "poliwrath": {
+      "id": 62,
+      "types": [
+        "water",
+        "fighting"
+      ],
+      "stats": [
+        3,
+        7,
+        8,
+        8
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        3,
+        7,
+        8,
+        8
+      ],
+      "rarity": "epic",
+      "statWeight": 510
+    },
     "abra": {
       "id": 63,
       "types": [
@@ -533,6 +1367,48 @@
       "rarity": "common",
       "statWeight": 310
     },
+    "kadabra": {
+      "id": 64,
+      "types": [
+        "psychic"
+      ],
+      "stats": [
+        8,
+        6,
+        5,
+        1
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        6,
+        5,
+        1
+      ],
+      "rarity": "uncommon",
+      "statWeight": 400
+    },
+    "alakazam": {
+      "id": 65,
+      "types": [
+        "psychic"
+      ],
+      "stats": [
+        2,
+        8,
+        8,
+        7
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        2,
+        8,
+        8,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 500
+    },
     "machop": {
       "id": 66,
       "types": [
@@ -553,6 +1429,48 @@
       ],
       "rarity": "common",
       "statWeight": 305
+    },
+    "machoke": {
+      "id": 67,
+      "types": [
+        "fighting"
+      ],
+      "stats": [
+        9,
+        3,
+        6,
+        2
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        9,
+        3,
+        6,
+        2
+      ],
+      "rarity": "uncommon",
+      "statWeight": 405
+    },
+    "machamp": {
+      "id": 68,
+      "types": [
+        "fighting"
+      ],
+      "stats": [
+        7,
+        7,
+        4,
+        7
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        7,
+        7,
+        4,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 505
     },
     "bellsprout": {
       "id": 69,
@@ -576,6 +1494,50 @@
       "rarity": "common",
       "statWeight": 300
     },
+    "weepinbell": {
+      "id": 70,
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "stats": [
+        5,
+        4,
+        3,
+        8
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        4,
+        3,
+        8
+      ],
+      "rarity": "uncommon",
+      "statWeight": 390
+    },
+    "victreebel": {
+      "id": 71,
+      "types": [
+        "grass",
+        "poison"
+      ],
+      "stats": [
+        6,
+        8,
+        6,
+        5
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        6,
+        8,
+        6,
+        5
+      ],
+      "rarity": "rare",
+      "statWeight": 490
+    },
     "tentacool": {
       "id": 72,
       "types": [
@@ -597,6 +1559,28 @@
       ],
       "rarity": "common",
       "statWeight": 335
+    },
+    "tentacruel": {
+      "id": 73,
+      "types": [
+        "water",
+        "poison"
+      ],
+      "stats": [
+        10,
+        5,
+        6,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        10,
+        5,
+        6,
+        5
+      ],
+      "rarity": "epic",
+      "statWeight": 515
     },
     "geodude": {
       "id": 74,
@@ -620,6 +1604,50 @@
       "rarity": "common",
       "statWeight": 300
     },
+    "graveler": {
+      "id": 75,
+      "types": [
+        "rock",
+        "ground"
+      ],
+      "stats": [
+        8,
+        3,
+        7,
+        2
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        3,
+        7,
+        2
+      ],
+      "rarity": "uncommon",
+      "statWeight": 390
+    },
+    "golem": {
+      "id": 76,
+      "types": [
+        "rock",
+        "ground"
+      ],
+      "stats": [
+        5,
+        7,
+        6,
+        7
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        5,
+        7,
+        6,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 495
+    },
     "ponyta": {
       "id": 77,
       "types": [
@@ -640,6 +1668,27 @@
       ],
       "rarity": "uncommon",
       "statWeight": 410
+    },
+    "rapidash": {
+      "id": 78,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        5,
+        7,
+        6,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        7,
+        6,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 500
     },
     "slowpoke": {
       "id": 79,
@@ -663,6 +1712,28 @@
       "rarity": "common",
       "statWeight": 315
     },
+    "slowbro": {
+      "id": 80,
+      "types": [
+        "water",
+        "psychic"
+      ],
+      "stats": [
+        5,
+        7,
+        7,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        7,
+        7,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 490
+    },
     "magnemite": {
       "id": 81,
       "types": [
@@ -684,6 +1755,28 @@
       ],
       "rarity": "common",
       "statWeight": 325
+    },
+    "magneton": {
+      "id": 82,
+      "types": [
+        "electric",
+        "steel"
+      ],
+      "stats": [
+        6,
+        8,
+        8,
+        1
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        8,
+        8,
+        1
+      ],
+      "rarity": "rare",
+      "statWeight": 465
     },
     "farfetchd": {
       "id": 83,
@@ -727,6 +1820,27 @@
       "rarity": "common",
       "statWeight": 310
     },
+    "dodrio": {
+      "id": 85,
+      "types": [
+        "flying"
+      ],
+      "stats": [
+        8,
+        8,
+        5,
+        3
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        8,
+        5,
+        3
+      ],
+      "rarity": "rare",
+      "statWeight": 470
+    },
     "seel": {
       "id": 86,
       "types": [
@@ -747,6 +1861,28 @@
       ],
       "rarity": "common",
       "statWeight": 325
+    },
+    "dewgong": {
+      "id": 87,
+      "types": [
+        "water",
+        "ice"
+      ],
+      "stats": [
+        6,
+        5,
+        7,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        5,
+        7,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 475
     },
     "grimer": {
       "id": 88,
@@ -769,6 +1905,27 @@
       "rarity": "common",
       "statWeight": 325
     },
+    "muk": {
+      "id": 89,
+      "types": [
+        "poison"
+      ],
+      "stats": [
+        7,
+        9,
+        2,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        9,
+        2,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 500
+    },
     "shellder": {
       "id": 90,
       "types": [
@@ -789,6 +1946,28 @@
       ],
       "rarity": "common",
       "statWeight": 305
+    },
+    "cloyster": {
+      "id": 91,
+      "types": [
+        "water",
+        "ice"
+      ],
+      "stats": [
+        7,
+        8,
+        3,
+        8
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        8,
+        3,
+        8
+      ],
+      "rarity": "epic",
+      "statWeight": 525
     },
     "gastly": {
       "id": 92,
@@ -811,6 +1990,50 @@
       ],
       "rarity": "common",
       "statWeight": 310
+    },
+    "haunter": {
+      "id": 93,
+      "types": [
+        "ghost",
+        "poison"
+      ],
+      "stats": [
+        6,
+        1,
+        4,
+        9
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        1,
+        4,
+        9
+      ],
+      "rarity": "uncommon",
+      "statWeight": 405
+    },
+    "gengar": {
+      "id": 94,
+      "types": [
+        "ghost",
+        "poison"
+      ],
+      "stats": [
+        4,
+        7,
+        8,
+        6
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        4,
+        7,
+        8,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 500
     },
     "onix": {
       "id": 95,
@@ -855,6 +2078,27 @@
       "rarity": "common",
       "statWeight": 328
     },
+    "hypno": {
+      "id": 97,
+      "types": [
+        "psychic"
+      ],
+      "stats": [
+        2,
+        8,
+        8,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        2,
+        8,
+        8,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 483
+    },
     "krabby": {
       "id": 98,
       "types": [
@@ -876,6 +2120,27 @@
       "rarity": "common",
       "statWeight": 325
     },
+    "kingler": {
+      "id": 99,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        7,
+        7,
+        4,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        7,
+        4,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 475
+    },
     "voltorb": {
       "id": 100,
       "types": [
@@ -896,6 +2161,27 @@
       ],
       "rarity": "common",
       "statWeight": 330
+    },
+    "electrode": {
+      "id": 101,
+      "types": [
+        "electric"
+      ],
+      "stats": [
+        8,
+        2,
+        6,
+        9
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        2,
+        6,
+        9
+      ],
+      "rarity": "rare",
+      "statWeight": 490
     },
     "exeggcute": {
       "id": 102,
@@ -919,6 +2205,28 @@
       "rarity": "common",
       "statWeight": 325
     },
+    "exeggutor": {
+      "id": 103,
+      "types": [
+        "grass",
+        "psychic"
+      ],
+      "stats": [
+        6,
+        7,
+        9,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        7,
+        9,
+        5
+      ],
+      "rarity": "epic",
+      "statWeight": 530
+    },
     "cubone": {
       "id": 104,
       "types": [
@@ -939,6 +2247,69 @@
       ],
       "rarity": "common",
       "statWeight": 320
+    },
+    "marowak": {
+      "id": 105,
+      "types": [
+        "ground"
+      ],
+      "stats": [
+        6,
+        4,
+        5,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        4,
+        5,
+        6
+      ],
+      "rarity": "uncommon",
+      "statWeight": 425
+    },
+    "hitmonlee": {
+      "id": 106,
+      "types": [
+        "fighting"
+      ],
+      "stats": [
+        6,
+        8,
+        4,
+        5
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        8,
+        4,
+        5
+      ],
+      "rarity": "rare",
+      "statWeight": 455
+    },
+    "hitmonchan": {
+      "id": 107,
+      "types": [
+        "fighting"
+      ],
+      "stats": [
+        6,
+        7,
+        4,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        7,
+        4,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 455
     },
     "lickitung": {
       "id": 108,
@@ -982,6 +2353,27 @@
       "rarity": "common",
       "statWeight": 340
     },
+    "weezing": {
+      "id": 110,
+      "types": [
+        "poison"
+      ],
+      "stats": [
+        6,
+        6,
+        9,
+        4
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        6,
+        9,
+        4
+      ],
+      "rarity": "rare",
+      "statWeight": 490
+    },
     "rhyhorn": {
       "id": 111,
       "types": [
@@ -1003,6 +2395,49 @@
       ],
       "rarity": "common",
       "statWeight": 345
+    },
+    "rhydon": {
+      "id": 112,
+      "types": [
+        "ground",
+        "rock"
+      ],
+      "stats": [
+        7,
+        7,
+        3,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        7,
+        3,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 485
+    },
+    "chansey": {
+      "id": 113,
+      "types": [
+        "normal"
+      ],
+      "stats": [
+        6,
+        4,
+        6,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        4,
+        6,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 450
     },
     "tangela": {
       "id": 114,
@@ -1067,6 +2502,27 @@
       "rarity": "common",
       "statWeight": 295
     },
+    "seadra": {
+      "id": 117,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        7,
+        5,
+        4,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        5,
+        4,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 440
+    },
     "goldeen": {
       "id": 118,
       "types": [
@@ -1087,6 +2543,27 @@
       ],
       "rarity": "common",
       "statWeight": 320
+    },
+    "seaking": {
+      "id": 119,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        8,
+        5,
+        4,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        5,
+        4,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 450
     },
     "staryu": {
       "id": 120,
@@ -1109,6 +2586,50 @@
       "rarity": "common",
       "statWeight": 340
     },
+    "starmie": {
+      "id": 121,
+      "types": [
+        "water",
+        "psychic"
+      ],
+      "stats": [
+        8,
+        5,
+        7,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        5,
+        7,
+        6
+      ],
+      "rarity": "epic",
+      "statWeight": 520
+    },
+    "mr-mime": {
+      "id": 122,
+      "types": [
+        "psychic",
+        "fairy"
+      ],
+      "stats": [
+        5,
+        6,
+        5,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        6,
+        5,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 460
+    },
     "scyther": {
       "id": 123,
       "types": [
@@ -1130,6 +2651,70 @@
       ],
       "rarity": "rare",
       "statWeight": 500
+    },
+    "jynx": {
+      "id": 124,
+      "types": [
+        "ice",
+        "psychic"
+      ],
+      "stats": [
+        6,
+        4,
+        6,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        6,
+        4,
+        6,
+        7
+      ],
+      "rarity": "rare",
+      "statWeight": 455
+    },
+    "electabuzz": {
+      "id": 125,
+      "types": [
+        "electric"
+      ],
+      "stats": [
+        9,
+        4,
+        8,
+        4
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        9,
+        4,
+        8,
+        4
+      ],
+      "rarity": "rare",
+      "statWeight": 490
+    },
+    "magmar": {
+      "id": 126,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        8,
+        7,
+        4,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        7,
+        4,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 495
     },
     "pinsir": {
       "id": 127,
@@ -1193,6 +2778,28 @@
       ],
       "rarity": "common",
       "statWeight": 200
+    },
+    "gyarados": {
+      "id": 130,
+      "types": [
+        "water",
+        "flying"
+      ],
+      "stats": [
+        4,
+        8,
+        7,
+        8
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        4,
+        8,
+        7,
+        8
+      ],
+      "rarity": "epic",
+      "statWeight": 540
     },
     "lapras": {
       "id": 131,
@@ -1258,6 +2865,69 @@
       "rarity": "common",
       "statWeight": 325
     },
+    "vaporeon": {
+      "id": 134,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        7,
+        5,
+        7,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        5,
+        7,
+        7
+      ],
+      "rarity": "epic",
+      "statWeight": 525
+    },
+    "jolteon": {
+      "id": 135,
+      "types": [
+        "electric"
+      ],
+      "stats": [
+        8,
+        6,
+        4,
+        8
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        6,
+        4,
+        8
+      ],
+      "rarity": "epic",
+      "statWeight": 525
+    },
+    "flareon": {
+      "id": 136,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        8,
+        6,
+        5,
+        7
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        6,
+        5,
+        7
+      ],
+      "rarity": "epic",
+      "statWeight": 525
+    },
     "porygon": {
       "id": 137,
       "types": [
@@ -1301,6 +2971,28 @@
       "rarity": "uncommon",
       "statWeight": 355
     },
+    "omastar": {
+      "id": 139,
+      "types": [
+        "rock",
+        "water"
+      ],
+      "stats": [
+        8,
+        8,
+        3,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        8,
+        8,
+        3,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 495
+    },
     "kabuto": {
       "id": 140,
       "types": [
@@ -1323,6 +3015,28 @@
       "rarity": "uncommon",
       "statWeight": 355
     },
+    "kabutops": {
+      "id": 141,
+      "types": [
+        "rock",
+        "water"
+      ],
+      "stats": [
+        5,
+        7,
+        7,
+        6
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        5,
+        7,
+        7,
+        6
+      ],
+      "rarity": "rare",
+      "statWeight": 495
+    },
     "aerodactyl": {
       "id": 142,
       "types": [
@@ -1344,6 +3058,27 @@
       ],
       "rarity": "epic",
       "statWeight": 515
+    },
+    "snorlax": {
+      "id": 143,
+      "types": [
+        "normal"
+      ],
+      "stats": [
+        7,
+        4,
+        6,
+        10
+      ],
+      "effort_value": 2,
+      "originalStats": [
+        7,
+        4,
+        6,
+        10
+      ],
+      "rarity": "epic",
+      "statWeight": 540
     },
     "articuno": {
       "id": 144,
@@ -1432,1783 +3167,6 @@
       "rarity": "common",
       "statWeight": 300
     },
-    "mewtwo": {
-      "id": 150,
-      "types": [
-        "psychic"
-      ],
-      "stats": [
-        9,
-        10,
-        9,
-        6
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        9,
-        10,
-        9,
-        6
-      ],
-      "rarity": "legendary",
-      "statWeight": 680
-    },
-    "mew": {
-      "id": 151,
-      "types": [
-        "psychic"
-      ],
-      "stats": [
-        9,
-        8,
-        8,
-        8
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        9,
-        8,
-        8,
-        8
-      ],
-      "rarity": "legendary",
-      "statWeight": 600
-    },
-    "ivysaur": {
-      "id": 2,
-      "types": [
-        "grass",
-        "poison"
-      ],
-      "stats": [
-        7,
-        5,
-        1,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        5,
-        1,
-        7
-      ],
-      "rarity": "uncommon",
-      "statWeight": 405
-    },
-    "venusaur": {
-      "id": 3,
-      "types": [
-        "grass",
-        "poison"
-      ],
-      "stats": [
-        8,
-        4,
-        6,
-        8
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        8,
-        4,
-        6,
-        8
-      ],
-      "rarity": "epic",
-      "statWeight": 525
-    },
-    "charmeleon": {
-      "id": 5,
-      "types": [
-        "fire"
-      ],
-      "stats": [
-        7,
-        3,
-        5,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        3,
-        5,
-        5
-      ],
-      "rarity": "uncommon",
-      "statWeight": 405
-    },
-    "charizard": {
-      "id": 6,
-      "types": [
-        "fire",
-        "flying"
-      ],
-      "stats": [
-        5,
-        7,
-        9,
-        6
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        5,
-        7,
-        9,
-        6
-      ],
-      "rarity": "epic",
-      "statWeight": 534
-    },
-    "wartortle": {
-      "id": 8,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        3,
-        8,
-        4,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        3,
-        8,
-        4,
-        5
-      ],
-      "rarity": "uncommon",
-      "statWeight": 405
-    },
-    "blastoise": {
-      "id": 9,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        9,
-        7,
-        5,
-        6
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        9,
-        7,
-        5,
-        6
-      ],
-      "rarity": "epic",
-      "statWeight": 530
-    },
-    "metapod": {
-      "id": 11,
-      "types": [
-        "bug"
-      ],
-      "stats": [
-        1,
-        5,
-        2,
-        2
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        1,
-        5,
-        2,
-        2
-      ],
-      "rarity": "common",
-      "statWeight": 205
-    },
-    "butterfree": {
-      "id": 12,
-      "types": [
-        "bug",
-        "flying"
-      ],
-      "stats": [
-        5,
-        7,
-        6,
-        2
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        5,
-        7,
-        6,
-        2
-      ],
-      "rarity": "uncommon",
-      "statWeight": 395
-    },
-    "kakuna": {
-      "id": 14,
-      "types": [
-        "bug",
-        "poison"
-      ],
-      "stats": [
-        1,
-        6,
-        2,
-        1
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        1,
-        6,
-        2,
-        1
-      ],
-      "rarity": "common",
-      "statWeight": 205
-    },
-    "beedrill": {
-      "id": 15,
-      "types": [
-        "bug",
-        "poison"
-      ],
-      "stats": [
-        3,
-        7,
-        3,
-        7
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        3,
-        7,
-        3,
-        7
-      ],
-      "rarity": "uncommon",
-      "statWeight": 395
-    },
-    "pidgeotto": {
-      "id": 17,
-      "types": [
-        "flying"
-      ],
-      "stats": [
-        2,
-        2,
-        6,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        2,
-        2,
-        6,
-        7
-      ],
-      "rarity": "common",
-      "statWeight": 349
-    },
-    "pidgeot": {
-      "id": 18,
-      "types": [
-        "flying"
-      ],
-      "stats": [
-        6,
-        6,
-        4,
-        8
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        6,
-        6,
-        4,
-        8
-      ],
-      "rarity": "rare",
-      "statWeight": 479
-    },
-    "raticate": {
-      "id": 20,
-      "types": [
-        "normal"
-      ],
-      "stats": [
-        4,
-        7,
-        7,
-        3
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        4,
-        7,
-        7,
-        3
-      ],
-      "rarity": "uncommon",
-      "statWeight": 413
-    },
-    "fearow": {
-      "id": 22,
-      "types": [
-        "flying"
-      ],
-      "stats": [
-        6,
-        4,
-        4,
-        8
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        4,
-        4,
-        8
-      ],
-      "rarity": "rare",
-      "statWeight": 442
-    },
-    "arbok": {
-      "id": 24,
-      "types": [
-        "poison"
-      ],
-      "stats": [
-        3,
-        7,
-        6,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        3,
-        7,
-        6,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 448
-    },
-    "pikachu": {
-      "id": 25,
-      "types": [
-        "electric"
-      ],
-      "stats": [
-        4,
-        2,
-        6,
-        4
-      ],
-      "effort_value": 2,
-      "starter": true,
-      "originalStats": [
-        4,
-        2,
-        6,
-        4
-      ],
-      "rarity": "common",
-      "statWeight": 320
-    },
-    "raichu": {
-      "id": 26,
-      "types": [
-        "electric"
-      ],
-      "stats": [
-        7,
-        8,
-        6,
-        3
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        7,
-        8,
-        6,
-        3
-      ],
-      "rarity": "rare",
-      "statWeight": 485
-    },
-    "sandslash": {
-      "id": 28,
-      "types": [
-        "ground"
-      ],
-      "stats": [
-        6,
-        6,
-        6,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        6,
-        6,
-        5
-      ],
-      "rarity": "rare",
-      "statWeight": 450
-    },
-    "nidorina": {
-      "id": 30,
-      "types": [
-        "poison"
-      ],
-      "stats": [
-        3,
-        9,
-        2,
-        4
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        3,
-        9,
-        2,
-        4
-      ],
-      "rarity": "uncommon",
-      "statWeight": 365
-    },
-    "nidoqueen": {
-      "id": 31,
-      "types": [
-        "poison",
-        "ground"
-      ],
-      "stats": [
-        4,
-        7,
-        6,
-        8
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        4,
-        7,
-        6,
-        8
-      ],
-      "rarity": "rare",
-      "statWeight": 505
-    },
-    "nidorino": {
-      "id": 33,
-      "types": [
-        "poison"
-      ],
-      "stats": [
-        3,
-        4,
-        6,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        3,
-        4,
-        6,
-        5
-      ],
-      "rarity": "uncommon",
-      "statWeight": 365
-    },
-    "nidoking": {
-      "id": 34,
-      "types": [
-        "poison",
-        "ground"
-      ],
-      "stats": [
-        7,
-        6,
-        6,
-        6
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        7,
-        6,
-        6,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 505
-    },
-    "clefairy": {
-      "id": 35,
-      "types": [
-        "fairy"
-      ],
-      "stats": [
-        7,
-        3,
-        4,
-        2
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        3,
-        4,
-        2
-      ],
-      "rarity": "common",
-      "statWeight": 323
-    },
-    "clefable": {
-      "id": 36,
-      "types": [
-        "fairy"
-      ],
-      "stats": [
-        6,
-        4,
-        8,
-        6
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        6,
-        4,
-        8,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 483
-    },
-    "ninetales": {
-      "id": 38,
-      "types": [
-        "fire"
-      ],
-      "stats": [
-        10,
-        6,
-        4,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        10,
-        6,
-        4,
-        5
-      ],
-      "rarity": "rare",
-      "statWeight": 505
-    },
-    "jigglypuff": {
-      "id": 39,
-      "types": [
-        "fairy"
-      ],
-      "stats": [
-        2,
-        5,
-        3,
-        4
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        2,
-        5,
-        3,
-        4
-      ],
-      "rarity": "common",
-      "statWeight": 270
-    },
-    "wigglytuff": {
-      "id": 40,
-      "types": [
-        "fairy"
-      ],
-      "stats": [
-        5,
-        6,
-        7,
-        4
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        5,
-        6,
-        7,
-        4
-      ],
-      "rarity": "rare",
-      "statWeight": 435
-    },
-    "golbat": {
-      "id": 42,
-      "types": [
-        "poison",
-        "flying"
-      ],
-      "stats": [
-        5,
-        7,
-        4,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        7,
-        4,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 455
-    },
-    "gloom": {
-      "id": 44,
-      "types": [
-        "grass",
-        "poison"
-      ],
-      "stats": [
-        6,
-        4,
-        8,
-        2
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        4,
-        8,
-        2
-      ],
-      "rarity": "uncommon",
-      "statWeight": 395
-    },
-    "vileplume": {
-      "id": 45,
-      "types": [
-        "grass",
-        "poison"
-      ],
-      "stats": [
-        7,
-        8,
-        5,
-        5
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        7,
-        8,
-        5,
-        5
-      ],
-      "rarity": "rare",
-      "statWeight": 490
-    },
-    "parasect": {
-      "id": 47,
-      "types": [
-        "bug",
-        "grass"
-      ],
-      "stats": [
-        5,
-        3,
-        6,
-        6
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        5,
-        3,
-        6,
-        6
-      ],
-      "rarity": "uncommon",
-      "statWeight": 405
-    },
-    "venomoth": {
-      "id": 49,
-      "types": [
-        "bug",
-        "poison"
-      ],
-      "stats": [
-        9,
-        6,
-        5,
-        3
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        9,
-        6,
-        5,
-        3
-      ],
-      "rarity": "rare",
-      "statWeight": 450
-    },
-    "dugtrio": {
-      "id": 51,
-      "types": [
-        "ground"
-      ],
-      "stats": [
-        7,
-        6,
-        4,
-        4
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        6,
-        4,
-        4
-      ],
-      "rarity": "uncommon",
-      "statWeight": 425
-    },
-    "persian": {
-      "id": 53,
-      "types": [
-        "normal"
-      ],
-      "stats": [
-        5,
-        5,
-        7,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        5,
-        7,
-        5
-      ],
-      "rarity": "rare",
-      "statWeight": 440
-    },
-    "golduck": {
-      "id": 55,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        5,
-        6,
-        6,
-        8
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        6,
-        6,
-        8
-      ],
-      "rarity": "rare",
-      "statWeight": 500
-    },
-    "primeape": {
-      "id": 57,
-      "types": [
-        "fighting"
-      ],
-      "stats": [
-        7,
-        4,
-        6,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        4,
-        6,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 455
-    },
-    "arcanine": {
-      "id": 59,
-      "types": [
-        "fire"
-      ],
-      "stats": [
-        7,
-        10,
-        6,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        10,
-        6,
-        5
-      ],
-      "rarity": "epic",
-      "statWeight": 555
-    },
-    "poliwhirl": {
-      "id": 61,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        4,
-        5,
-        5,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        4,
-        5,
-        5,
-        5
-      ],
-      "rarity": "uncommon",
-      "statWeight": 385
-    },
-    "poliwrath": {
-      "id": 62,
-      "types": [
-        "water",
-        "fighting"
-      ],
-      "stats": [
-        3,
-        7,
-        8,
-        8
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        3,
-        7,
-        8,
-        8
-      ],
-      "rarity": "epic",
-      "statWeight": 510
-    },
-    "kadabra": {
-      "id": 64,
-      "types": [
-        "psychic"
-      ],
-      "stats": [
-        8,
-        6,
-        5,
-        1
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        6,
-        5,
-        1
-      ],
-      "rarity": "uncommon",
-      "statWeight": 400
-    },
-    "alakazam": {
-      "id": 65,
-      "types": [
-        "psychic"
-      ],
-      "stats": [
-        2,
-        8,
-        8,
-        7
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        2,
-        8,
-        8,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 500
-    },
-    "machoke": {
-      "id": 67,
-      "types": [
-        "fighting"
-      ],
-      "stats": [
-        9,
-        3,
-        6,
-        2
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        9,
-        3,
-        6,
-        2
-      ],
-      "rarity": "uncommon",
-      "statWeight": 405
-    },
-    "machamp": {
-      "id": 68,
-      "types": [
-        "fighting"
-      ],
-      "stats": [
-        7,
-        7,
-        4,
-        7
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        7,
-        7,
-        4,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 505
-    },
-    "weepinbell": {
-      "id": 70,
-      "types": [
-        "grass",
-        "poison"
-      ],
-      "stats": [
-        5,
-        4,
-        3,
-        8
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        4,
-        3,
-        8
-      ],
-      "rarity": "uncommon",
-      "statWeight": 390
-    },
-    "victreebel": {
-      "id": 71,
-      "types": [
-        "grass",
-        "poison"
-      ],
-      "stats": [
-        6,
-        8,
-        6,
-        5
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        6,
-        8,
-        6,
-        5
-      ],
-      "rarity": "rare",
-      "statWeight": 490
-    },
-    "tentacruel": {
-      "id": 73,
-      "types": [
-        "water",
-        "poison"
-      ],
-      "stats": [
-        10,
-        5,
-        6,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        10,
-        5,
-        6,
-        5
-      ],
-      "rarity": "epic",
-      "statWeight": 515
-    },
-    "graveler": {
-      "id": 75,
-      "types": [
-        "rock",
-        "ground"
-      ],
-      "stats": [
-        8,
-        3,
-        7,
-        2
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        3,
-        7,
-        2
-      ],
-      "rarity": "uncommon",
-      "statWeight": 390
-    },
-    "golem": {
-      "id": 76,
-      "types": [
-        "rock",
-        "ground"
-      ],
-      "stats": [
-        5,
-        7,
-        6,
-        7
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        5,
-        7,
-        6,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 495
-    },
-    "rapidash": {
-      "id": 78,
-      "types": [
-        "fire"
-      ],
-      "stats": [
-        5,
-        7,
-        6,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        7,
-        6,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 500
-    },
-    "slowbro": {
-      "id": 80,
-      "types": [
-        "water",
-        "psychic"
-      ],
-      "stats": [
-        5,
-        7,
-        7,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        7,
-        7,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 490
-    },
-    "magneton": {
-      "id": 82,
-      "types": [
-        "electric",
-        "steel"
-      ],
-      "stats": [
-        6,
-        8,
-        8,
-        1
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        8,
-        8,
-        1
-      ],
-      "rarity": "rare",
-      "statWeight": 465
-    },
-    "dodrio": {
-      "id": 85,
-      "types": [
-        "flying"
-      ],
-      "stats": [
-        8,
-        8,
-        5,
-        3
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        8,
-        5,
-        3
-      ],
-      "rarity": "rare",
-      "statWeight": 470
-    },
-    "dewgong": {
-      "id": 87,
-      "types": [
-        "water",
-        "ice"
-      ],
-      "stats": [
-        6,
-        5,
-        7,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        5,
-        7,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 475
-    },
-    "muk": {
-      "id": 89,
-      "types": [
-        "poison"
-      ],
-      "stats": [
-        7,
-        9,
-        2,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        9,
-        2,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 500
-    },
-    "cloyster": {
-      "id": 91,
-      "types": [
-        "water",
-        "ice"
-      ],
-      "stats": [
-        7,
-        8,
-        3,
-        8
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        8,
-        3,
-        8
-      ],
-      "rarity": "epic",
-      "statWeight": 525
-    },
-    "haunter": {
-      "id": 93,
-      "types": [
-        "ghost",
-        "poison"
-      ],
-      "stats": [
-        6,
-        1,
-        4,
-        9
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        1,
-        4,
-        9
-      ],
-      "rarity": "uncommon",
-      "statWeight": 405
-    },
-    "gengar": {
-      "id": 94,
-      "types": [
-        "ghost",
-        "poison"
-      ],
-      "stats": [
-        4,
-        7,
-        8,
-        6
-      ],
-      "effort_value": 3,
-      "originalStats": [
-        4,
-        7,
-        8,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 500
-    },
-    "hypno": {
-      "id": 97,
-      "types": [
-        "psychic"
-      ],
-      "stats": [
-        2,
-        8,
-        8,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        2,
-        8,
-        8,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 483
-    },
-    "kingler": {
-      "id": 99,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        7,
-        7,
-        4,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        7,
-        4,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 475
-    },
-    "electrode": {
-      "id": 101,
-      "types": [
-        "electric"
-      ],
-      "stats": [
-        8,
-        2,
-        6,
-        9
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        2,
-        6,
-        9
-      ],
-      "rarity": "rare",
-      "statWeight": 490
-    },
-    "exeggutor": {
-      "id": 103,
-      "types": [
-        "grass",
-        "psychic"
-      ],
-      "stats": [
-        6,
-        7,
-        9,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        7,
-        9,
-        5
-      ],
-      "rarity": "epic",
-      "statWeight": 530
-    },
-    "marowak": {
-      "id": 105,
-      "types": [
-        "ground"
-      ],
-      "stats": [
-        6,
-        4,
-        5,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        4,
-        5,
-        6
-      ],
-      "rarity": "uncommon",
-      "statWeight": 425
-    },
-    "hitmonlee": {
-      "id": 106,
-      "types": [
-        "fighting"
-      ],
-      "stats": [
-        6,
-        8,
-        4,
-        5
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        8,
-        4,
-        5
-      ],
-      "rarity": "rare",
-      "statWeight": 455
-    },
-    "hitmonchan": {
-      "id": 107,
-      "types": [
-        "fighting"
-      ],
-      "stats": [
-        6,
-        7,
-        4,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        7,
-        4,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 455
-    },
-    "weezing": {
-      "id": 110,
-      "types": [
-        "poison"
-      ],
-      "stats": [
-        6,
-        6,
-        9,
-        4
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        6,
-        9,
-        4
-      ],
-      "rarity": "rare",
-      "statWeight": 490
-    },
-    "rhydon": {
-      "id": 112,
-      "types": [
-        "ground",
-        "rock"
-      ],
-      "stats": [
-        7,
-        7,
-        3,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        7,
-        3,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 485
-    },
-    "chansey": {
-      "id": 113,
-      "types": [
-        "normal"
-      ],
-      "stats": [
-        6,
-        4,
-        6,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        4,
-        6,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 450
-    },
-    "seadra": {
-      "id": 117,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        7,
-        5,
-        4,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        5,
-        4,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 440
-    },
-    "seaking": {
-      "id": 119,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        8,
-        5,
-        4,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        5,
-        4,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 450
-    },
-    "starmie": {
-      "id": 121,
-      "types": [
-        "water",
-        "psychic"
-      ],
-      "stats": [
-        8,
-        5,
-        7,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        5,
-        7,
-        6
-      ],
-      "rarity": "epic",
-      "statWeight": 520
-    },
-    "mr-mime": {
-      "id": 122,
-      "types": [
-        "psychic",
-        "fairy"
-      ],
-      "stats": [
-        5,
-        6,
-        5,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        6,
-        5,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 460
-    },
-    "jynx": {
-      "id": 124,
-      "types": [
-        "ice",
-        "psychic"
-      ],
-      "stats": [
-        6,
-        4,
-        6,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        6,
-        4,
-        6,
-        7
-      ],
-      "rarity": "rare",
-      "statWeight": 455
-    },
-    "electabuzz": {
-      "id": 125,
-      "types": [
-        "electric"
-      ],
-      "stats": [
-        9,
-        4,
-        8,
-        4
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        9,
-        4,
-        8,
-        4
-      ],
-      "rarity": "rare",
-      "statWeight": 490
-    },
-    "magmar": {
-      "id": 126,
-      "types": [
-        "fire"
-      ],
-      "stats": [
-        8,
-        7,
-        4,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        7,
-        4,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 495
-    },
-    "gyarados": {
-      "id": 130,
-      "types": [
-        "water",
-        "flying"
-      ],
-      "stats": [
-        4,
-        8,
-        7,
-        8
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        4,
-        8,
-        7,
-        8
-      ],
-      "rarity": "epic",
-      "statWeight": 540
-    },
-    "vaporeon": {
-      "id": 134,
-      "types": [
-        "water"
-      ],
-      "stats": [
-        7,
-        5,
-        7,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        5,
-        7,
-        7
-      ],
-      "rarity": "epic",
-      "statWeight": 525
-    },
-    "jolteon": {
-      "id": 135,
-      "types": [
-        "electric"
-      ],
-      "stats": [
-        8,
-        6,
-        4,
-        8
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        6,
-        4,
-        8
-      ],
-      "rarity": "epic",
-      "statWeight": 525
-    },
-    "flareon": {
-      "id": 136,
-      "types": [
-        "fire"
-      ],
-      "stats": [
-        8,
-        6,
-        5,
-        7
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        6,
-        5,
-        7
-      ],
-      "rarity": "epic",
-      "statWeight": 525
-    },
-    "omastar": {
-      "id": 139,
-      "types": [
-        "rock",
-        "water"
-      ],
-      "stats": [
-        8,
-        8,
-        3,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        8,
-        8,
-        3,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 495
-    },
-    "kabutops": {
-      "id": 141,
-      "types": [
-        "rock",
-        "water"
-      ],
-      "stats": [
-        5,
-        7,
-        7,
-        6
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        5,
-        7,
-        7,
-        6
-      ],
-      "rarity": "rare",
-      "statWeight": 495
-    },
-    "snorlax": {
-      "id": 143,
-      "types": [
-        "normal"
-      ],
-      "stats": [
-        7,
-        4,
-        6,
-        10
-      ],
-      "effort_value": 2,
-      "originalStats": [
-        7,
-        4,
-        6,
-        10
-      ],
-      "rarity": "epic",
-      "statWeight": 540
-    },
     "dragonair": {
       "id": 148,
       "types": [
@@ -3248,6 +3206,48 @@
         7,
         8,
         9
+      ],
+      "rarity": "legendary",
+      "statWeight": 600
+    },
+    "mewtwo": {
+      "id": 150,
+      "types": [
+        "psychic"
+      ],
+      "stats": [
+        9,
+        10,
+        9,
+        6
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        9,
+        10,
+        9,
+        6
+      ],
+      "rarity": "legendary",
+      "statWeight": 680
+    },
+    "mew": {
+      "id": 151,
+      "types": [
+        "psychic"
+      ],
+      "stats": [
+        9,
+        8,
+        8,
+        8
+      ],
+      "effort_value": 3,
+      "originalStats": [
+        9,
+        8,
+        8,
+        8
       ],
       "rarity": "legendary",
       "statWeight": 600

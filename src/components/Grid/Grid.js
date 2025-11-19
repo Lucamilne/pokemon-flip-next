@@ -6,6 +6,7 @@ import Card from '../Card/Card.js';
 function DroppableCell({ cellKey, cellData }) {
     const { isOver, setNodeRef } = useDroppable({
         id: cellKey,
+        disabled: !!cellData.pokemonCard, // Disable dropping on occupied cells
         data: {
             cellKey
         }
@@ -16,7 +17,7 @@ function DroppableCell({ cellKey, cellData }) {
             ref={setNodeRef}
             className={`relative aspect-square p-2 ${cellData.element ? `${cellData.element}-tile` : 'default-tile'}`}
             data-cell={cellKey}
-            title={cellData.element ? `${cellData.element.toUpperCase()}` : ""}
+            title={cellData.element ? `${cellData.element.charAt(0).toUpperCase() + cellData.element.slice(1)} element` : ""}
         >
             {/* Hover overlay */}
             {isOver && (
@@ -50,14 +51,10 @@ function DroppableCell({ cellKey, cellData }) {
 
 export default function Grid({ cells }) {
     return (
-        <div className="relative grid grid-cols-[repeat(3,140px)] sm:grid-cols-[repeat(3,174px)] bg-black gap-1.5 border-6 border-black mx-auto overflow-hidden aspect-square" id="grid">
+        <div className="relative grid grid-cols-3 w-full sm:w-auto sm:grid-cols-[repeat(3,174px)] bg-black gap-1.5 border-6 border-black mx-auto aspect-square" id="grid">
             {Object.entries(cells).map(([key, value]) => (
                 <DroppableCell key={key} cellKey={key} cellData={value} />
             ))}
-            {/* <div className="absolute -top-32 -left-8 grid grid-cols-[30px_120px] gap-4 rotate-35" aria-hidden="true">
-                <div className='w-full h-128 bg-white/30' />
-                <div className='w-full h-128 bg-white/30' />
-            </div> */}
         </div>
     );
 }

@@ -85,38 +85,53 @@ export default function Board() {
     const allocateRandomCpuCards = () => {
         const shuffledArray = Object.keys(pokemon.cards).sort(() => Math.random() - 0.5);
 
-        setCpuHand(shuffledArray.slice(0, 5).map((el) => createCard(el)));
+        return shuffledArray.slice(0, 5).map((el) => createCard(el));
     }
 
     const allocateStarterDeck = () => {
-        const starterPokemon = Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].starter);
-        setPlayerHand(starterPokemon.map((el) => createCard(el, true)));
+        // const starterPokemon = Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].starter);
+        // return starterPokemon.map((el) => createCard(el, true));
+        const pokemonCardsArray = Object.keys(pokemon.cards)
+
+        return pokemonCardsArray.slice(pokemonCardsArray.length - 5, pokemonCardsArray.length).map((el) => createCard(el, true));
     }
-
-    const setRandomElementalTiles = () => {
-        const gridCells = Object.keys(cells);
-        const arrayOfPokemonTypes = pokemon.types.filter((type) => type !== "normal");
-
-        gridCells.forEach((cell) => {
-            if (Math.random() < 0.15 && arrayOfPokemonTypes.length > 0) {
-                const randomIndex = Math.floor(Math.random() * arrayOfPokemonTypes.length);
-                const randomElement = arrayOfPokemonTypes[randomIndex];
-                cells[cell].element = randomElement;
-                arrayOfPokemonTypes.splice(randomIndex, 1); // Remove the element at the randomIndex
-            }
-        });
-    };
 
     //on mount
     useEffect(() => {
-        allocateStarterDeck(); // if a user is new, todo
-        allocateRandomCpuCards();
-        setRandomElementalTiles();
+        // Allocate hands
+        const newCpuHand = allocateRandomCpuCards();
+        const newPlayerHand = allocateStarterDeck();
+
+        // Gather types from both hands for elemental tiles
+        const playerTypes = newPlayerHand.flatMap(card => card.types);
+        const cpuTypes = newCpuHand.flatMap(card => card.types);
+        const allHandTypes = [...playerTypes, ...cpuTypes];
+        const arrayOfPokemonTypes = [...new Set(allHandTypes)].filter((type) => type !== "normal");
+
+        // Set random elemental tiles
+        const gridCells = Object.keys(cells);
+        let tilesPlaced = 0;
+        const maxTiles = 3;
+        const updatedCells = { ...cells };
+
+        gridCells.forEach((cell) => {
+            if (tilesPlaced < maxTiles && Math.random() < 0.15 && arrayOfPokemonTypes.length > 0) {
+                const randomIndex = Math.floor(Math.random() * arrayOfPokemonTypes.length);
+                const randomElement = arrayOfPokemonTypes[randomIndex];
+                updatedCells[cell] = { ...updatedCells[cell], element: randomElement };
+                tilesPlaced++;
+            }
+        });
+
+        // Set all state at once
+        setCpuHand(newCpuHand);
+        setPlayerHand(newPlayerHand);
+        setCells(updatedCells);
     }, []);
 
     const applyTileStatModifiers = (attackingCard, cellTargetObject) => {
         if (attackingCard.types.some((type) => type === "normal")) {
-            return; // normal pokemon are not affected by elemental tiles
+            return attackingCard.stats; // normal pokemon are not affected by elemental tiles
         }
 
         const updateStatOnElementalTile = (stat) => {
@@ -133,7 +148,7 @@ export default function Board() {
         return attackingCard.stats.map(updateStatOnElementalTile);
     };
 
-    const attack = (cellTarget, attackingCard) => {
+    const placeAttackingCard = (cellTarget, attackingCard) => {
         const cellTargetObject = cells[cellTarget];
 
         if (cellTargetObject.element) {
@@ -159,6 +174,8 @@ export default function Board() {
         });
     }
 
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
     function handleDragEnd(event) {
         const { active, over } = event;
         if (!over) return; // Dropped outside a droppable area
@@ -171,7 +188,7 @@ export default function Board() {
         // Remove card from the player hand
         setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
 
-        attack(cellTarget, attackingCard)
+        placeAttackingCard(cellTarget, attackingCard)
 
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
         setCells(prev => ({
@@ -186,9 +203,33 @@ export default function Board() {
         setIsPlayerTurn(false)
     }
 
-    // CPU scripting
-    useEffect(() => {
-        if (isPlayerTurn) return;
+    // Helper to calculate what a card's stats would be after elemental tile modifiers
+    const calculateModifiedStats = (card, cellKey) => {
+        const cellData = cells[cellKey];
+
+        // No element on this tile - return original stats
+        if (!cellData.element) {
+            return card.stats;
+        }
+
+        // Normal type pokemon aren't affected
+        if (card.types.some((type) => type === "normal")) {
+            return card.stats;
+        }
+
+        // Apply the same logic as applyTileStatModifiers
+        return card.stats.map(stat => {
+            if (card.types.includes(cellData.element) && stat < 10) {
+                return stat + 1; // Boost if card type matches tile element
+            } else if (cellData.element && stat > 1) {
+                return stat - 1; // Debuff if card doesn't match
+            }
+            return stat;
+        });
+    };
+
+    const makeCpuMove = async () => {
+        await sleep(500 + Math.random() * 500);
 
         let arrayOfCellsToPlace = [];
         let arrayOfPlayerOccupiedCells = [];
@@ -208,23 +249,157 @@ export default function Board() {
         const availableCpuCards = cpuHand.filter(card => card !== null);
 
         if (arrayOfCellsToPlace.length === 0 || availableCpuCards.length === 0) {
-            // end game here
+            // end game here todo
             return;
         }
 
-        // Randomly select a cell to place a card
-        const randomCellIndex = Math.floor(Math.random() * arrayOfCellsToPlace.length);
-        const cellTarget = arrayOfCellsToPlace[randomCellIndex];
+        const validPlacementsSet = new Set(arrayOfCellsToPlace);
 
-        const randomCardIndex = Math.floor(Math.random() * availableCpuCards.length);
-        const attackingCard = availableCpuCards[randomCardIndex];
+        let arrayOfCellsToPlaceToAttack = [...new Set(
+            arrayOfPlayerOccupiedCells.flatMap(playerOccupiedCell =>
+                cells[playerOccupiedCell].adjacentCells.filter(adjacentCell =>
+                    adjacentCell !== null && validPlacementsSet.has(adjacentCell)
+                )
+            )
+        )];
+
+        // Analyze each potential placement cell
+        const cellAnalysis = arrayOfCellsToPlaceToAttack.map(cellKey => {
+            const exposedDefendingStats = [];
+
+            // Check each adjacent cell for defending player cards
+            cells[cellKey].adjacentCells.forEach((adjacentCellKey, statIndex) => {
+                if (!adjacentCellKey || !cells[adjacentCellKey].pokemonCard) return;
+
+                const adjacentCard = cells[adjacentCellKey].pokemonCard;
+
+                // Only care about player cards (defending)
+                if (adjacentCard.isPlayerCard) {
+                    // Find which stat of the defending card faces this position
+                    const defendingStatIndex = cells[adjacentCellKey].adjacentCells.indexOf(cellKey);
+                    const defendingStat = adjacentCard.stats[defendingStatIndex];
+
+                    exposedDefendingStats.push({
+                        statIndex: statIndex, // which of CPU's card stats needs to counter
+                        defendingStat: defendingStat // the stat value to beat
+                    });
+                }
+            });
+
+            // Find the lowest defending stat at this position (easiest to beat)
+            const lowestDefendingStat = exposedDefendingStats.length > 0
+                ? Math.min(...exposedDefendingStats.map(e => e.defendingStat))
+                : Infinity;
+
+            return {
+                cellKey,
+                exposedDefendingStats,
+                lowestDefendingStat
+            };
+        });
+
+        // Find best card + cell combination
+        let bestCellToPlace = null;
+        let bestCardToPlay = null;
+
+        // Sort by lowest defending stat (easiest positions first)
+        cellAnalysis.sort((a, b) => a.lowestDefendingStat - b.lowestDefendingStat);
+
+        // Score each (cell, card) combination by how many cards it can capture
+        let bestScore = -1;
+
+        for (const analysis of cellAnalysis) {
+            for (const cpuCard of availableCpuCards) {
+                // Calculate what this card's stats would be after elemental modifiers
+                const modifiedStats = calculateModifiedStats(cpuCard, analysis.cellKey);
+
+                // Count how many defending cards this combination can beat
+                let captureCount = 0;
+
+                for (const { statIndex, defendingStat } of analysis.exposedDefendingStats) {
+                    if (modifiedStats[statIndex] > defendingStat) {
+                        captureCount++;
+                    }
+                }
+
+                // Update best move if this scores higher
+                if (captureCount > bestScore) {
+                    bestScore = captureCount;
+                    bestCellToPlace = analysis.cellKey;
+                    bestCardToPlay = cpuCard;
+                }
+            }
+        }
+
+        // Defensive strategy: if no attacking positions available, find the best corner/pocket
+        if (!bestCellToPlace) {
+            let bestDefensiveScore = -Infinity;
+
+            for (const cellKey of arrayOfCellsToPlace) {
+                const cellData = cells[cellKey];
+
+                // Count exposed positions (non-null adjacent cells)
+                const exposedPositions = cellData.adjacentCells
+                    .map((adj, index) => ({ adjacentCell: adj, statIndex: index }))
+                    .filter(({ adjacentCell }) => adjacentCell !== null);
+
+                // Number of exposed sides (2 = corner, 3 = edge, 4 = center)
+                const exposureCount = exposedPositions.length;
+
+                for (const cpuCard of availableCpuCards) {
+                    // Calculate modified stats for this position
+                    const modifiedStats = calculateModifiedStats(cpuCard, cellKey);
+
+                    // Calculate defensive score for this card at this position
+                    let defensiveScore = 0;
+
+                    // Base score: prefer corners (2 exposed) > edges (3) > center (4)
+                    defensiveScore += (4 - exposureCount) * 10;
+
+                    // Calculate average stat value that would be exposed (using modified stats)
+                    const exposedStats = exposedPositions.map(({ statIndex }) => modifiedStats[statIndex]);
+                    const avgExposedStat = exposedStats.length > 0
+                        ? exposedStats.reduce((sum, stat) => sum + stat, 0) / exposedStats.length
+                        : 0;
+
+                    // Prefer positions where we expose our stronger stats
+                    defensiveScore += avgExposedStat * 5;
+
+                    // Consider existing threats: bonus for high stats facing player cards
+                    exposedPositions.forEach(({ adjacentCell, statIndex }) => {
+                        const adjacentCard = cells[adjacentCell]?.pokemonCard;
+                        if (adjacentCard?.isPlayerCard) {
+                            // Strong bonus for having a high stat facing a player threat (using modified stats)
+                            defensiveScore += modifiedStats[statIndex] * 3;
+                        }
+                    });
+
+                    if (defensiveScore > bestDefensiveScore) {
+                        bestDefensiveScore = defensiveScore;
+                        bestCellToPlace = cellKey;
+                        bestCardToPlay = cpuCard;
+                    }
+                }
+            }
+
+            // Ultimate fallback if somehow still no placement found
+            if (!bestCellToPlace) {
+                const randomCellIndex = Math.floor(Math.random() * arrayOfCellsToPlace.length);
+                bestCellToPlace = arrayOfCellsToPlace[randomCellIndex];
+                const randomCardIndex = Math.floor(Math.random() * availableCpuCards.length);
+                bestCardToPlay = availableCpuCards[randomCardIndex];
+            }
+        }
+
+        const cellTarget = bestCellToPlace;
+        const attackingCard = bestCardToPlay;
 
         // Find the original index in cpuHand
         const originalIndex = cpuHand.findIndex(card => card === attackingCard);
 
         setCpuHand(prev => prev.map((card, index) => index === originalIndex ? null : card));
 
-        attack(cellTarget, attackingCard);
+        placeAttackingCard(cellTarget, attackingCard);
 
         // Place the card in the selected cell
         setCells(prevCells => ({
@@ -236,25 +411,18 @@ export default function Board() {
         }));
 
         setIsPlayerTurn(true); // end the turn!
+    }
 
-        // consider placement of elemental tiles
-        // scan CPU hand, adjust weighting
-        // identify direction which CPU is strongest
-        // scan opponent hand, adjust weighting
-        // identify direction which player is weakest
-        // identify players weakest exposed stats, adjust weighting
-        // placing in the center (cell B2) on turn 1 should be disabled
-        // check if it's possible to take two cards
-        // if none of the above, act defensive
+    useEffect(() => {
+        if (isPlayerTurn) return;
 
-
-
+        makeCpuMove();
     }, [isPlayerTurn])
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
             <section className="h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
-                <div className="grid grid-cols-[repeat(3,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
+                <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
                     {cpuHand.map((pokemonCard, index) => {
                         return (
                             <div className="relative aspect-square" key={index}>
@@ -270,7 +438,7 @@ export default function Board() {
                 <div className="relative arena-backdrop grow flex items-center justify-center">
                     <Grid cells={cells} ref="grid" />
                 </div>
-                <div className="grid grid-cols-[repeat(3,124px)] sm:grid-cols-[repeat(5,158px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
+                <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                     {playerHand.map((pokemonCard, index) => {
                         return (
                             <div className="relative aspect-square" key={index}>
