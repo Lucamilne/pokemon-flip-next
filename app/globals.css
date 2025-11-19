@@ -1378,3 +1378,54 @@ body {
     opacity: 1;
   }
 }
+
+.pokeball-top {
+  box-shadow: inset 0 -1.5rem #901a22;
+  height: calc(50vh - 3rem);
+}
+
+.pokeball-bottom {
+  height: calc(50vh + 3rem);
+}
+
+.pokeball-top,
+.pokeball-bottom {
+  transform: translate(0%);
+  transition: transform 400ms ease;
+}
+
+.shadow-top {
+  box-shadow: inset 0 1.5rem 0 #d4d4d8;
+}
+
+.open-up {
+  transform: translate(0, -100%);
+}
+
+.open-down {
+  transform: translate(0, calc(100% + 6rem));
+}
+
+.open-up,
+.open-down {
+  pointer-events: none;
+}
+
+.surround-mobile {
+  position: absolute;
+  top: -6rem;
+  transform: translateX(-50%);
+  left: 50%;
+  border: 1.5rem solid black;
+  width: 18rem;
+  height: 18rem;
+  box-shadow: inset 0 0 0 0.5rem #fff;
+  background: linear-gradient(to bottom, #d4d4d8 0%, #d4d4d8 50%, #a1a1aa 50%);
+}
+
+.pokeball-button {
+  width: 10rem;
+  height: 10rem;
+  border: 0.5rem solid black;
+  box-shadow: inset -0.5rem -0.5rem 0 0 #d4d4d8;
+}

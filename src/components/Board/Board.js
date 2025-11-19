@@ -5,11 +5,14 @@ import { useState, useEffect } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
+import Loading from "../Loading/Loading.js";
 
 export default function Board() {
     const [cpuHand, setCpuHand] = useState([]);
     const [playerHand, setPlayerHand] = useState([]);
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+    const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
+
     const [cells, setCells] = useState({
         A1: {
             pokemonCard: null,
@@ -113,12 +116,14 @@ export default function Board() {
         let tilesPlaced = 0;
         const maxTiles = 3;
         const updatedCells = { ...cells };
+        const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
         gridCells.forEach((cell) => {
-            if (tilesPlaced < maxTiles && Math.random() < 0.15 && arrayOfPokemonTypes.length > 0) {
-                const randomIndex = Math.floor(Math.random() * arrayOfPokemonTypes.length);
-                const randomElement = arrayOfPokemonTypes[randomIndex];
+            if (tilesPlaced < maxTiles && Math.random() < 0.15 && availableTypes.length > 0) {
+                const randomIndex = Math.floor(Math.random() * availableTypes.length);
+                const randomElement = availableTypes[randomIndex];
                 updatedCells[cell] = { ...updatedCells[cell], element: randomElement };
+                availableTypes.splice(randomIndex, 1); // Remove the used element from available pool
                 tilesPlaced++;
             }
         });
@@ -421,37 +426,39 @@ export default function Board() {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            <section className="h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
-                <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
-                    {cpuHand.map((pokemonCard, index) => {
-                        return (
-                            <div className="relative aspect-square" key={index}>
-                                <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
+            <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
+                    <>
+                        <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
+                            {cpuHand.map((pokemonCard, index) => {
+                                return (
+                                    <div className="relative aspect-square" key={index}>
+                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
 
-                                {pokemonCard && (
-                                    <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} />
-                                )}
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className="relative arena-backdrop grow flex items-center justify-center">
-                    <Grid cells={cells} ref="grid" />
-                </div>
-                <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
-                    {playerHand.map((pokemonCard, index) => {
-                        return (
-                            <div className="relative aspect-square" key={index}>
-                                <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
+                                        {pokemonCard && pokeballIsOpen && (
+                                            <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} />
+                                        )}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className="relative arena-backdrop grow flex items-center justify-center">
+                            <Grid cells={cells} ref="grid" />
+                        </div>
+                        <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
+                            {playerHand.map((pokemonCard, index) => {
+                                return (
+                                    <div className="relative aspect-square" key={index}>
+                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
 
-                                {pokemonCard && (
-                                    <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
-                                )}
-                            </div>
-                        )
-                    })}
-                </div>
-                {/* <Reveal /> */}
+                                        {pokemonCard && pokeballIsOpen && (
+                                            <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
+                                        )}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </>
+                <Loading pokeballIsOpen={pokeballIsOpen} setPokeballIsOpen={setPokeballIsOpen} />
             </section >
         </DndContext>
     )
