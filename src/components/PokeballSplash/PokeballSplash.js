@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function Loading({ pokeballIsOpen, setPokeballIsOpen }) {
+export default function PokeballSplash({ pokeballIsOpen, setPokeballIsOpen }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export default function Loading({ pokeballIsOpen, setPokeballIsOpen }) {
           />
         </div>
       </div>
+      <p className={`${pokeballIsOpen ? "hidden" : ""} pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-8 text-lg text-sky-400 text-shadow-sm/30 font-press-start blink-1 uppercase`}>Press!</p>
     </section>
   );
 }

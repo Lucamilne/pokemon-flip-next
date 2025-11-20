@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
-import Loading from "../Loading/Loading.js";
+import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 
 export default function Board() {
     const [cpuHand, setCpuHand] = useState([]);
@@ -458,7 +458,7 @@ export default function Board() {
                             })}
                         </div>
                     </>
-                <Loading pokeballIsOpen={pokeballIsOpen} setPokeballIsOpen={setPokeballIsOpen} />
+                <PokeballSplash pokeballIsOpen={pokeballIsOpen} setPokeballIsOpen={setPokeballIsOpen} />
             </section >
         </DndContext>
     )
