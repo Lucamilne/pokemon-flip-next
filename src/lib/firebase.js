@@ -13,25 +13,27 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase only once
+// Initialize Firebase only on client-side
 let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
+let auth;
+let db;
+let analytics;
+let googleProvider;
+
+if (typeof window !== "undefined") {
+  if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+  } else {
+    app = getApps()[0];
+  }
+
+  // Initialize services
+  auth = getAuth(app);
+  db = getFirestore(app);
+  analytics = getAnalytics(app);
+  googleProvider = new GoogleAuthProvider();
 }
 
-// Initialize services
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-
-// Analytics can only be initialized client-side
-export const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
-
-// Auth providers
-export const googleProvider = new GoogleAuthProvider();
-
-// Auth helper functions
-export { signInAnonymously, signInWithPopup, linkWithPopup };
-
+// Export with fallbacks for server-side rendering
+export { auth, db, analytics, googleProvider, signInAnonymously, signInWithPopup, linkWithPopup };
 export default app;
