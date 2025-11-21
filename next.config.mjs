@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/pokemon-flip-next',
+  basePath: process.env.NODE_ENV === 'production' ? '/pokemon-flip-next' : '',
   images: {
     unoptimized: true,
     remotePatterns: [

@@ -118,7 +118,7 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
     };
 
     return (
-        <div className={`relative select-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
+        <div className={`relative select-none touch-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
             style={style}
             {...listeners}
             {...attributes}
