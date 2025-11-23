@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
 
-export default function PokeballSplash({ pokeballIsOpen, setPokeballIsOpen }) {
+export default function PokeballSplash({ pokeballIsOpen, setPokeballIsOpen, href = "/pokemon-select", buttonText = "Press!" }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -13,8 +13,6 @@ export default function PokeballSplash({ pokeballIsOpen, setPokeballIsOpen }) {
   }, [pokeballIsOpen])
 
   if (!isVisible) return null;
-
-  const str = "Press!"
 
   return (
     <section className="absolute top-0 left-0 w-full h-full overflow-y-hidden">
@@ -29,13 +27,13 @@ export default function PokeballSplash({ pokeballIsOpen, setPokeballIsOpen }) {
         <div className="bg-white surround-mobile rounded-full flex justify-center items-center">
           <Link
             className="pokeball-button bg-white rounded-full cursor-pointer"
-            href="/play"
+            href={href}
             aria-label="Open pokeball"
           />
         </div>
       </div>
       <p className={`${pokeballIsOpen ? "hidden" : ""} flex gap-0.5 pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-8 text-lg text-sky-400 text-shadow-sm/30 font-press-start uppercase text-hop`}>
-        {str.split('').map((char, index) => (<span key={index} style={{
+        {buttonText.split('').map((char, index) => (<span key={index} style={{
           animationDelay: `${(index + 1) * 50}ms`
         }}> {char}</span>))}
       </p>

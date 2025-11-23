@@ -1,11 +1,11 @@
 "use client"
 
-import pokemon from "@/data/game-data.json";
 import { useState, useEffect } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
+import { allocateRandomCpuCards, allocateStarterDeck } from "@/utils/cardHelpers.js";
 
 export default function Board() {
     const [cpuHand, setCpuHand] = useState([]);
@@ -72,37 +72,10 @@ export default function Board() {
         }
     };
 
-    const createCard = (pokemonName, isPlayerCard = false) => {
-        return {
-            name: pokemonName,
-            types: pokemon.cards[pokemonName].types,
-            id: pokemon.cards[pokemonName].id,
-            stats: pokemon.cards[pokemonName].stats,
-            originalStats: pokemon.cards[pokemonName].originalStats, // A copy of stats is kept to track modifications
-            rarity: pokemon.cards[pokemonName].rarity,
-            playerOwned: pokemon.cards[pokemonName].starter, // this is an unimplemented feature as of writing
-            isPlayerCard: isPlayerCard
-        };
-    };
-
-    const allocateRandomCpuCards = () => {
-        const shuffledArray = Object.keys(pokemon.cards).sort(() => Math.random() - 0.5);
-
-        return shuffledArray.slice(0, 5).map((el) => createCard(el));
-    }
-
-    const allocateStarterDeck = () => {
-        // const starterPokemon = Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].starter);
-        // return starterPokemon.map((el) => createCard(el, true));
-        const pokemonCardsArray = Object.keys(pokemon.cards)
-
-        return pokemonCardsArray.slice(pokemonCardsArray.length - 5, pokemonCardsArray.length).map((el) => createCard(el, true));
-    }
-
     //on mount
     useEffect(() => {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
-        
+
         // Allocate hands
         const newCpuHand = allocateRandomCpuCards();
         const newPlayerHand = allocateStarterDeck();
@@ -428,13 +401,13 @@ export default function Board() {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            <div className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
+            <div className="overflow-hidden relative h-full flex flex-col gap-3 bg-neutral-400 rounded-xl" >
                     <>
                         <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
                             {cpuHand.map((pokemonCard, index) => {
                                 return (
                                     <div className="relative aspect-square" key={index}>
-                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
+                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
 
                                         {pokemonCard && pokeballIsOpen && (
                                             <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} />
@@ -443,14 +416,14 @@ export default function Board() {
                                 )
                             })}
                         </div>
-                        <div className="relative arena-backdrop grow flex items-center justify-center">
+                        <div className="relative arena-backdrop flex items-center justify-center">
                             <Grid cells={cells} ref="grid" />
                         </div>
                         <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                             {playerHand.map((pokemonCard, index) => {
                                 return (
                                     <div className="relative aspect-square" key={index}>
-                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-theme-red-100" />
+                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
 
                                         {pokemonCard && pokeballIsOpen && (
                                             <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />

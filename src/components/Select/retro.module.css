@@ -1,0 +1,40 @@
+.snes-input {
+  position: relative;
+  display: flex;
+  color: #000;
+  border-width: 12px;
+  border-image-slice: 18px;
+  border: solid;
+  border-image: url('/images/border-image.png');
+  border-image-slice: 12;
+  border-width: 12px;
+  border-image-outset: 6px;
+  border-image-repeat: initial;
+  background-color: #fff;
+  outline: none;
+}
+
+.snes-input input,
+.snes-input select,
+.snes-input textarea {
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #000;
+  font-family: var(--font-press-start), monospace;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0.05rem;
+  word-spacing: -0.3rem;
+  background-color: transparent;
+}
+
+.snes-input select {
+  cursor: pointer;
+  appearance: none;
+}
+
+.snes-input select option {
+  background-color: #fff;
+  padding: 8px;
+}

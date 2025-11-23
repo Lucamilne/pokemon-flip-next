@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${pressStart2P.variable} antialiased`}
       >
         <ClientProviders>
-          <div className="bg-linear-to-b from-theme-red-100 to-theme-red-200">
+          <div className="bg-linear-to-b from-theme-red-100 to-theme-red-200 text-black">
             <main className="flex justify-center min-h-screen font-sans bg-black/15 lg:p-8">
               <div className="h-screen lg:h-[calc(100vh-64px)] shadow-lg/50 overflow-hidden w-full max-w-5xl">
                 {children}
