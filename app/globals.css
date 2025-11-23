@@ -1408,6 +1408,20 @@ body {
 }
 
 
+.text-hop span {
+  position: relative;
+  animation: hop 800ms ease-out infinite;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hop {
+  25% {
+    top: -0.5rem;
+  }
+  35% {
+    top: 0;
+  }
+}
 
 .pokeball-top {
   box-shadow: inset 0 -1.5rem #901a22;
