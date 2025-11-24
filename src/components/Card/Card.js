@@ -5,13 +5,13 @@ import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
-export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false }) {
+export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false, selectMode = false }) {
     const [isFlipped, setIsFlipped] = useState(isPlacedInGrid);
-    const cardRef = useRef(null);
+        const cardRef = useRef(null);
 
-    if (!pokemonCard) {
-        return null;
-    }
+        if (!pokemonCard) {
+            return null;
+        }
 
     const sumUpNumbersInArray = (array) => {
         return array.reduce((acc, val) => acc + val, 0);
@@ -100,9 +100,6 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
 
     // used for rarity border, unused currently
     const getBgStyle = () => {
-        if (pokemonCard.types.length === 1) {
-            return { backgroundColor: `var(--color-${pokemonCard.types[0]}-500)` };
-        }
         return {
             backgroundImage: `linear-gradient(to right, var(--color-${pokemonCard.types[0]}-500), var(--color-${pokemonCard.types[1]}-500))`
         };
@@ -123,7 +120,7 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
             {...listeners}
             {...attributes}
         >
-            <div ref={cardRef} className={`p-2.5 border-front ${isPlacedInGrid ? "" : "rounded-md"} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
+            <div ref={cardRef} className={`p-2.5 border-front ${isPlacedInGrid && !selectMode ? "" : "rounded-md"} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
                 <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                     <div className="relative h-full flex flex-col items-center justify-center">
                         <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />

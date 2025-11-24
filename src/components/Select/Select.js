@@ -2,15 +2,19 @@ import { useState, useEffect } from 'react';
 import { fetchStarterCards, fetchAllCards } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
+import Help from "../Help/Help.js";
 import styles from './retro.module.css';
+import Link from 'next/link'
 
 export default function Select() {
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
+    const [playerCardLibrary, setPlayerCardLibrary] =
+        useState(() => fetchAllCards());
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
-    const [searchString, setSearchString] = useState('')
+    const [searchString, setSearchString] = useState('');
+    const [isDragging, setIsDragging] = useState(false);
 
     // const playerCardLibrary = fetchStarterCards(); // todo expand to user library
-    const playerCardLibrary = fetchAllCards();
 
     useEffect(() => {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
@@ -18,54 +22,93 @@ export default function Select() {
 
     const helperText = "Choose your hand!"
 
+    const togglePokemonCardSelection = (pokemonCard) => {
+        if (!pokemonCard) return;
+
+        // Check if card is already in hand
+        const cardIndex = playerHand.findIndex(card => card?.id === pokemonCard.id);
+
+        if (cardIndex !== -1) {
+            // Card is in hand, unselect it
+            setPlayerHand(prev => {
+                const newHand = [...prev];
+                newHand[cardIndex] = null;
+                return newHand;
+            });
+            return;
+        }
+
+        // Card not in hand, add it to first available slot
+        setPlayerHand(prev => {
+            const firstNullIndex = prev.findIndex(card =>
+                card === null);
+            if (firstNullIndex === -1) return prev; // Hand is full
+
+            const newHand = [...prev];
+            newHand[firstNullIndex] = pokemonCard;
+            return newHand;
+        });
+    }
+
     return (
-        <div className="overflow-hidden relative h-full flex flex-col bg-neutral-400 rounded-xl" >
+        <div className="overflow-hidden relative h-full flex flex-col rounded-xl" >
             <div className="px-7 pt-4 pb-6 flex justify-between items-center hand-top-container">
-                <h1 className="header-text text-2xl">Your Pokémon cards</h1>
-                <input type="text" id="search" className={styles['snes-input']} placeholder='Search Cards' value={searchString}
+                <h1 className="header-text text-2xl text-hop">
+                    {helperText.split('').map((char, index) => (<span key={index} style={{
+                        animationDelay: `${(index + 1) * 50}ms`
+                    }}>{char}</span>))}
+
+                </h1>
+                <input type="text" id="search" className={`${styles['snes-input']} font-press-start`} placeholder='Search Cards' value={searchString}
                     onChange={(e) => setSearchString(e.target.value)} />
             </div>
-            <div className='relative default-tile text-hop text-shadow-sm/30 px-8 py-4 border-b-8 border-black text-2xl font-press-start text-center'>
-                {helperText.split('').map((char, index) => (<span key={index} style={{
-                    animationDelay: `${(index + 1) * 50}ms`
-                }}>{char}</span>))}
-                {/* <button className='absolute text-black/60 hover:text-black right-2 cursor-pointer p-2 top-1/2 -translate-y-1/2'>X</button> */}
-            </div>
-            <div className="grow arena-backdrop overflow-y-auto p-8 bg-white">
-                <div>
-                </div>
-                <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 w-full justify-center">
+            <div className={`relative grow select-backdrop p-8 ${styles['hide-scrollbar']} ${isDragging ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'}`}>
+                <div className="grid grid-cols-[repeat(4,124px)] lg:grid-cols-[repeat(4,174px)] items-center gap-4 justify-center">
                     {playerCardLibrary
-                        .filter(pokemonCard =>
-                            pokemonCard.name.toLowerCase().startsWith(searchString.toLowerCase())
+                        .filter(pokemonCard => {
+                            if (pokemonCard === null) return searchString === '';
+                            return pokemonCard.name.toLowerCase().startsWith(searchString.toLowerCase())
+                        }
                         )
                         .map((pokemonCard, index) => {
+                            const isInHand = pokemonCard && playerHand.some(card => card?.id === pokemonCard.id);
                             return (
-                                <div className="relative aspect-square" key={index}>
-                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
-
+                                <button
+                                    className={`relative rounded-md aspect-square transition-transform drop-shadow-md ${isInHand ? 'drop-shadow-xl ring-5 scale-103 ring-white' : ''}`}
+                                    key={index}
+                                    onClick={() => togglePokemonCardSelection(pokemonCard)}
+                                >
                                     {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={true} isPlacedInGrid={true} />
+                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={true} isPlacedInGrid={true} selectMode={true} />
                                     )}
-                                </div>
+                                </button>
                             )
                         })}
                 </div>
+                {/* <div className={`absolute top-0 left-0 h-full w-full bg-white flex justify-center items-center transition-transform ${playerHand.every(card => card
+                    !== null) ? "" : "translate-x-full"}`}>
+                    <Link href="/play">Fight!</Link>
+                </div> */}
             </div>
-            <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
+            <div className="relative grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                 {playerHand.map((pokemonCard, index) => {
                     return (
-                        <div className="relative aspect-square" key={index}>
-                            <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
+                        <button className={`relative aspect-square ${pokemonCard ? "cursor-pointer" : ""}`} key={index} onClick={() => togglePokemonCardSelection(pokemonCard)}>
+                            <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue flex justify-center items-center">
+                                <span className='header-text text-2xl'>{index + 1}</span>
+                            </div>
 
                             {pokemonCard && pokeballIsOpen && (
-                                <Card pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                <Card pokemonCard={pokemonCard} index={index} isDraggable={false} isPlacedInGrid={true} selectMode={true} />
                             )}
-                        </div>
+                        </button>
                     )
                 })}
+                {playerHand.every(card => card === null) && (
+                    <Help customClass="!absolute !-top-16 !right-4" text="Tap a card to add it to your hand!" />
+                )}
             </div>
-            <PokeballSplash pokeballIsOpen={pokeballIsOpen} setPokeballIsOpen={setPokeballIsOpen} />
+            <PokeballSplash pokeballIsOpen={pokeballIsOpen} text="Ready!" />
         </div>
     )
 }

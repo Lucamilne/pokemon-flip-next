@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
 
-export default function PokeballSplash({ pokeballIsOpen, setPokeballIsOpen, href = "/pokemon-select", buttonText = "Press!" }) {
+export default function PokeballSplash({ pokeballIsOpen, href = "/pokemon-select", buttonText = "Press!" }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
