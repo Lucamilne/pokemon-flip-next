@@ -45,7 +45,22 @@ export default function RootLayout({ children }) {
             className="text-black transition-all duration-400 ease-in-out"
             style={getBackgroundStyle()}
           >
-            <main className="flex justify-center min-h-screen font-sans bg-black/15 lg:p-8">
+            {/* Mobile splash screen */}
+            <div className="block md:hidden min-h-screen flex items-center justify-center p-8">
+              <div className="text-center">
+                <h1 className="font-press-start text-2xl mb-6 text-white header-text ">
+                  Pokémon Flip
+                </h1>
+                <p className="font-press-start text-sm text-white/90 leading-relaxed drop-shadow-md">
+                  This game is not available on mobile devices.
+                  <br /><br />
+                  Please visit on a tablet or desktop.
+                </p>
+              </div>
+            </div>
+
+            {/* Main app - hidden on mobile */}
+            <main className="hidden md:flex justify-center min-h-screen font-sans bg-black/15 lg:p-8">
               <div className="h-screen lg:h-[calc(100vh-64px)] shadow-lg/50 overflow-hidden w-full max-w-5xl">
                 {children}
               </div>
