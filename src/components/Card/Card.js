@@ -5,13 +5,14 @@ import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
-export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false, roundCorners = true }) {
-    const [isFlipped, setIsFlipped] = useState(isPlacedInGrid);
-        const cardRef = useRef(null);
+export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true }) {
+    const [isFlipped, setIsFlipped] = useState(startsFlipped);
+    const cardRef = useRef(null);
+    const prevIsPlayerCard = useRef();
 
-        if (!pokemonCard) {
-            return null;
-        }
+    if (!pokemonCard) {
+        return null;
+    }
 
     const sumUpNumbersInArray = (array) => {
         return array.reduce((acc, val) => acc + val, 0);
@@ -71,6 +72,19 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
         });
     };
 
+    const defeatCard = () => {
+        return new Promise((resolve) => {
+            if (cardRef.current) {
+                cardRef.current.classList.remove('rotate-diagonal'); 
+
+                cardRef.current.classList.add('rotate-diagonal')
+                setTimeout(resolve, 400);
+            } else {
+                resolve();
+            }
+        });
+    };
+
     const runAnimations = async () => {
         if (!pokemonCard.isPlayerCard) {
             await dropCard(); // Wait for drop to finish
@@ -86,17 +100,33 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
         }
     };
 
+
     useEffect(() => {
         if (isPlacedInGrid) {
             runAnimations();
-        } else {
+        }
+    }, [isPlacedInGrid])
+
+    useEffect(() => {
+        if (prevIsPlayerCard.current !== undefined && prevIsPlayerCard.current !== pokemonCard.isPlayerCard) {
+            if (isPlacedInGrid) {
+                defeatCard();
+            }
+        }
+
+        // Update the previous value for next comparison
+        prevIsPlayerCard.current = pokemonCard.isPlayerCard;
+    }, [pokemonCard.isPlayerCard])
+
+    useEffect(() => {
+        if (!startsFlipped) {
             const animationDelay = 150;
 
             setTimeout(() => {
                 setIsFlipped(!isFlipped)
             }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
         }
-    }, [isPlacedInGrid])
+    }, [])
 
     // used for rarity border, unused currently
     const getBgStyle = () => {

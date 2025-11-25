@@ -5,7 +5,7 @@ import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
-import { allocateRandomCpuCards, allocateStarterDeck } from "@/utils/cardHelpers.js";
+import { allocateRandomCpuCards } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter } from 'next/navigation';
 
@@ -79,8 +79,6 @@ export default function Board() {
 
     //on mount
     useEffect(() => {
-        if (!pokeballIsOpen) setPokeballIsOpen(true);
-
         // Allocate hands
         const newCpuHand = allocateRandomCpuCards();
         const newPlayerHand = selectedPlayerHand;
@@ -89,6 +87,8 @@ export default function Board() {
             router.push('/pokemon-select');
             return;
         }
+
+        if (!pokeballIsOpen) setPokeballIsOpen(true);
 
         // Gather types from both hands for elemental tiles
         const playerTypes = newPlayerHand.flatMap(card => card.types);
@@ -219,7 +219,7 @@ export default function Board() {
     };
 
     const makeCpuMove = async () => {
-        await sleep(500 + Math.random() * 500);
+        await sleep(500 + Math.random() * 500); // delay move by minimum of 500ms
 
         let arrayOfCellsToPlace = [];
         let arrayOfPlayerOccupiedCells = [];
@@ -412,37 +412,37 @@ export default function Board() {
     return (
         <DndContext onDragEnd={handleDragEnd}>
             <div className="overflow-hidden relative h-full flex flex-col justify-between rounded-xl" >
-                    <>
-                        <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
-                            {cpuHand.map((pokemonCard, index) => {
-                                return (
-                                    <div className="relative aspect-square" key={index}>
-                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
+                <>
+                    <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
+                        {cpuHand.map((pokemonCard, index) => {
+                            return (
+                                <div className="relative aspect-square" key={index}>
+                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
 
-                                        {pokemonCard && pokeballIsOpen && (
-                                            <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} />
-                                        )}
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="relative arena-backdrop flex items-center justify-center">
-                            <Grid cells={cells} ref="grid" />
-                        </div>
-                        <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
-                            {playerHand.map((pokemonCard, index) => {
-                                return (
-                                    <div className="relative aspect-square" key={index}>
-                                        <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
+                                    {pokemonCard && pokeballIsOpen && (
+                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFlipped={false} />
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className="relative grow arena-backdrop flex items-center justify-center">
+                        <Grid cells={cells} ref="grid" />
+                    </div>
+                    <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
+                        {playerHand.map((pokemonCard, index) => {
+                            return (
+                                <div className="relative aspect-square" key={index}>
+                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
 
-                                        {pokemonCard && pokeballIsOpen && (
-                                            <Card pokemonCard={pokemonCard} index={index} isPlacedInGrid={true} isDraggable={isPlayerTurn} />
-                                        )}
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </>
+                                    {pokemonCard && pokeballIsOpen && (
+                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+                </>
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
             </div>
         </DndContext>

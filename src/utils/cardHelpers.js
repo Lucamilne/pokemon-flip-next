@@ -19,18 +19,14 @@ export const allocateRandomCpuCards = () => {
     return shuffledArray.slice(0, 5).map((el) => createCard(el));
 };
 
-export const allocateStarterDeck = () => {
-    // const starterPokemon = Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].starter);
-    // return starterPokemon.map((el) => createCard(el, true));
-    const pokemonCardsArray = Object.keys(pokemon.cards);
-
-    return pokemonCardsArray.slice(pokemonCardsArray.length - 5, pokemonCardsArray.length).map((el) => createCard(el, true));
-};
-
 export const fetchStarterCards = () => {
     return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].starter).map((pokemonName) => createCard(pokemonName, true));
 }
 
 export const fetchAllCards = () => {
     return Object.keys(pokemon.cards).map((pokemonName) => createCard(pokemonName, true));
+}
+
+export const fetchStrongCards = () => {
+    return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 580).map((pokemonName) => createCard(pokemonName, true));
 }

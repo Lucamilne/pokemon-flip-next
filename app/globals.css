@@ -1136,12 +1136,32 @@ body {
   @apply bg-gradient-to-br from-blue-400 to-blue-600;
 }
 
-.dual-type-accent-a {
-  clip-path: polygon(0 0, 62% 0, 38% 100%, 0% 100%);
+.red-animated-gradient,
+.blue-animated-gradient {
+  background-size: 600% 600%;
+  animation: gradient 12s ease infinite;
 }
 
-.dual-type-accent-b {
-  clip-path: polygon(62% 0, 100% 0, 100% 100%, 38% 100%);
+.red-animated-gradient {
+  background: linear-gradient(0deg, var(--color-theme-red), var(--color-pokedex-inner-red), var(--color-pokedex-dark-red));
+}
+
+.blue-animated-gradient {
+  background: linear-gradient(0deg, var(--color-theme-blue), var(--color-pokedex-inner-blue), var(--color-pokedex-dark-blue));
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 50% 0%
+  }
+
+  50% {
+    background-position: 50% 100%
+  }
+
+  100% {
+    background-position: 50% 0%
+  }
 }
 
 .card-hidden {
@@ -1161,34 +1181,6 @@ body {
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.27);
 }
 
-.red-animated-gradient,
-.blue-animated-gradient {
-  background-size: 600% 600%;
-  animation: gradient 12s ease infinite;
-}
-
-.red-animated-gradient {
-  background: linear-gradient(0deg, var(--color-theme-red), var(--color-pokedex-inner-red), var(--color-pokedex-dark-red));
-}
-
-.blue-animated-gradient {
-    background: linear-gradient(0deg, var(--color-theme-blue), var(--color-pokedex-inner-blue), var(--color-pokedex-dark-blue));
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 50% 0%
-  }
-
-  50% {
-    background-position: 50% 100%
-  }
-
-  100% {
-    background-position: 50% 0%
-  }
-}
-
 .slide-in-bck-top {
   animation: slide-in-bck-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 }
@@ -1201,8 +1193,8 @@ body {
   animation: jello-horizontal 0.5s both;
 }
 
-.rotate-diagonal-1 {
-  animation: rotate-diagonal-1 0.4s linear both;
+.rotate-diagonal {
+  animation: rotate-diagonal 0.4s linear both;
 }
 
 .puff-in-center {
@@ -1211,6 +1203,10 @@ body {
 
 .heartbeat {
   animation: heartbeat 1.5s ease-in-out infinite both;
+}
+
+.shadow-drop-2-bottom {
+  animation: shadow-drop-2-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* slide in */
@@ -1243,24 +1239,7 @@ body {
 }
 
 /* defeated */
-@-webkit-keyframes rotate-diagonal-1 {
-  0% {
-    -webkit-transform: rotate3d(1, 1, 0, 0deg);
-    transform: rotate3d(1, 1, 0, 0deg);
-  }
-
-  50% {
-    -webkit-transform: rotate3d(1, 1, 0, -180deg);
-    transform: rotate3d(1, 1, 0, -180deg);
-  }
-
-  100% {
-    -webkit-transform: rotate3d(1, 1, 0, -360deg);
-    transform: rotate3d(1, 1, 0, -360deg);
-  }
-}
-
-@keyframes rotate-diagonal-1 {
+@keyframes rotate-diagonal {
   0% {
     -webkit-transform: rotate3d(1, 1, 0, 0deg);
     transform: rotate3d(1, 1, 0, 0deg);
@@ -1425,45 +1404,6 @@ body {
   }
 }
 
-@-webkit-keyframes heartbeat {
-  from {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform-origin: center center;
-    transform-origin: center center;
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out;
-  }
-
-  10% {
-    -webkit-transform: scale(0.91);
-    transform: scale(0.91);
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
-  }
-
-  17% {
-    -webkit-transform: scale(0.98);
-    transform: scale(0.98);
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out;
-  }
-
-  33% {
-    -webkit-transform: scale(0.87);
-    transform: scale(0.87);
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
-  }
-
-  45% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out;
-  }
-}
-
 @keyframes heartbeat {
   from {
     -webkit-transform: scale(1);
@@ -1502,6 +1442,23 @@ body {
     animation-timing-function: ease-out;
   }
 }
+
+@keyframes shadow-drop-2-bottom {
+  0% {
+    -webkit-transform: translateZ(0) translateY(0);
+    transform: translateZ(0) translateY(0);
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    -webkit-transform: translateZ(50px) translateY(-12px);
+    transform: translateZ(50px) translateY(-12px);
+    -webkit-box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
 
 .text-hop span {
   position: relative;

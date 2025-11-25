@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { fetchStarterCards, fetchAllCards } from '@/utils/cardHelpers.js';
+import { useState, useEffect, useMemo } from 'react';
+import { fetchStarterCards, fetchStrongCards } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
 import Help from "../Help/Help.js";
@@ -9,8 +9,7 @@ import { useGameContext } from '@/contexts/GameContext';
 
 export default function Select() {
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
-    const [playerCardLibrary, setPlayerCardLibrary] =
-        useState(() => fetchStarterCards());
+    const playerCardLibrary = useMemo(() => fetchStrongCards(), []);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [searchString, setSearchString] = useState('');
     const { setSelectedPlayerHand } = useGameContext();
@@ -95,12 +94,12 @@ export default function Select() {
                             const isInHand = pokemonCard && playerHand.some(card => card?.id === pokemonCard.id);
                             return (
                                 <button
-                                    className={`relative rounded-md aspect-square transition-transform ${isInHand ? 'ring-6 scale-105 ring-black' : ''}`}
+                                    className={`relative rounded-md aspect-square transition-transform ${isInHand ? 'ring-4 drop-shadow-xl/30 scale-105 -translate-y-4 ring-black' : ''}`}
                                     key={index}
                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                 >
                                     {pokemonCard && (
-                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={true} isPlacedInGrid={true} />
+                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={true} />
                                     )}
                                 </button>
                             )
@@ -116,7 +115,7 @@ export default function Select() {
                             </div>
 
                             {pokemonCard && (
-                                <Card pokemonCard={pokemonCard} index={index} isDraggable={false} isPlacedInGrid={true} />
+                                <Card pokemonCard={pokemonCard} index={index} isDraggable={false} />
                             )}
                         </button>
                     )
@@ -125,7 +124,7 @@ export default function Select() {
                     <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
             </div>
-            <PokeballSplash pokeballIsOpen={pokeballIsOpen} href="/play" />
+            <PokeballSplash pokeballIsOpen={pokeballIsOpen} href="/play" buttonText='Fight!' />
         </div>
     )
 }
