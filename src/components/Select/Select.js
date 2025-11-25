@@ -4,18 +4,15 @@ import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
 import Help from "../Help/Help.js";
 import styles from './retro.module.css';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useGameContext } from '@/contexts/GameContext';
 
 export default function Select() {
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
     const [playerCardLibrary, setPlayerCardLibrary] =
-        useState(() => fetchAllCards());
+        useState(() => fetchStarterCards());
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [searchString, setSearchString] = useState('');
-    // const playerCardLibrary = fetchStarterCards(); // todo expand to user library
-
     const { setSelectedPlayerHand } = useGameContext();
     const router = useRouter();
 
@@ -23,12 +20,14 @@ export default function Select() {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
     }, [])
 
-    const helperText = "Choose your hand!"
+    useEffect(() => {
+        if (playerHand.every(card => card !== null)) {
+            setSelectedPlayerHand(playerHand);
+            setPokeballIsOpen(false);
+        }
+    }, [playerHand])
 
-    const handleStartGame = () => {
-        setSelectedPlayerHand(playerHand);
-        router.push('/play');
-    };
+    const helperText = "Choose your hand!"
 
     const togglePokemonCardSelection = (pokemonCard) => {
         if (!pokemonCard) return;
@@ -56,6 +55,8 @@ export default function Select() {
             newHand[firstNullIndex] = pokemonCard;
             return newHand;
         });
+
+        setSearchString("");
     }
 
     return (
@@ -67,8 +68,19 @@ export default function Select() {
                     }}>{char}</span>))}
 
                 </h1>
-                <input type="text" id="search" className={`${styles['snes-input']} font-press-start`} placeholder='Search Cards' value={searchString}
-                    onChange={(e) => setSearchString(e.target.value)} />
+                <div className="relative font-press-start">
+                    <input type="text" id="search" className={`${styles['snes-input']}`} placeholder='Search Cards' value={searchString}
+                        onChange={(e) => setSearchString(e.target.value)} maxLength={18} />
+                    {searchString !== "" && (
+                        <button
+                            onClick={() => setSearchString('')}
+                            className="px-1 cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-900 text-lg leading-none"
+                            aria-label="Clear search"
+                        >
+                            X
+                        </button>
+                    )}
+                </div>
             </div>
             <div className={`relative grow arena-backdrop p-8 ${styles['hide-scrollbar']} overflow-y-auto overflow-x-hidden`}>
                 <div className="grid grid-cols-[repeat(4,124px)] lg:grid-cols-[repeat(4,174px)] items-center gap-4 justify-center">
@@ -83,25 +95,16 @@ export default function Select() {
                             const isInHand = pokemonCard && playerHand.some(card => card?.id === pokemonCard.id);
                             return (
                                 <button
-                                    className={`relative rounded-md aspect-square transition-transform drop-shadow-md ${isInHand ? 'drop-shadow-xl ring-5 scale-103 ring-white' : ''}`}
+                                    className={`relative rounded-md aspect-square transition-transform ${isInHand ? 'ring-6 scale-105 ring-black' : ''}`}
                                     key={index}
                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                 >
-                                    {pokemonCard && pokeballIsOpen && (
+                                    {pokemonCard && (
                                         <Card pokemonCard={pokemonCard} index={index} isDraggable={true} isPlacedInGrid={true} selectMode={true} />
                                     )}
                                 </button>
                             )
                         })}
-                </div>
-                {/* this needs redoing */}
-                <div className={`absolute top-0 left-0 h-full w-full bg-black/80 flex justify-center items-center transition-transform ${playerHand.every(card => card !== null) ? "" : "translate-x-full"}`}>
-                    <button
-                        onClick={handleStartGame}
-                        className="header-text text-4xl text-white hover:scale-110 transition-transform px-8 py-4 bg-theme-red rounded-lg shadow-lg cursor-pointer"
-                    >
-                        Fight!
-                    </button>
                 </div>
             </div>
             <div className="relative grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
@@ -112,7 +115,7 @@ export default function Select() {
                                 <span className='header-text text-2xl'>{index + 1}</span>
                             </div>
 
-                            {pokemonCard && pokeballIsOpen && (
+                            {pokemonCard && (
                                 <Card pokemonCard={pokemonCard} index={index} isDraggable={false} isPlacedInGrid={true} selectMode={true} />
                             )}
                         </button>
@@ -122,7 +125,7 @@ export default function Select() {
                     <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
             </div>
-            <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
+            <PokeballSplash pokeballIsOpen={pokeballIsOpen} href="/play" />
         </div>
     )
 }

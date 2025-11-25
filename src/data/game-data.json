@@ -890,6 +890,7 @@
         2
       ],
       "effort_value": 1,
+      "starter": true,
       "originalStats": [
         4,
         5,
@@ -1598,6 +1599,7 @@
         5
       ],
       "effort_value": 1,
+      "starter": true,
       "originalStats": [
         2,
         1,

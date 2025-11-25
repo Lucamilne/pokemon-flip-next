@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
       case '/play':
         return { backgroundColor: '#e61919' };
       default:
-        return { backgroundColor: '#fff' };
+        return { backgroundColor: '#ddd' };
     }
   };
 
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
       >
         <ClientProviders>
           <div
-            className="text-black transition-all duration-1000 ease-in-out"
+            className="text-black transition-all duration-400 ease-in-out"
             style={getBackgroundStyle()}
           >
             <main className="flex justify-center min-h-screen font-sans bg-black/15 lg:p-8">

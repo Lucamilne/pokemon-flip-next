@@ -443,7 +443,7 @@ export default function Board() {
                             })}
                         </div>
                     </>
-                {/* <PokeballSplash pokeballIsOpen={pokeballIsOpen} setPokeballIsOpen={setPokeballIsOpen} /> */}
+                <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
             </div>
         </DndContext>
     )

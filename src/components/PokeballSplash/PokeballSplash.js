@@ -1,21 +1,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
 
-export default function PokeballSplash({ pokeballIsOpen, href = "/pokemon-select", buttonText = "Press!" }) {
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    if (pokeballIsOpen) {
-      setTimeout(() => {
-        setIsVisible(false);
-      }, 400);
-    }
-  }, [pokeballIsOpen])
-
-  if (!isVisible) return null;
-
+export default function PokeballSplash({ pokeballIsOpen, href = "/pokemon-select", buttonText = "Start!" }) {
   return (
-    <section className="absolute top-0 left-0 w-full h-full overflow-y-hidden">
+    <section className="absolute top-0 left-0 w-full h-full overflow-y-hidden pointer-events-none">
       <div
         className={`pokeball-top bg-theme-red ${pokeballIsOpen ? 'open-up' : ''}`}
       />
@@ -26,7 +14,7 @@ export default function PokeballSplash({ pokeballIsOpen, href = "/pokemon-select
         <div className="bg-zinc-200 shadow-top h-full" />
         <div className="bg-white surround-mobile rounded-full flex justify-center items-center">
           <Link
-            className="pokeball-button bg-white rounded-full cursor-pointer"
+            className="pokeball-button bg-white rounded-full cursor-pointer pointer-events-auto"
             href={href}
             aria-label="Open pokeball"
           />
