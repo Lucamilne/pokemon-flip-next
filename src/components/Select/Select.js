@@ -100,7 +100,7 @@ export default function Select() {
                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                 >
                                     {pokemonCard && (
-                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={true} isPlacedInGrid={true} selectMode={true} />
+                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={true} isPlacedInGrid={true} />
                                     )}
                                 </button>
                             )
@@ -116,7 +116,7 @@ export default function Select() {
                             </div>
 
                             {pokemonCard && (
-                                <Card pokemonCard={pokemonCard} index={index} isDraggable={false} isPlacedInGrid={true} selectMode={true} />
+                                <Card pokemonCard={pokemonCard} index={index} isDraggable={false} isPlacedInGrid={true} />
                             )}
                         </button>
                     )

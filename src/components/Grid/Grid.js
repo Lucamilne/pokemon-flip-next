@@ -42,6 +42,7 @@ function DroppableCell({ cellKey, cellData }) {
                         index={0}
                         isDraggable={false}
                         isPlacedInGrid={true}
+                        roundCorners={false}
                     />
                 </div>
             )}

@@ -5,7 +5,7 @@ import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
-export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false, selectMode = false }) {
+export default function Card({ pokemonCard, index, isDraggable = true, isPlacedInGrid = false, roundCorners = true }) {
     const [isFlipped, setIsFlipped] = useState(isPlacedInGrid);
         const cardRef = useRef(null);
 
@@ -120,7 +120,7 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
             {...listeners}
             {...attributes}
         >
-            <div ref={cardRef} className={`p-2.5 border-front ${isPlacedInGrid && !selectMode ? "" : "rounded-md"} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
+            <div ref={cardRef} className={`p-2.5 border-front ${roundCorners ? "rounded-md" : ""} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
                 <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                     <div className="relative h-full flex flex-col items-center justify-center">
                         <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
