@@ -12,8 +12,6 @@ export default function Select() {
         useState(() => fetchAllCards());
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [searchString, setSearchString] = useState('');
-    const [isDragging, setIsDragging] = useState(false);
-
     // const playerCardLibrary = fetchStarterCards(); // todo expand to user library
 
     useEffect(() => {
@@ -62,7 +60,7 @@ export default function Select() {
                 <input type="text" id="search" className={`${styles['snes-input']} font-press-start`} placeholder='Search Cards' value={searchString}
                     onChange={(e) => setSearchString(e.target.value)} />
             </div>
-            <div className={`relative grow select-backdrop p-8 ${styles['hide-scrollbar']} ${isDragging ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'}`}>
+            <div className={`relative grow arena-backdrop p-8 ${styles['hide-scrollbar']} overflow-y-auto overflow-x-hidden`}>
                 <div className="grid grid-cols-[repeat(4,124px)] lg:grid-cols-[repeat(4,174px)] items-center gap-4 justify-center">
                     {playerCardLibrary
                         .filter(pokemonCard => {
@@ -105,10 +103,10 @@ export default function Select() {
                     )
                 })}
                 {playerHand.every(card => card === null) && (
-                    <Help customClass="!absolute !-top-16 !right-4" text="Tap a card to add it to your hand!" />
+                    <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
             </div>
-            <PokeballSplash pokeballIsOpen={pokeballIsOpen} text="Ready!" />
+            <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
         </div>
     )
 }

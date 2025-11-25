@@ -401,7 +401,7 @@ export default function Board() {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            <div className="overflow-hidden relative h-full flex flex-col gap-3 bg-neutral-400 rounded-xl" >
+            <div className="overflow-hidden relative h-full flex flex-col justify-between rounded-xl" >
                     <>
                         <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
                             {cpuHand.map((pokemonCard, index) => {
@@ -433,7 +433,7 @@ export default function Board() {
                             })}
                         </div>
                     </>
-                <PokeballSplash pokeballIsOpen={pokeballIsOpen} setPokeballIsOpen={setPokeballIsOpen} />
+                {/* <PokeballSplash pokeballIsOpen={pokeballIsOpen} setPokeballIsOpen={setPokeballIsOpen} /> */}
             </div>
         </DndContext>
     )
