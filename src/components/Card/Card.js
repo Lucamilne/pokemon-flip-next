@@ -125,7 +125,7 @@ export default function Card({ pokemonCard, index, isDraggable = true, isPlacedI
                     <div className="relative h-full flex flex-col items-center justify-center">
                         <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
                         <ElementalTypes types={pokemonCard.types} />
-                        <Image draggable={false} loading="eager" width={96} height={96} className="drop-shadow-md/30 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`} />
+                        <Image draggable={false} width={96} height={96} className="drop-shadow-md/30 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`} />
                         <div className='absolute bottom-0'>
                             <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
                             <div className={`pt-10 text-center w-full ${pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`} />

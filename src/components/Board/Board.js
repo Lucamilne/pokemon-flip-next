@@ -6,12 +6,17 @@ import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import { allocateRandomCpuCards, allocateStarterDeck } from "@/utils/cardHelpers.js";
+import { useGameContext } from '@/contexts/GameContext';
+import { useRouter } from 'next/navigation';
 
 export default function Board() {
     const [cpuHand, setCpuHand] = useState([]);
     const [playerHand, setPlayerHand] = useState([]);
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
+
+    const { selectedPlayerHand } = useGameContext();
+    const router = useRouter();
 
     const [cells, setCells] = useState({
         A1: {
@@ -78,7 +83,12 @@ export default function Board() {
 
         // Allocate hands
         const newCpuHand = allocateRandomCpuCards();
-        const newPlayerHand = allocateStarterDeck();
+        const newPlayerHand = selectedPlayerHand;
+
+        if (!newPlayerHand) {
+            router.push('/pokemon-select');
+            return;
+        }
 
         // Gather types from both hands for elemental tiles
         const playerTypes = newPlayerHand.flatMap(card => card.types);
@@ -426,7 +436,7 @@ export default function Board() {
                                         <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
 
                                         {pokemonCard && pokeballIsOpen && (
-                                            <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
+                                            <Card pokemonCard={pokemonCard} index={index} isPlacedInGrid={true} isDraggable={isPlayerTurn} />
                                         )}
                                     </div>
                                 )

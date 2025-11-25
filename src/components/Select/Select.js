@@ -4,7 +4,9 @@ import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
 import Help from "../Help/Help.js";
 import styles from './retro.module.css';
-import Link from 'next/link'
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useGameContext } from '@/contexts/GameContext';
 
 export default function Select() {
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
@@ -14,11 +16,19 @@ export default function Select() {
     const [searchString, setSearchString] = useState('');
     // const playerCardLibrary = fetchStarterCards(); // todo expand to user library
 
+    const { setSelectedPlayerHand } = useGameContext();
+    const router = useRouter();
+
     useEffect(() => {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
     }, [])
 
     const helperText = "Choose your hand!"
+
+    const handleStartGame = () => {
+        setSelectedPlayerHand(playerHand);
+        router.push('/play');
+    };
 
     const togglePokemonCardSelection = (pokemonCard) => {
         if (!pokemonCard) return;
@@ -64,8 +74,9 @@ export default function Select() {
                 <div className="grid grid-cols-[repeat(4,124px)] lg:grid-cols-[repeat(4,174px)] items-center gap-4 justify-center">
                     {playerCardLibrary
                         .filter(pokemonCard => {
-                            if (pokemonCard === null) return searchString === '';
-                            return pokemonCard.name.toLowerCase().startsWith(searchString.toLowerCase())
+                            const trimmedSearch = searchString.trim();
+                            if (pokemonCard === null) return trimmedSearch === '';
+                            return pokemonCard.name.toLowerCase().startsWith(trimmedSearch.toLowerCase())
                         }
                         )
                         .map((pokemonCard, index) => {
@@ -83,10 +94,15 @@ export default function Select() {
                             )
                         })}
                 </div>
-                {/* <div className={`absolute top-0 left-0 h-full w-full bg-white flex justify-center items-center transition-transform ${playerHand.every(card => card
-                    !== null) ? "" : "translate-x-full"}`}>
-                    <Link href="/play">Fight!</Link>
-                </div> */}
+                {/* this needs redoing */}
+                <div className={`absolute top-0 left-0 h-full w-full bg-black/80 flex justify-center items-center transition-transform ${playerHand.every(card => card !== null) ? "" : "translate-x-full"}`}>
+                    <button
+                        onClick={handleStartGame}
+                        className="header-text text-4xl text-white hover:scale-110 transition-transform px-8 py-4 bg-theme-red rounded-lg shadow-lg cursor-pointer"
+                    >
+                        Fight!
+                    </button>
+                </div>
             </div>
             <div className="relative grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                 {playerHand.map((pokemonCard, index) => {
