@@ -18,6 +18,249 @@
     "steel",
     "water"
   ],
+  "typeMatchups": {
+    "bug": {
+      "superEffective": [
+        "grass",
+        "psychic",
+        "dark"
+      ],
+      "notEffective": [
+        "fire",
+        "fighting",
+        "poison",
+        "flying",
+        "ghost",
+        "steel",
+        "fairy"
+      ],
+      "immune": []
+    },
+    "dragon": {
+      "superEffective": [
+        "dragon"
+      ],
+      "notEffective": [
+        "steel"
+      ],
+      "immune": [
+        "fairy"
+      ]
+    },
+    "electric": {
+      "superEffective": [
+        "water",
+        "flying"
+      ],
+      "notEffective": [
+        "electric",
+        "grass",
+        "dragon"
+      ],
+      "immune": [
+        "ground"
+      ]
+    },
+    "fairy": {
+      "superEffective": [
+        "fighting",
+        "dragon",
+        "dark"
+      ],
+      "notEffective": [
+        "fire",
+        "poison",
+        "steel"
+      ],
+      "immune": []
+    },
+    "fighting": {
+      "superEffective": [
+        "normal",
+        "ice",
+        "rock",
+        "dark",
+        "steel"
+      ],
+      "notEffective": [
+        "poison",
+        "flying",
+        "psychic",
+        "bug",
+        "fairy"
+      ],
+      "immune": [
+        "ghost"
+      ]
+    },
+    "fire": {
+      "superEffective": [
+        "grass",
+        "ice",
+        "bug",
+        "steel"
+      ],
+      "notEffective": [
+        "fire",
+        "water",
+        "rock",
+        "dragon"
+      ],
+      "immune": []
+    },
+    "flying": {
+      "superEffective": [
+        "grass",
+        "fighting",
+        "bug"
+      ],
+      "notEffective": [
+        "electric",
+        "rock",
+        "steel"
+      ],
+      "immune": []
+    },
+    "ghost": {
+      "superEffective": [
+        "psychic",
+        "ghost"
+      ],
+      "notEffective": [
+        "dark"
+      ],
+      "immune": [
+        "normal"
+      ]
+    },
+    "grass": {
+      "superEffective": [
+        "water",
+        "ground",
+        "rock"
+      ],
+      "notEffective": [
+        "fire",
+        "grass",
+        "poison",
+        "flying",
+        "bug",
+        "dragon",
+        "steel"
+      ],
+      "immune": []
+    },
+    "ground": {
+      "superEffective": [
+        "fire",
+        "electric",
+        "poison",
+        "rock",
+        "steel"
+      ],
+      "notEffective": [
+        "grass",
+        "bug"
+      ],
+      "immune": [
+        "flying"
+      ]
+    },
+    "ice": {
+      "superEffective": [
+        "grass",
+        "ground",
+        "flying",
+        "dragon"
+      ],
+      "notEffective": [
+        "fire",
+        "water",
+        "ice",
+        "steel"
+      ],
+      "immune": []
+    },
+    "normal": {
+      "superEffective": [],
+      "notEffective": [
+        "rock",
+        "steel"
+      ],
+      "immune": [
+        "ghost"
+      ]
+    },
+    "poison": {
+      "superEffective": [
+        "grass",
+        "fairy"
+      ],
+      "notEffective": [
+        "poison",
+        "ground",
+        "rock",
+        "ghost"
+      ],
+      "immune": [
+        "steel"
+      ]
+    },
+    "psychic": {
+      "superEffective": [
+        "fighting",
+        "poison"
+      ],
+      "notEffective": [
+        "psychic",
+        "steel"
+      ],
+      "immune": [
+        "dark"
+      ]
+    },
+    "rock": {
+      "superEffective": [
+        "fire",
+        "ice",
+        "flying",
+        "bug"
+      ],
+      "notEffective": [
+        "fighting",
+        "ground",
+        "steel"
+      ],
+      "immune": []
+    },
+    "steel": {
+      "superEffective": [
+        "ice",
+        "rock",
+        "fairy"
+      ],
+      "notEffective": [
+        "fire",
+        "water",
+        "electric",
+        "steel"
+      ],
+      "immune": []
+    },
+    "water": {
+      "superEffective": [
+        "fire",
+        "ground",
+        "rock"
+      ],
+      "notEffective": [
+        "water",
+        "grass",
+        "dragon"
+      ],
+      "immune": []
+    }
+  },
   "cards": {
     "bulbasaur": {
       "id": 1,
@@ -93,7 +336,7 @@
       ],
       "stats": [
         2,
-        6,
+        7,
         2,
         6
       ],
@@ -101,7 +344,7 @@
       "starter": true,
       "originalStats": [
         2,
-        6,
+        7,
         2,
         6
       ],
@@ -157,16 +400,16 @@
         "water"
       ],
       "stats": [
-        3,
-        5,
+        2,
+        6,
         6,
         2
       ],
       "effort_value": 1,
       "starter": true,
       "originalStats": [
-        3,
-        5,
+        2,
+        6,
         6,
         2
       ],

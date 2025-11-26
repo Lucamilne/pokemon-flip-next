@@ -1,19 +1,20 @@
 import { useState, useEffect, useMemo } from 'react';
-import { fetchStarterCards, fetchStrongCards } from '@/utils/cardHelpers.js';
+import { fetchStarterCards, fetchStrongCards, fetchAllCards } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
 import Help from "../Help/Help.js";
+import Profile from "../Profile/Profile.js"
 import styles from './retro.module.css';
-import { useRouter } from 'next/navigation';
 import { useGameContext } from '@/contexts/GameContext';
 
 export default function Select() {
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
-    const playerCardLibrary = useMemo(() => fetchStrongCards(), []);
+    const playerCardLibrary = useMemo(() => fetchAllCards(), []);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
+    const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
     const { setSelectedPlayerHand } = useGameContext();
-    const router = useRouter();
+    const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
 
     useEffect(() => {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
@@ -22,11 +23,16 @@ export default function Select() {
     useEffect(() => {
         if (playerHand.every(card => card !== null)) {
             setSelectedPlayerHand(playerHand);
+            setIsPokeballDisabled(false);
             setPokeballIsOpen(false);
         }
     }, [playerHand])
 
     const helperText = "Choose your hand!"
+
+    const selectedCardIds = useMemo(() =>
+        new Set(playerHand.filter(Boolean).map(card => card.id))
+        , [playerHand]);
 
     const togglePokemonCardSelection = (pokemonCard) => {
         if (!pokemonCard) return;
@@ -55,18 +61,13 @@ export default function Select() {
             return newHand;
         });
 
+        setLastPokemonCardSelected(pokemonCard)
         setSearchString("");
     }
 
     return (
         <div className="overflow-hidden relative h-full flex flex-col rounded-xl" >
             <div className="px-7 pt-4 pb-6 flex justify-between items-center hand-top-container">
-                <h1 className="header-text text-2xl text-hop">
-                    {helperText.split('').map((char, index) => (<span key={index} style={{
-                        animationDelay: `${(index + 1) * 50}ms`
-                    }}>{char}</span>))}
-
-                </h1>
                 <div className="relative font-press-start">
                     <input type="text" id="search" className={`${styles['snes-input']}`} placeholder='Search Cards' value={searchString}
                         onChange={(e) => setSearchString(e.target.value)} maxLength={18} />
@@ -80,31 +81,40 @@ export default function Select() {
                         </button>
                     )}
                 </div>
+                <h1 className="header-text text-2xl text-hop">
+                    {helperText.split('').map((char, index) => (<span key={index} style={{
+                        animationDelay: `${(index + 1) * 50}ms`
+                    }}>{char}</span>))}
+
+                </h1>
             </div>
-            <div className={`relative grow arena-backdrop p-8 ${styles['hide-scrollbar']} overflow-y-auto overflow-x-hidden`}>
-                <div className="grid grid-cols-[repeat(4,124px)] lg:grid-cols-[repeat(4,174px)] items-center gap-4 justify-center">
-                    {playerCardLibrary
-                        .filter(pokemonCard => {
-                            const trimmedSearch = searchString.trim();
-                            if (pokemonCard === null) return trimmedSearch === '';
-                            return pokemonCard.name.toLowerCase().startsWith(trimmedSearch.toLowerCase())
-                        }
-                        )
-                        .map((pokemonCard, index) => {
-                            const isInHand = pokemonCard && playerHand.some(card => card?.id === pokemonCard.id);
-                            return (
-                                <button
-                                    className={`relative rounded-md aspect-square transition-transform ${isInHand ? 'ring-4 drop-shadow-xl/30 scale-105 -translate-y-4 ring-black' : ''}`}
-                                    key={index}
-                                    onClick={() => togglePokemonCardSelection(pokemonCard)}
-                                >
-                                    {pokemonCard && (
-                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={true} />
-                                    )}
-                                </button>
+            <div className='grow flex overflow-y-auto'>
+                <div className={`relative bg-theme-blue ${styles['hide-scrollbar']} overflow-y-auto flex`}>
+                    <div className="grid grid-cols-[repeat(2,124px)] lg:grid-cols-[repeat(2,174px)] auto-rows-min gap-4 p-4">
+                        {playerCardLibrary
+                            .filter(pokemonCard => {
+                                const trimmedSearch = searchString.trim();
+                                if (pokemonCard === null) return trimmedSearch === '';
+                                return pokemonCard.name.toLowerCase().startsWith(trimmedSearch.toLowerCase())
+                            }
                             )
-                        })}
+                            .map((pokemonCard, index) => {
+                                const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
+                                return (
+                                    <button
+                                        className={`relative rounded-md aspect-square transition-transform shadow-md/30 ${isInHand ? 'ring-5 ring-lime-300' : ''}`}
+                                        key={index}
+                                        onClick={() => togglePokemonCardSelection(pokemonCard)}
+                                    >
+                                        {pokemonCard && (
+                                            <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                        )}
+                                    </button>
+                                )
+                            })}
+                    </div>
                 </div>
+                <Profile playerHand={playerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
             <div className="relative grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                 {playerHand.map((pokemonCard, index) => {
@@ -124,7 +134,7 @@ export default function Select() {
                     <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
             </div>
-            <PokeballSplash pokeballIsOpen={pokeballIsOpen} href="/play" buttonText='Fight!' />
+            <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href="/play" buttonText='Fight!' />
         </div>
     )
 }

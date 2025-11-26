@@ -566,6 +566,36 @@ body {
   background-color: #ffffff;
 }
 
+.tile {
+  background:
+    linear-gradient(to bottom, #fff 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to left, #a1a1a1 8px, transparent 8px) top right / 100% 100%,
+    linear-gradient(to top, #a1a1a1 8px, transparent 8px) bottom left / 100% 100%,
+    linear-gradient(to right, #fff 8px, transparent 8px) top left / 100% 100%,
+    #e5e5e5;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #fff 50%, #a1a1a1 50%);
+}
+
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: auto auto 0 0;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, #fff 50%, #a1a1a1 50%);
+}
+
+
 .default-tile {
   background:
     linear-gradient(to bottom, #a1a1a1 8px, transparent 8px) top left / 100% 100%,
@@ -1139,7 +1169,7 @@ body {
 .red-animated-gradient,
 .blue-animated-gradient {
   background-size: 600% 600%;
-  animation: gradient 12s ease infinite;
+  animation: gradient 5s ease infinite;
 }
 
 .red-animated-gradient {
@@ -1162,6 +1192,15 @@ body {
   100% {
     background-position: 50% 0%
   }
+}
+
+.pokeball-loader {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  border: 5px solid black;
+  background-image:
+  radial-gradient(white 20%, white 20%, black 20%, black 30%, transparent 30%, transparent), linear-gradient(red 46%, black 46%, black 54%, white 54%);
 }
 
 .card-hidden {

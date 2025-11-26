@@ -61,7 +61,7 @@ export default function RootLayout({ children }) {
 
             {/* Main app - hidden on mobile */}
             <main className="hidden md:flex justify-center min-h-screen font-sans bg-black/15 lg:p-8">
-              <div className="h-screen lg:h-[calc(100vh-64px)] shadow-lg/50 overflow-hidden w-full max-w-5xl">
+              <div className="h-screen lg:h-[calc(100vh-64px)] drop-shadow-lg/50 overflow-hidden w-full max-w-5xl">
                 {children}
               </div>
             </main>

@@ -5,7 +5,7 @@ import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
-export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true }) {
+export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
@@ -34,10 +34,13 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
 
 
     const bgGradient = useMemo(() => {
+        if (isUnselected) {
+            return 'bg-gradient-to-b from-neutral-300 to-neutral-500';
+        }
         return pokemonCard.isPlayerCard
-            ? 'bg-gradient-to-br from-theme-blue to-theme-blue-100'
-            : 'bg-gradient-to-br from-theme-red to-theme-red-100';
-    }, [pokemonCard.isPlayerCard]);
+            ? 'bg-gradient-to-b from-theme-blue to-theme-blue-100'
+            : 'bg-gradient-to-b from-theme-red to-theme-red-100';
+    }, [pokemonCard.isPlayerCard, isUnselected]);
 
     const weakenCard = () => {
         return new Promise((resolve) => {
@@ -65,7 +68,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         return new Promise((resolve) => {
             if (cardRef.current) {
                 cardRef.current.classList.add('slide-in-bck-top')
-                setTimeout(resolve, 300);
+                setTimeout(resolve, 400);
             } else {
                 resolve();
             }
@@ -150,15 +153,15 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
             {...listeners}
             {...attributes}
         >
-            <div ref={cardRef} className={`p-2.5 border-front ${roundCorners ? "rounded-md" : ""} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
+            <div ref={cardRef} className={`p-2 lg:p-3 border-front ${roundCorners ? "rounded-md" : ""} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
                 <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                     <div className="relative h-full flex flex-col items-center justify-center">
                         <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
                         <ElementalTypes types={pokemonCard.types} />
-                        <Image draggable={false} width={96} height={96} className="drop-shadow-md/30 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonCard.id}.png`} />
+                        <Image draggable={false} width={80} height={80} className="drop-shadow-md/30 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} />
                         <div className='absolute bottom-0'>
-                            <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64"}></path></svg>
-                            <div className={`pt-10 text-center w-full ${pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent"}`} />
+                            <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
+                            <div className={`pt-10 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
                             <div className="px-2 py-1 w-full text-center uppercase text-white text-[10px] lg:text-xs font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
                         </div>
                     </div>
