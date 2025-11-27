@@ -37,6 +37,12 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <title>Pokémon Flip | Strategic Card Battle Game</title>
+        <meta name="description" content="A strategic card battle game inspired by Triple Triad, featuring Pokémon cards with elemental types and stat-based combat." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pressStart2P.variable} antialiased`}
       >
