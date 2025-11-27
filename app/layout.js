@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
             {/* Mobile splash screen */}
             <div className="block md:hidden min-h-screen flex items-center justify-center p-8">
               <div className="text-center">
-                <h1 className="font-press-start text-2xl mb-6 text-white header-text ">
+                <h1 className="font-press-start text-2xl mb-6 text-white header-text">
                   Pokémon Flip
                 </h1>
                 <p className="font-press-start text-sm text-white/90 leading-relaxed drop-shadow-md">

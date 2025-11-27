@@ -89,7 +89,7 @@ export default function Select() {
                 </h1>
             </div>
             <div className='grow flex overflow-y-auto'>
-                <div className={`relative bg-theme-blue ${styles['hide-scrollbar']} overflow-y-auto flex`}>
+                <div className="relative bg-theme-blue hide-scrollbar overflow-y-auto flex">
                     <div className="grid grid-cols-[repeat(2,124px)] lg:grid-cols-[repeat(2,174px)] auto-rows-min gap-4 p-4">
                         {playerCardLibrary
                             .filter(pokemonCard => {

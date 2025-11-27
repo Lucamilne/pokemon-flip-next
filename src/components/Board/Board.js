@@ -8,6 +8,7 @@ import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import { allocateRandomCpuCards } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter } from 'next/navigation';
+import gameData from '@/data/game-data.json';
 
 export default function Board() {
     const [cpuHand, setCpuHand] = useState([]);
@@ -104,7 +105,7 @@ export default function Board() {
         const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
         gridCells.forEach((cell) => {
-            if (tilesPlaced < maxTiles && Math.random() < 0.15 && availableTypes.length > 0) {
+            if (tilesPlaced < maxTiles && Math.random() < 0.2 && availableTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * availableTypes.length);
                 const randomElement = availableTypes[randomIndex];
                 updatedCells[cell] = { ...updatedCells[cell], element: randomElement };
@@ -128,7 +129,7 @@ export default function Board() {
             if (attackingCard.types.includes(cellTargetObject.element) && stat < 10) {
                 // stat cannot be increased above 10
                 return stat + 1;
-            } else if (cellTargetObject.element && stat > 1) {
+            } else if (cellTargetObject.element && !attackingCard.types.includes(cellTargetObject.element) && stat > 1) {
                 // stat cannot be decreased below 1
                 return stat - 1;
             }
@@ -145,6 +146,10 @@ export default function Board() {
             attackingCard.stats = applyTileStatModifiers(attackingCard, cellTargetObject); // add or remove stats on placement of attacking card on tile
         }
 
+        // Track if this card captured any cards due to type effectiveness
+        attackingCard.wasSuperEffective = false;
+        attackingCard.wasNoEffect = false;
+
         // apply attack logic against adjacent cards
         cellTargetObject.adjacentCells.forEach((adjacentCellKey, statIndex) => {
             if (!adjacentCellKey || !cells[adjacentCellKey].pokemonCard) return; // No adjacent cell or no adjacent defending card present
@@ -152,14 +157,61 @@ export default function Board() {
             const defendingCard = cells[adjacentCellKey].pokemonCard;
             const defendingStatIndex = cells[adjacentCellKey].adjacentCells.indexOf(cellTarget); // index of the attacking cell in the defending cell's adjacentCells
             const defendingStat = defendingCard.stats[defendingStatIndex];
-            const attackingStat = attackingCard.stats[statIndex];
+            let attackingStat = attackingCard.stats[statIndex];
+
+            // Calculate type effectiveness
+            const typeMatchups = gameData.typeMatchups;
+
+            // First check for immunity - if immune, attack fails completely
+            let isImmune = false;
+            for (const attackType of attackingCard.types) {
+                const matchup = typeMatchups[attackType];
+
+                for (const defendType of defendingCard.types) {
+                    if (matchup.immune.includes(defendType)) {
+                        isImmune = true;
+                        break;
+                    }
+                }
+                if (isImmune) break;
+            }
+
+            // Mark if attacking card encountered immunity
+            if (isImmune && defendingCard.isPlayerCard !== attackingCard.isPlayerCard) {
+                attackingCard.wasNoEffect = true;
+            }
+
+            // Calculate net type effectiveness bonus
+            let effectivenessBonus = 0;
+            if (!isImmune) {
+                attackingCard.types.forEach(attackType => {
+                    const matchup = typeMatchups[attackType];
+
+                    defendingCard.types.forEach(defendType => {
+                        if (matchup.superEffective.includes(defendType)) {
+                            effectivenessBonus++;
+                        } else if (matchup.notEffective.includes(defendType)) {
+                            effectivenessBonus--;
+                        }
+                    });
+                });
+            }
+
+            const hasEffectivenessBonus = effectivenessBonus > 0;
 
             // check if attackingCard and defendingCard belong to different players
+            // Immunity prevents all captures
             if (
-                attackingStat > defendingStat &&
+                !isImmune &&
+                (attackingStat > defendingStat || (attackingStat === defendingStat && hasEffectivenessBonus)) &&
                 defendingCard.isPlayerCard !== attackingCard.isPlayerCard
             ) {
                 defendingCard.isPlayerCard = attackingCard.isPlayerCard; // capture the defending card
+
+                // Mark if this capture involved type effectiveness
+                if (hasEffectivenessBonus) {
+                    attackingCard.wasSuperEffective = true;
+                }
             }
         });
     }
@@ -181,13 +233,19 @@ export default function Board() {
         placeAttackingCard(cellTarget, attackingCard)
 
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
-        setCells(prev => ({
-            ...prev,
-            [cellTarget]: {
+        // Force re-render by creating a new cells object so React detects defending card changes
+        setCells(prev => {
+            const newCells = { ...prev };
+            // Spread all cells to trigger re-renders on captured cards
+            Object.keys(newCells).forEach(key => {
+                newCells[key] = { ...newCells[key] };
+            });
+            newCells[cellTarget] = {
                 ...prev[cellTarget],
                 pokemonCard: attackingCard
-            }
-        }));
+            };
+            return newCells;
+        });
 
         // end the turn!
         setIsPlayerTurn(false)
@@ -219,7 +277,7 @@ export default function Board() {
     };
 
     const makeCpuMove = async () => {
-        await sleep(500 + Math.random() * 500); // delay move by minimum of 500ms
+        await sleep(1000 + Math.random() * 500); // delay move by minimum of 500ms
 
         let arrayOfCellsToPlace = [];
         let arrayOfPlayerOccupiedCells = [];
@@ -392,13 +450,19 @@ export default function Board() {
         placeAttackingCard(cellTarget, attackingCard);
 
         // Place the card in the selected cell
-        setCells(prevCells => ({
-            ...prevCells,
-            [cellTarget]: {
+        // Force re-render by creating a new cells object so React detects defending card changes
+        setCells(prevCells => {
+            const newCells = { ...prevCells };
+            // Spread all cells to trigger re-renders on captured cards
+            Object.keys(newCells).forEach(key => {
+                newCells[key] = { ...newCells[key] };
+            });
+            newCells[cellTarget] = {
                 ...prevCells[cellTarget],
                 pokemonCard: attackingCard
-            }
-        }));
+            };
+            return newCells;
+        });
 
         setIsPlayerTurn(true); // end the turn!
     }

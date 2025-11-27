@@ -1,16 +1,15 @@
 import { useEffect, useState, useMemo } from 'react';
-import { getPokemonData } from '@/utils/pokeApi';
+import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import Loader from "@/components/Loader/Loader.js";
-import Image from 'next/image';
+
 
 export default function Profile({ playerHand, lastPokemonCardSelected }) {
     const [pokemonData, setPokemonData] = useState(null);
+    const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const filteredPlayerHand = playerHand.filter(Boolean);
 
-
-    const TypeList = ({ types }) => {
+    const TypeList = ({ types = [] }) => {
         return types.map((type) => {
             return (
                 <span
@@ -28,18 +27,32 @@ export default function Profile({ playerHand, lastPokemonCardSelected }) {
         if (!lastPokemonCardSelected) return;
 
         const fetchPokemonData = async () => {
+            setPokemonData(null);
+            setEvolutionChain(null);
             setIsLoading(true);
             setError(null);
 
             try {
-                const data = await getPokemonData(lastPokemonCardSelected.name);
+                const [pokemonData, speciesData] = await Promise.all([
+                    getPokemonData(lastPokemonCardSelected.name),
+                    getPokemonSpeciesData(lastPokemonCardSelected.name)
+                ]);
 
-                setPokemonData(data);
+                const combinedData = { ...pokemonData, ...speciesData };
 
-                const pokemonCry = new Audio(data.cries.legacy);
+                // Fetch evolution chain if available
+                if (speciesData.evolution_chain?.url) {
+                    const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+                    const evolutionData = await evolutionResponse.json();
+                    setEvolutionChain(evolutionData.chain);
+                }
+
+                setPokemonData(combinedData);
+
+                const pokemonCry = new Audio(combinedData.cries.legacy);
                 pokemonCry.volume = 0.5;
                 pokemonCry.addEventListener('error', (error) => {
-                    console.error(`Failed to play ${data.name} cry: `, error)
+                    console.error(`Failed to play ${combinedData.name} cry: `, error)
                 })
                 pokemonCry.play();
             } catch (error) {
@@ -53,63 +66,105 @@ export default function Profile({ playerHand, lastPokemonCardSelected }) {
         fetchPokemonData();
     }, [lastPokemonCardSelected])
 
-    useEffect(() => {
-        if (!pokemonData) return;
+    const getIdFromUrl = (url) => {
+        return url.split('/').filter(Boolean).pop();
+    };
 
-        console.log(pokemonData)
-    }, [pokemonData]) //delete after testing
+    const EvolutionChain = ({ chain }) => {
+        if (!chain) return null;
 
-    const allTypes = useMemo(() => new Set(filteredPlayerHand.flatMap(card => card.types)), [filteredPlayerHand]);
+        const baseImgURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
-    const ProfileContent = () => {
-        if (filteredPlayerHand.length < 1) (
-            <h1>Hello!</h1>
-        )
+        // No evolution
+        if (!chain.evolves_to || chain.evolves_to.length === 0) {
+            return <div className="text-sm">{chain.species.name} does not evolve.</div>;
+        }
+
+        // Render evolution rows
+        const renderEvolution = (basePokemon, evolvedPokemon) => (
+            <div key={`${basePokemon.species.name}-${evolvedPokemon.species.name}`} className="grid grid-cols-3 justify-between items-center gap-2 mb-2">
+                <div className="flex flex-col items-center">
+                    <img
+                        alt={basePokemon.species.name}
+                        src={`${baseImgURL}${getIdFromUrl(basePokemon.species.url)}.png`}
+                        className="w-16 h-16"
+                    />
+                    <span className="text-xs capitalize">{basePokemon.species.name}</span>
+                </div>
+                <div className='flex justify-center'>
+                    <div className="arrow" />
+                </div>
+                <div className="flex flex-col items-center">
+                    <img
+                        alt={evolvedPokemon.species.name}
+                        src={`${baseImgURL}${getIdFromUrl(evolvedPokemon.species.url)}.png`}
+                        className="w-16 h-16"
+                    />
+                    <span className="text-xs capitalize">{evolvedPokemon.species.name}</span>
+                </div>
+            </div>
+        );
 
         return (
-            <div className='grid grid-cols-2 grid-rows-3 h-full'>
-                <div>
-                    <h3 className='font-bold text-lg mb-2'>Your Team</h3>
-                    <ul className="text-sm">
-                        {/* <hr className="border-2 my-2" /> */}
-                        {filteredPlayerHand.map(pokemonCard => (
-                            <li className='capitalize'>{pokemonCard.name}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div>
-                    <h3 className='font-bold text-lg mb-2'>Selected Types</h3>
-                    <ul className='flex flex-wrap gap-2 text-sm'>
-                        {/* <hr className="border-2 my-2" /> */}
-                        {Array.from(allTypes).map(type => (
-                            <li key={type} className='inline-block capitalize text-white py-1 px-3' style={{ backgroundColor: `var(--color-${type}-500)` }}>{type}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="col-span-2">
-                    <h3 className='font-bold text-lg mb-2'>Your Stats</h3>
-                    <ul className="text-sm">
-                        <li>Most played card: Bulbasaur</li>
-                        <li>Favourite type: <span className='inline-block capitalize text-white py-0.5 px-2 text-xs' style={{ backgroundColor: `var(--color-normal-500)` }}>Normal</span></li>
-                        <li>Times won: 0</li>
-                        <l1>Artifacts discovered: 0</l1>
-                    </ul>
-                </div>
+            <div className="text-sm">
+                {chain.evolves_to.map(evolution => (
+                    <div key={evolution.species.name}>
+                        {renderEvolution(chain, evolution)}
+                        {evolution.evolves_to?.map(secondEvolution =>
+                            renderEvolution(evolution, secondEvolution)
+                        )}
+                    </div>
+                ))}
             </div>
         );
     };
 
-    // {
-    //     pokemonData && (
-    //         <Image draggable={false} width={80} height={80} className="drop-shadow-md/30 z-10" alt={lastPokemonCardSelected.name} src={pokemonData.sprites.other["official-artwork"].front_default} />
-    //     )
-    // }
+    const ProfileContent = () => {
+        if (!pokemonData) return null;
 
-    // <TypeList types={lastPokemonCardSelected.types} />
-
+        return (
+            <div className='h-full p-8 overflow-y-auto hide-scrollbar'>
+                <div>
+                    <h3 className="mb-2">
+                        <span className="capitalize text-lg font-bold">{lastPokemonCardSelected?.name}</span>
+                        <span>#{lastPokemonCardSelected?.id}</span>
+                    </h3>
+                    <TypeList types={lastPokemonCardSelected?.types} />
+                </div>
+                <hr className="border-2 border-black my-3" />
+                <div>
+                    <h3 className='mb-2'>
+                        {pokemonData.genera?.find(g => g.language.name === 'en')?.genus || 'Unknown Pokémon'}
+                    </h3>
+                    <p className="text-sm">
+                        {pokemonData.flavor_text_entries?.find(entry => entry.language.name === 'en')?.flavor_text.replace(/\f/g, ' ') || 'No description available.'}
+                    </p>
+                </div>
+                <hr className="border-2 border-black my-3" />
+                <div>
+                    <h3 className='mb-2'>Pokédex Data</h3>
+                    <ul className="text-sm">
+                        <li className="flex justify-between">Height:<span>{(pokemonData.height / 10).toFixed(1)}m</span></li>
+                        <li className="flex justify-between">Weight:<span>{(pokemonData.weight / 10).toFixed(1)}kg</span></li>
+                        <li className="flex justify-between">Colour:<span className="capitalize">{pokemonData.color?.name || 'Unknown'}</span></li>
+                        <li className="flex justify-between">Shape:<span className="capitalize">{pokemonData.shape?.name || 'Unknown'}</span></li>
+                        <li className="flex justify-between">Growth rate:<span className="capitalize">{pokemonData.growth_rate?.name.replace('-', ' ') || 'Unknown'}</span></li>
+                        <li className="flex justify-between">Habitat:<span className="capitalize">{pokemonData.habitat?.name || 'Unknown'}</span></li>
+                    </ul>
+                </div>
+                <hr className="border-2 border-black my-3" />
+                {evolutionChain && (
+                    <div>
+                        <h3 className='mb-2'>Evolution Chain</h3>
+                        <EvolutionChain chain={evolutionChain} />
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     return (
-        <div className='relative flex-1 default-tile p-8 border-x-4 border-black font-press-start text-lg'>
+        <div className='relative flex-1 default-tile border-x-4 border-black font-press-start p-2'>
             {isLoading ? (
                 <Loader />
             ) : (
