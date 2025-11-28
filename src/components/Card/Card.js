@@ -19,7 +19,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
     };
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: `${pokemonCard.id.toString()}-${pokemonCard.isPlayerCard ? "-player" : "-cpu"}`, // it's possible that the cpu may have the same card as a player, we need to distinguish IDs
+        id: `${pokemonCard.id.toString()}-${index}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`, // unique ID includes index and player/cpu
         disabled: !isDraggable,
         data: {
             pokemonCard,
