@@ -14,7 +14,7 @@ export default function Profile({ playerHand, lastPokemonCardSelected }) {
             return (
                 <span
                     key={type}
-                    className="capitalize text-white py-1 px-3"
+                    className="capitalize text-white py-1 px-3 mr-2"
                     style={{ backgroundColor: `var(--color-${type}-500)` }}
                 >
                     {type}
@@ -77,7 +77,7 @@ export default function Profile({ playerHand, lastPokemonCardSelected }) {
 
         // No evolution
         if (!chain.evolves_to || chain.evolves_to.length === 0) {
-            return <div className="text-sm">{chain.species.name} does not evolve.</div>;
+            return <div className="text-sm"><span className='capitalize'>{chain.species.name}</span> does not evolve.</div>;
         }
 
         // Render evolution rows

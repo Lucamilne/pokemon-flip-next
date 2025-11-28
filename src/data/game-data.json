@@ -3012,16 +3012,16 @@
         "water"
       ],
       "stats": [
-        6,
         1,
-        2,
+        1,
+        1,
         1
       ],
       "effort_value": 1,
       "originalStats": [
-        6,
         1,
-        2,
+        1,
+        1,
         1
       ],
       "rarity": "common",

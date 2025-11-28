@@ -85,7 +85,7 @@ export default function Board() {
         const newPlayerHand = selectedPlayerHand;
 
         if (!newPlayerHand) {
-            router.push('/pokemon-select');
+            router.push('/select');
             return;
         }
 
@@ -100,12 +100,12 @@ export default function Board() {
         // Set random elemental tiles
         const gridCells = Object.keys(cells);
         let tilesPlaced = 0;
-        const maxTiles = 3;
+        const maxTiles = 9;
         const updatedCells = { ...cells };
         const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
         gridCells.forEach((cell) => {
-            if (tilesPlaced < maxTiles && Math.random() < 0.2 && availableTypes.length > 0) {
+            if (tilesPlaced < maxTiles && Math.random() < 1 && availableTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * availableTypes.length);
                 const randomElement = availableTypes[randomIndex];
                 updatedCells[cell] = { ...updatedCells[cell], element: randomElement };
@@ -149,6 +149,9 @@ export default function Board() {
         // Track if this card captured any cards due to type effectiveness
         attackingCard.wasSuperEffective = false;
         attackingCard.wasNoEffect = false;
+
+        // Track which cells had cards captured
+        const capturedCells = {};
 
         // apply attack logic against adjacent cards
         cellTargetObject.adjacentCells.forEach((adjacentCellKey, statIndex) => {
@@ -206,7 +209,8 @@ export default function Board() {
                 (attackingStat > defendingStat || (attackingStat === defendingStat && hasEffectivenessBonus)) &&
                 defendingCard.isPlayerCard !== attackingCard.isPlayerCard
             ) {
-                defendingCard.isPlayerCard = attackingCard.isPlayerCard; // capture the defending card
+                // Track this cell as having been captured (don't mutate the original object)
+                capturedCells[adjacentCellKey] = attackingCard.isPlayerCard;
 
                 // Mark if this capture involved type effectiveness
                 if (hasEffectivenessBonus) {
@@ -214,6 +218,8 @@ export default function Board() {
                 }
             }
         });
+
+        return capturedCells;
     }
 
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -230,7 +236,7 @@ export default function Board() {
         // Remove card from the player hand
         setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
 
-        placeAttackingCard(cellTarget, attackingCard)
+        const capturedCells = placeAttackingCard(cellTarget, attackingCard);
 
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
         // Force re-render by creating a new cells object so React detects defending card changes
@@ -241,7 +247,11 @@ export default function Board() {
                 if (newCells[key].pokemonCard) {
                     newCells[key] = {
                         ...newCells[key],
-                        pokemonCard: { ...newCells[key].pokemonCard }
+                        pokemonCard: {
+                            ...newCells[key].pokemonCard,
+                            // Update isPlayerCard for captured cards
+                            ...(capturedCells[key] !== undefined && { isPlayerCard: capturedCells[key] })
+                        }
                     };
                 } else {
                     newCells[key] = { ...newCells[key] };
@@ -454,7 +464,7 @@ export default function Board() {
 
         setCpuHand(prev => prev.map((card, index) => index === originalIndex ? null : card));
 
-        placeAttackingCard(cellTarget, attackingCard);
+        const capturedCells = placeAttackingCard(cellTarget, attackingCard);
 
         // Place the card in the selected cell
         // Force re-render by creating a new cells object so React detects defending card changes
@@ -465,7 +475,11 @@ export default function Board() {
                 if (newCells[key].pokemonCard) {
                     newCells[key] = {
                         ...newCells[key],
-                        pokemonCard: { ...newCells[key].pokemonCard }
+                        pokemonCard: {
+                            ...newCells[key].pokemonCard,
+                            // Update isPlayerCard for captured cards
+                            ...(capturedCells[key] !== undefined && { isPlayerCard: capturedCells[key] })
+                        }
                     };
                 } else {
                     newCells[key] = { ...newCells[key] };
@@ -521,7 +535,7 @@ export default function Board() {
                         })}
                     </div>
                 </>
-                <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
+                <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={true} />
             </div>
         </DndContext>
     )

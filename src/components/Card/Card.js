@@ -7,6 +7,7 @@ import { useDraggable } from '@dnd-kit/core';
 
 export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, element, isUnselected = false }) {
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
+    const [isDefeated, setIsDefeated] = useState(false);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
 
@@ -77,14 +78,26 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
 
     const defeatCard = () => {
         return new Promise((resolve) => {
-            if (cardRef.current) {
-                cardRef.current.classList.remove('rotate-diagonal');
+            console.log('🔄 defeatCard() called for:', pokemonCard.name);
+            console.log('   element:', element);
+            console.log('   stats:', pokemonCard.stats);
+            console.log('   originalStats:', pokemonCard.originalStats);
+            console.log('   isDefeated before:', isDefeated);
 
-                cardRef.current.classList.add('rotate-diagonal')
-                setTimeout(resolve, 400);
-            } else {
-                resolve();
+            // Remove any existing animation classes that might interfere
+            if (cardRef.current) {
+                console.log('   classes before:', cardRef.current.className);
+                cardRef.current.classList.remove('wobble-hor-bottom', 'jello-horizontal', 'slide-in-bck-top');
+                console.log('   classes after:', cardRef.current.className);
             }
+
+            console.log('   ✅ Setting isDefeated = TRUE');
+            setIsDefeated(true);
+            setTimeout(() => {
+                console.log('   ⬅️ Setting isDefeated = FALSE');
+                setIsDefeated(false);
+                resolve();
+            }, 400);
         });
     };
 
@@ -103,7 +116,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         }
 
         // Check if this card's attack was immune
-        if (pokemonCard.wasImmune) {
+        if (pokemonCard.wasNoEffect) {
             setShowOverlay(true);
             setTimeout(() => setShowOverlay(false), 400);
             return;
@@ -162,34 +175,45 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         };
     };
 
+    // Log render state
+    if (isPlacedInGrid) {
+        console.log(`📺 Rendering ${pokemonCard.name}: isDefeated=${isDefeated}, element=${element}`);
+    }
+
     return (
         <div className={`relative select-none touch-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
             style={style}
             {...listeners}
             {...attributes}
         >
-            <div ref={cardRef} className={`relative p-2 lg:p-3 border-front ${roundCorners ? "rounded-md" : ""} aspect-square ${isFlipped ? 'card-shown' : 'card-hidden'}`}>
-                <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
-                    <div className="relative h-full flex flex-col items-center justify-center">
-                        <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
-                        <ElementalTypes types={pokemonCard.types} />
-                        <Image draggable={false} width={80} height={80} className="drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} />
-                        <div className='absolute bottom-0'>
-                            <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
-                            <div className={`pt-10 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
-                            <div className="px-2 py-1 w-full text-center uppercase text-white text-[10px] lg:text-xs font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
+            <div ref={cardRef} style={{
+                transformStyle: 'preserve-3d',
+                transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'} ${isDefeated ? 'rotateY(360deg)' : 'rotateY(0deg)'}`,
+                transition: isDefeated || !startsFlipped ? 'transform 0.4s' : 'none'
+            }}>
+                <div className={`relative p-2 lg:p-3 border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden' }}>
+                    <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
+                        <div className="relative h-full flex flex-col items-center justify-center">
+                            <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
+                            <ElementalTypes types={pokemonCard.types} />
+                            <Image draggable={false} width={80} height={80} className="drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} />
+                            <div className='absolute bottom-0'>
+                                <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
+                                <div className={`pt-10 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
+                                <div className="px-2 py-1 w-full text-center uppercase text-white text-[10px] lg:text-xs font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
+                            </div>
                         </div>
                     </div>
+                    {pokemonCard.playerOwned && <Image width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={PokemonBallSprite} />}
+                    {showOverlay && (
+                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-xs p-4 ${roundCorners ? "rounded-md" : ""}`}>
+                            <span className='mt-4'>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
+                        </div>
+                    )}
                 </div>
-                {pokemonCard.playerOwned && <Image width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={PokemonBallSprite} />}
-                {showOverlay && (
-                    <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-xs p-4 ${roundCorners ? "rounded-md" : ""}`}>
-                        <span className='mt-4'>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasImmune ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
+                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-3 select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+                    <div className="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
                     </div>
-                )}
-            </div>
-            <div className={`border-back absolute top-0 left-0 w-full rounded-md p-3 select-none aspect-square shadow ${!isFlipped ? 'card-shown' : 'card-hidden'}`}>
-                <div className="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
 
   const getBackgroundStyle = () => {
     switch (pathname) {
-      case '/pokemon-select':
+      case '/select':
         return { backgroundColor: '#59acff' };
       case '/play':
         return { backgroundColor: '#e61919' };
@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
         return { backgroundColor: '#ddd' };
     }
   };
-  
+
   return (
     <html lang="en">
       <head>

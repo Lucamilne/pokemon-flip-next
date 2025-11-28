@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
 
-export default function PokeballSplash({ pokeballIsOpen, href = "/pokemon-select", buttonText = "Start!", textColour = "text-sky-400", disabled = false }) {
+export default function PokeballSplash({ pokeballIsOpen, href = "/select", buttonText = "Start!", textColour = "text-sky-400", disabled = false }) {
   return (
     <section className="absolute top-0 left-0 w-full h-full overflow-y-hidden pointer-events-none">
       <div
