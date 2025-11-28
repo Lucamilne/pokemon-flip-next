@@ -2,14 +2,7 @@
   position: relative;
   display: flex;
   color: #000;
-  border-width: 12px;
-  border-image-slice: 18px;
-  border: solid;
-  border-image: url('/images/border-image.png');
-  border-image-slice: 12;
-  border-width: 12px;
-  border-image-outset: 6px;
-  border-image-repeat: initial;
+  border: solid 12px;
   background-color: #fff;
   outline: none;
 }

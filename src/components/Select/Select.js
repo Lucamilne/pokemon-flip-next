@@ -7,6 +7,8 @@ import Profile from "../Profile/Profile.js"
 import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
 
+const basePath = process.env.NODE_ENV === 'production' ? '/pokemon-flip-next' : '';
+
 export default function Select() {
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
     const playerCardLibrary = useMemo(() => fetchAllCards(), []);
@@ -69,8 +71,22 @@ export default function Select() {
         <div className="overflow-hidden relative h-full flex flex-col rounded-xl" >
             <div className="px-7 pt-4 pb-6 flex justify-between items-center hand-top-container">
                 <div className="relative font-press-start">
-                    <input type="text" id="search" className={`${styles['snes-input']}`} placeholder='Search Cards' value={searchString}
-                        onChange={(e) => setSearchString(e.target.value)} maxLength={18} />
+                    <input
+                        type="text"
+                        id="search"
+                        className={`${styles['snes-input']}`}
+                        style={{
+                            borderImageSource: `url('${basePath}/images/border-image.png')`,
+                            borderImageSlice: '12',
+                            borderImageWidth: '12px',
+                            borderImageOutset: '6px',
+                            borderImageRepeat: 'initial'
+                        }}
+                        placeholder='Search Cards'
+                        value={searchString}
+                        onChange={(e) => setSearchString(e.target.value)}
+                        maxLength={18}
+                    />
                     {searchString !== "" && (
                         <button
                             onClick={() => setSearchString('')}

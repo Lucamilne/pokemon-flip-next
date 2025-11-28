@@ -236,9 +236,16 @@ export default function Board() {
         // Force re-render by creating a new cells object so React detects defending card changes
         setCells(prev => {
             const newCells = { ...prev };
-            // Spread all cells to trigger re-renders on captured cards
+            // Spread all cells AND pokemonCards to trigger re-renders on captured cards
             Object.keys(newCells).forEach(key => {
-                newCells[key] = { ...newCells[key] };
+                if (newCells[key].pokemonCard) {
+                    newCells[key] = {
+                        ...newCells[key],
+                        pokemonCard: { ...newCells[key].pokemonCard }
+                    };
+                } else {
+                    newCells[key] = { ...newCells[key] };
+                }
             });
             newCells[cellTarget] = {
                 ...prev[cellTarget],
@@ -453,9 +460,16 @@ export default function Board() {
         // Force re-render by creating a new cells object so React detects defending card changes
         setCells(prevCells => {
             const newCells = { ...prevCells };
-            // Spread all cells to trigger re-renders on captured cards
+            // Spread all cells AND pokemonCards to trigger re-renders on captured cards
             Object.keys(newCells).forEach(key => {
-                newCells[key] = { ...newCells[key] };
+                if (newCells[key].pokemonCard) {
+                    newCells[key] = {
+                        ...newCells[key],
+                        pokemonCard: { ...newCells[key].pokemonCard }
+                    };
+                } else {
+                    newCells[key] = { ...newCells[key] };
+                }
             });
             newCells[cellTarget] = {
                 ...prevCells[cellTarget],

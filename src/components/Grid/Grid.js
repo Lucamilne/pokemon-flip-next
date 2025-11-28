@@ -17,7 +17,7 @@ function DroppableCell({ cellKey, cellData }) {
             ref={setNodeRef}
             className={`relative aspect-square p-2 ${cellData.element ? `${cellData.element}-tile` : 'default-tile'}`}
             data-cell={cellKey}
-            title={cellData.element ? `${cellData.element.charAt(0).toUpperCase() + cellData.element.slice(1)} element` : ""}
+            title={cellData.element ? `${cellData.element.charAt(0).toUpperCase() + cellData.element.slice(1)} tile` : ""}
         >
             {/* Hover overlay */}
             {isOver && (
