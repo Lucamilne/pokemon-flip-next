@@ -1,9 +1,7 @@
 import Image from 'next/image'
 import { typeIcons } from '@/utils/typeIcons'
 
-export default function ElementalTypes({ types }) {
-    // w-10 = 40px
-    
+export default function ElementalTypes({ types }) {    
     return (
         <div className="absolute top-1 right-1 z-10">
             {types.map(type => (
