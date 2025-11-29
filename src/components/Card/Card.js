@@ -78,26 +78,23 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
 
     const defeatCard = () => {
         return new Promise((resolve) => {
-            console.log('🔄 defeatCard() called for:', pokemonCard.name);
-            console.log('   element:', element);
-            console.log('   stats:', pokemonCard.stats);
-            console.log('   originalStats:', pokemonCard.originalStats);
-            console.log('   isDefeated before:', isDefeated);
-
-            // Remove any existing animation classes that might interfere
             if (cardRef.current) {
-                console.log('   classes before:', cardRef.current.className);
                 cardRef.current.classList.remove('wobble-hor-bottom', 'jello-horizontal', 'slide-in-bck-top');
-                console.log('   classes after:', cardRef.current.className);
-            }
 
-            console.log('   ✅ Setting isDefeated = TRUE');
-            setIsDefeated(true);
-            setTimeout(() => {
-                console.log('   ⬅️ Setting isDefeated = FALSE');
-                setIsDefeated(false);
+                // Force a reflow to ensure the browser has committed the current state. This is to fix a transition property issue with animations playing instantly
+                cardRef.current.offsetHeight;
+
+                // Use requestAnimationFrame to ensure the browser has painted before changing state
+                requestAnimationFrame(() => {
+                    setIsDefeated(true);
+                    setTimeout(() => {
+                        setIsDefeated(false);
+                        resolve();
+                    }, 400);
+                });
+            } else {
                 resolve();
-            }, 400);
+            }
         });
     };
 
@@ -175,11 +172,6 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         };
     };
 
-    // Log render state
-    if (isPlacedInGrid) {
-        console.log(`📺 Rendering ${pokemonCard.name}: isDefeated=${isDefeated}, element=${element}`);
-    }
-
     return (
         <div className={`relative select-none touch-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
             style={style}
@@ -188,8 +180,8 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         >
             <div ref={cardRef} style={{
                 transformStyle: 'preserve-3d',
-                transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'} ${isDefeated ? 'rotateY(360deg)' : 'rotateY(0deg)'}`,
-                transition: isDefeated || !startsFlipped ? 'transform 0.4s' : 'none'
+                transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'} ${isDefeated ? 'rotateY(180deg)' : 'rotateY(0deg)'}`,
+                transition: 'transform 0.4s'
             }}>
                 <div className={`relative p-2 lg:p-3 border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden' }}>
                     <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
