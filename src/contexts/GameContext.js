@@ -1,14 +1,24 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
+import { GAME_MODES } from '@/constants/gameModes';
+
+// Re-export for convenience
+export { GAME_MODES };
 
 const GameContext = createContext();
 
 export function GameProvider({ children }) {
   const [selectedPlayerHand, setSelectedPlayerHand] = useState(null);
+  const [selectedGameMode, setSelectedGameMode] = useState(GAME_MODES.QUICK_PLAY.id);
 
   return (
-    <GameContext.Provider value={{ selectedPlayerHand, setSelectedPlayerHand }}>
+    <GameContext.Provider value={{
+      selectedPlayerHand,
+      setSelectedPlayerHand,
+      selectedGameMode,
+      setSelectedGameMode
+    }}>
       {children}
     </GameContext.Provider>
   );

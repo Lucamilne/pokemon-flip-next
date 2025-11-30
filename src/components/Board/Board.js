@@ -7,7 +7,7 @@ import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import { allocateRandomCpuCards } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import gameData from '@/data/game-data.json';
 
 export default function Board() {
@@ -15,7 +15,7 @@ export default function Board() {
     const [playerHand, setPlayerHand] = useState([]);
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
-
+    const pathname = usePathname();
     const { selectedPlayerHand } = useGameContext();
     const router = useRouter();
 
@@ -85,7 +85,9 @@ export default function Board() {
         const newPlayerHand = selectedPlayerHand;
 
         if (!newPlayerHand) {
-            router.push('/select');
+            // Extract game mode from pathname (e.g., /quickplay/select/play -> quickplay)
+            const gameMode = pathname.split('/').filter(Boolean)[0];
+            router.push(`/${gameMode}/select`);
             return;
         }
 
@@ -100,12 +102,12 @@ export default function Board() {
         // Set random elemental tiles
         const gridCells = Object.keys(cells);
         let tilesPlaced = 0;
-        const maxTiles = 9;
+        const maxTiles = 3;
         const updatedCells = { ...cells };
         const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
         gridCells.forEach((cell) => {
-            if (tilesPlaced < maxTiles && Math.random() < 1 && availableTypes.length > 0) {
+            if (tilesPlaced < maxTiles && Math.random() < 0.2 && availableTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * availableTypes.length);
                 const randomElement = availableTypes[randomIndex];
                 updatedCells[cell] = { ...updatedCells[cell], element: randomElement };
@@ -294,7 +296,7 @@ export default function Board() {
     };
 
     const makeCpuMove = async () => {
-        await sleep(1000 + Math.random() * 500); // delay move by minimum of 500ms
+        await sleep(1250 + Math.random() * 250); // delay move by minimum of 1250ms
 
         let arrayOfCellsToPlace = [];
         let arrayOfPlayerOccupiedCells = [];
@@ -535,7 +537,7 @@ export default function Board() {
                         })}
                     </div>
                 </>
-                <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={true} />
+                <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
             </div>
         </DndContext>
     )

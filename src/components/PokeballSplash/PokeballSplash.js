@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
 
-export default function PokeballSplash({ pokeballIsOpen, href = "/select", buttonText = "Start!", textColour = "text-sky-400", disabled = false }) {
+export default function PokeballSplash({ pokeballIsOpen, href, buttonText = "Start!", textColour = "text-sky-400" }) {
   return (
     <section className="absolute top-0 left-0 w-full h-full overflow-y-hidden pointer-events-none">
       <div
@@ -15,12 +15,17 @@ export default function PokeballSplash({ pokeballIsOpen, href = "/select", butto
         <div className="bg-white surround-mobile rounded-full flex justify-center items-center">
           <Link
             className="pokeball-button bg-white rounded-full cursor-pointer pointer-events-auto"
-            href={href}
+            href={href || "/"}
             aria-label="Open pokeball"
+            onClick={(e) => {
+              if (!href) {
+                e.preventDefault();
+              }
+            }}
           />
         </div>
       </div>
-      <p className={`${pokeballIsOpen || disabled ? "hidden" : ""} flex gap-0.5 pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-8 text-lg ${textColour} text-shadow-sm/30 font-press-start uppercase text-hop`}>
+      <p className={`${pokeballIsOpen || !href ? "hidden" : ""} flex gap-0.5 pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-8 text-lg ${textColour} text-shadow-sm/30 font-press-start uppercase text-hop`}>
         {buttonText.split('').map((char, index) => (<span key={index} style={{
           animationDelay: `${(index + 1) * 50}ms`
         }}> {char}</span>))}

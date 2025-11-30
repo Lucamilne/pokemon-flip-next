@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 import { fetchStarterCards, fetchStrongCards, fetchAllCards } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
@@ -6,17 +7,23 @@ import Help from "../Help/Help.js";
 import Profile from "../Profile/Profile.js"
 import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
+import { GAME_MODES } from '@/constants/gameModes';
 
 const basePath = process.env.NODE_ENV === 'production' ? '/pokemon-flip-next' : '';
 
 export default function Select() {
+    const pathname = usePathname();
+    // Extract root path (e.g., "/quickplay/select" -> "/quickplay")
+    const rootPath = '/' + pathname.split('/').filter(Boolean)[0];
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
-    const playerCardLibrary = useMemo(() => fetchAllCards(), []);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const { setSelectedPlayerHand } = useGameContext();
+    const { setSelectedPlayerHand, selectedGameMode } = useGameContext();
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
+    const playerCardLibrary = useMemo(() => {
+        return pathname.startsWith('/quickplay') ? fetchAllCards() : fetchStarterCards();
+    }, [pathname]);
 
     useEffect(() => {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
@@ -150,7 +157,7 @@ export default function Select() {
                     <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
             </div>
-            <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href="/play" buttonText='Fight!' />
+            <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />
         </div>
     )
 }

@@ -17,10 +17,14 @@ export default function Matchups() {
         return 'normal';
     };
 
+    const getBgStyle = (type) => {
+        return { backgroundColor: `var(--color-${type}-500)` };
+    };
+
     return (
         <div className='grid grid-cols-18 grid-rows-18'>
             {/* Empty corner cell */}
-            <div className='border'></div>
+            <div />
 
             {/* Header row - defending types */}
             {gameData.types.map((type) => (
@@ -43,16 +47,13 @@ export default function Matchups() {
                         return (
                             <div
                                 key={`${attackingType}-${defendingType}`}
-                                className={`border p-2 text-center ${effectiveness === 'super' ? 'bg-green-500' :
-                                    effectiveness === 'immune' ? 'bg-gray-500' :
-                                        effectiveness === 'not-effective' ? 'bg-red-500' :
-                                            'bg-white'
+                                className={`aspect-square rounded text-[10px] text-center m-0 flex justify-center items-center text-white ${effectiveness === 'super' ? 'grass-tile' :
+                                    effectiveness === 'immune' ? 'steel-tile' :
+                                        ''
                                     }`}
                             >
-                                {effectiveness === 'super' ? '2x' :
-                                    effectiveness === 'immune' ? '0x' :
-                                        effectiveness === 'not-effective' ? '0.5x' :
-                                            '1x'}
+                                {effectiveness === 'super' ? 'Effective' :
+                                    effectiveness === 'immune' ? 'No Effect' : '' }
                             </div>
                         );
                     })}

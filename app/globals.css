@@ -543,7 +543,7 @@ body {
     width: 14px;
     height: 14px;
     position: relative;
-    display: inline-block;
+    display: inline-block
 }
 
 .arrow::before {

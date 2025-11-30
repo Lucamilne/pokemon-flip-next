@@ -7,7 +7,7 @@ import { useDraggable } from '@dnd-kit/core';
 
 export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, element, isUnselected = false }) {
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
-    const [isDefeated, setIsDefeated] = useState(false);
+    // const [isDefeated, setIsDefeated] = useState(false);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
 
@@ -86,9 +86,11 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
 
                 // Use requestAnimationFrame to ensure the browser has painted before changing state
                 requestAnimationFrame(() => {
-                    setIsDefeated(true);
+                    // setIsDefeated(true);
+                    cardRef.current.classList.add('rotate-diagonal')
                     setTimeout(() => {
-                        setIsDefeated(false);
+                        // setIsDefeated(false);
+                        cardRef.current.classList.remove('rotate-diagonal')
                         resolve();
                     }, 400);
                 });
@@ -151,7 +153,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
             const animationDelay = 150;
 
             setTimeout(() => {
-                setIsFlipped(!isFlipped)
+                setIsFlipped(true)
             }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
         }
     }, [])
@@ -180,8 +182,8 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         >
             <div ref={cardRef} style={{
                 transformStyle: 'preserve-3d',
-                transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'} ${isDefeated ? 'rotateY(180deg)' : 'rotateY(0deg)'}`,
-                transition: 'transform 0.4s'
+                transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
+                transition: 'transform 0.3s ease-out'
             }}>
                 <div className={`relative p-2 lg:p-3 border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden' }}>
                     <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>

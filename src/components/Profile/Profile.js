@@ -2,22 +2,25 @@ import { useEffect, useState, useMemo } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import Loader from "@/components/Loader/Loader.js";
 
-
 export default function Profile({ playerHand, lastPokemonCardSelected }) {
     const [pokemonData, setPokemonData] = useState(null);
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    function capitaliseFirstLetter(val) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+    }
+
     const TypeList = ({ types = [] }) => {
         return types.map((type) => {
             return (
                 <span
                     key={type}
-                    className="capitalize text-white py-1 px-3 mr-2"
+                    className="text-white py-1 px-3 mr-2"
                     style={{ backgroundColor: `var(--color-${type}-500)` }}
                 >
-                    {type}
+                    {capitaliseFirstLetter(type)}
                 </span>
             );
         });
