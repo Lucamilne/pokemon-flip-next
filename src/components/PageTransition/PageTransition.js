@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
-export default function PageTransition() {
-    const [tilesLeft, setTilesLeft] = useState(Array.from({ length: 12 }, () => false));
-    const [tilesRight, setTilesRight] = useState(Array.from({ length: 12 }, () => false));
+export default function PageTransition({ debugMode = false }) {
+    const [tilesLeft, setTilesLeft] = useState(Array.from({ length: 10 }, () => false));
+    const [tilesRight, setTilesRight] = useState(Array.from({ length: 10 }, () => false));
     const router = useRouter();
     const pathname = usePathname();
 
@@ -33,38 +33,40 @@ export default function PageTransition() {
 
         // Calculate when both animations complete and route to results screen
         const totalAnimationTime = halfwayDelay + ((tilesRight.length - 1) * 50) + 300;
-
-        setTimeout(() => {
-            router.push(`${pathname}/result`);
-        }, totalAnimationTime);
+        
+        if (!debugMode) {
+            setTimeout(() => {
+                router.push(`${pathname}/result`);
+            }, totalAnimationTime);
+        }
     }, []);
 
     return (
         <div className="absolute inset-0 z-50 pointer-events-none">
             {/* Left tiles */}
-            {tilesLeft.map((isActive, index) => (
-                <div
-                    key={`left-${index}`}
-                    className="absolute w-full bg-white opacity-75 transition-transform duration-300 ease-out"
-                    style={{
-                        height: `${100 / 12}%`,
-                        top: `${(100 / 12) * index}%`,
-                        transform: isActive ? 'translateX(0)' : 'translateX(-100%)',
-                    }}
-                />
-            ))}
+            <div className="absolute inset-0 grid grid-rows-10">
+                {tilesLeft.map((isActive, index) => (
+                    <div
+                        key={`left-${index}`}
+                        className="w-full bg-white opacity-75 transition-transform duration-300 ease-out"
+                        style={{
+                            transform: isActive ? 'translateX(0)' : 'translateX(-100%)',
+                        }}
+                    />
+                ))}
+            </div>
             {/* Right tiles */}
-            {tilesRight.map((isActive, index) => (
-                <div
-                    key={`right-${index}`}
-                    className="absolute w-full bg-white transition-transform duration-300 ease-out"
-                    style={{
-                        height: `${100 / 12}%`,
-                        top: `${(100 / 12) * index}%`,
-                        transform: isActive ? 'translateX(0)' : 'translateX(100%)',
-                    }}
-                />
-            ))}
+            <div className="absolute inset-0 grid grid-rows-10">
+                {tilesRight.map((isActive, index) => (
+                    <div
+                        key={`right-${index}`}
+                        className="w-full bg-white transition-transform duration-300 ease-out"
+                        style={{
+                            transform: isActive ? 'translateX(0)' : 'translateX(100%)',
+                        }}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

@@ -31,6 +31,9 @@ export default function RootLayout({ children }) {
     if (pathname.endsWith('/play')) {
       return { backgroundColor: '#e61919' };
     }
+    if (pathname.endsWith('/result')) {
+      return { backgroundColor: '#fff' };
+    }
     return { backgroundColor: '#ddd' };
   };
 
