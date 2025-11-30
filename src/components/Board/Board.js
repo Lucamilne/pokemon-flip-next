@@ -5,6 +5,7 @@ import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
+import PageTransition from '../PageTransition/PageTransition.js';
 import { allocateRandomCpuCards } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter, usePathname } from 'next/navigation';
@@ -15,8 +16,9 @@ export default function Board() {
     const [playerHand, setPlayerHand] = useState([]);
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
+    const [isGameComplete, setIsGameComplete] = useState(false);
     const pathname = usePathname();
-    const { selectedPlayerHand } = useGameContext();
+    const { selectedPlayerHand, setMatchCards } = useGameContext();
     const router = useRouter();
 
     const [cells, setCells] = useState({
@@ -296,7 +298,7 @@ export default function Board() {
     };
 
     const makeCpuMove = async () => {
-        await sleep(1250 + Math.random() * 250); // delay move by minimum of 1250ms
+        // todo: check if CPU considers effective/no effect types
 
         let arrayOfCellsToPlace = [];
         let arrayOfPlayerOccupiedCells = [];
@@ -315,10 +317,23 @@ export default function Board() {
         // Filter out null cards from CPU hand
         const availableCpuCards = cpuHand.filter(card => card !== null);
 
+        // Ends match: needs work. Only CPU can end game currently.
         if (arrayOfCellsToPlace.length === 0 || availableCpuCards.length === 0) {
-            // end game here todo
+            // Create a snapshot of cards in the game to determine the winner and what cards can be awarded or lost
+            const cardsFromCells = Object.values(cells)
+                .map(cell => cell.pokemonCard)
+                .filter(card => card !== null);
+
+            const remainingPlayerCards = playerHand.filter(card => card !== null);
+            const remainingCpuCards = cpuHand.filter(card => card !== null);
+            const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
+
+            setMatchCards(allMatchCards);
+            setTimeout(setIsGameComplete(true), 400);
             return;
         }
+
+        await sleep(1250 + Math.random() * 250); // delay move by minimum of 1250ms
 
         const validPlacementsSet = new Set(arrayOfCellsToPlace);
 
@@ -538,6 +553,7 @@ export default function Board() {
                     </div>
                 </>
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
+                {isGameComplete && <PageTransition />}
             </div>
         </DndContext>
     )

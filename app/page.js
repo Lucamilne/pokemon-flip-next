@@ -1,6 +1,7 @@
 "use client"
 
 // import HowToPlay from "@/components/HowToPlay/HowToPlay.js";
+import PageTransition from "@/components/PageTransition/PageTransition";
 import PokeballSplash from "@/components/PokeballSplash/PokeballSplash.js";
 import { GAME_MODES } from '@/constants/gameModes';
 import { useGameContext } from '@/contexts/GameContext';
@@ -30,8 +31,8 @@ export default function Home() {
           </div>
         </div>
         <PokeballSplash href={selectedGameMode ? `${selectedGameMode}/select` : null} buttonText="Press!" />
+        <PageTransition />
       </section>
-      {/* <HowToPlay /> */}
     </>
   );
 }

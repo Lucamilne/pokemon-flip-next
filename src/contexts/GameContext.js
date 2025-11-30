@@ -11,13 +11,16 @@ const GameContext = createContext();
 export function GameProvider({ children }) {
   const [selectedPlayerHand, setSelectedPlayerHand] = useState(null);
   const [selectedGameMode, setSelectedGameMode] = useState(GAME_MODES.QUICK_PLAY.id);
+  const [matchCards, setMatchCards] = useState([]);
 
   return (
     <GameContext.Provider value={{
       selectedPlayerHand,
       setSelectedPlayerHand,
       selectedGameMode,
-      setSelectedGameMode
+      setSelectedGameMode,
+      matchCards,
+      setMatchCards
     }}>
       {children}
     </GameContext.Provider>
