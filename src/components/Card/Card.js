@@ -5,7 +5,7 @@ import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 
-export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, element, isUnselected = false }) {
+export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     // const [isDefeated, setIsDefeated] = useState(false);
     const cardRef = useRef(null);

@@ -7,7 +7,8 @@ import Help from "../Help/Help.js";
 import Profile from "../Profile/Profile.js"
 import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
-import { GAME_MODES } from '@/constants/gameModes';
+import { clearGameState } from '@/utils/gameStorage';
+
 
 const basePath = process.env.NODE_ENV === 'production' ? '/pokemon-flip-next' : '';
 
@@ -26,6 +27,7 @@ export default function Select() {
     }, [pathname]);
 
     useEffect(() => {
+        clearGameState();
         if (!pokeballIsOpen) setPokeballIsOpen(true);
     }, [])
 

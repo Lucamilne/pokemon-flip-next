@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter, usePathname } from 'next/navigation';
+import { clearGameState } from '@/utils/gameStorage';
 
 export default function Result() {
     const { matchCards } = useGameContext();
@@ -8,6 +9,8 @@ export default function Result() {
     const pathname = usePathname();
 
     useEffect(() => {
+        clearGameState();
+        
         if (matchCards.length === 0) {
             const gameMode = pathname.split('/').filter(Boolean)[0];
             router.push(`/${gameMode}/select`);

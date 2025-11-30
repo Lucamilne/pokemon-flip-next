@@ -10,6 +10,7 @@ import { allocateRandomCpuCards } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter, usePathname } from 'next/navigation';
 import gameData from '@/data/game-data.json';
+import { saveGameState, loadGameState, clearGameState } from '@/utils/gameStorage';
 
 export default function Board() {
     const [cpuHand, setCpuHand] = useState([]);
@@ -82,6 +83,21 @@ export default function Board() {
 
     //on mount
     useEffect(() => {
+        // Try to load saved game state first
+        const savedGameState = loadGameState();
+
+        if (savedGameState) {
+            // Restore saved game state
+            setCells(savedGameState.cells);
+            setPlayerHand(savedGameState.playerHand);
+            setCpuHand(savedGameState.cpuHand);
+            setIsPlayerTurn(savedGameState.isPlayerTurn);
+
+            if (!pokeballIsOpen) setPokeballIsOpen(true);
+            return;
+        }
+
+        // No saved state - start new game
         // Allocate hands
         const newCpuHand = allocateRandomCpuCards();
         const newPlayerHand = selectedPlayerHand;
@@ -265,6 +281,15 @@ export default function Board() {
                 ...prev[cellTarget],
                 pokemonCard: attackingCard
             };
+
+            // Save game state after player move
+            saveGameState({
+                cells: newCells,
+                playerHand: playerHand.map((card, index) => index === sourceIndex ? null : card),
+                cpuHand: cpuHand,
+                isPlayerTurn: false
+            });
+
             return newCells;
         });
 
@@ -329,7 +354,7 @@ export default function Board() {
             const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
 
             setMatchCards(allMatchCards);
-            setTimeout(setIsGameComplete(true), 400);
+            setTimeout(() => setIsGameComplete(true), 400);
             return;
         }
 
@@ -506,6 +531,15 @@ export default function Board() {
                 ...prevCells[cellTarget],
                 pokemonCard: attackingCard
             };
+
+            // Save game state after CPU move
+            saveGameState({
+                cells: newCells,
+                playerHand: playerHand,
+                cpuHand: cpuHand.map((card, index) => index === originalIndex ? null : card),
+                isPlayerTurn: true
+            });
+
             return newCells;
         });
 

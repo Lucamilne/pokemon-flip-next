@@ -39,15 +39,15 @@ const allocateStatsByPokemon = (pokemonName) => {
 }; // an old function I used to allocate stats. Retired but I may want to return to a random element
 
 // {
-//     "overgrow":3, increases random stats by 1 when flipped once per game
-//     "blaze":3, increases random stats by 1 when flipped once per game
-//     "torrent":3, increases random stats by 1 when flipped once per game
-//     "chlorophyll":9, stats have a chance to be increased by 2 when on grass tile
-//     "rock-head":9, cannot be combod
-//     "sturdy":6, Will always resist an equal attacking card regardless of type.
-//     "vital-spirit":2, cannot have stats lowered by more than 1
-//     "anger-point":3, increases random stats by 1 everytime it's flipped
-//     "swarm":2, increases random stats by 1 when flipped once per game
+//     "overgrow":3, tile Stat increases are increased to 2
+//     "blaze":3, tile Stat increases are increased to 2
+//     "torrent":3, tile Stat increases are increased to 2
+//     "chlorophyll":9, raise the stats of ALL grass type pokemon on the board by 1
+//     "rock-head":9, defending card can be flipped on equal stats regardless of effectiveness
+//     "sturdy":6, Will always resist an equal attacking card regardless of effectiveness.
+//     "vital-spirit":2, cannot have stats lowered
+//     "anger-point":3, increases random stats by 1 every time a friendly card has it's stats lowered
+//     "swarm":2, your weakest stat will become your second weakest on attack
 //     "technician":3, weakest stat is increased by one on card placement
 //     "shell-armor":7, Immune to stat attacking card stat increase
 //     "skill-link":2, todo combos?
