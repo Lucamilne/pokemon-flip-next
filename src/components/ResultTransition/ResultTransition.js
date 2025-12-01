@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
-export default function PageTransition({ debugMode = false }) {
+export default function ResultTransition({ debugMode = false }) {
     const [tilesLeft, setTilesLeft] = useState(Array.from({ length: 10 }, () => false));
     const [tilesRight, setTilesRight] = useState(Array.from({ length: 10 }, () => false));
     const router = useRouter();

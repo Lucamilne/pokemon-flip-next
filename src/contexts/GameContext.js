@@ -12,6 +12,7 @@ export function GameProvider({ children }) {
   const [selectedPlayerHand, setSelectedPlayerHand] = useState(null);
   const [selectedGameMode, setSelectedGameMode] = useState(GAME_MODES.QUICK_PLAY.id);
   const [matchCards, setMatchCards] = useState([]);
+  const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
 
   return (
     <GameContext.Provider value={{
@@ -20,7 +21,9 @@ export function GameProvider({ children }) {
       selectedGameMode,
       setSelectedGameMode,
       matchCards,
-      setMatchCards
+      setMatchCards,
+      isPlayerVictory,
+      setIsPlayerVictory
     }}>
       {children}
     </GameContext.Provider>

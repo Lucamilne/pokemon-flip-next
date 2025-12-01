@@ -31,9 +31,6 @@ export default function RootLayout({ children }) {
     if (pathname.endsWith('/play')) {
       return { backgroundColor: '#e61919' };
     }
-    if (pathname.endsWith('/result')) {
-      return { backgroundColor: '#fff' };
-    }
     return { backgroundColor: '#ddd' };
   };
 
@@ -56,7 +53,7 @@ export default function RootLayout({ children }) {
             {/* Mobile splash screen */}
             <div className="block md:hidden min-h-screen flex items-center justify-center p-8">
               <div className="text-center default-tile border-8 border-black p-2 shadow-lg/30">
-                <h1 className="font-press-start bg-theme-red border-b-8 border-theme-red-100 py-4 text-3xl header-text">
+                <h1 className="font-press-start bg-theme-red py-4 text-3xl header-text">
                   Pokémon Flip
                 </h1>
                 <p className="font-press-start text-sm leading-relaxed drop-shadow-md mt-2 py-4">

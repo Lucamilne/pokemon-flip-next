@@ -5,7 +5,7 @@ import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
-import PageTransition from '../PageTransition/PageTransition.js';
+import ResultTransition from '../ResultTransition/ResultTransition.js';
 import { allocateRandomCpuCards } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter, usePathname } from 'next/navigation';
@@ -322,9 +322,51 @@ export default function Board() {
         });
     };
 
-    const makeCpuMove = async () => {
-        // todo: check if CPU considers effective/no effect types
+    // Helper to calculate type effectiveness between attacking and defending cards
+    const calculateTypeEffectiveness = (attackingCard, defendingCard) => {
+        const typeMatchups = gameData.typeMatchups;
 
+        // First check for immunity - if immune, attack fails completely
+        let isImmune = false;
+        for (const attackType of attackingCard.types) {
+            const matchup = typeMatchups[attackType];
+
+            for (const defendType of defendingCard.types) {
+                if (matchup.immune.includes(defendType)) {
+                    isImmune = true;
+                    break;
+                }
+            }
+            if (isImmune) break;
+        }
+
+        if (isImmune) {
+            return { isImmune: true, effectivenessBonus: 0, hasEffectivenessBonus: false };
+        }
+
+        // Calculate net type effectiveness bonus
+        let effectivenessBonus = 0;
+        attackingCard.types.forEach(attackType => {
+            const matchup = typeMatchups[attackType];
+
+            defendingCard.types.forEach(defendType => {
+                if (matchup.superEffective.includes(defendType)) {
+                    effectivenessBonus++;
+                } else if (matchup.notEffective.includes(defendType)) {
+                    effectivenessBonus--;
+                }
+            });
+        });
+
+        return {
+            isImmune: false,
+            effectivenessBonus,
+            hasEffectivenessBonus: effectivenessBonus > 0
+        };
+    };
+
+    const makeCpuMove = async () => {
+        //known bug: if pokemon super effective against one tile adjacent it's effective to ALL tiles adjacent. Same with No effect
         let arrayOfCellsToPlace = [];
         let arrayOfPlayerOccupiedCells = [];
         let arrayOfCpuOccupiedCells = [];
@@ -422,16 +464,44 @@ export default function Board() {
 
                 // Count how many defending cards this combination can beat
                 let captureCount = 0;
+                let superEffectiveCaptureCount = 0;
 
-                for (const { statIndex, defendingStat } of analysis.exposedDefendingStats) {
-                    if (modifiedStats[statIndex] > defendingStat) {
-                        captureCount++;
+                // Check each exposed defending stat at this position
+                cells[analysis.cellKey].adjacentCells.forEach((adjacentCellKey, statIndex) => {
+                    if (!adjacentCellKey || !cells[adjacentCellKey].pokemonCard) return;
+
+                    const defendingCard = cells[adjacentCellKey].pokemonCard;
+
+                    // Only consider player cards (opponents)
+                    if (!defendingCard.isPlayerCard) return;
+
+                    const defendingStatIndex = cells[adjacentCellKey].adjacentCells.indexOf(analysis.cellKey);
+                    const defendingStat = defendingCard.stats[defendingStatIndex];
+                    const attackingStat = modifiedStats[statIndex];
+
+                    // Calculate type effectiveness
+                    const { isImmune, hasEffectivenessBonus } = calculateTypeEffectiveness(cpuCard, defendingCard);
+
+                    // Skip if immune - cannot capture
+                    if (isImmune) {
+                        return;
                     }
-                }
+
+                    // Check if this can capture (same logic as placeAttackingCard)
+                    if (attackingStat > defendingStat || (attackingStat === defendingStat && hasEffectivenessBonus)) {
+                        captureCount++;
+                        if (hasEffectivenessBonus) {
+                            superEffectiveCaptureCount++;
+                        }
+                    }
+                });
+
+                // Calculate score: prioritize captures, with bonus for super effective captures
+                const score = captureCount * 10 + superEffectiveCaptureCount * 5;
 
                 // Update best move if this scores higher
-                if (captureCount > bestScore) {
-                    bestScore = captureCount;
+                if (score > bestScore) {
+                    bestScore = score;
                     bestCellToPlace = analysis.cellKey;
                     bestCardToPlay = cpuCard;
                 }
@@ -476,8 +546,23 @@ export default function Board() {
                     exposedPositions.forEach(({ adjacentCell, statIndex }) => {
                         const adjacentCard = cells[adjacentCell]?.pokemonCard;
                         if (adjacentCard?.isPlayerCard) {
+                            // Calculate type effectiveness for this matchup
+                            const { isImmune, hasEffectivenessBonus, effectivenessBonus } = calculateTypeEffectiveness(cpuCard, adjacentCard);
+
                             // Strong bonus for having a high stat facing a player threat (using modified stats)
-                            defensiveScore += modifiedStats[statIndex] * 3;
+                            let threatBonus = modifiedStats[statIndex] * 3;
+
+                            // Additional bonus if we have type advantage
+                            if (hasEffectivenessBonus) {
+                                threatBonus += effectivenessBonus * 10;
+                            }
+
+                            // Penalty if player has immunity to us (bad positioning)
+                            if (isImmune) {
+                                threatBonus -= 20;
+                            }
+
+                            defensiveScore += threatBonus;
                         }
                     });
 
@@ -587,7 +672,7 @@ export default function Board() {
                     </div>
                 </>
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
-                {isGameComplete && <PageTransition />}
+                {isGameComplete && <ResultTransition />}
             </div>
         </DndContext>
     )
