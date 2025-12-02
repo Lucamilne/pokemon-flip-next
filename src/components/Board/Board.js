@@ -654,10 +654,10 @@ export default function Board() {
                             )
                         })}
                     </div>
-                    <div className="relative grow arena-backdrop flex items-center justify-center">
+                    <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
                         <Grid cells={cells} ref="grid" />
                     </div>
-                    <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
+                    <div className="z-10 grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center shrink-0">
                         {playerHand.map((pokemonCard, index) => {
                             return (
                                 <div className="relative aspect-square" key={index}>

@@ -53,7 +53,7 @@ function DroppableCell({ cellKey, cellData }) {
 
 export default function Grid({ cells }) {
     return (
-        <div className="relative grid grid-cols-3 w-full sm:w-auto sm:grid-cols-[repeat(3,174px)] bg-black gap-1.5 border-6 border-black mx-auto aspect-square" id="grid">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid grid-cols-3 w-full sm:w-auto sm:grid-cols-[repeat(3,174px)] bg-black gap-1.5 border-6 border-black mx-auto aspect-square" id="grid">
             {Object.entries(cells).map(([key, value]) => (
                 <DroppableCell key={key} cellKey={key} cellData={value} />
             ))}
