@@ -21,7 +21,8 @@ export default function Defeat({ debugMode = false }) {
         "THE CARDS WEEP FOR YOU.",
         "YOUR FAMILY NAME IS TARNISHED.",
         "RETURN TO THE TUTORIAL. (Yet to be written)",
-        "A DISGRACE TO THE DOJO."
+        "A DISGRACE TO THE DOJO.",
+        "AI GENERATED SLOP."
     ];
 
     const randomGameOverText = useMemo(() => {
@@ -29,7 +30,7 @@ export default function Defeat({ debugMode = false }) {
     }, []);
 
     return (
-        <div className='h-full bg-linear-to-b bg-red from-10% via-theme-red to-theme-red-200 flex flex-col'>
+        <div className='fade-in h-full bg-linear-to-b from-transparent from-10% via-theme-red to-theme-red-200 flex flex-col'>
             <div className="text-2xl font-bold p-16 flex justify-center">
                 <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className='max-w-xl' src={DefeatImage} />
             </div>

@@ -25,10 +25,8 @@ export default function Victory({ debugMode = false }) {
         "ASCENDED TO GOD-TIER",
         "THE PROPHECY IS FULFILLED",
         "DECK MASTERY ACHIEVED",
-        "A TRULY PITIFUL DISPLAY",
         "EZ. NEXT.",
         "THE ONLY QUESTION WAS WHEN",
-        "YOU ARE SIMPLY NOT READY",
         "THIS IS YOUR NEW REALITY",
         "PERFECTION IS EXHAUSTING"
     ];
@@ -38,7 +36,7 @@ export default function Victory({ debugMode = false }) {
     }, []);
 
     return (
-        <div className='h-full bg-linear-to-b from-transparent from-10% via-ground-200 to-ground-400 flex flex-col'>
+        <div className='fade-in h-full bg-linear-to-b from-transparent from-10% via-ground-200 to-ground-400 flex flex-col'>
             <div className="text-2xl font-bold p-16 flex justify-center">
                 <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className='max-w-xl' src={VictoryImage} />
             </div>

@@ -73,7 +73,7 @@ export default function Select() {
         });
 
         setLastPokemonCardSelected(pokemonCard)
-        setSearchString("");
+        // setSearchString("");
     }
 
     return (
@@ -120,7 +120,7 @@ export default function Select() {
                             .filter(pokemonCard => {
                                 const trimmedSearch = searchString.trim();
                                 if (pokemonCard === null) return trimmedSearch === '';
-                                return pokemonCard.name.toLowerCase().startsWith(trimmedSearch.toLowerCase())
+                                return pokemonCard.name.toLowerCase().includes(trimmedSearch.toLowerCase())
                             }
                             )
                             .map((pokemonCard, index) => {
