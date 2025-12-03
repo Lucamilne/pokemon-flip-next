@@ -1,12 +1,14 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
+import Balance from "../Balance/Balance.js"
+import Help from "../Help/Help.js"
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
-import { allocateRandomCpuCards } from "@/utils/cardHelpers.js";
+import { fetchBalancedTierCards, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter, usePathname } from 'next/navigation';
 import gameData from '@/data/game-data.json';
@@ -70,6 +72,15 @@ export default function Board() {
         },
     });
 
+    const score = useMemo(() => {
+        let count = 0;
+        for (const key in cells) {
+            if (cells[key].pokemonCard?.isPlayerCard) count++;
+        }
+        count += playerHand.filter(card => card !== null).length;
+        return count;
+    }, [cells]);
+
     const decrementRandomStat = (stats) => {
         const randomIndex = Math.floor(Math.random() * stats.length);
 
@@ -99,7 +110,8 @@ export default function Board() {
 
         // No saved state - start new game
         // Allocate hands
-        const newCpuHand = allocateRandomCpuCards();
+        const cpuCardsToDeal = fetchBalancedTierCards(false);
+        const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
         const newPlayerHand = selectedPlayerHand;
 
         if (!newPlayerHand) {
@@ -396,7 +408,7 @@ export default function Board() {
             const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
 
             setMatchCards(allMatchCards);
-            setTimeout(() => setIsGameComplete(true), 400);
+            setTimeout(() => setIsGameComplete(true), 800);
             return;
         }
 
@@ -654,10 +666,13 @@ export default function Board() {
                             )
                         })}
                     </div>
+                    {/* Arena */}
                     <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
+                        <div className='absolute left-1/2 -translate-x-1/2 h-full w-[148px] lg:w-[208px] bg-gradient-to-b from-[var(--pokedex-red)] from-50% to-[var(--pokedex-blue)] to-50% ribbon-shadow' />
+                        <Balance score={score} />
                         <Grid cells={cells} ref="grid" />
                     </div>
-                    <div className="z-10 grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center shrink-0">
+                    <div className="z-10 relative grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center shrink-0">
                         {playerHand.map((pokemonCard, index) => {
                             return (
                                 <div className="relative aspect-square" key={index}>
@@ -669,6 +684,9 @@ export default function Board() {
                                 </div>
                             )
                         })}
+                        {isPlayerTurn && Object.values(cells).every(cell => cell.pokemonCard === null) && (
+                            <Help customClass="!absolute !-top-18 !right-4" text="Drag a card to the arena grid!" />
+                        )}
                     </div>
                 </>
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />

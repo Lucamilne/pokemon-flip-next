@@ -6,9 +6,13 @@
 
   /* Theme */
   --pokedex-red: #e61919;
+  --pokedex-light-red: #f05555;
+  --pokedex-lighter-red: #f79999;
   --pokedex-inner-red: #c20a0a;
   --pokedex-dark-red: #901a22;
   --pokedex-blue: #197de6;
+  --pokedex-light-blue: #5ca3eb;
+  --pokedex-lighter-blue: #99c9f5;
   --pokedex-inner-blue: #0a64c2;
   --pokedex-dark-blue: #224590;
 
@@ -588,6 +592,33 @@ body {
   border-top: 8px solid black;
 }
 
+.ribbon-shadow {
+  box-shadow:
+    inset 0 8px var(--pokedex-dark-red),
+    inset 0 16px var(--pokedex-inner-red),
+    inset 0 -8px var(--pokedex-dark-blue),
+    inset 0 -16px var(--pokedex-inner-blue)
+}
+
+.balance-red {
+  background-color: var(--pokedex-red);
+  box-shadow:
+    inset 8px 0 var(--pokedex-red),
+    inset 16px 0 var(--pokedex-light-red),
+    inset -8px 0 var(--pokedex-dark-red),
+    inset -16px 0 var(--pokedex-inner-red);
+}
+
+.balance-blue {
+  background-color: var(--pokedex-blue);
+  box-shadow:
+    inset 8px 0 var(--pokedex-blue),
+    inset 16px 0 var(--pokedex-light-blue),
+    inset -8px 0 var(--pokedex-dark-blue),
+    inset -16px 0 var(--pokedex-inner-blue);
+
+}
+
 .arena-backdrop {
   box-shadow:
     inset 0 -8px #d4d4d4,
@@ -625,7 +656,6 @@ body {
   height: 8px;
   background: linear-gradient(135deg, #fff 50%, #a1a1a1 50%);
 }
-
 
 .default-tile {
   background:

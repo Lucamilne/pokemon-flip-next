@@ -25,7 +25,7 @@ export default function PokeballSplash({ pokeballIsOpen, href, buttonText = "Sta
           />
         </div>
       </div>
-      <p className={`${pokeballIsOpen || !href ? "hidden" : ""} flex gap-0.5 pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-8 text-lg ${textColour} text-shadow-sm/30 font-press-start uppercase text-hop`}>
+      <p className={`${pokeballIsOpen || !href ? "hidden" : ""} flex gap-0.5 pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-4 text-lg ${textColour} text-shadow-sm/30 font-press-start uppercase text-hop`}>
         {buttonText.split('').map((char, index) => (<span key={index} style={{
           animationDelay: `${(index + 1) * 50}ms`
         }}> {char}</span>))}
