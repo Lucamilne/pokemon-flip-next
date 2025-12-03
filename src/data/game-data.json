@@ -382,14 +382,14 @@
         5,
         7,
         9,
-        6
+        7
       ],
       "effort_value": 3,
       "originalStats": [
         5,
         7,
         9,
-        6
+        7
       ],
       "rarity": "epic",
       "statWeight": 534
@@ -3012,17 +3012,17 @@
         "water"
       ],
       "stats": [
-        1,
-        1,
-        1,
-        1
+        2,
+        2,
+        2,
+        2
       ],
       "effort_value": 1,
       "originalStats": [
-        1,
-        1,
-        1,
-        1
+        2,
+        2,
+        2,
+        2
       ],
       "rarity": "common",
       "statWeight": 200
@@ -3034,14 +3034,14 @@
         "flying"
       ],
       "stats": [
-        4,
+        6,
         8,
         7,
         8
       ],
       "effort_value": 2,
       "originalStats": [
-        4,
+        6,
         8,
         7,
         8
@@ -3057,16 +3057,16 @@
       ],
       "stats": [
         9,
-        3,
+        5,
         9,
-        6
+        5
       ],
       "effort_value": 2,
       "originalStats": [
         9,
-        3,
+        5,
         9,
-        6
+        5
       ],
       "rarity": "epic",
       "statWeight": 535
@@ -3183,15 +3183,15 @@
       ],
       "stats": [
         5,
-        4,
-        6,
+        5,
+        5,
         5
       ],
       "effort_value": 1,
       "originalStats": [
         5,
-        4,
-        6,
+        5,
+        5,
         5
       ],
       "rarity": "uncommon",
@@ -3335,17 +3335,17 @@
         "flying"
       ],
       "stats": [
-        9,
+        7,
         4,
         9,
-        7
+        9
       ],
       "effort_value": 3,
       "originalStats": [
-        9,
+        7,
         4,
         9,
-        7
+        9
       ],
       "rarity": "epic",
       "statWeight": 580
@@ -3359,15 +3359,15 @@
       "stats": [
         9,
         5,
-        9,
-        6
+        6,
+        9
       ],
       "effort_value": 3,
       "originalStats": [
         9,
         5,
-        9,
-        6
+        6,
+        9
       ],
       "rarity": "epic",
       "statWeight": 580
@@ -3380,16 +3380,16 @@
       ],
       "stats": [
         9,
-        5,
+        6,
         8,
-        7
+        6
       ],
       "effort_value": 3,
       "originalStats": [
         9,
-        5,
+        6,
         8,
-        7
+        6
       ],
       "rarity": "epic",
       "statWeight": 580
@@ -3443,14 +3443,14 @@
         "flying"
       ],
       "stats": [
-        6,
+        7,
         7,
         8,
         9
       ],
       "effort_value": 3,
       "originalStats": [
-        6,
+        7,
         7,
         8,
         9
@@ -3467,14 +3467,14 @@
         9,
         10,
         9,
-        6
+        7
       ],
       "effort_value": 3,
       "originalStats": [
         9,
         10,
         9,
-        6
+        7
       ],
       "rarity": "legendary",
       "statWeight": 680
@@ -3487,14 +3487,14 @@
       "stats": [
         9,
         8,
-        8,
+        9,
         8
       ],
       "effort_value": 3,
       "originalStats": [
         9,
         8,
-        8,
+        9,
         8
       ],
       "rarity": "legendary",
