@@ -40,7 +40,9 @@ export default function Home() {
           </div>
         </div>
         <PokeballSplash href={selectedGameMode ? `${selectedGameMode}/select` : null} buttonText="Press!" />
-        <HowToPlay isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        {isOpen && (
+          <HowToPlay isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        )}
       </section>
     </>
   );
