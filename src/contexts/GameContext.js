@@ -10,7 +10,7 @@ const GameContext = createContext();
 
 export function GameProvider({ children }) {
   const [selectedPlayerHand, setSelectedPlayerHand] = useState(null);
-  const [selectedGameMode, setSelectedGameMode] = useState(GAME_MODES.QUICK_PLAY.id);
+  const [selectedGameMode, setSelectedGameMode] = useState(null);
   const [matchCards, setMatchCards] = useState([]);
   const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
 

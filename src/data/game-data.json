@@ -269,16 +269,16 @@
         "poison"
       ],
       "stats": [
-        6,
         5,
+        6,
         4,
         1
       ],
       "effort_value": 1,
       "starter": true,
       "originalStats": [
-        6,
         5,
+        6,
         4,
         1
       ],

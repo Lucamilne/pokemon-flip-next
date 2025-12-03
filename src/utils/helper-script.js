@@ -116,5 +116,6 @@ const allocateStatsByPokemon = (pokemonName) => {
 //     "magic-guard":2,
 //     "volt-absorb":1,
 //     "competitive":2,
-//     "filter":1
+//     "filter":1,
+//      "splash": Magikarp only, 1% change to boost all stats to 10 for the remainder of the current game
 //  }

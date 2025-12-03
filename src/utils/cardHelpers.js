@@ -1,16 +1,25 @@
 import pokemon from "@/data/game-data.json";
 
 export const createCard = (pokemonName, isPlayerCard = false) => {
+    let cardData = { ...pokemon.cards[pokemonName] };
+
     return {
+        ...cardData,
         name: pokemonName,
-        types: pokemon.cards[pokemonName].types,
-        id: pokemon.cards[pokemonName].id,
-        stats: pokemon.cards[pokemonName].stats,
-        originalStats: pokemon.cards[pokemonName].originalStats, // A copy of stats is kept to track modifications
-        rarity: pokemon.cards[pokemonName].rarity,
-        playerOwned: pokemon.cards[pokemonName].starter, // this is an unimplemented feature as of writing
         isPlayerCard: isPlayerCard
     };
+};
+
+export const fetchCardById = (id, isPlayerCard = true) => {
+    const pokemonName = Object.keys(pokemon.cards).find(
+        (name) => pokemon.cards[name].id === id
+    );
+
+    if (!pokemonName) {
+        return null;
+    }
+
+    return createCard(pokemonName, isPlayerCard);
 };
 
 export const allocateRandomCpuCards = () => {

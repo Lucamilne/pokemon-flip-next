@@ -1,12 +1,15 @@
 "use client"
 
+import { useState } from 'react';
 import PokeballSplash from "@/components/PokeballSplash/PokeballSplash.js";
-// import ResultTransition from "@/components/ResultTransition/ResultTransition";
+import HowToPlay from "@/components/HowToPlay/HowToPlay";
 import { GAME_MODES } from '@/constants/gameModes';
 import { useGameContext } from '@/contexts/GameContext';
 
 export default function Home() {
   const { selectedGameMode, setSelectedGameMode } = useGameContext();
+  const [isOpen, setIsOpen] = useState(false);
+
 
   return (
     <>
@@ -22,6 +25,13 @@ export default function Home() {
             <button disabled={true} className="text-center disabled:opacity-30">Continue</button>
           </div>
           <div className="relative group text-center">
+            <div className={`arrow absolute -left-4 top-0 -translate-y-1/2 transition-opacity opacity-0 group-hover:opacity-100 group-focus-within:opacity-100`} />
+            <button className={`cursor-pointer`} onClick={() => {
+              setIsOpen(true);
+
+            }}>How to Play</button>
+          </div>
+          <div className="relative group text-center">
             <div className={`arrow absolute -left-4 top-0 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
             <button className={`cursor-pointer`} onClick={() => {
               setSelectedGameMode(GAME_MODES.QUICK_PLAY.id);
@@ -30,7 +40,7 @@ export default function Home() {
           </div>
         </div>
         <PokeballSplash href={selectedGameMode ? `${selectedGameMode}/select` : null} buttonText="Press!" />
-        {/* <ResultTransition debugMode={true} /> */}
+        <HowToPlay isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </section>
     </>
   );
