@@ -62,6 +62,10 @@ export const fetchMonoTypeCards = (isPlayerCard = true) => {
     return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].types.length === 1).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
+export const fetchNidoFamilyCards = (isPlayerCard = true) => {
+    return Object.keys(pokemon.cards).filter((pokemonName) => pokemonName.startsWith('Nido')).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+}
+
 export const fetchBalancedTierCards = (isPlayerCard = true) => {
     const weakCards = [];
     const midCards = [];

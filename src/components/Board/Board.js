@@ -668,7 +668,7 @@ export default function Board() {
                     </div>
                     {/* Arena */}
                     <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
-                        <div className='absolute left-1/2 -translate-x-1/2 h-full w-[148px] lg:w-[208px] bg-gradient-to-b from-[var(--pokedex-red)] from-50% to-[var(--pokedex-blue)] to-50% ribbon-shadow' />
+                        {/* <div className='absolute left-1/2 -translate-x-1/2 h-full w-[148px] lg:w-[208px] bg-gradient-to-b from-[var(--pokedex-red)] from-50% to-[var(--pokedex-blue)] to-50% ribbon-shadow' /> */}
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" />
                     </div>

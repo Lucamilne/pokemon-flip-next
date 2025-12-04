@@ -84,7 +84,7 @@ export default function C() {
 
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-            <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-normal p-4 border-y-6 border-black">
+            <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-fire p-4 border-y-6 border-black">
                 <div className={`relative aspect-square w-[124px] lg:w-[174px] rounded-md`}>
                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
                     {!droppedCard && (

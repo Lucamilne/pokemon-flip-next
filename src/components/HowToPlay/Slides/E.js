@@ -25,7 +25,7 @@ function TutorialDropZone({ droppedCard }) {
     }
 
     return (
-        <div className="grid grid-cols-1 w-[140px] lg:w-[190px] gap-1.5 bg-black border-6 border-black">
+        <div className="grid grid-cols-2 grid-cols-[repeat(2,124px)] lg:grid-cols-[repeat(2,174px)] gap-1.5 bg-black border-6 border-black">
             <div
                 ref={setNodeRef}
                 className="relative aspect-square p-2 default-tile"
@@ -66,7 +66,7 @@ function TutorialDropZone({ droppedCard }) {
 }
 
 export default function E() {
-    const pokemonCard = fetchCardById(27);
+    const pokemonCard = fetchCardById(76);
     const [droppedCard, setDroppedCard] = useState(null);
     const [isBeingDragged, setIsBeingDragged] = useState(false)
 
@@ -96,7 +96,7 @@ export default function E() {
                 <div className="arrow" />
                 <TutorialDropZone droppedCard={droppedCard} />
                 {!isBeingDragged && !droppedCard && (
-                    <Help customClass="!absolute !-top-12 !-right-10" text="Drag here!" />
+                    <Help customClass="!absolute !-top-12 !-right-10" text="No threat!" />
                 )}
             </div>
         </DndContext>

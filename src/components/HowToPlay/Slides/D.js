@@ -18,7 +18,7 @@ function TutorialDropZone({ droppedCard }) {
         }
     });
 
-    let defendingCard = fetchCardById(1, false);
+    let defendingCard = fetchCardById(5, false);
 
     if (droppedCard) {
         droppedCard.wasSuperEffective = true
@@ -26,7 +26,7 @@ function TutorialDropZone({ droppedCard }) {
     }
 
     return (
-        <div className="grid grid-cols-1 w-[140px] lg:w-[190px] gap-1.5 bg-black border-6 border-black">
+        <div className="grid grid-cols-2 grid-cols-[repeat(2,124px)] lg:grid-cols-[repeat(2,174px)] gap-1.5 bg-black border-6 border-black">
             <div
                 ref={setNodeRef}
                 className="relative aspect-square p-2 default-tile"
@@ -67,7 +67,7 @@ function TutorialDropZone({ droppedCard }) {
 }
 
 export default function D() {
-    const pokemonCard = fetchCardById(4);
+    const pokemonCard = fetchCardById(8);
     const [droppedCard, setDroppedCard] = useState(null);
     const [isBeingDragged, setIsBeingDragged] = useState(false)
 
@@ -97,7 +97,7 @@ export default function D() {
                 <div className="arrow" />
                 <TutorialDropZone droppedCard={droppedCard} />
                 {!isBeingDragged && !droppedCard && (
-                    <Help customClass="!absolute !-top-12 !-right-10" text="Drag here!" />
+                    <Help customClass="!absolute !-top-12 !-right-10" text="Yikes!" />
                 )}
             </div>
         </DndContext>

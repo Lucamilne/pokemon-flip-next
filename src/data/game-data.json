@@ -357,16 +357,16 @@
         "fire"
       ],
       "stats": [
-        7,
-        3,
         5,
+        3,
+        7,
         5
       ],
       "effort_value": 2,
       "originalStats": [
-        7,
-        3,
         5,
+        3,
+        7,
         5
       ],
       "rarity": "uncommon",
@@ -424,15 +424,15 @@
       "stats": [
         3,
         8,
-        4,
-        5
+        5,
+        4
       ],
       "effort_value": 2,
       "originalStats": [
         3,
         8,
-        4,
-        5
+        5,
+        4
       ],
       "rarity": "uncommon",
       "statWeight": 405

@@ -22,17 +22,18 @@ export default function HowToPlay({ isOpen, onClose }) {
     return (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={onClose}>
             {/* Modal Container */}
-            <div className="relative w-full max-w-4xl h-[800px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full max-w-4xl h-full max-h-[800px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
                     className="flex h-full transition-transform duration-300 ease-in-out text-base"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                     {/* Slide A */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-around px-24 py-12">
-                        <div className='grid grid-cols-1 gap-4'>
-                            <p className='font-press-start'>Control more cards than your opponent by placing yours strategically to capture Pokémon and dominate the arena.
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                        <div className='font-press-start grid grid-cols-1 gap-8'>
+                            <h2 className='font-bold text-2xl text-center'>Game Objective</h2>
+                            <p>Control more cards than your opponent by placing yours strategically to capture Pokémon and dominate the arena.
                             </p>
-                            <p className='font-press-start'>
+                            <p>
                                 On your turn, drag a card to any empty space on the 3x3 grid, where it will battle adjacent opponent cards — choose wisely!
                             </p>
                         </div>
@@ -40,38 +41,71 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide B */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-around px-24 py-12">
-                        <p className='font-press-start'>Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
-                        </p>
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                        <div className='font-press-start grid grid-cols-1 gap-8'>
+                            <h2 className='font-bold text-2xl text-center'>Core Combat</h2>
+                            <p>Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
+                            </p>
+                        </div>
                         <SlideB />
                     </div>
 
                     {/* Slide C */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-around px-24 py-12">
-                        <p className='font-press-start'>Some grid spaces have elemental symbols. Placing a card on a
-                            matching elemental tile boosts its stats by <span className="text-green-600">+1</span>. Non-matching types
-                            get <span className="text-red-500">-1</span>. Normal-type Pokemon ignore tile effects.</p>
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                        <div className='font-press-start grid grid-cols-1 gap-8'>
+                            <h2 className='font-bold text-2xl text-center'>Elemental Tiles</h2>
+                            <p>Some grid spaces have elemental symbols. Placing a card on a
+                                matching elemental tile boosts its stats by <span className="text-green-600">+1</span>. Non-matching types
+                                get <span className="text-red-500">-1</span>.
+                            </p>
+                            <p>
+                                <span className="text-white py-1 px-3"
+                                    style={{ backgroundColor: `var(--color-normal-500)` }}
+                                >Normal</span> type Pokemon ignore tile effects.</p>
+                        </div>
                         <SlideC />
                     </div>
 
                     {/* Slide D */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-around px-24 py-12">
-                        <p className='font-press-start'>Pokemon types matter! Super-effective attacks (like Fire vs Grass)
-                            give you a stat advantage. You will be able to flip a defending card with equal or higher stats.
-                            Some types have no effect, and cannot flip defending cards, no matter the stat advantage.</p>
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                        <div className='font-press-start grid grid-cols-1 gap-8'>
+                            <h2 className='font-bold text-2xl text-center'>Type Advantages</h2>
+                            <p className='font-press-start'>Pokemon types matter! Super-effective attacks (like
+                                <span className="text-white py-1 px-3 ml-2"
+                                    style={{ backgroundColor: `var(--color-water-500)` }}
+                                >Water</span> vs <span className="text-white py-1 px-3"
+                                    style={{ backgroundColor: `var(--color-fire-500)` }}
+                                >Fire</span>) give you a stat advantage.
+                            </p>
+                            <p>
+                                You will be able to flip a defending card with equal or higher facing stats.
+                            </p>
+                        </div>
                         <SlideD />
                     </div>
                     {/* Slide E */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-around px-24 py-12">
-                        <p className='font-press-start'>Some types have no effect, and cannot flip defending cards, no matter the stat advantage.</p>
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                        <div className='font-press-start grid grid-cols-1 gap-8'>
+                            <h2 className='font-bold text-2xl text-center'>Type Immunities</h2>
+                            <p>Some types have no effect, and cannot flip defending cards, no matter the stat advantage.</p>
+                            <p>
+                                <span className="text-white py-1 px-3"
+                                    style={{ backgroundColor: `var(--color-normal-500)` }}
+                                >Normal</span> type Pokemon have no type advantages or disadvantages. All
+                                attacks hit them normally, and they ignore type-based immunities.</p>
+                        </div>
                         <SlideE />
                     </div>
 
                     {/* Slide F */}
-                    <div className="min-w-full h-full flex items-center justify-center px-24 py-12">
-                        <p className='font-press-start'>The game ends when all 9 spaces are filled. The player controlling
-                            the most cards wins! Plan your moves carefully. Every card placed
-                            can trigger a rapid change of fortunes!</p>
+                    <div className="min-w-full h-full p-24">
+                        <div className='font-press-start grid grid-cols-1 gap-8'>
+                            <h2 className='font-bold text-2xl text-center'>Winning the Game</h2>
+                            <p>The game ends when all 9 spaces are filled. The player controlling
+                                the most cards wins! Plan your moves carefully.
+                            </p>
+                            <p>Every card placed can trigger a rapid change of fortunes!</p>
+                        </div>
                     </div>
                 </div>
 
@@ -100,7 +134,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 items-center">
                     {Array.from({ length: totalSlides }, (_, i) => (
                         i === currentSlide ? (
-                            <div key={i} className="slide-in-fwd-center pokeball-bullet shadow-sm/30" />
+                            <div key={i} className="pokeball-bullet shadow-sm/30" />
 
                         ) : (
                             <button
@@ -112,6 +146,6 @@ export default function HowToPlay({ isOpen, onClose }) {
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
