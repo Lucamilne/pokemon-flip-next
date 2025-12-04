@@ -21,7 +21,7 @@ function TutorialDropZone({ droppedCard }) {
     return (
         <div
             ref={setNodeRef}
-            className="relative aspect-square w-[140px] lg:w-[190px] border-6 border-black p-2 default-tile"
+            className="relative aspect-square w-[152px] border-6 border-black p-2 default-tile"
             data-cell="tutorial-drop-zone"
         >
             {/* Hover overlay */}
@@ -66,7 +66,7 @@ export default function A() {
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-normal p-4 border-y-6 border-black">
-                <div className={`relative aspect-square w-[124px] lg:w-[174px] rounded-md`}>
+                <div className={`relative aspect-square w-[124px] rounded-md`}>
                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
                     {!droppedCard && (
                         <Card index={0} pokemonCard={pokemonCard} isPlayerCard={true} isDraggable={true} startsFlipped={true} />

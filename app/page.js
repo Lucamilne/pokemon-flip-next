@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
         {/* <Image draggable={false} width={264} height={132} className="absolute z-10 top-1/2 left-1/2" alt="Pokemon Flip logo" src={pokemonFlipLogo} /> */}
-        <div className="absolute z-10 mt-56 top-1/2 left-1/2 -translate-x-1/2 font-press-start grid grid-cols-1 gap-2 text-2xl">
+        <div className="absolute z-10 bottom-8 left-1/2 -translate-x-1/2 font-press-start grid grid-cols-1 gap-2 text-xl">
           <div className="relative group text-center">
             <div className="arrow absolute -left-4 top-0 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
             <button disabled={true} className="text-center disabled:opacity-30">New Game</button>

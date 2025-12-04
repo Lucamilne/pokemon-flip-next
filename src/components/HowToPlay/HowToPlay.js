@@ -22,13 +22,13 @@ export default function HowToPlay({ isOpen, onClose }) {
     return (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={onClose}>
             {/* Modal Container */}
-            <div className="relative w-full max-w-4xl h-full max-h-[800px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full max-w-4xl h-full lg:max-h-[600px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
                     className="flex h-full transition-transform duration-300 ease-in-out text-base"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                     {/* Slide A */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between px-24 p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8'>
                             <h2 className='font-bold text-2xl text-center'>Game Objective</h2>
                             <p>Control more cards than your opponent by placing yours strategically to capture Pokémon and dominate the arena.
@@ -41,7 +41,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide B */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between px-24 p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8'>
                             <h2 className='font-bold text-2xl text-center'>Core Combat</h2>
                             <p>Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
@@ -51,7 +51,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide C */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between px-24 p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8'>
                             <h2 className='font-bold text-2xl text-center'>Elemental Tiles</h2>
                             <p>Some grid spaces have elemental symbols. Placing a card on a
@@ -67,7 +67,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide D */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between px-24 p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8'>
                             <h2 className='font-bold text-2xl text-center'>Type Advantages</h2>
                             <p className='font-press-start'>Pokemon types matter! Super-effective attacks (like
@@ -84,7 +84,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <SlideD />
                     </div>
                     {/* Slide E */}
-                    <div className="min-w-full h-full flex flex-col gap-8 justify-between p-24">
+                    <div className="min-w-full h-full flex flex-col gap-8 justify-between px-24 p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8'>
                             <h2 className='font-bold text-2xl text-center'>Type Immunities</h2>
                             <p>Some types have no effect, and cannot flip defending cards, no matter the stat advantage.</p>
@@ -98,7 +98,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide F */}
-                    <div className="min-w-full h-full p-24">
+                    <div className="min-w-full h-full px-24 p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8'>
                             <h2 className='font-bold text-2xl text-center'>Winning the Game</h2>
                             <p>The game ends when all 9 spaces are filled. The player controlling

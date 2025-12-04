@@ -25,7 +25,7 @@ function TutorialDropZone({ droppedCard }) {
     }
 
     return (
-        <div className="grid grid-cols-2 grid-cols-[repeat(2,124px)] lg:grid-cols-[repeat(2,174px)] gap-1.5 bg-black border-6 border-black">
+        <div className="grid grid-cols-2 grid-cols-[repeat(2,140px)] gap-1.5 bg-black border-6 border-black">
             <div
                 ref={setNodeRef}
                 className="relative aspect-square p-2 default-tile"
@@ -87,7 +87,7 @@ export default function E() {
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-normal p-4 border-y-6 border-black">
-                <div className={`relative aspect-square w-[124px] lg:w-[174px] rounded-md`}>
+                <div className={`relative aspect-square w-[124px] rounded-md`}>
                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
                     {!droppedCard && (
                         <Card index={0} pokemonCard={pokemonCard} isPlayerCard={true} isDraggable={true} startsFlipped={true} />

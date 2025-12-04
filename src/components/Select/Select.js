@@ -115,7 +115,7 @@ export default function Select() {
             </div>
             <div className='grow flex overflow-y-auto'>
                 <div className="relative bg-theme-blue hide-scrollbar overflow-y-auto flex">
-                    <div className="grid grid-cols-[repeat(3,124px)] lg:grid-cols-[repeat(3,174px)] auto-rows-min gap-4 p-4">
+                    <div className="grid grid-cols-[repeat(3,124px)] auto-rows-min gap-4 p-4">
                         {playerCardLibrary
                             .filter(pokemonCard => {
                                 const trimmedSearch = searchString.trim();
@@ -141,7 +141,7 @@ export default function Select() {
                 </div>
                 <Profile playerHand={playerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
-            <div className="relative grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
+            <div className="relative grid grid-cols-[repeat(5,124px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                 {playerHand.map((pokemonCard, index) => {
                     return (
                         <button className={`relative aspect-square ${pokemonCard ? "cursor-pointer" : ""}`} key={index} onClick={() => togglePokemonCardSelection(pokemonCard)}>

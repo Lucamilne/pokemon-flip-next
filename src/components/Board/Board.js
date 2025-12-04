@@ -651,28 +651,9 @@ export default function Board() {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            <div className="overflow-hidden relative h-full flex flex-col justify-between rounded-xl" >
+            <div className="overflow-hidden relative h-full flex justify-between rounded-xl" >
                 <>
-                    <div className="grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-top-container pb-8 p-4 w-full justify-center">
-                        {cpuHand.map((pokemonCard, index) => {
-                            return (
-                                <div className="relative aspect-square" key={index}>
-                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
-
-                                    {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFlipped={false} />
-                                    )}
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {/* Arena */}
-                    <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
-                        {/* <div className='absolute left-1/2 -translate-x-1/2 h-full w-[148px] lg:w-[208px] bg-gradient-to-b from-[var(--pokedex-red)] from-50% to-[var(--pokedex-blue)] to-50% ribbon-shadow' /> */}
-                        <Balance score={score} />
-                        <Grid cells={cells} ref="grid" />
-                    </div>
-                    <div className="z-10 relative grid grid-cols-[repeat(5,124px)] lg:grid-cols-[repeat(5,174px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center shrink-0">
+                    <div className="relative grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-left-container pl-4 pr-8 p-2 h-full">
                         {playerHand.map((pokemonCard, index) => {
                             return (
                                 <div className="relative aspect-square" key={index}>
@@ -684,9 +665,28 @@ export default function Board() {
                                 </div>
                             )
                         })}
-                        {isPlayerTurn && Object.values(cells).every(cell => cell.pokemonCard === null) && (
+                        {/* {isPlayerTurn && Object.values(cells).every(cell => cell.pokemonCard === null) && (
                             <Help customClass="!absolute !-top-18 !right-4" text="Drag a card to the arena grid!" />
-                        )}
+                        )} */}
+                    </div>
+                    {/* Arena */}
+                    <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
+                        {/* <div className='absolute left-1/2 -translate-x-1/2 h-full w-[148px] lg:w-[208px] bg-gradient-to-b from-[var(--pokedex-red)] from-50% to-[var(--pokedex-blue)] to-50% ribbon-shadow' /> */}
+                        <Balance score={score} />
+                        <Grid cells={cells} ref="grid" />
+                    </div>
+                    <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-6 pr-4 p-2 h-full">
+                        {cpuHand.map((pokemonCard, index) => {
+                            return (
+                                <div className="relative aspect-square" key={index}>
+                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
+
+                                    {pokemonCard && pokeballIsOpen && (
+                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFlipped={false} />
+                                    )}
+                                </div>
+                            )
+                        })}
                     </div>
                 </>
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
