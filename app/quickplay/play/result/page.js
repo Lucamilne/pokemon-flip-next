@@ -16,11 +16,11 @@ export default function Home({ debugMode = false }) {
   useEffect(() => {
     clearGameState();
 
-    // if (matchCards.length === 0 && debugMode === false) {
-    //   const gameMode = pathname.split('/').filter(Boolean)[0];
-    //   router.push(`/${gameMode}/select`);
-    //   return;
-    // }
+    if (matchCards.length === 0 && debugMode === false) {
+      const gameMode = pathname.split('/').filter(Boolean)[0];
+      router.push(`/${gameMode}/select`);
+      return;
+    }
 
     // Calculate victory by counting cards with isPlayerCard property
     const playerCardCount = matchCards.filter(card => card.isPlayerCard === true).length;
