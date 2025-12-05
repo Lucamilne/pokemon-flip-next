@@ -5,16 +5,16 @@ import Defeat from "@/components/Results/Defeat";
 import Tie from "@/components/Results/Tie";
 import { useEffect } from 'react';
 import { useGameContext } from '@/contexts/GameContext';
-import { clearGameState } from '@/utils/gameStorage';
+import { clearLocalStorage } from '@/utils/gameStorage';
 import { useRouter, usePathname } from 'next/navigation';
 
 export default function Home({ debugMode = false }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { matchCards, setMatchCards, isPlayerVictory, setIsPlayerVictory } = useGameContext();
+  const { matchCards, cells, isPlayerVictory, setIsPlayerVictory } = useGameContext();
 
   useEffect(() => {
-    clearGameState();
+    clearLocalStorage();
 
     if (matchCards.length === 0 && debugMode === false) {
       const gameMode = pathname.split('/').filter(Boolean)[0];

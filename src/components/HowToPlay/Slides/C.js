@@ -31,7 +31,7 @@ function TutorialDropZone({ droppedCard }) {
     return (
         <div
             ref={setNodeRef}
-            className="relative aspect-square w-[152px] border-4 border-black p-2 fire-tile"
+            className="relative aspect-square w-[148px] border-4 border-black p-2 fire-tile"
             data-cell="tutorial-drop-zone"
         >
             {/* Hover overlay */}

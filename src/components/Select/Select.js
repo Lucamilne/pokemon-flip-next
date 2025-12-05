@@ -7,7 +7,6 @@ import Help from "../Help/Help.js";
 import Profile from "../Profile/Profile.js"
 import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
-import { clearGameState } from '@/utils/gameStorage';
 
 
 const basePath = process.env.NODE_ENV === 'production' ? '/pokemon-flip-next' : '';
@@ -20,14 +19,15 @@ export default function Select() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const { setSelectedPlayerHand } = useGameContext();
+    const { setSelectedPlayerHand, resetGameState } = useGameContext();
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const playerCardLibrary = useMemo(() => {
         return pathname.startsWith('/quickplay') ? fetchAllCards() : fetchStarterCards();
     }, [pathname]);
 
     useEffect(() => {
-        clearGameState();
+        // Reset game state when arriving at select screen (prepares for new game)
+        resetGameState();
         if (!pokeballIsOpen) setPokeballIsOpen(true);
     }, [])
 

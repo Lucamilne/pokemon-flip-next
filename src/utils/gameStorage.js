@@ -4,7 +4,7 @@ const GAME_STATE_KEY = 'pokemonGameState';
  * Save game state to localStorage
  * @param {Object} gameState - The game state object containing cells, hands, and turn info
  */
-export const saveGameState = (gameState) => {
+export const saveGameStateToLocalStorage = (gameState) => {
     try {
         localStorage.setItem(GAME_STATE_KEY, JSON.stringify(gameState));
     } catch (error) {
@@ -16,7 +16,7 @@ export const saveGameState = (gameState) => {
  * Load game state from localStorage
  * @returns {Object|null} The saved game state or null if none exists
  */
-export const loadGameState = () => {
+export const loadGameStateFromLocalStorage = () => {
     try {
         const savedState = localStorage.getItem(GAME_STATE_KEY);
         return savedState ? JSON.parse(savedState) : null;
@@ -29,7 +29,7 @@ export const loadGameState = () => {
 /**
  * Clear game state from localStorage
  */
-export const clearGameState = () => {
+export const clearLocalStorage = () => {
     try {
         localStorage.removeItem(GAME_STATE_KEY);
     } catch (error) {

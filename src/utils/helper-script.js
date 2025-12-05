@@ -38,6 +38,13 @@ const allocateStatsByPokemon = (pokemonName) => {
     return statsToReturn;
 }; // an old function I used to allocate stats. Retired but I may want to return to a random element
 
+
+//   - Display stats on result screen to show MVP cards
+//   - Show stats in card tooltips during gameplay
+//   - Use stats to determine match rewards in career mode
+//   - Add more stats like superEffectiveCaptures,
+//   immuneDefenses, etc.
+
 // {
 //     "overgrow":3, tile Stat increases are increased to 2
 //     "blaze":3, tile Stat increases are increased to 2

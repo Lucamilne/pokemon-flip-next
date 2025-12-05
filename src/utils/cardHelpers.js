@@ -6,7 +6,14 @@ export const createCard = (pokemonName, isPlayerCard = false) => {
     return {
         ...cardData,
         name: pokemonName,
-        isPlayerCard: isPlayerCard
+        isPlayerCard: isPlayerCard,
+        // Match stats (reset each game)
+        matchStats: {
+            timesFlipped: 0,
+            capturesMade: 0,
+            superEffectiveCaptures: 0,
+            immuneDefenses: 0
+        }
     };
 };
 

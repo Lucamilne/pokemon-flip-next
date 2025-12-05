@@ -11,74 +11,28 @@ import { fetchBalancedTierCards, allocateCpuCardsFromPool } from "@/utils/cardHe
 import { useGameContext } from '@/contexts/GameContext';
 import { useRouter, usePathname } from 'next/navigation';
 import gameData from '@/data/game-data.json';
-import { saveGameState, loadGameState, clearGameState } from '@/utils/gameStorage';
+import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 
 export default function Board() {
-    const [cpuHand, setCpuHand] = useState([]);
-    const [playerHand, setPlayerHand] = useState([]);
-    const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
-    const [isGameComplete, setIsGameComplete] = useState(false);
     const pathname = usePathname();
-    const { selectedPlayerHand, setMatchCards } = useGameContext();
+    const {
+        selectedPlayerHand,
+        setMatchCards,
+        isGameComplete,
+        setIsGameComplete,
+        cells,
+        setCells,
+        isPlayerTurn,
+        setIsPlayerTurn,
+        playerHand,
+        setPlayerHand,
+        cpuHand,
+        setCpuHand,
+        score,
+        resetGameState
+    } = useGameContext();
     const router = useRouter();
-
-    const [cells, setCells] = useState({
-        A1: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: [null, null, "A2", "B1"],
-        },
-        A2: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: ["A1", null, "A3", "B2"],
-        },
-        A3: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: ["A2", null, null, "B3"],
-        },
-        B1: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: [null, "A1", "B2", "C1"],
-        },
-        B2: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: ["B1", "A2", "B3", "C2"],
-        },
-        B3: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: ["B2", "A3", null, "C3"],
-        },
-        C1: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: [null, "B1", "C2", null],
-        },
-        C2: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: ["C1", "B2", "C3", null],
-        },
-        C3: {
-            pokemonCard: null,
-            element: null,
-            adjacentCells: ["C2", "B3", null, null],
-        },
-    });
-
-    const score = useMemo(() => {
-        let count = 0;
-        for (const key in cells) {
-            if (cells[key].pokemonCard?.isPlayerCard) count++;
-        }
-        count += playerHand.filter(card => card !== null).length;
-        return count;
-    }, [cells]);
 
     const decrementRandomStat = (stats) => {
         const randomIndex = Math.floor(Math.random() * stats.length);
@@ -94,7 +48,7 @@ export default function Board() {
     //on mount
     useEffect(() => {
         // Try to load saved game state first
-        const savedGameState = loadGameState();
+        const savedGameState = loadGameStateFromLocalStorage();
 
         if (savedGameState) {
             // Restore saved game state
@@ -145,7 +99,7 @@ export default function Board() {
             }
         });
 
-        // Set all state at once
+        // Set all state at once (context will auto-save via useEffect)
         setCpuHand(newCpuHand);
         setPlayerHand(newPlayerHand);
         setCells(updatedCells);
@@ -214,6 +168,7 @@ export default function Board() {
             // Mark if attacking card encountered immunity
             if (isImmune && defendingCard.isPlayerCard !== attackingCard.isPlayerCard) {
                 attackingCard.wasNoEffect = true;
+                defendingCard.matchStats.immuneDefenses++;
             }
 
             // Calculate net type effectiveness bonus
@@ -247,9 +202,14 @@ export default function Board() {
                 // Record the index of the defending card that was flipped
                 attackingCard.flippedCardIndices.push(statIndex);
 
+                // Update match stats
+                attackingCard.matchStats.capturesMade++;
+                defendingCard.matchStats.timesFlipped++;
+
                 // Mark if this capture involved type effectiveness
                 if (hasEffectivenessBonus) {
                     attackingCard.wasSuperEffective = true;
+                    attackingCard.matchStats.superEffectiveCaptures++;
                 }
             }
         });
@@ -296,14 +256,6 @@ export default function Board() {
                 ...prev[cellTarget],
                 pokemonCard: attackingCard
             };
-
-            // Save game state after player move
-            saveGameState({
-                cells: newCells,
-                playerHand: playerHand.map((card, index) => index === sourceIndex ? null : card),
-                cpuHand: cpuHand,
-                isPlayerTurn: false
-            });
 
             return newCells;
         });
@@ -631,14 +583,6 @@ export default function Board() {
                 ...prevCells[cellTarget],
                 pokemonCard: attackingCard
             };
-
-            // Save game state after CPU move
-            saveGameState({
-                cells: newCells,
-                playerHand: playerHand,
-                cpuHand: cpuHand.map((card, index) => index === originalIndex ? null : card),
-                isPlayerTurn: true
-            });
 
             return newCells;
         });
