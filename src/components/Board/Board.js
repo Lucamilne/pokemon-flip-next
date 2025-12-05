@@ -134,7 +134,6 @@ export default function Board() {
         // Track if this card captured any cards due to type effectiveness
         attackingCard.wasSuperEffective = false;
         attackingCard.wasNoEffect = false;
-        attackingCard.flippedCardIndices = []; // Track indices of defending cards that were flipped
 
         // Track which cells had cards captured
         const capturedCells = {};
@@ -198,9 +197,6 @@ export default function Board() {
             ) {
                 // Track this cell as having been captured (don't mutate the original object)
                 capturedCells[adjacentCellKey] = attackingCard.isPlayerCard;
-
-                // Record the index of the defending card that was flipped
-                attackingCard.flippedCardIndices.push(statIndex);
 
                 // Update match stats
                 attackingCard.matchStats.capturesMade++;

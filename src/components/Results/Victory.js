@@ -7,7 +7,7 @@ import VictoryImage from "@/assets/images/victory.webp";
 import Card from "../Card/Card.js";
 import { GAME_MODES } from '@/constants/gameModes';
 
-export default function Victory({ debugMode = false }) {
+export default function Victory({ matchAwards, debugMode = false }) {
     const pathname = usePathname();
     const { matchCards, selectedGameMode } = useGameContext();
 
@@ -20,42 +20,41 @@ export default function Victory({ debugMode = false }) {
         return [];
     }, [matchCards]);
 
-    const victoryTextArray = [
-        "NICE HAHA",
-        "HE'S ALRITE",
-        "THAT COULD BE USEFUL (YOU).",
-        "COMPLETED IT MATE.",
-        "UNSTOPPABLE FORCE",
-        "ASCENDED TO GOD-TIER",
-        "THE PROPHECY IS FULFILLED",
-        "DECK MASTERY ACHIEVED",
-        "EZ. NEXT.",
-        "THE ONLY QUESTION WAS WHEN",
-        "THIS IS YOUR NEW REALITY",
-        "PERFECTION IS EXHAUSTING"
-    ];
-
-    const randomVictoryText = useMemo(() => {
-        return victoryTextArray[Math.floor(Math.random() * victoryTextArray.length)];
-    }, []);
-
-
-
     return (
         <div className='fade-in h-full bg-linear-to-b from-transparent from-10% via-ground-200 to-ground-400 flex flex-col'>
-            <div className="text-2xl font-bold p-16 flex justify-center">
+            <div className="font-bold px-16 py-6 flex justify-center">
                 <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className='max-w-xl' src={VictoryImage} />
             </div>
-            <div className='default-tile mx-8 mb-8 p-10 border-8 h-full'>
+            <div className='p-10 h-full'>
                 {selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay && (
-                    <div className='size-full flex justify-center items-center'>
-                        <div className="relative group text-center font-press-start text-lg">
-                            <h1 className="header-text text-2xl text-hop uppercase mb-12">
-                                {randomVictoryText.split('').map((char, index) => (<span key={index} style={{
-                                    animationDelay: `${(index + 1) * 50}ms`
-                                }}>{char}</span>))}
+                    <div className='size-full'>
+                        {matchAwards && matchAwards.length > 0 && (
+                            <div className="mb-8">
+                                <h2 className="text-xl font-press-start text-center mb-6">
+                                    Match Awards
+                                </h2>
+                                <div className="grid grid-cols-3 gap-4">
+                                    {matchAwards.map((award, index) => (
+                                        <div key={index} className="default-tile p-4 py-8 border-4 border-black">
+                                            {/* Award Title */}
+                                            <div className="text-center mb-3">
+                                                <span className="font-press-start text-sm">
+                                                    {award.label}
+                                                </span>
+                                            </div>
 
-                            </h1>
+                                            {/* Award Card */}
+                                            <div className="flex justify-center">
+                                                <div className="w-[124px]">
+                                                    <Card pokemonCard={award.card} isDraggable={false} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        <div className="relative group text-center font-press-start text-lg">
                             <div className={`arrow absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
                             <Link className={`cursor-pointer`} href={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
                         </div>
