@@ -8,7 +8,7 @@ export default function PokeballSplash({ pokeballIsOpen, href, buttonText = "Sta
         className={`pokeball-top bg-theme-red ${pokeballIsOpen ? 'open-up' : ''}`}
       />
       <div
-        className={`pokeball-bottom flex flex-col relative ${pokeballIsOpen ? 'open-down' : ''}`}
+        className={`relative pokeball-bottom flex flex-col relative ${pokeballIsOpen ? 'open-down' : ''}`}
       >
         <div className="bg-black h-24 w-full" />
         <div className="bg-zinc-200 shadow-top h-full" />
@@ -24,12 +24,12 @@ export default function PokeballSplash({ pokeballIsOpen, href, buttonText = "Sta
             }}
           />
         </div>
+        <p className={`${pokeballIsOpen || !href ? "hidden" : ""} flex gap-0.5 pointer-events-none absolute top-8 left-1/2 -translate-x-1/2 text-lg ${textColour} text-shadow-sm/30 font-press-start uppercase text-hop`}>
+          {buttonText.split('').map((char, index) => (<span key={index} style={{
+            animationDelay: `${(index + 1) * 50}ms`
+          }}> {char}</span>))}
+        </p>
       </div>
-      <p className={`${pokeballIsOpen || !href ? "hidden" : ""} flex gap-0.5 pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:mt-4 text-lg ${textColour} text-shadow-sm/30 font-press-start uppercase text-hop`}>
-        {buttonText.split('').map((char, index) => (<span key={index} style={{
-          animationDelay: `${(index + 1) * 50}ms`
-        }}> {char}</span>))}
-      </p>
     </section >
   );
 }

@@ -4,7 +4,6 @@ import { useState, useEffect, useMemo } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import Balance from "../Balance/Balance.js"
-import Help from "../Help/Help.js"
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
@@ -181,6 +180,7 @@ export default function Board() {
         // Track if this card captured any cards due to type effectiveness
         attackingCard.wasSuperEffective = false;
         attackingCard.wasNoEffect = false;
+        attackingCard.flippedCardIndices = []; // Track indices of defending cards that were flipped
 
         // Track which cells had cards captured
         const capturedCells = {};
@@ -243,6 +243,9 @@ export default function Board() {
             ) {
                 // Track this cell as having been captured (don't mutate the original object)
                 capturedCells[adjacentCellKey] = attackingCard.isPlayerCard;
+
+                // Record the index of the defending card that was flipped
+                attackingCard.flippedCardIndices.push(statIndex);
 
                 // Mark if this capture involved type effectiveness
                 if (hasEffectivenessBonus) {
@@ -665,15 +668,12 @@ export default function Board() {
                                 </div>
                             )
                         })}
-                        {/* {isPlayerTurn && Object.values(cells).every(cell => cell.pokemonCard === null) && (
-                            <Help customClass="!absolute !-top-18 !right-4" text="Drag a card to the arena grid!" />
-                        )} */}
+
                     </div>
                     {/* Arena */}
                     <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
-                        {/* <div className='absolute left-1/2 -translate-x-1/2 h-full w-[148px] lg:w-[208px] bg-gradient-to-b from-[var(--pokedex-red)] from-50% to-[var(--pokedex-blue)] to-50% ribbon-shadow' /> */}
                         <Balance score={score} />
-                        <Grid cells={cells} ref="grid" />
+                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
                     </div>
                     <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-6 pr-4 p-2 h-full">
                         {cpuHand.map((pokemonCard, index) => {

@@ -63,7 +63,7 @@ export const fetchMonoTypeCards = (isPlayerCard = true) => {
 }
 
 export const fetchNidoFamilyCards = (isPlayerCard = true) => {
-    return Object.keys(pokemon.cards).filter((pokemonName) => pokemonName.startsWith('Nido')).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return Object.keys(pokemon.cards).filter((pokemonName) => pokemonName.startsWith('nido')).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchBalancedTierCards = (isPlayerCard = true) => {
@@ -97,6 +97,41 @@ export const fetchBalancedTierCards = (isPlayerCard = true) => {
 
     return selectedCards
         .sort(() => Math.random() - 0.5)
+        .map((pokemonName) => createCard(pokemonName, isPlayerCard));
+}
+
+export const fetchGlassCannonCards = (isPlayerCard = true) => {
+    return Object.keys(pokemon.cards)
+        .filter((pokemonName) => {
+            const card = pokemon.cards[pokemonName];
+            const stats = card.stats;
+            const maxStat = Math.max(...stats);
+            const minStat = Math.min(...stats);
+            // Has at least one very high stat and one low stat (variance)
+            return maxStat >= 8 && minStat <= 1;
+        })
+        .map((pokemonName) => createCard(pokemonName, isPlayerCard));
+}
+
+export const fetchDualTypeCards = (isPlayerCard = true) => {
+    return Object.keys(pokemon.cards)
+        .filter((pokemonName) => pokemon.cards[pokemonName].types.length === 2)
+        .map((pokemonName) => createCard(pokemonName, isPlayerCard));
+}
+
+
+export const fetchAllStarterLineCards = (isPlayerCard = true) => {
+    const starters = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon', 'charizard',
+        'squirtle', 'wartortle', 'blastoise', 'pikachu', 'raichu'];
+    return Object.keys(pokemon.cards)
+        .filter((pokemonName) => starters.includes(pokemonName))
+        .map((pokemonName) => createCard(pokemonName, isPlayerCard));
+}
+
+export const fetchFossilCards = (isPlayerCard = true) => {
+    const fossils = ['omanyte', 'omastar', 'kabuto', 'kabutops', 'aerodactyl'];
+    return Object.keys(pokemon.cards)
+        .filter((pokemonName) => fossils.includes(pokemonName))
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 

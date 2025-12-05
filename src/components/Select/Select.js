@@ -20,7 +20,7 @@ export default function Select() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const { setSelectedPlayerHand, selectedGameMode } = useGameContext();
+    const { setSelectedPlayerHand } = useGameContext();
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const playerCardLibrary = useMemo(() => {
         return pathname.startsWith('/quickplay') ? fetchAllCards() : fetchStarterCards();
@@ -139,7 +139,7 @@ export default function Select() {
                             })}
                     </div>
                 </div>
-                <Profile playerHand={playerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
+                <Profile playerHand={playerHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
             <div className="relative grid grid-cols-[repeat(5,124px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
                 {playerHand.map((pokemonCard, index) => {

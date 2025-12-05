@@ -108,23 +108,21 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         if (pokemonCard.wasSuperEffective) {
             setShowOverlay(true);
             setTimeout(() => setShowOverlay(false), 400);
-            return;
         }
 
         // Check if this card's attack was immune
         if (pokemonCard.wasNoEffect) {
             setShowOverlay(true);
             setTimeout(() => setShowOverlay(false), 400);
-            return;
         }
 
         const totalStats = sumUpNumbersInArray(pokemonCard.stats);
         const totalOriginalStats = sumUpNumbersInArray(pokemonCard.originalStats);
 
         if (totalStats < totalOriginalStats) {
-            weakenCard();
+            await weakenCard();
         } else if (totalStats > totalOriginalStats) {
-            strengthenCard();
+            await strengthenCard();
         }
     };
 
