@@ -31,7 +31,7 @@ function TutorialDropZone({ droppedCard }) {
     return (
         <div
             ref={setNodeRef}
-            className="relative aspect-square w-[152px] border-6 border-black p-2 fire-tile"
+            className="relative aspect-square w-[152px] border-4 border-black p-2 fire-tile"
             data-cell="tutorial-drop-zone"
         >
             {/* Hover overlay */}
@@ -63,7 +63,7 @@ function TutorialDropZone({ droppedCard }) {
     );
 }
 
-export default function C() {
+export default function C({ nextSlide }) {
     const pokemonCard = fetchCardById(37);
     const [droppedCard, setDroppedCard] = useState(null);
     const [isBeingDragged, setIsBeingDragged] = useState(false)

@@ -114,8 +114,8 @@ export default function Select() {
                 </h1>
             </div>
             <div className='grow flex overflow-y-auto'>
-                <div className="relative bg-theme-blue hide-scrollbar overflow-y-auto flex">
-                    <div className="grid grid-cols-[repeat(3,124px)] auto-rows-min gap-4 p-4">
+                <div className="relative bg-theme-blue hide-scrollbar overflow-y-auto p-4">
+                    <div className="grid grid-cols-[repeat(3,124px)] auto-rows-min gap-4">
                         {playerCardLibrary
                             .filter(pokemonCard => {
                                 const trimmedSearch = searchString.trim();

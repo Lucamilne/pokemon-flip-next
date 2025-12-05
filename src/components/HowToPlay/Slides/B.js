@@ -25,7 +25,7 @@ function TutorialDropZone({ droppedCard }) {
     }
 
     return (
-        <div className="grid grid-cols-2 grid-cols-[repeat(2,140px)] gap-1.5 bg-black border-6 border-black">
+        <div className="grid grid-cols-2 grid-cols-[repeat(2,140px)] gap-1 bg-black border-4 border-black">
             <div
                 ref={setNodeRef}
                 className="relative aspect-square p-2 default-tile"
@@ -65,7 +65,7 @@ function TutorialDropZone({ droppedCard }) {
     );
 }
 
-export default function B() {
+export default function B({ nextSlide }) {
     const pokemonCard = fetchCardById(150);
     const [droppedCard, setDroppedCard] = useState(null);
     const [isBeingDragged, setIsBeingDragged] = useState(false)

@@ -18,7 +18,7 @@ export default function Home({ debugMode = false }) {
 
     if (matchCards.length === 0 && debugMode === false) {
       const gameMode = pathname.split('/').filter(Boolean)[0];
-      router.push(`/${gameMode}/select`);
+      router.replace(`/${gameMode}/select`);
       return;
     }
 

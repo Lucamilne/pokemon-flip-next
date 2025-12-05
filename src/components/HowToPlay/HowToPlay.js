@@ -37,7 +37,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                                 On your turn, drag a card to any empty space on the 3x3 grid, where it will battle adjacent opponent cards — choose wisely!
                             </p>
                         </div>
-                        <SlideA />
+                        <SlideA nextSlide={nextSlide} />
                     </div>
 
                     {/* Slide B */}
@@ -47,7 +47,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                             <p>Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
                             </p>
                         </div>
-                        <SlideB />
+                        <SlideB nextSlide={nextSlide} />
                     </div>
 
                     {/* Slide C */}
@@ -63,7 +63,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                                     style={{ backgroundColor: `var(--color-normal-500)` }}
                                 >Normal</span> type Pokemon ignore tile effects.</p>
                         </div>
-                        <SlideC />
+                        <SlideC nextSlide={nextSlide} />
                     </div>
 
                     {/* Slide D */}
@@ -81,7 +81,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                                 You will be able to flip a defending card with equal or higher facing stats.
                             </p>
                         </div>
-                        <SlideD />
+                        <SlideD nextSlide={nextSlide} />
                     </div>
                     {/* Slide E */}
                     <div className="min-w-full h-full flex flex-col gap-8 justify-between px-24 p-14">
@@ -94,7 +94,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                                 >Normal</span> type Pokemon have no type advantages or disadvantages. All
                                 attacks hit them normally, and they ignore type-based immunities.</p>
                         </div>
-                        <SlideE />
+                        <SlideE nextSlide={nextSlide} />
                     </div>
 
                     {/* Slide F */}
