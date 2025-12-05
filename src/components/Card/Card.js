@@ -67,7 +67,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
     const dropCard = () => {
         return new Promise((resolve) => {
             if (cardRef.current) {
-                cardRef.current.classList.add('slide-in-bck-top')
+                cardRef.current.classList.add('slide-in-blurred-top')
                 setTimeout(resolve, 400);
             } else {
                 resolve();
@@ -78,7 +78,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
     const defeatCard = () => {
         return new Promise((resolve) => {
             if (cardRef.current) {
-                cardRef.current.classList.remove('wobble-hor-bottom', 'jello-horizontal', 'slide-in-bck-top');
+                cardRef.current.classList.remove('wobble-hor-bottom', 'jello-horizontal', 'slide-in-blurred-top');
 
                 // Force a reflow to ensure the browser has committed the current state. This is to fix a transition property issue with animations playing instantly
                 cardRef.current.offsetHeight;
