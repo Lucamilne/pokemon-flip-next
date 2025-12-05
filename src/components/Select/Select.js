@@ -78,7 +78,7 @@ export default function Select() {
 
     return (
         <div className="overflow-hidden relative h-full flex flex-col rounded-xl" >
-            <div className="px-7 pt-4 pb-6 flex justify-between items-center hand-top-container">
+            <div className="px-7 pt-4 pb-6 flex justify-between gap-4 items-center hand-top-container">
                 <div className="relative font-press-start">
                     <input
                         type="text"
@@ -106,7 +106,7 @@ export default function Select() {
                         </button>
                     )}
                 </div>
-                <h1 className="header-text text-2xl text-hop">
+                <h1 className="text-right header-text text-xl lg:text-2xl text-hop">
                     {helperText.split('').map((char, index) => (<span key={index} style={{
                         animationDelay: `${(index + 1) * 50}ms`
                     }}>{char}</span>))}
@@ -150,7 +150,9 @@ export default function Select() {
                             </div>
 
                             {pokemonCard && (
-                                <Card pokemonCard={pokemonCard} index={index} isDraggable={false} />
+                                <div className='slide-in-blurred-top'>
+                                    <Card pokemonCard={pokemonCard} index={index} isDraggable={false} />
+                                </div>
                             )}
                         </button>
                     )

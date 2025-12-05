@@ -89,7 +89,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
                     setTimeout(() => {
                         cardRef.current.classList.remove('rotate-vert-center', 'z-50')
                         resolve();
-                    }, 500);
+                    }, 400);
                 });
             } else {
                 resolve();
