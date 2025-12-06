@@ -19,6 +19,7 @@ export default function Results() {
     const { matchCards } = useGameContext();
     const [matchAwards, setMatchAwards] = useState(null);
     const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         clearLocalStorage();
@@ -251,9 +252,10 @@ export default function Results() {
         const selectedAwards = shuffled.slice(0, 3);
 
         setMatchAwards(selectedAwards);
+        setMounted(true);
     }, []);
 
-    if (!matchCards || matchCards.length === 0 || !matchAwards) {
+    if (!matchCards || matchCards.length === 0 || !mounted) {
         return <Loader />;
     }
 
@@ -264,7 +266,7 @@ export default function Results() {
                 <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
             </div>
             <div className='p-10 h-full'>
-                {(selectedGameMode === GAME_MODES.QUICK_PLAY.id) || isQuickplay && (
+                {mounted && (selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
                     <div className='size-full'>
                         {matchAwards && matchAwards.length > 0 && (
                             <div className="mb-8">
