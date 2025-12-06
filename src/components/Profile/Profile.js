@@ -240,6 +240,10 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                                 <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                 <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchFossilCards)} className="disabled:opacity-30 cursor-pointer">Fossil Cards</button>
                             </div>
+                            <div className="relative group">
+                                <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">秘密 (debug)</button>
+                            </div>
                         </div>
                         <div className='ml-5'>
                             {gameData.types.filter(type => !['steel', "ghost", "dragon"].includes(type)).map(type => (

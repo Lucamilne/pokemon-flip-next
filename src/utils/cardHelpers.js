@@ -1,7 +1,8 @@
 import pokemon from "@/data/game-data.json";
 
-export const createCard = (pokemonName, isPlayerCard = false) => {
-    let cardData = { ...pokemon.cards[pokemonName] };
+export const createCard = (pokemonName, isPlayerCard = false, debugMode = false) => {
+    let libraryOfCards = debugMode ? "legends" : "cards";
+    let cardData = { ...pokemon[libraryOfCards][pokemonName] };
 
     return {
         ...cardData,
@@ -71,6 +72,10 @@ export const fetchMonoTypeCards = (isPlayerCard = true) => {
 
 export const fetchNidoFamilyCards = (isPlayerCard = true) => {
     return Object.keys(pokemon.cards).filter((pokemonName) => pokemonName.startsWith('nido')).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+}
+
+export const fetchSecretCards = (isPlayerCard = true) => {
+    return Object.keys(pokemon.legends).map((pokemonName) => createCard(pokemonName, isPlayerCard, true));
 }
 
 export const fetchBalancedTierCards = (isPlayerCard = true) => {

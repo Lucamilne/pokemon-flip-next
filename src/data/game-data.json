@@ -3500,5 +3500,119 @@
       "rarity": "legendary",
       "statWeight": 600
     }
+  },
+  "legends": {
+    "celebi": {
+      "id": 251,
+      "types": [
+        "psychic",
+        "grass"
+      ],
+      "stats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "effort_value": 4,
+      "starter": false,
+      "originalStats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "rarity": "legendary",
+      "statWeight": 999
+    },
+    "ho-oh": {
+      "id": 250,
+      "types": [
+        "fire",
+        "flying"
+      ],
+      "stats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "effort_value": 4,
+      "starter": false,
+      "originalStats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "rarity": "legendary",
+      "statWeight": 999
+    },
+    "raikou": {
+      "id": 243,
+      "types": [
+        "electric"
+      ],
+      "stats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "effort_value": 4,
+      "starter": false,
+      "originalStats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "rarity": "legendary",
+      "statWeight": 999
+    },
+    "entei": {
+      "id": 244,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "effort_value": 4,
+      "starter": false,
+      "originalStats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "rarity": "legendary",
+      "statWeight": 999
+    },
+    "suicine": {
+      "id": 245,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "effort_value": 4,
+      "starter": false,
+      "originalStats": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "rarity": "legendary",
+      "statWeight": 999
+    }
   }
 }
