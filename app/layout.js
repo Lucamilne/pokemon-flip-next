@@ -22,9 +22,6 @@ const pressStart2P = Press_Start_2P({
 export const metadata = {
   title: "Pokémon Flip | Strategic Card Battle Game",
   description: "A strategic card battle game inspired by Triple Triad, featuring Pokémon cards with elemental types and stat-based combat.",
-  icons: {
-    icon: '/favicon.ico',
-  },
 };
 
 export default function RootLayout({ children }) {

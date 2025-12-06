@@ -1,10 +1,13 @@
 import { useEffect, useState, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import Loader from "@/components/Loader/Loader.js";
 import * as cardHelpers from '@/utils/cardHelpers.js';
 import gameData from '@/data/game-data.json';
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
+    const searchParams = useSearchParams();
+    const debugMode = searchParams.get('debug') === 'true';
     const [pokemonData, setPokemonData] = useState(null);
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -240,7 +243,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                                 <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                 <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchFossilCards)} className="disabled:opacity-30 cursor-pointer">Fossil Cards</button>
                             </div>
-                            {process.env.NODE_ENV === 'development' && (
+                            {debugMode && (
                                 <div className="relative group">
                                     <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">秘密 (debug)</button>
