@@ -462,8 +462,8 @@ export default function Board() {
                 // Calculate score: prioritize captures, with bonus for super effective captures
                 const score = captureCount * 10 + superEffectiveCaptureCount * 5;
 
-                // Update best move if this scores higher
-                if (score > bestScore) {
+                // Update best move if this scores higher (only accept score > 0 to avoid immune-only positions)
+                if (score > bestScore && score > 0) {
                     bestScore = score;
                     bestCellToPlace = analysis.cellKey;
                     bestCardToPlay = cpuCard;

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { GAME_MODES } from '@/constants/gameModes';
 import Card from "@/components/Card/Card.js"
 
-export default function ResultScreen({ matchAwards, image, bgGradient, imageMaxWidth = 'max-w-xl', debugMode = false }) {
+export default function Results({ matchAwards, image, bgGradient, imageMaxWidth = 'max-w-xl', debugMode = false }) {
     const pathname = usePathname();
     const { selectedGameMode } = useGameContext();
 
@@ -17,7 +17,7 @@ export default function ResultScreen({ matchAwards, image, bgGradient, imageMaxW
                 <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className={imageMaxWidth} src={image} />
             </div>
             <div className='p-10 h-full'>
-                {selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay && (
+                {(selectedGameMode === GAME_MODES.QUICK_PLAY.id) || isQuickplay && (
                     <div className='size-full'>
                         {matchAwards && matchAwards.length > 0 && (
                             <div className="mb-8">

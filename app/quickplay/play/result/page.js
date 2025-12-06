@@ -1,7 +1,7 @@
 "use client"
 
 import Victory from "@/components/Results/Victory";
-import ResultScreen from "@/components/Results/ResultScreen";
+import Results from "@/components/Results/Results";
 import DefeatImage from "@/assets/images/defeat.webp";
 import TieImage from "@/assets/images/tie.webp";
 import { useEffect, useState } from 'react';
@@ -256,14 +256,14 @@ export default function Home({ debugMode = true }) {
         {isPlayerVictory === true ? (
           <Victory matchAwards={matchAwards} />
         ) : isPlayerVictory === false ? (
-          <ResultScreen
+          <Results
             matchAwards={matchAwards}
             image={DefeatImage}
             bgGradient="via-theme-red to-theme-red-200"
             imageMaxWidth="max-w-xl"
           />
         ) : (
-          <ResultScreen
+          <Results
             matchAwards={matchAwards}
             image={TieImage}
             bgGradient="via-normal to-normal-400"

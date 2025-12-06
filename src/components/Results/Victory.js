@@ -26,7 +26,7 @@ export default function Victory({ matchAwards, debugMode = false }) {
                 <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className='max-w-xl' src={VictoryImage} />
             </div>
             <div className='p-10 h-full'>
-                {selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay && (
+                {(selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
                     <div className='size-full'>
                         {matchAwards && matchAwards.length > 0 && (
                             <div className="mb-8">
