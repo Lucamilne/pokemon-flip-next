@@ -13,7 +13,6 @@ export function GameProvider({ children }) {
   const [selectedPlayerHand, setSelectedPlayerHand] = useState(null);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
   const [matchCards, setMatchCards] = useState([]);
-  const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
   const [isGameComplete, setIsGameComplete] = useState(false);
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
   const [playerHand, setPlayerHand] = useState([]);
@@ -104,7 +103,6 @@ export function GameProvider({ children }) {
     // Reset context state
     setIsGameComplete(false);
     setMatchCards([]);
-    setIsPlayerVictory(null);
     setIsPlayerTurn(true);
     setPlayerHand([]);
     setCpuHand([]);
@@ -165,8 +163,6 @@ export function GameProvider({ children }) {
       setSelectedGameMode,
       matchCards,
       setMatchCards,
-      isPlayerVictory,
-      setIsPlayerVictory,
       isGameComplete,
       setIsGameComplete,
       cells,
