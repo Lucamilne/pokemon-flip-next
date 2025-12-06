@@ -1,21 +1,20 @@
 import { usePathname } from 'next/navigation';
 import { useGameContext } from '@/contexts/GameContext';
 import Link from 'next/link'
-import DefeatImage from "@/assets/images/defeat.webp";
 import Image from 'next/image'
 import { GAME_MODES } from '@/constants/gameModes';
 import Card from "@/components/Card/Card.js"
 
-export default function Defeat({ matchAwards, debugMode = false }) {
+export default function ResultScreen({ matchAwards, image, bgGradient, imageMaxWidth = 'max-w-xl', debugMode = false }) {
     const pathname = usePathname();
     const { selectedGameMode } = useGameContext();
 
     const isQuickplay = pathname?.includes('quickplay') ?? false;
 
     return (
-        <div className='fade-in h-full bg-linear-to-b from-transparent from-10% via-theme-red to-theme-red-200 flex flex-col'>
+        <div className={`fade-in h-full bg-linear-to-b from-transparent from-10% ${bgGradient} flex flex-col`}>
             <div className="font-bold px-16 py-6 flex justify-center">
-                <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className='max-w-xl' src={DefeatImage} />
+                <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className={imageMaxWidth} src={image} />
             </div>
             <div className='p-10 h-full'>
                 {selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay && (

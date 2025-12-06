@@ -29,10 +29,10 @@ export const fetchCardById = (id, isPlayerCard = true) => {
     return createCard(pokemonName, isPlayerCard);
 };
 
-export const allocateRandomCpuCards = () => {
+export const allocateRandomCards = (isPlayerCard) => {
     const shuffledArray = Object.keys(pokemon.cards).sort(() => Math.random() - 0.5);
 
-    return shuffledArray.slice(0, 5).map((el) => createCard(el));
+    return shuffledArray.slice(0, 5).map((el) => createCard(el, isPlayerCard));
 };
 
 export const allocateCpuCardsFromPool = (cardPool) => {

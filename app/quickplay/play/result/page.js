@@ -1,8 +1,9 @@
 "use client"
 
 import Victory from "@/components/Results/Victory";
-import Defeat from "@/components/Results/Defeat";
-import Tie from "@/components/Results/Tie";
+import ResultScreen from "@/components/Results/ResultScreen";
+import DefeatImage from "@/assets/images/defeat.webp";
+import TieImage from "@/assets/images/tie.webp";
 import { useEffect, useState } from 'react';
 import { useGameContext } from '@/contexts/GameContext';
 import { clearLocalStorage } from '@/utils/gameStorage';
@@ -104,7 +105,7 @@ export default function Home({ debugMode = true }) {
     // Special personality-based awards
     const specialAwardDefinitions = [
       { name: 'jigglypuff', award: 'Worst Singer' },
-      { name: 'magikarp', award: 'Most Determined' },
+      { name: 'magikarp', award: 'Most Useless' },
       { name: 'psyduck', award: 'Most Confused' },
       { name: 'snorlax', award: 'Sleepiest' },
       { name: 'mewtwo', award: 'Most Intimidating' },
@@ -116,15 +117,15 @@ export default function Home({ debugMode = true }) {
       { name: 'bulbasaur', award: 'Best Starter' },
       { name: 'eevee', award: 'Most Versatile' },
       { name: 'gengar', award: 'Spookiest' },
-      { name: 'dragonite', award: 'Friendliest Dragon' },
+      { name: 'dragonite', award: 'Goofiest Dragon' },
       { name: 'alakazam', award: 'Biggest Brain' },
-      { name: 'machamp', award: 'Strongest' },
+      { name: 'machamp', award: 'Most Swole' },
       { name: 'mew', award: 'Most Mysterious' },
       { name: 'gyarados', award: 'Angriest' },
       { name: 'lapras', award: 'Best Transport' },
       { name: 'articuno', award: 'Chillest' },
-      { name: 'zapdos', award: 'Most Shocking' },
-      { name: 'moltres', award: 'Most Fired Up' },
+      { name: 'zapdos', award: 'Most Tangy' },
+      { name: 'moltres', award: 'Most Meteoric' },
       { name: 'cubone', award: 'Loneliest' },
       { name: 'electrode', award: 'Most Explosive' },
       { name: 'chansey', award: 'Luckiest' },
@@ -133,7 +134,7 @@ export default function Home({ debugMode = true }) {
       { name: 'hitmonlee', award: 'Best Kicks' },
       { name: 'hitmonchan', award: 'Best Punches' },
       { name: 'lickitung', award: 'Longest Tongue' },
-      { name: 'tangela', award: 'Most Tangled' },
+      { name: 'tangela', award: 'Worst Hair' },
       { name: 'seaking', award: 'Most Fabulous' },
       { name: 'starmie', award: 'Most Cosmic' },
       { name: 'scyther', award: 'Sharpest Blades' },
@@ -150,7 +151,7 @@ export default function Home({ debugMode = true }) {
       { name: 'cloyster', award: 'Most Defensive' },
       { name: 'hypno', award: 'Sleepiest Hypnotist' },
       { name: 'kingler', award: 'Biggest Claw' },
-      { name: 'voltorb', award: 'Most Likely to Explode' },
+      { name: 'voltorb', award: 'Most Explosive' },
       { name: 'mr-mime', award: 'Best Performer' },
       { name: 'jynx', award: 'Best Dancer' },
       { name: 'electabuzz', award: 'Most Energetic' },
@@ -164,6 +165,7 @@ export default function Home({ debugMode = true }) {
       { name: 'poliwrath', award: 'Strongest Swimmer' },
       { name: 'victreebel', award: 'Hungriest' },
       { name: 'tentacruel', award: 'Most Tentacles' },
+      { name: 'geodude', award: 'Skipped Leg Day'},
       { name: 'golem', award: 'Most Rock Solid' },
       { name: 'ponyta', award: 'Fastest Runner' },
       { name: 'rapidash', award: 'Most Majestic' },
@@ -182,7 +184,7 @@ export default function Home({ debugMode = true }) {
       { name: 'blastoise', award: 'Best Cannons' },
       { name: 'venusaur', award: 'Biggest Bloom' },
       { name: 'pidgeot', award: 'Most Majestic Bird' },
-      { name: 'fearow', award: 'Most Intimidating Bird' },
+      { name: 'fearow', award: 'Most Intimidating' },
       { name: 'weezing', award: 'Most Polluted' },
       { name: 'rhydon', award: 'Most Armored' }
     ];
@@ -254,9 +256,19 @@ export default function Home({ debugMode = true }) {
         {isPlayerVictory === true ? (
           <Victory matchAwards={matchAwards} />
         ) : isPlayerVictory === false ? (
-          <Defeat matchAwards={matchAwards} />
+          <ResultScreen
+            matchAwards={matchAwards}
+            image={DefeatImage}
+            bgGradient="via-theme-red to-theme-red-200"
+            imageMaxWidth="max-w-xl"
+          />
         ) : (
-          <Tie matchAwards={matchAwards} />
+          <ResultScreen
+            matchAwards={matchAwards}
+            image={TieImage}
+            bgGradient="via-normal to-normal-400"
+            imageMaxWidth="max-w-lg"
+          />
         )}
       </section>
     </>

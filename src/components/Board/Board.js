@@ -30,8 +30,8 @@ export default function Board() {
         cpuHand,
         setCpuHand,
         score,
-        resetGameState
     } = useGameContext();
+    
     const router = useRouter();
 
     const decrementRandomStat = (stats) => {
