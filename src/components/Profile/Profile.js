@@ -1,13 +1,19 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import Loader from "@/components/Loader/Loader.js";
 import * as cardHelpers from '@/utils/cardHelpers.js';
 import gameData from '@/data/game-data.json';
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
-    const searchParams = useSearchParams();
-    const debugMode = searchParams.get('debug') === 'true';
+    const [debugMode, setDebugMode] = useState(false);
+
+    useEffect(() => {
+        // Check for debug parameter on client side only
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            setDebugMode(params.get('debug') === 'true');
+        }
+    }, []);
     const [pokemonData, setPokemonData] = useState(null);
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
