@@ -28,7 +28,7 @@ export default function Victory({ matchAwards, debugMode = false }) {
             <div className='p-10 h-full'>
                 {(selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
                     <div className='size-full'>
-                        {matchAwards && matchAwards.length > 0 && (
+                        {process.env.NODE_ENV === 'development' && matchAwards && matchAwards.length > 0 && (
                             <div className="mb-8">
                                 <h2 className="text-xl font-press-start text-center mb-6">
                                     Match Awards
