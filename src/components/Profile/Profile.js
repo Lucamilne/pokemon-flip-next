@@ -132,7 +132,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                     <span className="hidden md:block text-xs capitalize">{basePokemon.species.name}</span>
                 </div>
                 <div className='flex justify-center'>
-                    <div className="arrow" />
+                    <div className="arrow-relative" />
                 </div>
                 <div className="flex flex-col items-center">
                     <img

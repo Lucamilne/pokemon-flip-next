@@ -20,7 +20,7 @@ export default function AppShell({ children }) {
       style={getBackgroundStyle()}
     >
       {/* Mobile splash screen */}
-      <div className="block md:hidden min-h-screen flex items-center justify-center p-8">
+      {/* <div className="block md:hidden min-h-screen flex items-center justify-center p-8">
         <div className="text-center default-tile border-8 border-black p-2 shadow-lg/30">
           <h1 className="font-press-start bg-theme-red py-4 text-3xl header-text">
             Pokémon Flip
@@ -31,10 +31,10 @@ export default function AppShell({ children }) {
             Please visit on a tablet or desktop.
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Main app - hidden on mobile */}
-      <main className="hidden md:flex justify-center min-h-screen font-sans bg-black/15 lg:p-4">
+      <main className="flex justify-center min-h-screen font-sans bg-black/15 lg:p-4">
         <div className="h-screen lg:h-[calc(100vh-32px)] overflow-hidden w-full max-w-5xl">
           {children}
         </div>

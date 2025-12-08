@@ -551,11 +551,17 @@ body {
 .arrow {
   width: 14px;
   height: 14px;
-  position: relative;
   display: inline-block
 }
 
-.arrow::before {
+.arrow-relative {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: inline-block
+}
+
+.arrow::before, .arrow-relative::before {
   position: absolute;
   top: -2px;
   left: -2px;
