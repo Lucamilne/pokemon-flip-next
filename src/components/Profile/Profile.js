@@ -8,12 +8,14 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
     const [debugMode, setDebugMode] = useState(false);
 
     useEffect(() => {
-        // Check for debug parameter on client side only
+        // Enable debug mode in development or when ?debug=true is in URL
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
-            setDebugMode(params.get('debug') === 'true');
+            const hasDebugParam = params.get('debug') === 'true';
+            setDebugMode(hasDebugParam || import.meta.env.DEV);
         }
     }, []);
+    
     const [pokemonData, setPokemonData] = useState(null);
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +65,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
 
                 setPokemonData(combinedData);
 
-                if (process.env.NODE_ENV === 'production') {
+                if (import.meta.env.PROD) {
                     const pokemonCry = new Audio(combinedData.cries.legacy);
                     pokemonCry.volume = 0.5;
                     pokemonCry.addEventListener('error', (error) => {

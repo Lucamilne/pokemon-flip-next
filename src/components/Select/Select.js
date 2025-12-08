@@ -9,7 +9,7 @@ import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
 
 
-const basePath = process.env.NODE_ENV === 'production' ? '/pokemon-flip-next' : '';
+const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
 
 export default function Select() {
     const location = useLocation();
