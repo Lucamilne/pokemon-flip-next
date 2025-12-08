@@ -263,9 +263,9 @@ export default function Results() {
     return (
         <div className={`fade-in h-full bg-linear-to-b from-transparent from-10% ${isPlayerVictory ? 'via-ground-200 to-ground-400' : (isPlayerVictory === false ? "via-theme-red to-theme-red-200" : "via-normal to-normal-400")} flex flex-col`}>
             <div className="font-bold px-16 py-6 flex justify-center">
-                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
+                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-sm md:max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
             </div>
-            <div className='p-10 h-full'>
+            <div className='p-5 md:p-10 h-full'>
                 {mounted && (selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
                     <div className='size-full'>
                         {matchAwards && matchAwards.length > 0 && (
@@ -273,19 +273,19 @@ export default function Results() {
                                 <h2 className="text-xl font-press-start text-center mb-6">
                                     Match Awards
                                 </h2>
-                                <div className="grid grid-cols-3 gap-4">
+                                <div className="flex flex-col md:grid grid-cols-3 gap-2 md:gap-4">
                                     {matchAwards.map((award, index) => (
-                                        <div key={index} className="default-tile p-4 py-8 border-4 border-black">
+                                        <div key={index} className="default-tile p-4 md:py-8 border-4 border-black">
                                             {/* Award Title */}
                                             <div className="text-center mb-3">
-                                                <span className="font-press-start text-sm">
+                                                <span className="font-press-start text-[10px] md:text-sm">
                                                     {award.label}
                                                 </span>
                                             </div>
 
                                             {/* Award Card */}
                                             <div className="flex justify-center">
-                                                <div className="w-[124px]">
+                                                <div className="w-[72px]">
                                                     <Card pokemonCard={award.card} isDraggable={false} />
                                                 </div>
                                             </div>

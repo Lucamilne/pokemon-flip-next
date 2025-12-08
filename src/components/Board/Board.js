@@ -15,6 +15,7 @@ import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const location = useLocation();
     const pathname = location.pathname;
     const {
@@ -35,16 +36,16 @@ export default function Board() {
 
     const navigate = useNavigate();
 
-    const decrementRandomStat = (stats) => {
-        const randomIndex = Math.floor(Math.random() * stats.length);
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 767px)');
 
-        if (stats[randomIndex] > 1) {
-            stats[randomIndex] -= 1;
-        } else {
-            // If it's 1 or less, recursively call the function again
-            decrementRandomStat(stats);
-        }
-    };
+        setIsMobile(mediaQuery.matches);
+
+        const handler = (e) => setIsMobile(e.matches);
+        mediaQuery.addEventListener('change', handler);
+
+        return () => mediaQuery.removeEventListener('change', handler);
+    }, []);
 
     //on mount
     useEffect(() => {
@@ -592,6 +593,48 @@ export default function Board() {
 
         makeCpuMove();
     }, [isPlayerTurn])
+
+    if (isMobile) {
+        return (
+            <DndContext onDragEnd={handleDragEnd}>
+                <div className="overflow-hidden relative h-full flex flex-col justify-between md:rounded-xl" >
+                    <div className="relative grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-top-container p-2 pb-6 pt-4">
+                        {cpuHand.map((pokemonCard, index) => {
+                            return (
+                                <div className="relative aspect-square" key={index}>
+                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
+
+                                    {pokemonCard && pokeballIsOpen && (
+                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFlipped={false} />
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    {/* Arena */}
+                    <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
+                        <Balance score={score} />
+                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
+                    </div>
+                    <div className="grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-bottom-container p-2 pt-6 pb-4">
+                        {playerHand.map((pokemonCard, index) => {
+                            return (
+                                <div className="relative aspect-square" key={index}>
+                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
+
+                                    {pokemonCard && pokeballIsOpen && (
+                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
+                    {isGameComplete && <ResultTransition />}
+                </div>
+            </DndContext>
+        )
+    }
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
