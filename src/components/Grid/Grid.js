@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { typeTiles } from '@/utils/typeIcons'
 import { useDroppable } from '@dnd-kit/core';
 import Card from '../Card/Card.js';
@@ -25,7 +24,7 @@ function DroppableCell({ cellKey, cellData }) {
             )}
 
             {cellData.element && (
-                <Image
+                <img
                     draggable={false}
                     className="absolute w-1/3 h-1/3 inset-1/2 transform -translate-x-1/2 -translate-y-1/2"
                     src={typeTiles[cellData.element]}

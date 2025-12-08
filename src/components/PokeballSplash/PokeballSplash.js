@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Link from 'next/link'
+import { Link } from 'react-router-dom';
 
 export default function PokeballSplash({ pokeballIsOpen, href, buttonText = "Start!", textColour = "text-sky-400" }) {
   return (
@@ -15,7 +15,7 @@ export default function PokeballSplash({ pokeballIsOpen, href, buttonText = "Sta
         <div className="bg-white surround-mobile rounded-full flex justify-center items-center">
           <Link
             className="pokeball-button bg-white rounded-full cursor-pointer pointer-events-auto"
-            href={href || "/"}
+            to={href || "/"}
             aria-label="Open pokeball"
             onClick={(e) => {
               if (!href) {

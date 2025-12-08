@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function ResultTransition({ debugMode = false }) {
     const [tilesLeft, setTilesLeft] = useState(Array.from({ length: 10 }, () => false));
     const [tilesRight, setTilesRight] = useState(Array.from({ length: 10 }, () => false));
-    const router = useRouter();
-    const pathname = usePathname();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const pathname = location.pathname;
 
     useEffect(() => {
         // First set of tiles from left
@@ -36,7 +37,7 @@ export default function ResultTransition({ debugMode = false }) {
         
         if (!debugMode) {
             setTimeout(() => {
-                router.push(`${pathname}/result`);
+                navigate(`${pathname}/result`);
             }, totalAnimationTime);
         }
     }, []);

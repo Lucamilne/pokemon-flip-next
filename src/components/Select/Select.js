@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
+import { useLocation } from 'react-router-dom';
 import { fetchStarterCards, fetchStrongCards, fetchAllCards } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
@@ -9,10 +9,11 @@ import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
 
 
-const basePath = process.env.NODE_ENV === 'production' ? '/pokemon-flip-next' : '';
+const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
 
 export default function Select() {
-    const pathname = usePathname();
+    const location = useLocation();
+    const pathname = location.pathname;
     // Extract root path (e.g., "/quickplay/select" -> "/quickplay")
     const rootPath = '/' + pathname.split('/').filter(Boolean)[0];
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);

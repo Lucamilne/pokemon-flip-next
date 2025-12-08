@@ -1,21 +1,21 @@
 import { useGameContext } from '@/contexts/GameContext';
-import Link from 'next/link'
-import Image from 'next/image'
+import { Link } from 'react-router-dom';
 import VictoryImage from "@/assets/images/victory.webp";
 import DefeatImage from "@/assets/images/defeat.webp";
 import TieImage from "@/assets/images/tie.webp";
 import { GAME_MODES } from '@/constants/gameModes';
 import Card from "@/components/Card/Card.js"
-import { useRouter, usePathname } from 'next/navigation';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { clearLocalStorage } from '@/utils/gameStorage';
 import Loader from "@/components/Loader/Loader.js";
 
 export default function Results() {
-    const pathname = usePathname();
+    const location = useLocation();
+    const pathname = location.pathname;
     const { selectedGameMode } = useGameContext();
     const isQuickplay = pathname?.includes('quickplay') ?? false;
-    const router = useRouter();
+    const navigate = useNavigate();
     const { matchCards } = useGameContext();
     const [matchAwards, setMatchAwards] = useState(null);
     const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
@@ -26,7 +26,7 @@ export default function Results() {
 
         if (!matchCards || matchCards.length === 0) {
             const gameMode = pathname.split('/').filter(Boolean)[0];
-            router.replace(`/${gameMode}/select`);
+            navigate(`/${gameMode}/select`, { replace: true });
             return;
         }
 
@@ -263,7 +263,7 @@ export default function Results() {
     return (
         <div className={`fade-in h-full bg-linear-to-b from-transparent from-10% ${isPlayerVictory ? 'via-ground-200 to-ground-400' : (isPlayerVictory === false ? "via-theme-red to-theme-red-200" : "via-normal to-normal-400")} flex flex-col`}>
             <div className="font-bold px-16 py-6 flex justify-center">
-                <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
+                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
             </div>
             <div className='p-10 h-full'>
                 {mounted && (selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
@@ -296,7 +296,7 @@ export default function Results() {
                         )}
                         <div className="relative group text-center font-press-start text-lg">
                             <div className={`arrow absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
-                            <Link className={`cursor-pointer`} href={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
+                            <Link className={`cursor-pointer`} to={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
                         </div>
                     </div>
                 )}
