@@ -594,7 +594,7 @@ export default function Board() {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            <div className="overflow-hidden relative h-full flex justify-between rounded-xl" >
+            <div className="overflow-hidden relative h-full flex justify-between md:rounded-xl" >
                 <>
                     <div className="relative grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-left-container pl-4 pr-8 p-2 h-full">
                         {playerHand.map((pokemonCard, index) => {

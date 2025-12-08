@@ -9,7 +9,7 @@ export default function Home() {
   
   return (
     <>
-      <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
+      <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 md:rounded-xl" >
         <Board />
       </section>
       <button onClick={() => setIsOpen(true)} className="cursor-pointer p-1 leading-none flex justify-center items-center absolute top-2 right-2 text-white/80 font-press-start text-2xl hover:text-white">

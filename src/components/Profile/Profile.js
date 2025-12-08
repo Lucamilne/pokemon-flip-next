@@ -28,7 +28,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
             return (
                 <span
                     key={type}
-                    className="text-white py-1 px-3 mr-2"
+                    className="text-white text-[10px] md:text-base py-1 px-3 mr-2"
                     style={{ backgroundColor: `var(--color-${type}-500)` }}
                 >
                     {capitaliseFirstLetter(type)}
@@ -120,14 +120,14 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
 
         // Render evolution rows
         const renderEvolution = (basePokemon, evolvedPokemon) => (
-            <div key={`${basePokemon.species.name}-${evolvedPokemon.species.name}`} className="grid grid-cols-3 justify-between items-center gap-2 mb-2">
+            <div key={`${basePokemon.species.name}-${evolvedPokemon.species.name}`} className="grid grid-cols-[1fr_auto_1fr] justify-between items-center gap-2 mb-2">
                 <div className="flex flex-col items-center">
                     <img
                         alt={basePokemon.species.name}
                         src={`${baseImgURL}${getIdFromUrl(basePokemon.species.url)}.png`}
                         className="w-16 h-16"
                     />
-                    <span className="text-xs capitalize">{basePokemon.species.name}</span>
+                    <span className="hidden md:block text-xs capitalize">{basePokemon.species.name}</span>
                 </div>
                 <div className='flex justify-center'>
                     <div className="arrow" />
@@ -138,7 +138,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                         src={`${baseImgURL}${getIdFromUrl(evolvedPokemon.species.url)}.png`}
                         className="w-16 h-16"
                     />
-                    <span className="text-xs capitalize">{evolvedPokemon.species.name}</span>
+                    <span className="hidden md:block text-xs capitalize">{evolvedPokemon.species.name}</span>
                 </div>
             </div>
         );
@@ -161,27 +161,27 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
         if (!pokemonData) return null;
 
         return (
-            <div className='h-full p-8 overflow-y-auto hide-scrollbar'>
+            <div className='h-full p-3 md:p-8 overflow-y-auto hide-scrollbar'>
                 <div>
-                    <h3 className="mb-2">
-                        <span className="capitalize text-lg font-bold mr-4">{lastPokemonCardSelected?.name}</span>
+                    <h3 className="md:mb-2 text-xs md:text-lg font-bold ">
+                        <span className="capitalize mr-1 md:mr-4">{lastPokemonCardSelected?.name}</span>
                         <span>#{lastPokemonCardSelected?.id}</span>
                     </h3>
                     <TypeList types={lastPokemonCardSelected?.types} />
                 </div>
                 <hr className="border-2 border-black my-3" />
                 <div>
-                    <h3 className='mb-2'>
+                    <h3 className='text-xs mb-2 md:text-base'>
                         {pokemonData.genera?.find(g => g.language.name === 'en')?.genus || 'Unknown Pokémon'}
                     </h3>
-                    <p className="text-sm">
+                    <p className="text-[10px] md:text-sm">
                         {pokemonData.flavor_text_entries?.find(entry => entry.language.name === 'en')?.flavor_text.replace(/\f/g, ' ') || 'No description available.'}
                     </p>
                 </div>
                 <hr className="border-2 border-black my-3" />
                 <div>
-                    <h3 className='mb-2'>Pokédex Data</h3>
-                    <ul className="text-sm">
+                    <h3 className='text-xs mb-2 md:text-base'>Pokédex Data</h3>
+                    <ul className="text-[10px] md:text-sm">
                         <li className="flex justify-between">Height:<span>{(pokemonData.height / 10).toFixed(1)}m</span></li>
                         <li className="flex justify-between">Weight:<span>{(pokemonData.weight / 10).toFixed(1)}kg</span></li>
                         <li className="flex justify-between">Colour:<span className="capitalize">{pokemonData.color?.name || 'Unknown'}</span></li>
@@ -193,7 +193,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                 <hr className="border-2 border-black my-3" />
                 {evolutionChain && (
                     <div>
-                        <h3 className='mb-2'>Evolution Chain</h3>
+                        <h3 className='text-xs mb-2 md:text-base'>Evolutions</h3>
                         <EvolutionChain chain={evolutionChain} />
                     </div>
                 )}
@@ -204,14 +204,14 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
     return (
         <div className='relative flex-1 default-tile border-x-4 border-black font-press-start p-2'>
             {playerHand.every(card => card === null) ? (
-                <div className="min-w-full h-full flex flex-col gap-8 justify-between p-8 overflow-y-auto hide-scrollbar">
-                    <div className='font-press-start grid grid-cols-1 gap-8'>
-                        <h2 className='font-bold text-2xl text-center'>Themed hands</h2>
-                        <p>For the purposes of testing, all pokemon are made available to you.</p>
-                        <p>
+                <div className="min-w-full h-full flex flex-col gap-3 md:gap-8 justify-between p-3 md:p-8 overflow-y-auto hide-scrollbar">
+                    <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8'>
+                        <h2 className='font-bold text-sm md:text-2xl text-center'>Themed hands</h2>
+                        <p className='text-[10px] md:text-base'>For the purposes of testing, all pokemon are made available to you.</p>
+                        <p className='text-[10px] md:text-base'>
                             Create your own hand by selecting from the full pokemon library on the left, or choose a theme below:
                         </p>
-                        <div className='ml-5'>
+                        <div className='text-[8px] md:text-base md:ml-5'>
                             <div className="relative group">
                                 <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                 <button onClick={() => setRandomThemedPlayerHand(cardHelpers.allocateRandomCards)} className="disabled:opacity-30 cursor-pointer">Random</button>
@@ -241,9 +241,9 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                                 <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                 <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchGlassCannonCards)} className="disabled:opacity-30 cursor-pointer">Glass Cannons</button>
                             </div>
-                            <div className="relative group">
+                            <div className="hidden md:block relative group">
                                 <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchAllStarterLineCards)} className="disabled:opacity-30 cursor-pointer">Starter Pokemon & Evolutions</button>
+                                <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchAllStarterLineCards)} className="disabled:opacity-30 cursor-pointer">Starter & Evolutions</button>
                             </div>
                             <div className="relative group">
                                 <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
@@ -256,7 +256,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                                 </div>
                             )}
                         </div>
-                        <div className='ml-5'>
+                        <div className='text-[8px] md:text-base md:ml-5'>
                             {gameData.types.filter(type => !['steel', "ghost", "dragon"].includes(type)).map(type => (
                                 <div className="relative group" key={type}>
                                     <div className="arrow absolute -left-4 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
