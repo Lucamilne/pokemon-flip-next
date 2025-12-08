@@ -612,7 +612,7 @@ export default function Board() {
                         })}
                     </div>
                     {/* Arena */}
-                    <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
+                    <div className="relative grow arena-backdrop-vertical flex items-center justify-center overflow-visible">
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
                     </div>

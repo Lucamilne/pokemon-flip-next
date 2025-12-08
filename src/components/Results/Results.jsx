@@ -262,22 +262,22 @@ export default function Results() {
 
     return (
         <div className={`fade-in h-full bg-linear-to-b from-transparent from-10% ${isPlayerVictory ? 'via-ground-200 to-ground-400' : (isPlayerVictory === false ? "via-theme-red to-theme-red-200" : "via-normal to-normal-400")} flex flex-col`}>
-            <div className="font-bold px-16 py-6 flex justify-center">
-                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-sm md:max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
+            <div className="font-bold px-16 py-6 md:mb-8 flex justify-center">
+                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-xs md:max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
             </div>
-            <div className='p-5 md:p-10 h-full'>
+            <h2 className="text-lg md:text-xl font-press-start text-center">
+                Match Awards
+            </h2>
+            <div className='p-5 md:p-10 h-full overflow-y-auto'>
                 {mounted && (selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
                     <div className='size-full'>
                         {matchAwards && matchAwards.length > 0 && (
-                            <div className="mb-8">
-                                <h2 className="text-xl font-press-start text-center mb-6">
-                                    Match Awards
-                                </h2>
-                                <div className="flex flex-col md:grid grid-cols-3 gap-2 md:gap-4">
+                            <div>
+                                <div className="grid md:grid-cols-3 gap-2 md:gap-4">
                                     {matchAwards.map((award, index) => (
                                         <div key={index} className="default-tile p-4 md:py-8 border-4 border-black">
                                             {/* Award Title */}
-                                            <div className="text-center mb-3">
+                                            <div className="text-center mb-2 md:mb-3">
                                                 <span className="font-press-start text-[10px] md:text-sm">
                                                     {award.label}
                                                 </span>
@@ -285,7 +285,7 @@ export default function Results() {
 
                                             {/* Award Card */}
                                             <div className="flex justify-center">
-                                                <div className="w-[72px]">
+                                                <div className="w-[72px] md:w-[124px]">
                                                     <Card pokemonCard={award.card} isDraggable={false} />
                                                 </div>
                                             </div>
@@ -294,8 +294,8 @@ export default function Results() {
                                 </div>
                             </div>
                         )}
-                        <div className="relative group text-center font-press-start text-lg">
-                            <div className={`arrow absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
+                        <div className="relative group text-center font-press-start text-lg py-10">
+                            <div className={`arrow-relative absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
                             <Link className={`cursor-pointer`} to={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
                         </div>
                     </div>
