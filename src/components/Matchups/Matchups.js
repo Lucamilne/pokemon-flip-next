@@ -1,6 +1,5 @@
 import React from 'react';
 import gameData from '@/data/game-data.json';
-import Image from 'next/image'
 import { typeIcons } from '@/utils/typeIcons'
 
 export default function Matchups() {
@@ -29,7 +28,7 @@ export default function Matchups() {
             {/* Header row - defending types */}
             {gameData.types.map((type) => (
                 <div key={`header-${type}`} className='flex justify-center items-center'>
-                    <Image draggable={false} key={type} width={48} height={18} src={typeIcons[type]} alt={`${type} type`} />
+                    <img draggable={false} width={48} height={18} src={typeIcons[type]} alt={`${type} type`} />
                 </div>
             ))}
 
@@ -38,7 +37,7 @@ export default function Matchups() {
                 <React.Fragment key={attackingType}>
                     {/* Row header - attacking type */}
                     <div className='flex justify-center items-center'>
-                        <Image draggable={false} key={attackingType} width={48} height={18} src={typeIcons[attackingType]} alt={`${attackingType} type`} />
+                        <img draggable={false} width={48} height={18} src={typeIcons[attackingType]} alt={`${attackingType} type`} />
                     </div>
 
                     {/* Effectiveness cells for this attacking type */}

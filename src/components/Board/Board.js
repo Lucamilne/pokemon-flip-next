@@ -9,13 +9,14 @@ import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
 import { fetchBalancedTierCards, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
-import { useRouter, usePathname } from 'next/navigation';
+import { useNavigate, useLocation } from 'react-router-dom';
 import gameData from '@/data/game-data.json';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
-    const pathname = usePathname();
+    const location = useLocation();
+    const pathname = location.pathname;
     const {
         selectedPlayerHand,
         setMatchCards,
@@ -31,8 +32,8 @@ export default function Board() {
         setCpuHand,
         score,
     } = useGameContext();
-    
-    const router = useRouter();
+
+    const navigate = useNavigate();
 
     const decrementRandomStat = (stats) => {
         const randomIndex = Math.floor(Math.random() * stats.length);
@@ -70,7 +71,7 @@ export default function Board() {
         if (!newPlayerHand) {
             // Extract game mode from pathname (e.g., /quickplay/select/play -> quickplay)
             const gameMode = pathname.split('/').filter(Boolean)[0];
-            router.push(`/${gameMode}/select`);
+            navigate(`/${gameMode}/select`);
             return;
         }
 

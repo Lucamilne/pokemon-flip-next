@@ -1,16 +1,9 @@
-"use client"
-
 import { fetchCardById } from "@/utils/cardHelpers.js";
 import { useDroppable, DndContext } from '@dnd-kit/core';
 import { useState, useMemo } from 'react';
-import dynamic from "next/dynamic";
 import Help from "@/components/Help/Help.js"
-import Image from "next/image"
 import { typeTiles } from '@/utils/typeIcons'
-
-const Card = dynamic(() => import('../../Card/Card.js'), {
-    ssr: false,
-});
+import Card from '../../Card/Card.js';
 
 function TutorialDropZone({ droppedCard }) {
     const { isOver, setNodeRef } = useDroppable({
@@ -39,7 +32,7 @@ function TutorialDropZone({ droppedCard }) {
                 <div className="absolute inset-0 bg-blue-500/30 pointer-events-none z-10" />
             )}
 
-            <Image
+            <img
                 draggable={false}
                 className="absolute w-1/3 h-1/3 inset-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 src={typeTiles.fire}

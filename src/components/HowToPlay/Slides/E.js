@@ -1,14 +1,8 @@
-"use client"
-
 import { fetchCardById } from "@/utils/cardHelpers.js";
 import { useDroppable, DndContext } from '@dnd-kit/core';
 import { useState } from 'react';
-import dynamic from "next/dynamic";
 import Help from "@/components/Help/Help.js"
-
-const Card = dynamic(() => import('../../Card/Card.js'), {
-    ssr: false,
-});
+import Card from '../../Card/Card.js';
 
 function TutorialDropZone({ droppedCard }) {
     const { isOver, setNodeRef } = useDroppable({

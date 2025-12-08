@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(npm install)",
+      "Bash(npm run build)",
+      "Bash(powershell \"Get-ChildItem -Path src/components -Recurse -Filter *.js | ForEach-Object { Rename-Item -Path $_FullName -NewName ($_Name -replace ''.js$'',''.jsx'') }\")",
+      "Bash(while read file)",
+      "Bash(do mv \"$file\" \"$file%.js.jsx\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

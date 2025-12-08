@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import { usePathname } from 'next/navigation';
+import { useLocation } from 'react-router-dom';
 import { useGameContext } from '@/contexts/GameContext';
-import Link from 'next/link'
-import Image from 'next/image'
+import { Link } from 'react-router-dom';
 import VictoryImage from "@/assets/images/victory.webp";
 import Card from "../Card/Card.js";
 import { GAME_MODES } from '@/constants/gameModes';
 
 export default function Victory({ matchAwards, debugMode = false }) {
-    const pathname = usePathname();
+    const location = useLocation();
+    const pathname = location.pathname;
     const { matchCards, selectedGameMode } = useGameContext();
 
     const isQuickplay = pathname?.includes('quickplay') ?? false;
@@ -23,7 +23,7 @@ export default function Victory({ matchAwards, debugMode = false }) {
     return (
         <div className='fade-in h-full bg-linear-to-b from-transparent from-10% via-ground-200 to-ground-400 flex flex-col'>
             <div className="font-bold px-16 py-6 flex justify-center">
-                <Image loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className='max-w-xl' src={VictoryImage} />
+                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className='max-w-xl' src={VictoryImage} />
             </div>
             <div className='p-10 h-full'>
                 {(selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
@@ -56,7 +56,7 @@ export default function Victory({ matchAwards, debugMode = false }) {
                         )}
                         <div className="relative group text-center font-press-start text-lg">
                             <div className={`arrow absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
-                            <Link className={`cursor-pointer`} href={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
+                            <Link className={`cursor-pointer`} to={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
                         </div>
                     </div>
                 )}
