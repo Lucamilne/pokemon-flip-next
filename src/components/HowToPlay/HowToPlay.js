@@ -22,7 +22,7 @@ export default function HowToPlay({ isOpen, onClose }) {
     return (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={onClose}>
             {/* Modal Container */}
-            <div className="relative w-full max-w-4xl h-full lg:max-h-[600px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full max-w-4xl h-full lg:max-h-[620px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
                     className="flex h-full transition-transform duration-300 ease-in-out text-base"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}

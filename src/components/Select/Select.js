@@ -163,6 +163,14 @@ export default function Select() {
                 )}
             </div>
             <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />
+            {!pokeballIsOpen && (
+                <div className="fade-in absolute z-10 bottom-8 left-1/2 -translate-x-1/2 font-press-start grid grid-cols-1 gap-2 text-xl">
+                    <div className="relative group text-center">
+                        <div className="arrow absolute -left-4 top-0 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                        <button onClick={() => { setPokeballIsOpen(true); setPlayerHand([null, null, null, null, null]) }} className="cursor-pointer text-center disabled:opacity-30">Choose Again?</button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
