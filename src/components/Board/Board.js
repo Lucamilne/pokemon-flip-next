@@ -12,6 +12,7 @@ import { useGameContext } from '@/contexts/GameContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import gameData from '@/data/game-data.json';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
+import styles from './background.module.css';
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
@@ -612,7 +613,11 @@ export default function Board() {
 
                     </div>
                     {/* Arena */}
-                    <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
+                    <div className={`grow ${styles.arena} flex items-center justify-center overflow-hidden`}>
+                        <div className={styles.wrap}>
+                            <div className={styles['top-plane']}/>
+                            <div className={styles['bottom-plane']} />
+                        </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
                     </div>
