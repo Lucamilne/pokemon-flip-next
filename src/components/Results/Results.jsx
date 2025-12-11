@@ -266,14 +266,14 @@ export default function Results() {
             <div className="h-20 hand-top-container z-10" />
             <AnimatedBackground isPlayerVictory={isPlayerVictory} />
 
-            <div className="relative z-10 font-bold px-16 mt-12 flex justify-center">
+            <div className="relative z-10 font-bold px-16 flex justify-center">
                 <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="w-1/2 drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
             </div>
-            <div className='relative grow m-12 pb-12 bg-white border-4 border-black shadow-lg/30'>
+            <div className='relative mx-12 bg-white border-4 border-black shadow-lg/30'>
                 {mounted && (selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
-                    <div className='size-full flex flex-col h-full justify-between'>
+                    <div>
                         {matchAwards && matchAwards.length > 0 && (
-                            <div className="mb-8 ">
+                            <div>
                                 <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
                                     Match Awards
                                 </h2>
@@ -298,7 +298,7 @@ export default function Results() {
                                 </div>
                             </div>
                         )}
-                        <div className="relative group text-center font-press-start text-lg">
+                        <div className="relative group text-center font-press-start text-lg mb-4">
                             <div className={`arrow absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
                             <Link className={`cursor-pointer`} to={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
                         </div>
