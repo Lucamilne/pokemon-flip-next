@@ -154,7 +154,7 @@ export default function Select() {
             <div className={`${showConfirm ? '-translate-y-20' : 'translate-y-0'} transition-transform relative grid grid-cols-[repeat(5,124px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center`}>
                 {playerHand.map((pokemonCard, index) => {
                     return (
-                        <button className={`relative aspect-square ${pokemonCard ? "cursor-pointer" : ""}`} key={index} onClick={() => togglePokemonCardSelection(pokemonCard)}>
+                        <button className={`relative aspect-square ${pokemonCard && !showConfirm ? "cursor-pointer" : ""}`} key={index} onClick={() => togglePokemonCardSelection(pokemonCard)} disabled={showConfirm}>
                             <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue flex justify-center items-center">
                                 <span className='header-text text-2xl'>{index + 1}</span>
                             </div>
