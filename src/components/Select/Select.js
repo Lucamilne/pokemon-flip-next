@@ -22,6 +22,7 @@ export default function Select() {
     const [searchString, setSearchString] = useState('');
     const { setSelectedPlayerHand, resetGameState } = useGameContext();
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
+    const [showConfirm, setShowConfirm] = useState(false);
     const playerCardLibrary = useMemo(() => {
         return pathname.startsWith('/quickplay') ? fetchAllCards() : fetchStarterCards();
     }, [pathname]);
@@ -32,11 +33,16 @@ export default function Select() {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
     }, [])
 
+    const closePokeball = () => {
+        setIsPokeballDisabled(false);
+        setPokeballIsOpen(false);
+    }
+
     useEffect(() => {
         if (playerHand.every(card => card !== null)) {
+            setLastPokemonCardSelected(null);
+            setShowConfirm(true);
             setSelectedPlayerHand(playerHand);
-            setIsPokeballDisabled(false);
-            setPokeballIsOpen(false);
         }
     }, [playerHand])
 
@@ -142,7 +148,10 @@ export default function Select() {
                 </div>
                 <Profile playerHand={playerHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
-            <div className="relative grid grid-cols-[repeat(5,124px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center">
+            {showConfirm && (
+                <div className="absolute inset-0 bg-black/40" />
+            )}
+            <div className={`${showConfirm ? '-translate-y-20' : 'translate-y-0'} transition-transform relative grid grid-cols-[repeat(5,124px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center`}>
                 {playerHand.map((pokemonCard, index) => {
                     return (
                         <button className={`relative aspect-square ${pokemonCard ? "cursor-pointer" : ""}`} key={index} onClick={() => togglePokemonCardSelection(pokemonCard)}>
@@ -161,16 +170,12 @@ export default function Select() {
                 {playerHand.every(card => card === null) && (
                     <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
+                <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
+                    <button onClick={() => { setPlayerHand([null, null, null, null, null]); setShowConfirm(false); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Cancel</button>
+                    <button onClick={closePokeball} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
+                </div>
             </div>
             <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />
-            {!pokeballIsOpen && (
-                <div className="fade-in absolute z-10 bottom-8 left-1/2 -translate-x-1/2 font-press-start grid grid-cols-1 gap-2 text-xl">
-                    <div className="relative group text-center">
-                        <div className="arrow absolute -left-4 top-0 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                        <button onClick={() => { setPokeballIsOpen(true); setPlayerHand([null, null, null, null, null]) }} className="cursor-pointer text-center disabled:opacity-30">Choose Again?</button>
-                    </div>
-                </div>
-            )}
-        </div>
+        </div >
     )
 }

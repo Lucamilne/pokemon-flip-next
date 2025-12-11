@@ -15,7 +15,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
             setDebugMode(hasDebugParam || import.meta.env.DEV);
         }
     }, []);
-    
+
     const [pokemonData, setPokemonData] = useState(null);
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -40,11 +40,12 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
     }
 
     useEffect(() => {
+        setPokemonData(null);
+        setEvolutionChain(null);
+
         if (!lastPokemonCardSelected) return;
 
         const fetchPokemonData = async () => {
-            setPokemonData(null);
-            setEvolutionChain(null);
             setIsLoading(true);
             setError(null);
 
@@ -163,7 +164,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
         if (!pokemonData) return null;
 
         return (
-            <div className='h-full p-8 overflow-y-auto hide-scrollbar'>
+            <div className='fade-in h-full p-8 overflow-y-auto hide-scrollbar'>
                 <div>
                     <h3 className="mb-2">
                         <span className="capitalize text-lg font-bold mr-4">{lastPokemonCardSelected?.name}</span>
