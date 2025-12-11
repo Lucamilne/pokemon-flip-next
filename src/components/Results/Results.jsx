@@ -262,14 +262,16 @@ export default function Results() {
 
 
     return (
-        <div className={`relative fade-in h-full bg-linear-to-b from-transparent from-10% ${isPlayerVictory ? 'via-ground-200 to-ground-400' : (isPlayerVictory === false ? "via-theme-red to-theme-red-200" : "via-normal to-normal-400")} flex flex-col`}>
+        <div className={`relative fade-in h-full flex flex-col justify-between`}>
+            <div className="h-20 hand-top-container z-10" />
             <AnimatedBackground isPlayerVictory={isPlayerVictory} />
-            <div className="relative z-10 font-bold px-16 py-6 flex justify-center">
-                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="max-w-lg" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
+
+            <div className="relative z-10 font-bold px-16 mt-12 flex justify-center">
+                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="w-1/2 drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
             </div>
-            <div className='px-12 pb-12'>
+            <div className='relative grow m-12 pb-12 bg-white border-4 border-black shadow-lg/30'>
                 {mounted && (selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
-                    <div className='size-full backdrop-blur-sm rounded-lg overflow-hidden flex flex-col h-full justify-between'>
+                    <div className='size-full flex flex-col h-full justify-between'>
                         {matchAwards && matchAwards.length > 0 && (
                             <div className="mb-8 ">
                                 <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
@@ -296,13 +298,15 @@ export default function Results() {
                                 </div>
                             </div>
                         )}
-                        <div className="relative group text-center font-press-start text-lg p-4">
+                        <div className="relative group text-center font-press-start text-lg">
                             <div className={`arrow absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
-                            <Link className={`cursor-pointer text-white`} to={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
+                            <Link className={`cursor-pointer`} to={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
                         </div>
                     </div>
                 )}
             </div>
+            <div className="h-20 hand-bottom-container-red  z-10" />
+
         </div >
     )
 }
