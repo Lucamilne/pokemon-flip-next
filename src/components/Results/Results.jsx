@@ -279,9 +279,9 @@ export default function Results() {
                                 </h2>
                                 <div className="grid grid-cols-3 gap-4 p-4">
                                     {matchAwards.map((award, index) => (
-                                        <div key={index} className="default-tile p-4 py-8 border-4 border-black">
+                                        <div key={index} className="default-tile p-4 border-4 border-black">
                                             {/* Award Title */}
-                                            <div className="text-center mb-3">
+                                            <div className="text-center mb-2">
                                                 <span className="font-press-start text-sm">
                                                     {award.label}
                                                 </span>
