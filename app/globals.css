@@ -597,7 +597,8 @@ body {
 }
 
 .hand-top-container,
-.hand-right-container {
+.hand-right-container,
+.hand-bottom-container-red {
   background-color: var(--pokedex-red);
 }
 
@@ -612,6 +613,14 @@ body {
     inset 0 -16px var(--pokedex-inner-red);
   border-bottom: 8px solid black;
 }
+
+.hand-bottom-container-red {
+  box-shadow:
+    inset 0 8px var(--pokedex-dark-red),
+    inset 0 16px var(--pokedex-inner-red);
+  border-top: 8px solid black;
+}
+
 
 .hand-bottom-container {
   box-shadow:
@@ -678,22 +687,12 @@ body {
     inset -16px 0 var(--pokedex-inner-blue);
 }
 
-.arena-backdrop {
-  box-shadow:
-    inset -8px 0 #d4d4d4,
-    inset -16px 0 #e5e5e5,
-    inset 8px 0 #d4d4d4,
-    inset 16px 0 #e5e5e5;
+.grid-background {
+  background: repeating-linear-gradient(90deg, #d4d4d4 0, #d4d4d4 4px, transparent 0, transparent 50%), repeating-linear-gradient(180deg, #d4d4d4 0, #d4d4d4 4px, transparent 0, transparent 50%);
+  background-size: 18em 18em;
+  background-position: 6rem 6rem;
   background-color: #ffffff;
-}
-
-.arena-backdrop-vertical {
-  box-shadow:
-    inset 0 -8px #d4d4d4,
-    inset 0 -16px #e5e5e5,
-    inset 0 8px #d4d4d4,
-    inset 0 16px #e5e5e5;
-  background-color: #ffffff;
+  opacity: 1
 }
 
 .tile {

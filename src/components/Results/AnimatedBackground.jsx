@@ -51,11 +51,11 @@ export default function AnimatedBackground({ isPlayerVictory }) {
         };
 
         const createGrid = () => {
-            const reds = ['#fff', '#f05555', '#f79999', '#e61919', '#c20a0a', '#901a22']
-            const blues = ['#fff', '#5ca3eb', '#99c9f5', '#197de6', '#0a64c2', '#224590'];
+            const reds = ['#fff', '#f79999', '#f05555', '#e61919', '#c20a0a', '#901a22']
+            const blues = ['#fff', '#99c9f5', '#5ca3eb', '#197de6', '#0a64c2', '#224590'];
             const grays = ['#fafafa', '#f5f5f5', '#e5e5e5', '#d4d4d4',
                 '#a3a3a3', '#737373'];
-            const colours = isPlayerVictory ? blues : isPlayerVictory === false  ? reds : grays;
+            const colours = isPlayerVictory ? blues : isPlayerVictory === false ? reds : grays;
 
             gridRef.current = [];
             for (let ky = 0; ky < nbyRef.current; ++ky) {
