@@ -15,7 +15,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         return null;
     }
 
-    const isOwned = hasCard(pokemonCard.name);
+    const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
 
     const sumUpNumbersInArray = (array) => {
         return array.reduce((acc, val) => acc + val, 0);
