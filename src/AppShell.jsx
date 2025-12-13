@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import GoogleSignInButton from '@/components/Auth/GoogleSignInButton';
 
 export default function AppShell({ children }) {
   const location = useLocation();
@@ -34,7 +35,8 @@ export default function AppShell({ children }) {
       </div>
 
       {/* Main app - hidden on mobile */}
-      <main className="hidden md:flex justify-center min-h-screen font-sans bg-black/15 lg:p-4">
+      <main className="hidden md:flex justify-center min-h-screen font-sans bg-black/15 lg:p-4 relative">
+        {import.meta.env.DEV && <GoogleSignInButton />}
         <div className="h-screen lg:h-[calc(100vh-32px)] overflow-hidden w-full max-w-5xl">
           {children}
         </div>

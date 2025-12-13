@@ -3,8 +3,10 @@ import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
 import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
+    const { hasCard } = useAuth();
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
@@ -12,6 +14,8 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
     if (!pokemonCard) {
         return null;
     }
+
+    const isOwned = hasCard(pokemonCard.name);
 
     const sumUpNumbersInArray = (array) => {
         return array.reduce((acc, val) => acc + val, 0);
@@ -192,7 +196,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
                             </div>
                         </div>
                     </div>
-                    {pokemonCard.playerOwned && <img width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={PokemonBallSprite} />}
+                    {isOwned && <img width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={PokemonBallSprite} />}
                     {showOverlay && (
                         <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
                             <span className='mt-4'>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>

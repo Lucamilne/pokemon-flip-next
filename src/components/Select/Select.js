@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { fetchStarterCards, fetchStrongCards, fetchAllCards } from '@/utils/cardHelpers.js';
+import { fetchStarterCards, createCard } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
 import Help from "../Help/Help.js";
 import Profile from "../Profile/Profile.js"
 import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
-
+import { useAuth } from '@/contexts/AuthContext';
+import pokemon from '@/data/game-data.json';
 
 const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
 
@@ -23,15 +24,36 @@ export default function Select() {
     const { setSelectedPlayerHand, resetGameState } = useGameContext();
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
-    const playerCardLibrary = useMemo(() => {
-        return pathname.startsWith('/quickplay') ? fetchAllCards() : fetchStarterCards();
-    }, [pathname]);
+    const [playerCardLibrary, setPlayerCardLibrary] = useState([]);
+    const { user, userCollection, isLoadingCollection } = useAuth();
+
+    const loadPlayerCardLibrary = () => {
+        if (user) {
+            // User is authenticated - load cards from their collection
+            const ownedPokemonNames = Object.keys(userCollection);
+            const ownedCards = ownedPokemonNames
+                .map(name => createCard(name, true))
+                .sort((a, b) => a.id - b.id);
+
+            setPlayerCardLibrary(ownedCards);
+        } else {
+            console.log("No user detected");
+            // Not signed in - use starter cards
+            setPlayerCardLibrary(fetchStarterCards(true));
+        }
+    }
 
     useEffect(() => {
         // Reset game state when arriving at select screen (prepares for new game)
         resetGameState();
         if (!pokeballIsOpen) setPokeballIsOpen(true);
+
+        loadPlayerCardLibrary();
     }, [])
+
+    useEffect(() => {
+        loadPlayerCardLibrary();
+    }, [user, userCollection])
 
     const closePokeball = () => {
         setIsPokeballDisabled(false);
@@ -121,29 +143,51 @@ export default function Select() {
                 </h1>
             </div>
             <div className='grow flex overflow-y-auto'>
-                <div className="relative bg-theme-blue hide-scrollbar overflow-y-auto p-4">
+                <div className={`relative bg-theme-blue hide-scrollbar p-4 ${isLoadingCollection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
                     <div className="grid grid-cols-[repeat(3,124px)] auto-rows-min gap-4">
-                        {playerCardLibrary
-                            .filter(pokemonCard => {
-                                const trimmedSearch = searchString.trim();
-                                if (pokemonCard === null) return trimmedSearch === '';
-                                return pokemonCard.name.toLowerCase().includes(trimmedSearch.toLowerCase())
-                            }
-                            )
-                            .map((pokemonCard, index) => {
-                                const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
-                                return (
-                                    <button
-                                        className={`relative rounded-md aspect-square transition-transform shadow-md/30 ${isInHand ? 'ring-5 ring-lime-300' : ''}`}
+                        {isLoadingCollection ? (
+                            <>
+                                {Array.from({ length: 24 }).map((_, index) => (
+                                    <div
                                         key={index}
-                                        onClick={() => togglePokemonCardSelection(pokemonCard)}
-                                    >
-                                        {pokemonCard && (
-                                            <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={true} />
-                                        )}
-                                    </button>
-                                )
-                            })}
+                                        className="fade-in-out aspect-square bg-pokedex-inner-blue/15 rounded-md"
+                                        style={{
+                                            animationDelay: `${index * 50}ms`,
+                                            opacity: 0
+                                        }}
+                                    />
+                                ))}
+                                <p className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl header-text text-hop flex'>{"...".split('').map((char, index) => (<span key={index} style={{
+                                    animationDelay: `${(index + 1) * 50}ms`
+                                }}> {char}</span>))}</p>
+                            </>
+                        ) : (
+                            <>
+                                {
+                                    playerCardLibrary
+                                        .filter(pokemonCard => {
+                                            const trimmedSearch = searchString.trim();
+                                            if (pokemonCard === null) return trimmedSearch === '';
+                                            return pokemonCard.name.toLowerCase().includes(trimmedSearch.toLowerCase())
+                                        }
+                                        )
+                                        .map((pokemonCard, index) => {
+                                            const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
+                                            return (
+                                                <button
+                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/30 ${isInHand ? 'ring-5 ring-lime-300' : ''}`}
+                                                    key={index}
+                                                    onClick={() => togglePokemonCardSelection(pokemonCard)}
+                                                >
+                                                    {pokemonCard && (
+                                                        <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                                    )}
+                                                </button>
+                                            )
+                                        })
+                                }
+                            </>
+                        )}
                     </div>
                 </div>
                 <Profile playerHand={playerHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
