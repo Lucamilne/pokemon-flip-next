@@ -3,11 +3,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
+// import Coin from "../Coin/Coin.js";
 import Balance from "../Balance/Balance.js"
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
-import { fetchBalancedTierCards, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
+import { fetchCardsByPlayerTierDistribution, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import gameData from '@/data/game-data.json';
@@ -65,7 +66,7 @@ export default function Board() {
 
         // No saved state - start new game
         // Allocate hands
-        const cpuCardsToDeal = fetchBalancedTierCards(false);
+        const cpuCardsToDeal = fetchCardsByPlayerTierDistribution(selectedPlayerHand);
         const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
         const newPlayerHand = selectedPlayerHand;
 
@@ -615,13 +616,13 @@ export default function Board() {
                     {/* Arena */}
                     <div className={`grow ${styles.arena} flex items-center justify-center overflow-hidden`}>
                         <div className={styles.wrap}>
-                            <div className={styles['top-plane']}/>
+                            <div className={styles['top-plane']} />
                             <div className={styles['bottom-plane']} />
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
                     </div>
-                    <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-6 pr-4 p-2 h-full">
+                    <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-8 pr-4 p-2 h-full">
                         {cpuHand.map((pokemonCard, index) => {
                             return (
                                 <div className="relative aspect-square" key={index}>
@@ -635,6 +636,9 @@ export default function Board() {
                         })}
                     </div>
                 </>
+                {/* <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none'>
+                    <Coin />
+                </div> */}
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                 {isGameComplete && <ResultTransition />}
             </div>
