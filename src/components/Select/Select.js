@@ -27,7 +27,13 @@ export default function Select() {
     const [playerCardLibrary, setPlayerCardLibrary] = useState([]);
     const { user, userCollection, isLoadingCollection } = useAuth();
 
-    const loadPlayerCardLibrary = () => {
+    useEffect(() => {
+        // Reset game state when arriving at select screen (prepares for new game)
+        resetGameState();
+        if (!pokeballIsOpen) setPokeballIsOpen(true);
+    }, [])
+
+    useEffect(() => {
         if (user) {
             // User is authenticated - load cards from their collection
             const ownedPokemonNames = Object.keys(userCollection);
@@ -41,19 +47,7 @@ export default function Select() {
             // Not signed in - use starter cards
             setPlayerCardLibrary(fetchStarterCards(true));
         }
-    }
-
-    useEffect(() => {
-        // Reset game state when arriving at select screen (prepares for new game)
-        resetGameState();
-        if (!pokeballIsOpen) setPokeballIsOpen(true);
-
-        loadPlayerCardLibrary();
-    }, [])
-
-    useEffect(() => {
-        loadPlayerCardLibrary();
-    }, [user, userCollection])
+    }, [userCollection])
 
     const closePokeball = () => {
         setIsPokeballDisabled(false);
