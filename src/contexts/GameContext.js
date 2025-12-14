@@ -92,7 +92,7 @@ export function GameProvider({ children }) {
         isPlayerTurn
       });
     }
-  }, [cells, playerHand, cpuHand, isPlayerTurn]);
+  }, [cells]);
 
   // Reset game state when starting a new game (keeps selection state)
   // Combines context state reset + localStorage clear

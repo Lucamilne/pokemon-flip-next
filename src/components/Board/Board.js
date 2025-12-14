@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
-// import Coin from "../Coin/Coin.js";
 import Balance from "../Balance/Balance.js"
 import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
@@ -636,9 +635,6 @@ export default function Board() {
                         })}
                     </div>
                 </>
-                {/* <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none'>
-                    <Coin />
-                </div> */}
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                 {isGameComplete && <ResultTransition />}
             </div>
