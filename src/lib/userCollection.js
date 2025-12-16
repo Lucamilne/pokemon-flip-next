@@ -12,7 +12,7 @@ const starterPokemon = Object.keys(pokemon.cards).filter(
  * @param {string} userId - The user's Firebase UID
  * @returns {Promise<Object>} The initialized collection
  */
-export async function initializeUserCollection(userId) {
+export async function initialiseUserCollection(userId) {
   if (!userId) return {};
 
   try {
@@ -68,7 +68,7 @@ export async function getUserCollection(userId) {
       return collection;
     } else {
       // New user - initialize with starter Pokemon
-      return await initializeUserCollection(userId);
+      return await initialiseUserCollection(userId);
     }
   } catch (error) {
     console.error('Error fetching user collection:', error);

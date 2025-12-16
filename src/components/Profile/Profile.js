@@ -169,10 +169,10 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
             <div className='fade-in h-full p-8 overflow-y-auto hide-scrollbar'>
                 <div>
                     <h3 className="mb-2">
-                        <span className="capitalize text-lg font-bold mr-4">{lastPokemonCardSelected?.name}</span>
-                        <span>#{lastPokemonCardSelected?.id}</span>
+                        <span className="capitalize text-lg font-bold mr-4">{pokemonData?.name}</span>
+                        <span>#{pokemonData?.id}</span>
                     </h3>
-                    <TypeList types={lastPokemonCardSelected?.types} />
+                    <TypeList types={pokemonData?.types?.map(t => t.type.name)} />
                 </div>
                 <hr className="border-2 border-black my-3" />
                 <div>
