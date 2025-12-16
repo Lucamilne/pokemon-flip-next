@@ -33,16 +33,15 @@ export default function Select() {
     }, [])
 
     useEffect(() => {
-        if (user) {
-            // User is authenticated - load cards from their collection
-            const ownedPokemonNames = Object.keys(userCollection);
+        const ownedPokemonNames = Object.keys(userCollection);
+
+        if (ownedPokemonNames.length > 0) {
             const ownedCards = ownedPokemonNames
                 .map(name => createCard(name, true))
                 .sort((a, b) => a.id - b.id);
-
             setPlayerCardLibrary(ownedCards);
         } else {
-            // Not signed in - use starter cards, todo: load from local storage later?
+            // Fallback to starters if collection is empty
             setPlayerCardLibrary(fetchStarterCards(true));
         }
     }, [userCollection])
@@ -94,7 +93,6 @@ export default function Select() {
         });
 
         setLastPokemonCardSelected(pokemonCard)
-        // setSearchString("");
     }
 
     return (

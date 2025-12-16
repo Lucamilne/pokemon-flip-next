@@ -16,7 +16,7 @@ export default function Results() {
     const navigate = useNavigate();
 
     const { isPlayerVictory, matchCards } = useGameContext();
-    const { userCollection } = useAuth();
+    const { user, userCollection, addCards, removeCard } = useAuth();
 
     const [matchAwards, setMatchAwards] = useState(null);
     const [rewardCards, setRewardCards] = useState([]);
@@ -36,12 +36,99 @@ export default function Results() {
         "An even match! No spoils for either side."
     ];
 
-    const playAgain = () => {
+    const handlePlayAgain = () => {
         setIsPokeballOpen(false);
         setTimeout(() => {
             navigate(`/quickplay/select`);
         }, 600);
     }
+
+    const specialAwardDefinitions = [
+        { name: 'jigglypuff', award: 'Worst Singer' },
+        { name: 'magikarp', award: 'Most Useless' },
+        { name: 'psyduck', award: 'Most Confused' },
+        { name: 'snorlax', award: 'Sleepiest' },
+        { name: 'mewtwo', award: 'Most Intimidating' },
+        { name: 'ditto', award: 'Best Impression' },
+        { name: 'slowpoke', award: 'Slowest to React' },
+        { name: 'pikachu', award: 'Fan Favorite' },
+        { name: 'charizard', award: 'Hottest' },
+        { name: 'squirtle', award: 'Coolest' },
+        { name: 'bulbasaur', award: 'Best Starter' },
+        { name: 'eevee', award: 'Most Versatile' },
+        { name: 'gengar', award: 'Spookiest' },
+        { name: 'dragonite', award: 'Goofiest' },
+        { name: 'alakazam', award: 'Biggest Brain' },
+        { name: 'machamp', award: 'Most Swole' },
+        { name: 'mew', award: 'Most Mysterious' },
+        { name: 'gyarados', award: 'Angriest' },
+        { name: 'lapras', award: 'Best Transport' },
+        { name: 'articuno', award: 'Chillest' },
+        { name: 'zapdos', award: 'Most Tangy' },
+        { name: 'moltres', award: 'Most Meteoric' },
+        { name: 'cubone', award: 'Loneliest' },
+        { name: 'electrode', award: 'Most Explosive' },
+        { name: 'chansey', award: 'Luckiest' },
+        { name: 'kangaskhan', award: 'Best Parent' },
+        { name: 'onix', award: 'Longest' },
+        { name: 'hitmonlee', award: 'Best Kicks' },
+        { name: 'hitmonchan', award: 'Best Punches' },
+        { name: 'lickitung', award: 'Longest Tongue' },
+        { name: 'tangela', award: 'Worst Hair' },
+        { name: 'seaking', award: 'Most Fabulous' },
+        { name: 'starmie', award: 'Most Cosmic' },
+        { name: 'scyther', award: 'Sharpest Blades' },
+        { name: 'pinsir', award: 'Most Pinchy' },
+        { name: 'tauros', award: 'Most Aggressive' },
+        { name: 'exeggutor', award: 'Tallest' },
+        { name: 'marowak', award: 'Bravest' },
+        { name: 'porygon', award: 'Most Digital' },
+        { name: 'aerodactyl', award: 'Most Prehistoric' },
+        { name: 'farfetchd', award: 'Most Prepared' },
+        { name: 'dodrio', award: 'Most Heads' },
+        { name: 'dewgong', award: 'Most Graceful' },
+        { name: 'muk', award: 'Most Toxic' },
+        { name: 'cloyster', award: 'Most Defensive' },
+        { name: 'hypno', award: 'Sleepiest Hypnotist' },
+        { name: 'kingler', award: 'Biggest Claw' },
+        { name: 'voltorb', award: 'Most Explosive' },
+        { name: 'mr-mime', award: 'Best Performer' },
+        { name: 'jynx', award: 'Best Dancer' },
+        { name: 'electabuzz', award: 'Most Energetic' },
+        { name: 'magmar', award: 'Hottest Temper' },
+        { name: 'kabutops', award: 'Best Fossil' },
+        { name: 'omastar', award: 'Most Spiraled' },
+        { name: 'wigglytuff', award: 'Fluffiest' },
+        { name: 'clefable', award: 'Most Mystical' },
+        { name: 'ninetales', award: 'Most Elegant' },
+        { name: 'arcanine', award: 'Most Loyal' },
+        { name: 'poliwrath', award: 'Strongest Swimmer' },
+        { name: 'victreebel', award: 'Hungriest' },
+        { name: 'tentacruel', award: 'Most Tentacles' },
+        { name: 'geodude', award: 'Skipped Leg Day' },
+        { name: 'golem', award: 'Most Rock Solid' },
+        { name: 'ponyta', award: 'Fastest Runner' },
+        { name: 'rapidash', award: 'Most Majestic' },
+        { name: 'dugtrio', award: 'Most Underground' },
+        { name: 'persian', award: 'Most Pampered' },
+        { name: 'golduck', award: 'Most Psychic' },
+        { name: 'primeape', award: 'Most Furious' },
+        { name: 'arbok', award: 'Most Venomous' },
+        { name: 'raichu', award: 'Most Electrifying' },
+        { name: 'sandslash', award: 'Spikiest' },
+        { name: 'nidoking', award: 'Most Royal' },
+        { name: 'nidoqueen', award: 'Most Regal' },
+        { name: 'vileplume', award: 'Smelliest' },
+        { name: 'parasect', award: 'Most Possessed' },
+        { name: 'venomoth', award: 'Most Hypnotic' },
+        { name: 'blastoise', award: 'Best Cannons' },
+        { name: 'venusaur', award: 'Biggest Bloom' },
+        { name: 'pidgeot', award: 'Most Majestic Bird' },
+        { name: 'fearow', award: 'Most Intimidating' },
+        { name: 'weezing', award: 'Most Polluted' },
+        { name: 'rhydon', award: 'Most Armored' }
+    ];
+
 
 
     const calculateRewardCards = (cards, collection) => {
@@ -147,93 +234,6 @@ export default function Results() {
             awards.comebackKid = null;
         }
 
-        // Special personality-based awards
-        const specialAwardDefinitions = [
-            { name: 'jigglypuff', award: 'Worst Singer' },
-            { name: 'magikarp', award: 'Most Useless' },
-            { name: 'psyduck', award: 'Most Confused' },
-            { name: 'snorlax', award: 'Sleepiest' },
-            { name: 'mewtwo', award: 'Most Intimidating' },
-            { name: 'ditto', award: 'Best Impression' },
-            { name: 'slowpoke', award: 'Slowest to React' },
-            { name: 'pikachu', award: 'Fan Favorite' },
-            { name: 'charizard', award: 'Hottest' },
-            { name: 'squirtle', award: 'Coolest' },
-            { name: 'bulbasaur', award: 'Best Starter' },
-            { name: 'eevee', award: 'Most Versatile' },
-            { name: 'gengar', award: 'Spookiest' },
-            { name: 'dragonite', award: 'Goofiest' },
-            { name: 'alakazam', award: 'Biggest Brain' },
-            { name: 'machamp', award: 'Most Swole' },
-            { name: 'mew', award: 'Most Mysterious' },
-            { name: 'gyarados', award: 'Angriest' },
-            { name: 'lapras', award: 'Best Transport' },
-            { name: 'articuno', award: 'Chillest' },
-            { name: 'zapdos', award: 'Most Tangy' },
-            { name: 'moltres', award: 'Most Meteoric' },
-            { name: 'cubone', award: 'Loneliest' },
-            { name: 'electrode', award: 'Most Explosive' },
-            { name: 'chansey', award: 'Luckiest' },
-            { name: 'kangaskhan', award: 'Best Parent' },
-            { name: 'onix', award: 'Longest' },
-            { name: 'hitmonlee', award: 'Best Kicks' },
-            { name: 'hitmonchan', award: 'Best Punches' },
-            { name: 'lickitung', award: 'Longest Tongue' },
-            { name: 'tangela', award: 'Worst Hair' },
-            { name: 'seaking', award: 'Most Fabulous' },
-            { name: 'starmie', award: 'Most Cosmic' },
-            { name: 'scyther', award: 'Sharpest Blades' },
-            { name: 'pinsir', award: 'Most Pinchy' },
-            { name: 'tauros', award: 'Most Aggressive' },
-            { name: 'exeggutor', award: 'Tallest' },
-            { name: 'marowak', award: 'Bravest' },
-            { name: 'porygon', award: 'Most Digital' },
-            { name: 'aerodactyl', award: 'Most Prehistoric' },
-            { name: 'farfetchd', award: 'Most Prepared' },
-            { name: 'dodrio', award: 'Most Heads' },
-            { name: 'dewgong', award: 'Most Graceful' },
-            { name: 'muk', award: 'Most Toxic' },
-            { name: 'cloyster', award: 'Most Defensive' },
-            { name: 'hypno', award: 'Sleepiest Hypnotist' },
-            { name: 'kingler', award: 'Biggest Claw' },
-            { name: 'voltorb', award: 'Most Explosive' },
-            { name: 'mr-mime', award: 'Best Performer' },
-            { name: 'jynx', award: 'Best Dancer' },
-            { name: 'electabuzz', award: 'Most Energetic' },
-            { name: 'magmar', award: 'Hottest Temper' },
-            { name: 'kabutops', award: 'Best Fossil' },
-            { name: 'omastar', award: 'Most Spiraled' },
-            { name: 'wigglytuff', award: 'Fluffiest' },
-            { name: 'clefable', award: 'Most Mystical' },
-            { name: 'ninetales', award: 'Most Elegant' },
-            { name: 'arcanine', award: 'Most Loyal' },
-            { name: 'poliwrath', award: 'Strongest Swimmer' },
-            { name: 'victreebel', award: 'Hungriest' },
-            { name: 'tentacruel', award: 'Most Tentacles' },
-            { name: 'geodude', award: 'Skipped Leg Day' },
-            { name: 'golem', award: 'Most Rock Solid' },
-            { name: 'ponyta', award: 'Fastest Runner' },
-            { name: 'rapidash', award: 'Most Majestic' },
-            { name: 'dugtrio', award: 'Most Underground' },
-            { name: 'persian', award: 'Most Pampered' },
-            { name: 'golduck', award: 'Most Psychic' },
-            { name: 'primeape', award: 'Most Furious' },
-            { name: 'arbok', award: 'Most Venomous' },
-            { name: 'raichu', award: 'Most Electrifying' },
-            { name: 'sandslash', award: 'Spikiest' },
-            { name: 'nidoking', award: 'Most Royal' },
-            { name: 'nidoqueen', award: 'Most Regal' },
-            { name: 'vileplume', award: 'Smelliest' },
-            { name: 'parasect', award: 'Most Possessed' },
-            { name: 'venomoth', award: 'Most Hypnotic' },
-            { name: 'blastoise', award: 'Best Cannons' },
-            { name: 'venusaur', award: 'Biggest Bloom' },
-            { name: 'pidgeot', award: 'Most Majestic Bird' },
-            { name: 'fearow', award: 'Most Intimidating' },
-            { name: 'weezing', award: 'Most Polluted' },
-            { name: 'rhydon', award: 'Most Armored' }
-        ];
-
         matchCards.forEach(card => {
             const specialAward = specialAwardDefinitions.find(def => def.name === card.name.toLowerCase());
             if (specialAward) {
@@ -295,18 +295,27 @@ export default function Results() {
 
         setMatchAwards(selectedAwards);
 
-        // Calculate reward cards
         if (isPlayerVictory) {
             const rewards = calculateRewardCards(matchCards, userCollection);
             setRewardCards(rewards);
+            // Use AuthContext method - handles both localStorage + Firebase
+            addCards(rewards.map(pokemonCard => pokemonCard.name))
+                .catch(error => console.error('Failed to add rewards:', error));
         } else if (isPlayerVictory === false) {
             const penalty = calculatePenaltyCard(matchCards);
             setPenaltyCard(penalty);
+
+            if (penalty) {
+                // Use AuthContext method - handles both localStorage + Firebase
+                removeCard(penalty.name)
+                    .catch(error => console.error('Failed to remove penalty:', error));
+            }
+
             setTimeout(() => {
                 if (penaltyCardRef.current) {
                     penaltyCardRef.current.classList.add('rotate-out-center');
                 }
-            }, 2000);
+            }, 2500);
         }
         setMounted(true);
     }, []);
@@ -399,7 +408,7 @@ export default function Results() {
                         )}
                     </div>
                     <div className="relative group text-center font-press-start text-lg">
-                        <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={playAgain}>Play Again</button>
+                        <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={handlePlayAgain}>Play Again</button>
                     </div>
                 </div >
             )
