@@ -135,7 +135,7 @@ export default function Select() {
                 </h1>
             </div>
             <div className='grow flex overflow-y-auto'>
-                <div className={`relative bg-theme-blue hide-scrollbar p-4 ${isLoadingCollection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+                <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-4 ${isLoadingCollection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
                     <div className="grid grid-cols-[repeat(3,124px)] auto-rows-min gap-4">
                         {isLoadingCollection ? (
                             <>
