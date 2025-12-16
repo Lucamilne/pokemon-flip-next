@@ -385,7 +385,7 @@ export default function Results() {
                                 {penaltyCard ? (
                                     <>
                                         <div className='font-press-start text-center'>
-                                            <p>Your opponent claimed this card from your collection!</p>
+                                            <p>Your opponent claimed the <span className='capitalize'>{penaltyCard.name}</span> card from your collection!</p>
                                         </div>
                                         <div className="grid grid-cols-[repeat(auto-fit,124px)] place-content-center gap-4 mt-8">
                                             <div className="relative aspect-square">
