@@ -1,44 +1,84 @@
 import { useGameContext } from '@/contexts/GameContext';
-import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { clearLocalStorage } from '@/utils/gameStorage';
+
 import VictoryImage from "@/assets/images/victory.webp";
 import DefeatImage from "@/assets/images/defeat.webp";
 import TieImage from "@/assets/images/tie.webp";
-import { GAME_MODES } from '@/constants/gameModes';
 import Card from "@/components/Card/Card.js"
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { clearLocalStorage } from '@/utils/gameStorage';
-import Loader from "@/components/Loader/Loader.js";
-import AnimatedBackground from './AnimatedBackground.jsx';
+import styles from './retro.module.css';
+import PokeballSplash from '../PokeballSplash/PokeballSplash';
 
 export default function Results() {
     const location = useLocation();
-    const pathname = location.pathname;
-    const { selectedGameMode } = useGameContext();
-    const isQuickplay = pathname?.includes('quickplay') ?? false;
     const navigate = useNavigate();
-    const { matchCards } = useGameContext();
+
+    const { isPlayerVictory, matchCards } = useGameContext();
+    const { userCollection } = useAuth();
+
     const [matchAwards, setMatchAwards] = useState(null);
-    const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
+    const [rewardCards, setRewardCards] = useState([]);
+    const [penaltyCard, setPenaltyCard] = useState(null);
     const [mounted, setMounted] = useState(false);
+    const [isPokeballOpen, setIsPokeballOpen] = useState(true);
+
+    const penaltyCardRef = useRef(null);
+
+    const tieText = [
+        "A tie means no cards change hands. Battle again for victory!",
+        "No cards were won or lost in this draw.",
+        "The match was a draw. No cards were exchanged.",
+        "It's a stalemate! Try again to claim some cards.",
+        "No cards won in a tie. Battle again!",
+        "So close! A tie means everyone keeps their cards.",
+        "An even match! No spoils for either side."
+    ];
+
+    const playAgain = () => {
+        setIsPokeballOpen(false);
+        setTimeout(() => {
+            navigate(`/quickplay/select`);
+        }, 600);
+    }
+
+
+    const calculateRewardCards = (cards, collection) => {
+        // Filter out player cards and cards already in collection
+        const eligibleCards = cards.filter(card => card.isPlayerCard && !collection[card.name]);
+
+        // If 5 or fewer cards, return all
+        if (eligibleCards.length <= 5) {
+            return eligibleCards;
+        }
+
+        // Randomly select 5 cards
+        const shuffled = [...eligibleCards].sort(() => Math.random() - 0.5);
+        return shuffled.slice(0, 5);
+    };
+
+    const calculatePenaltyCard = (cards) => {
+        // Filter out starter cards and only include player cards
+        const eligibleCards = cards.filter(card => card.isPlayerCard && !card.starter);
+
+        // If no eligible cards, return null
+        if (eligibleCards.length === 0) {
+            return null;
+        }
+
+        // Find and return the card with the highest statWeight
+        return eligibleCards.reduce((highest, card) => {
+            return card.statWeight > highest.statWeight ? card : highest;
+        });
+    };
 
     useEffect(() => {
         clearLocalStorage();
 
         if (!matchCards || matchCards.length === 0) {
-            const gameMode = pathname.split('/').filter(Boolean)[0];
-            navigate(`/${gameMode}/select`, { replace: true });
+            navigate(`/quickplay/select`, { replace: true });
             return;
-        }
-
-        // Calculate victory by counting cards with isPlayerCard property
-        const playerCardCount = matchCards.filter(card => card.isPlayerCard === true).length;
-        const cpuCardCount = matchCards.filter(card => card.isPlayerCard === false).length;
-
-        if (playerCardCount > cpuCardCount) {
-            setIsPlayerVictory(true);
-        } else if (cpuCardCount > playerCardCount) {
-            setIsPlayerVictory(false);
         }
 
         // Calculate match awards from card stats
@@ -122,7 +162,7 @@ export default function Results() {
             { name: 'bulbasaur', award: 'Best Starter' },
             { name: 'eevee', award: 'Most Versatile' },
             { name: 'gengar', award: 'Spookiest' },
-            { name: 'dragonite', award: 'Goofiest Dragon' },
+            { name: 'dragonite', award: 'Goofiest' },
             { name: 'alakazam', award: 'Biggest Brain' },
             { name: 'machamp', award: 'Most Swole' },
             { name: 'mew', award: 'Most Mysterious' },
@@ -252,61 +292,119 @@ export default function Results() {
         const shuffled = allPossibleAwards.sort(() => Math.random() - 0.5);
         const selectedAwards = shuffled.slice(0, 3);
 
+
         setMatchAwards(selectedAwards);
+
+        // Calculate reward cards
+        if (isPlayerVictory) {
+            const rewards = calculateRewardCards(matchCards, userCollection);
+            setRewardCards(rewards);
+        } else if (isPlayerVictory === false) {
+            const penalty = calculatePenaltyCard(matchCards);
+            setPenaltyCard(penalty);
+            setTimeout(() => {
+                if (penaltyCardRef.current) {
+                    penaltyCardRef.current.classList.add('rotate-out-center');
+                }
+            }, 2000);
+        }
         setMounted(true);
     }, []);
 
-    if (!matchCards || matchCards.length === 0 || !mounted) {
-        return <Loader />;
-    }
-
-
     return (
-        <div className={`relative fade-in h-full flex flex-col justify-between`}>
-            <div className="h-20 hand-top-container z-10" />
-            <AnimatedBackground isPlayerVictory={isPlayerVictory} />
+        <div className={`h-full overflow-y-auto ${isPlayerVictory ? 'bg-pokedex-lighter-blue' : isPlayerVictory === false ? 'bg-pokedex-light-red' : 'bg-white'}`}>
+            {mounted && (
+                <div className="relative flex flex-col gap-8 m-8 justify-center fade-in">
+                    <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="w-1/2 mx-auto drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
+                    <div className='bg-white border-4 border-block shadow-lg/30'>
+                        {
+                            matchAwards && matchAwards.length > 0 && (
+                                <div>
+                                    <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
+                                        Match Awards
+                                    </h2>
+                                    <div className="grid grid-cols-3 gap-4 p-8">
+                                        {matchAwards.map((award, index) => (
+                                            <div key={index} className="default-tile py-8 border-4 border-black">
+                                                {/* Award Title */}
+                                                <div className="text-center mb-4">
+                                                    <span className="font-press-start text-sm">
+                                                        {award.label}
+                                                    </span>
+                                                </div>
 
-            <div className="relative z-10 font-bold px-16 flex justify-center">
-                <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="w-1/2 drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
-            </div>
-            <div className='relative mx-12 bg-white border-4 border-black shadow-lg/30'>
-                {mounted && (selectedGameMode === GAME_MODES.QUICK_PLAY.id || isQuickplay) && (
-                    <div>
-                        {matchAwards && matchAwards.length > 0 && (
-                            <div>
-                                <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
-                                    Match Awards
-                                </h2>
-                                <div className="grid grid-cols-3 gap-4 p-4">
-                                    {matchAwards.map((award, index) => (
-                                        <div key={index} className="default-tile p-4 border-4 border-black">
-                                            {/* Award Title */}
-                                            <div className="text-center mb-2">
-                                                <span className="font-press-start text-sm">
-                                                    {award.label}
-                                                </span>
-                                            </div>
-
-                                            {/* Award Card */}
-                                            <div className="flex justify-center">
-                                                <div className="w-[124px]">
-                                                    <Card pokemonCard={award.card} isDraggable={false} />
+                                                {/* Award Card */}
+                                                <div className="flex justify-center">
+                                                    <div className="w-[124px] drop-shadow-md/15">
+                                                        <Card pokemonCard={award.card} isDraggable={false} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div >
+                    <div className='bg-white border-4 border-block shadow-lg/30'>
+                        <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
+                            {isPlayerVictory === false ? 'Penalty' : 'Rewards'}
+                        </h2>
+                        {isPlayerVictory && matchCards?.some(card => card.isPlayerCard) ? (
+                            <div className='p-8'>
+                                <div className='font-press-start text-center'>
+                                    <p>Your spoils of victory! These cards now belong to you.</p>
+                                </div>
+                                <div className="grid grid-cols-[repeat(auto-fit,124px)] place-content-center gap-4 mt-8">
+                                    {rewardCards.map((pokemonCard, index) => {
+                                        return (
+                                            <div className="relative aspect-square drop-shadow-md/15" key={index}>
+                                                {pokemonCard && (
+                                                    <Card pokemonCard={pokemonCard} isPlayerCard={true} index={index} isDraggable={true} startsFlipped={false} />
+                                                )}
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
-                        )}
-                        <div className="relative group text-center font-press-start text-lg mb-4">
-                            <div className={`arrow absolute -left-4 top-1 -translate-y-1/2 transition-opacity ${selectedGameMode === GAME_MODES.QUICK_PLAY.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'}`} />
-                            <Link className={`cursor-pointer`} to={`${isQuickplay ? "/quickplay" : "/career"}/select`}>Play Again?</Link>
-                        </div>
-                    </div>
-                )}
-            </div>
-            <div className="h-20 hand-bottom-container-red  z-10" />
+                        ) : isPlayerVictory === false ? (
+                            <div className="p-8 text-center">
+                                {penaltyCard ? (
+                                    <>
+                                        <div className='font-press-start text-center'>
+                                            <p>Your opponent claimed this card from your collection!</p>
+                                        </div>
+                                        <div className="grid grid-cols-[repeat(auto-fit,124px)] place-content-center gap-4 mt-8">
+                                            <div className="relative aspect-square">
+                                                <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
 
+                                                {penaltyCard && (
+                                                    <div ref={penaltyCardRef} className="drop-shadow-md/15">
+                                                        <Card pokemonCard={penaltyCard} index={0} isDraggable={true} startsFlipped={true} />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="p-8 py-24 text-center font-press-start">
+                                        <p>Your opponent couldn't find a card worth taking...</p>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="p-8 py-26 text-center font-press-start">
+                                <p>{tieText[Math.floor(Math.random() * tieText.length)]}</p>
+                            </div>
+                        )}
+                    </div>
+                    <div className="relative group text-center font-press-start text-lg">
+                        <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={playAgain}>Play Again</button>
+                    </div>
+                </div >
+            )
+            }
+            <PokeballSplash pokeballIsOpen={isPokeballOpen} />
         </div >
     )
 }

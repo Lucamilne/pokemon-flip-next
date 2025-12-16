@@ -1,24 +1,31 @@
 import { useLocation } from 'react-router-dom';
+import { useGameContext } from '@/contexts/GameContext';
 import GoogleSignInButton from '@/components/Auth/GoogleSignInButton';
 
 export default function AppShell({ children }) {
+  const { isPlayerVictory } = useGameContext();
   const location = useLocation();
   const pathname = location.pathname;
 
-  const getBackgroundStyle = () => {
+  const getBackgroundClass = () => {
+    if (isPlayerVictory && pathname.endsWith('/result')) {
+      return 'bg-pokedex-blue';
+    }
+    if (isPlayerVictory === false && pathname.endsWith('/result')) {
+      return 'bg-pokedex-red';
+    }
     if (pathname.endsWith('/select')) {
-      return { backgroundColor: '#59acff' };
+      return 'bg-pokedex-light-blue';
     }
     if (pathname.endsWith('/play')) {
-      return { backgroundColor: '#e61919' };
+      return 'bg-pokedex-red';
     }
-    return { backgroundColor: '#ddd' };
+    return 'bg-neutral-100';
   };
 
   return (
     <div
-      className="text-black transition-all duration-400 ease-in-out"
-      style={getBackgroundStyle()}
+      className={`text-black transition-all duration-800 ease-in-out ${getBackgroundClass()} bg-linear-to-r from-black/30 via-transparent to-black/30`}
     >
       {/* Mobile splash screen */}
       <div className="block md:hidden min-h-screen flex items-center justify-center p-8">
@@ -35,7 +42,7 @@ export default function AppShell({ children }) {
       </div>
 
       {/* Main app - hidden on mobile */}
-      <main className="hidden md:flex justify-center min-h-screen font-sans bg-black/15 lg:p-4 relative">
+      <main className="hidden md:flex justify-center min-h-screen font-sans lg:p-4 relative">
         {import.meta.env.DEV && <GoogleSignInButton />}
         <div className="h-screen lg:h-[calc(100vh-32px)] overflow-hidden w-full max-w-5xl">
           {children}

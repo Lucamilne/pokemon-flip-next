@@ -8,7 +8,6 @@ import Profile from "../Profile/Profile.js"
 import styles from './retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
 import { useAuth } from '@/contexts/AuthContext';
-import pokemon from '@/data/game-data.json';
 
 const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
 
@@ -43,8 +42,7 @@ export default function Select() {
 
             setPlayerCardLibrary(ownedCards);
         } else {
-            console.log("No user detected");
-            // Not signed in - use starter cards
+            // Not signed in - use starter cards, todo: load from local storage later?
             setPlayerCardLibrary(fetchStarterCards(true));
         }
     }, [userCollection])
@@ -169,7 +167,7 @@ export default function Select() {
                                             const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
                                             return (
                                                 <button
-                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/30 ${isInHand ? 'ring-5 ring-lime-300' : ''}`}
+                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-5 ring-lime-300' : ''}`}
                                                     key={index}
                                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                                 >

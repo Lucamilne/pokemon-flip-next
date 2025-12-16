@@ -1,0 +1,190 @@
+/* Converted CSS from your SCSS */
+
+/* Default button style */
+.nes-btn {
+  /* Border using SVG for pixel-perfect NES style */
+  border-style: solid;
+  border-width: 4px;
+  border-image-source: url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8"?><svg version="1.1" width="5" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2 1 h1 v1 h-1 z M1 2 h1 v1 h-1 z M3 2 h1 v1 h-1 z M2 3 h1 v1 h-1 z" fill="rgb(33,37,41)"/></svg>');
+  border-image-slice: 2;
+  border-image-width: 2;
+  border-image-repeat: stretch;
+  border-image-outset: 2;
+  outline: none;
+  position: relative;
+  display: inline-block;
+  padding: 6px 8px;
+  margin: 4px;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  color: rgb(33, 37, 41);
+  background-color: rgb(255, 255, 255);
+}
+
+/* Safari/Chrome fix for border-image */
+@media (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  .nes-btn {
+    border-image-repeat: space;
+  }
+}
+
+/* Shadow effect using ::after pseudo-element */
+.nes-btn::after {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  left: -4px;
+  content: "";
+  box-shadow: rgb(173, 175, 188) -4px -4px inset;
+}
+
+.nes-btn:hover {
+  color: rgb(33, 37, 41);
+  text-decoration: none;
+  background-color: rgb(224, 224, 224); /* hover state */
+}
+
+.nes-btn:hover::after {
+  box-shadow: rgb(173, 175, 188) -6px -6px inset;
+}
+
+.nes-btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 6px rgba(173, 175, 188, 0.3);
+}
+
+.nes-btn:active:not(.is-disabled)::after {
+  box-shadow: rgb(173, 175, 188) 4px 4px inset;
+}
+
+/* Disabled state */
+.nes-btn.is-disabled,
+.nes-btn.is-disabled:hover,
+.nes-btn.is-disabled:focus {
+  color: rgb(33, 37, 41);
+  cursor: not-allowed;
+  background-color: rgb(211, 211, 211);
+  box-shadow: rgb(173, 175, 188) -4px -4px inset;
+  opacity: 0.6;
+}
+
+.nes-btn.is-disabled:hover::after {
+  box-shadow: rgb(173, 175, 188) -4px -4px inset;
+}
+
+/* Success button (green) */
+.nes-btn.is-success {
+  color: rgb(255, 255, 255);
+  background-color: rgb(146, 204, 65);
+}
+
+.nes-btn.is-success::after {
+  box-shadow: rgb(74, 165, 46) -4px -4px inset;
+}
+
+.nes-btn.is-success:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(118, 196, 66);
+}
+
+.nes-btn.is-success:hover::after {
+  box-shadow: rgb(74, 165, 46) -6px -6px inset;
+}
+
+.nes-btn.is-success:focus {
+  box-shadow: 0 0 0 6px rgba(74, 165, 46, 0.3);
+}
+
+.nes-btn.is-success:active:not(.is-disabled)::after {
+  box-shadow: rgb(74, 165, 46) 4px 4px inset;
+}
+
+/* Primary button (blue) */
+.nes-btn.is-primary {
+  color: rgb(255, 255, 255);
+  background-color: rgb(32, 156, 238);
+}
+
+.nes-btn.is-primary::after {
+  box-shadow: rgb(0, 107, 179) -4px -4px inset;
+}
+
+.nes-btn.is-primary:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(16, 141, 224);
+}
+
+.nes-btn.is-primary:hover::after {
+  box-shadow: rgb(0, 107, 179) -6px -6px inset;
+}
+
+.nes-btn.is-primary:focus {
+  box-shadow: 0 0 0 6px rgba(0, 107, 179, 0.3);
+}
+
+.nes-btn.is-primary:active:not(.is-disabled)::after {
+  box-shadow: rgb(0, 107, 179) 4px 4px inset;
+}
+
+/* Warning button (yellow) */
+.nes-btn.is-warning {
+  color: rgb(33, 37, 41);
+  background-color: rgb(247, 213, 29);
+}
+
+.nes-btn.is-warning::after {
+  box-shadow: rgb(229, 148, 0) -4px -4px inset;
+}
+
+.nes-btn.is-warning:hover {
+  color: rgb(33, 37, 41);
+  background-color: rgb(242, 196, 9);
+}
+
+.nes-btn.is-warning:hover::after {
+  box-shadow: rgb(229, 148, 0) -6px -6px inset;
+}
+
+.nes-btn.is-warning:focus {
+  box-shadow: 0 0 0 6px rgba(229, 148, 0, 0.3);
+}
+
+.nes-btn.is-warning:active:not(.is-disabled)::after {
+  box-shadow: rgb(229, 148, 0) 4px 4px inset;
+}
+
+/* Error button (red) */
+.nes-btn.is-error {
+  color: rgb(255, 255, 255);
+  background-color: rgb(231, 110, 85);
+}
+
+.nes-btn.is-error::after {
+  box-shadow: rgb(140, 32, 34) -4px -4px inset;
+}
+
+.nes-btn.is-error:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(206, 55, 43);
+}
+
+.nes-btn.is-error:hover::after {
+  box-shadow: rgb(140, 32, 34) -6px -6px inset;
+}
+
+.nes-btn.is-error:focus {
+  box-shadow: 0 0 0 6px rgba(140, 32, 34, 0.3);
+}
+
+.nes-btn.is-error:active:not(.is-disabled)::after {
+  box-shadow: rgb(140, 32, 34) 4px 4px inset;
+}
+
+/* File input */
+.nes-btn input[type="file"] {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}

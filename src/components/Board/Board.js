@@ -16,15 +16,15 @@ import styles from './background.module.css';
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
+    const [isGameComplete, setIsGameComplete] = useState(false);
     const location = useLocation();
     const pathname = location.pathname;
     const {
         selectedPlayerHand,
         setMatchCards,
-        isGameComplete,
-        setIsGameComplete,
         cells,
         setCells,
+        setIsPlayerVictory,
         isPlayerTurn,
         setIsPlayerTurn,
         playerHand,
@@ -361,6 +361,15 @@ export default function Board() {
             const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
 
             setMatchCards(allMatchCards);
+            const playerCardCount = allMatchCards.filter(card => card.isPlayerCard === true).length;
+            const cpuCardCount = allMatchCards.filter(card => card.isPlayerCard === false).length;
+
+            if (playerCardCount > cpuCardCount) {
+                setIsPlayerVictory(true);
+            } else if (cpuCardCount > playerCardCount) {
+                setIsPlayerVictory(false);
+            }
+
             setTimeout(() => setIsGameComplete(true), 800);
             return;
         }

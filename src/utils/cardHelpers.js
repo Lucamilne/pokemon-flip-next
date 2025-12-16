@@ -123,6 +123,10 @@ export const fetchBalancedTierCards = (isPlayerCard = true) => {
 export const fetchCardsByPlayerTierDistribution = (playerHand) => {
     const { weakCards, midCards, strongCards } = categoriseCardsByTier();
 
+    // Add random variance to tier thresholds (+/- 20)
+    const weakThreshold = 400 + Math.floor(Math.random() * 41) - 20; // 380-420
+    const midThreshold = 520 + Math.floor(Math.random() * 41) - 20; // 500-540
+
     // Count player's tier distribution
     const playerTiers = {
         weak: 0,
@@ -132,8 +136,8 @@ export const fetchCardsByPlayerTierDistribution = (playerHand) => {
 
     playerHand.forEach(card => {
         const statWeight = card.statWeight;
-        if (statWeight <= 400) playerTiers.weak++;
-        else if (statWeight < 520) playerTiers.mid++;
+        if (statWeight <= weakThreshold) playerTiers.weak++;
+        else if (statWeight < midThreshold) playerTiers.mid++;
         else playerTiers.strong++;
     });
 

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useGameContext } from '@/contexts/GameContext';
 
 export default function ResultTransition({ reverse = false }) {
     const [tilesLeft, setTilesLeft] = useState(Array.from({ length: 10 }, () => false));
     const [tilesRight, setTilesRight] = useState(Array.from({ length: 10 }, () => false));
+    const { isPlayerVictory } = useGameContext();
     const navigate = useNavigate();
     const location = useLocation();
     const pathname = location.pathname;
@@ -74,7 +76,7 @@ export default function ResultTransition({ reverse = false }) {
                 {tilesLeft.map((isActive, index) => (
                     <div
                         key={`left-${index}`}
-                        className="w-full bg-white opacity-75 transition-transform duration-300 ease-out"
+                        className={`w-full ${isPlayerVictory ? 'bg-pokedex-lighter-blue' : isPlayerVictory === false ? 'bg-pokedex-light-red' : 'bg-white'} opacity-75 transition-transform duration-300 ease-out`}
                         style={{
                             transform: reverse
                                 ? (isActive ? 'translateX(100%)' : 'translateX(0)')
@@ -88,7 +90,7 @@ export default function ResultTransition({ reverse = false }) {
                 {tilesRight.map((isActive, index) => (
                     <div
                         key={`right-${index}`}
-                        className="w-full bg-white transition-transform duration-300 ease-out"
+                        className={`w-full ${isPlayerVictory ? 'bg-pokedex-lighter-blue' : isPlayerVictory === false ? 'bg-pokedex-light-red' : 'bg-white'} transition-transform duration-300 ease-out`}
                         style={{
                             transform: reverse
                                 ? (isActive ? 'translateX(-100%)' : 'translateX(0)')
