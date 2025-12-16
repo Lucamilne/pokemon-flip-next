@@ -43,7 +43,7 @@ export default function AppShell({ children }) {
 
       {/* Main app - hidden on mobile */}
       <main className="hidden md:flex justify-center min-h-screen font-sans lg:p-4 relative">
-        {import.meta.env.DEV && <GoogleSignInButton />}
+        <GoogleSignInButton />
         <div className="h-screen lg:h-[calc(100vh-32px)] overflow-hidden w-full max-w-5xl">
           {children}
         </div>

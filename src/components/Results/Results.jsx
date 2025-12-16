@@ -16,7 +16,7 @@ export default function Results() {
     const navigate = useNavigate();
 
     const { isPlayerVictory, matchCards } = useGameContext();
-    const { user, userCollection, addCards, removeCard } = useAuth();
+    const { userCollection, addCards, removeCard } = useAuth();
 
     const [matchAwards, setMatchAwards] = useState(null);
     const [rewardCards, setRewardCards] = useState([]);
@@ -146,8 +146,12 @@ export default function Results() {
     };
 
     const calculatePenaltyCard = (cards) => {
-        // Filter out starter cards and only include player cards
-        const eligibleCards = cards.filter(card => card.isPlayerCard && !card.starter);
+        // Filter out starter cards, only include player cards that are in collection
+        const eligibleCards = cards.filter(card =>
+            !card.isPlayerCard &&
+            !card.starter &&
+            userCollection[card.name]
+        );
 
         // If no eligible cards, return null
         if (eligibleCards.length === 0) {

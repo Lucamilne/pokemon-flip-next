@@ -2,7 +2,6 @@ import { useEffect, useState, useMemo } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import Loader from "@/components/Loader/Loader.js";
 import * as cardHelpers from '@/utils/cardHelpers.js';
-import gameData from '@/data/game-data.json';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
