@@ -5,7 +5,7 @@ import * as cardHelpers from '@/utils/cardHelpers.js';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
-    const { user } = useAuth();
+    const { user, signInWithGoogle } = useAuth();
     const [debugMode, setDebugMode] = useState(false);
 
     useEffect(() => {
@@ -216,7 +216,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                         </p>
                         {!user && (
                             <p>
-                                Sign in with Google to save and access your collection across devices!
+                                <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
                             </p>
                         )}
                         {debugMode && (

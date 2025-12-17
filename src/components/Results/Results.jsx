@@ -327,38 +327,8 @@ export default function Results() {
     return (
         <div className={`h-full overflow-y-auto ${isPlayerVictory ? 'bg-pokedex-lighter-blue' : isPlayerVictory === false ? 'bg-pokedex-light-red' : 'bg-white'}`}>
             {mounted && (
-                <div className="relative flex flex-col gap-8 m-8 justify-center fade-in">
+                <div className="relative flex flex-col gap-4 m-8 justify-center fade-in">
                     <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="w-1/2 mx-auto drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
-                    <div className='bg-white border-4 border-block shadow-lg/30'>
-                        {
-                            matchAwards && matchAwards.length > 0 && (
-                                <div>
-                                    <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
-                                        Match Awards
-                                    </h2>
-                                    <div className="grid grid-cols-3 gap-4 p-8">
-                                        {matchAwards.map((award, index) => (
-                                            <div key={index} className="default-tile py-8 border-4 border-black">
-                                                {/* Award Title */}
-                                                <div className="text-center mb-4">
-                                                    <span className="font-press-start text-sm">
-                                                        {award.label}
-                                                    </span>
-                                                </div>
-
-                                                {/* Award Card */}
-                                                <div className="flex justify-center">
-                                                    <div className="w-[124px] drop-shadow-md/15">
-                                                        <Card pokemonCard={award.card} isDraggable={false} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )
-                        }
-                    </div >
                     <div className='bg-white border-4 border-block shadow-lg/30'>
                         <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
                             {isPlayerVictory === false ? 'Penalty' : 'Rewards'}
@@ -411,6 +381,37 @@ export default function Results() {
                             </div>
                         )}
                     </div>
+
+                    <div className='bg-white border-4 border-block shadow-lg/30'>
+                        {
+                            matchAwards && matchAwards.length > 0 && (
+                                <div>
+                                    <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
+                                        Match Awards
+                                    </h2>
+                                    <div className="grid grid-cols-3 gap-4 p-8">
+                                        {matchAwards.map((award, index) => (
+                                            <div key={index} className="default-tile py-8 border-4 border-black">
+                                                {/* Award Title */}
+                                                <div className="text-center mb-4">
+                                                    <span className="font-press-start text-sm">
+                                                        {award.label}
+                                                    </span>
+                                                </div>
+
+                                                {/* Award Card */}
+                                                <div className="flex justify-center">
+                                                    <div className="w-[124px] drop-shadow-md/15">
+                                                        <Card pokemonCard={award.card} isDraggable={false} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div >
                     <div className="relative group text-center font-press-start text-lg">
                         <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={handlePlayAgain}>Play Again</button>
                     </div>

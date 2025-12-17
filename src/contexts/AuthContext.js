@@ -32,6 +32,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [userCollection, setUserCollection] = useState({});
   const [isLoadingCollection, setIsLoadingCollection] = useState(true);
+  const [syncMetadata, setSyncMetadata] = useState(getCollectionMetadata());
 
   useEffect(() => {
     // Load local collection immediately (before Firebase)
@@ -140,6 +141,7 @@ export function AuthProvider({ children }) {
       if (user) {
         await addCardToCollection(user.uid, pokemonName);
         updateSyncState(user.uid, new Date().toISOString());
+        setSyncMetadata(getCollectionMetadata());
       }
     } catch (error) {
       console.error('Error adding card:', error);
@@ -163,6 +165,7 @@ export function AuthProvider({ children }) {
       if (user) {
         await addMultipleCards(user.uid, pokemonNames);
         updateSyncState(user.uid, new Date().toISOString());
+        setSyncMetadata(getCollectionMetadata());
       }
     } catch (error) {
       console.error('Error adding cards:', error);
@@ -183,6 +186,7 @@ export function AuthProvider({ children }) {
       if (user) {
         await removeCardFromCollection(user.uid, pokemonName);
         updateSyncState(user.uid, new Date().toISOString());
+        setSyncMetadata(getCollectionMetadata());
       }
     } catch (error) {
       console.error('Error removing card:', error);
@@ -207,7 +211,7 @@ export function AuthProvider({ children }) {
     removeCard,
     collectionCount,
     // Sync state for UI indicators
-    syncMetadata: getCollectionMetadata(),
+    syncMetadata,
   };
 
   return (

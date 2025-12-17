@@ -1515,15 +1515,15 @@
       ],
       "stats": [
         7,
-        10,
         6,
+        10,
         5
       ],
       "effort_value": 2,
       "originalStats": [
         7,
-        10,
         6,
+        10,
         5
       ],
       "rarity": "epic",
@@ -1842,7 +1842,6 @@
         5
       ],
       "effort_value": 1,
-      "starter": true,
       "originalStats": [
         2,
         1,
@@ -3485,14 +3484,14 @@
         "psychic"
       ],
       "stats": [
-        9,
+        8,
         8,
         9,
         8
       ],
       "effort_value": 3,
       "originalStats": [
-        9,
+        8,
         8,
         9,
         8

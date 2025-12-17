@@ -1,11 +1,32 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function GoogleSignInButton() {
-  const { user, signInWithGoogle, signOut } = useAuth();
+  const { user, syncMetadata, signInWithGoogle, signOut } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [isSyncRecent, setIsSyncRecent] = useState(false);
+
+  useEffect(() => {
+    if (!syncMetadata?.lastSyncedAt) {
+      setIsSyncRecent(false);
+      return;
+    }
+
+    const timeSinceSync = Date.now() - new Date(syncMetadata.lastSyncedAt).getTime();
+
+    if (timeSinceSync < 2500) {
+      setIsSyncRecent(true);
+      const timeoutId = setTimeout(() => {
+        setIsSyncRecent(false);
+      }, 2500 - timeSinceSync);
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      setIsSyncRecent(false);
+    }
+  }, [syncMetadata?.lastSyncedAt]);
 
   const handleSignIn = async () => {
     setLoading(true);
@@ -24,54 +45,30 @@ export default function GoogleSignInButton() {
     setLoading(false);
   };
 
+
   return (
-    <div className="absolute top-4 right-4 z-50">
+    <div className="absolute top-5 right-5 z-50">
       {!user ? (
         <button
           onClick={handleSignIn}
           disabled={loading}
-          className="px-4 py-2 bg-white text-gray-700 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-sm"
+          className={`cursor-pointer ring-2 ring-white shrink-0 grow-0 w-9 h-9 transition-colors bg-blue-500 rounded-full flex items-center justify-center overflow-hidden`}
         >
-          <svg className="w-4 h-4" viewBox="0 0 24 24">
-            <path
-              fill="#4285F4"
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-            />
-            <path
-              fill="#34A853"
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-            />
-            <path
-              fill="#FBBC05"
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-            />
-            <path
-              fill="#EA4335"
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-            />
-          </svg>
-          {loading ? 'Signing in...' : 'Sign in with Google'}
+          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 2h14v2H4v16h2v-6h12v6h2V6h2v16H2V2h2zm4 18h8v-4H8v4zM20 6h-2V4h2v2zM6 6h9v4H6V6z" fill="#FFF"></path> </g></svg>
         </button>
       ) : (
         <div className="relative group">
-          <button className="flex items-center gap-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-all px-3 py-2">
-            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-              {user.photoURL ? (
-                <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
-              ) : (
-                <span className="text-gray-700 font-bold text-sm">
-                  {user.email?.[0]?.toUpperCase() || '?'}
-                </span>
-              )}
-            </div>
-            <span className="text-sm font-medium text-gray-700 hidden lg:block max-w-[150px] truncate">
-              {user.displayName || user.email || 'User'}
-            </span>
+          <button className={`cursor-pointer ring-2 ring-white shrink-0 grow-0 w-9 h-9 transition-colors ${isSyncRecent ? 'bg-amber-500' : 'bg-lime-500'} rounded-full flex items-center justify-center overflow-hidden`}>
+            {isSyncRecent ? (
+              <svg className="w-6 h-6 mb-0.5 animate-pulse" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M10 4h6v2h-6V4zM8 8V6h2v2H8zm-4 2V8h4v2H4zm-2 2v-2h2v2H2zm0 6H0v-6h2v6zm0 0h7v2H2v-2zM18 8h-2V6h2v2zm4 4h-4V8h2v2h2v2zm0 6v-6h2v6h-2zm0 0v2h-7v-2h7zM11 9h2v2h2v2h2v2h-4v5h-2v-5H7v-2h2v-2h2V9z" fill="#fff"></path> </g></svg>
+            ) : (
+              <svg className="w-6 h-6 mb-0.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M16 4h-6v2H8v2H4v2H2v2H0v6h2v2h20v-2h2v-6h-2v-2h-2V8h-2V6h-2V4zm0 2v2h2v4h4v6H2v-6h2v-2h4V8h2V6h6zm-6 6H8v2h2v2h2v-2h2v-2h2v-2h-2v2h-2v2h-2v-2z" fill="#fff"></path> </g></svg>
+            )}
           </button>
 
           {/* Dropdown menu on hover */}
           <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-            <div className="p-3 border-b border-gray-200">
+            <div className="p-2 border-b border-gray-200">
               <p className="text-xs text-gray-500">Signed in as</p>
               <p className="text-sm font-medium text-gray-900 truncate">
                 {user.email || 'User'}
@@ -86,7 +83,8 @@ export default function GoogleSignInButton() {
             </button>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
