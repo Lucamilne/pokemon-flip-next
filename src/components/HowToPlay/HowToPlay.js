@@ -102,9 +102,12 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <div className='font-press-start grid grid-cols-1 gap-8'>
                             <h2 className='font-bold text-2xl text-center'>Winning the Game</h2>
                             <p>The game ends when all 9 spaces are filled. The player controlling
-                                the most cards wins! Plan your moves carefully.
+                                the most cards wins!
                             </p>
-                            <p>Every card placed can trigger a rapid change of fortunes!</p>
+                            <p>
+                                Win a round to add all cards you captured that round to your permanent collection. Lose the round, and you must forfeit one of the cards you lost during it.
+                            </p>
+                            <p>Plan your moves carefully.Every card placed can trigger a rapid change of fortunes!</p>
                         </div>
                     </div>
                 </div>

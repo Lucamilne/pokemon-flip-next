@@ -52,6 +52,7 @@ export default function GoogleSignInButton() {
         <button
           onClick={handleSignIn}
           disabled={loading}
+          title="Sign in and save"
           className={`cursor-pointer ring-2 ring-white shrink-0 grow-0 w-9 h-9 transition-colors bg-blue-500 rounded-full flex items-center justify-center overflow-hidden`}
         >
           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 2h14v2H4v16h2v-6h12v6h2V6h2v16H2V2h2zm4 18h8v-4H8v4zM20 6h-2V4h2v2zM6 6h9v4H6V6z" fill="#FFF"></path> </g></svg>

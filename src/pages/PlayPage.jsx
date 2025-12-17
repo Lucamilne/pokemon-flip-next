@@ -1,5 +1,5 @@
-import Board from "@/components/Board/Board";
 import { useState } from 'react';
+import Board from "@/components/Board/Board";
 import HowToPlay from "@/components/HowToPlay/HowToPlay";
 
 export default function PlayPage() {
@@ -10,7 +10,7 @@ export default function PlayPage() {
       <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
         <Board />
       </section>
-      <button onClick={() => setIsOpen(true)} className="cursor-pointer p-1 leading-none flex justify-center items-center absolute top-2 right-2 text-white/80 font-press-start text-2xl hover:text-white">
+      <button title="How to play" onClick={() => setIsOpen(true)} className="cursor-pointer p-1 leading-none flex justify-center items-center absolute top-18 right-5 text-white/80 font-press-start text-2xl hover:text-white">
         <span>?</span>
       </button>
       {isOpen && (
