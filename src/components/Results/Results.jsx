@@ -132,15 +132,12 @@ export default function Results() {
 
 
     const calculateRewardCards = (cards, collection) => {
-        // Filter out player cards and cards already in collection
         const eligibleCards = cards.filter(card => card.isPlayerCard && !collection[card.name]);
 
-        // If 5 or fewer cards, return all
         if (eligibleCards.length <= 5) {
             return eligibleCards;
         }
 
-        // Randomly select 5 cards
         const shuffled = [...eligibleCards].sort(() => Math.random() - 0.5);
         return shuffled.slice(0, 5);
     };
@@ -153,12 +150,10 @@ export default function Results() {
             userCollection[card.name]
         );
 
-        // If no eligible cards, return null
         if (eligibleCards.length === 0) {
             return null;
         }
 
-        // Find and return the card with the highest statWeight
         return eligibleCards.reduce((highest, card) => {
             return card.statWeight > highest.statWeight ? card : highest;
         });
@@ -172,13 +167,12 @@ export default function Results() {
             return;
         }
 
-        // Calculate match awards from card stats
         const awards = {
             playOfTheGame: null,
             mostEvasive: null,
             typeMaster: null,
             comebackKid: null,
-            specialAwards: [] // For personality-based awards
+            specialAwards: []
         };
 
         // Play of the Game: Card with most captures (must be > 1)
@@ -190,24 +184,24 @@ export default function Results() {
             }
         });
 
-        // Most Evasive: Card with most immuneDefenses (must have timesFlipped === 0)
+        // Most Evasive: Card with most immuneDefenses (todo: bugged; must have timesFlipped === 0)
         const evasiveCandidates = matchCards.filter(card =>
             card.matchStats?.immuneDefenses > 0 &&
             card.matchStats?.timesFlipped === 0
         );
         if (evasiveCandidates.length > 0) {
-            // Find the highest immuneDefenses value
+
             let bestImmune = 0;
             evasiveCandidates.forEach(card => {
                 if (card.matchStats.immuneDefenses > bestImmune) {
                     bestImmune = card.matchStats.immuneDefenses;
                 }
             });
-            // Get all cards with the highest value (in case of tie)
+
             const topEvasive = evasiveCandidates.filter(card =>
                 card.matchStats.immuneDefenses === bestImmune
             );
-            // Pick one at random if there's a tie
+
             awards.mostEvasive = topEvasive[Math.floor(Math.random() * topEvasive.length)];
         }
 
@@ -219,7 +213,7 @@ export default function Results() {
                 awards.typeMaster = card;
             }
         });
-        // Only award if they actually got super effective captures
+
         if (bestSuperEffective === 0) {
             awards.typeMaster = null;
         }
@@ -233,7 +227,6 @@ export default function Results() {
             }
         });
 
-        // Only award if they actually made a comeback
         if (bestComeback === 0) {
             awards.comebackKid = null;
         }
@@ -248,7 +241,6 @@ export default function Results() {
             }
         });
 
-        // Collect all valid awards into a flat array
         const allPossibleAwards = [];
 
         if (awards.playOfTheGame) {
@@ -283,7 +275,6 @@ export default function Results() {
             });
         }
 
-        // Add each special award as a separate possible award
         awards.specialAwards.forEach(special => {
             allPossibleAwards.push({
                 type: 'special',
@@ -292,7 +283,6 @@ export default function Results() {
             });
         });
 
-        // Randomly select 3 awards
         const shuffled = allPossibleAwards.sort(() => Math.random() - 0.5);
         const selectedAwards = shuffled.slice(0, 3);
 
@@ -302,7 +292,6 @@ export default function Results() {
         if (isPlayerVictory) {
             const rewards = calculateRewardCards(matchCards, userCollection);
             setRewardCards(rewards);
-            // Use AuthContext method - handles both localStorage + Firebase
             addCards(rewards.map(pokemonCard => pokemonCard.name))
                 .catch(error => console.error('Failed to add rewards:', error));
         } else if (isPlayerVictory === false) {
@@ -310,7 +299,6 @@ export default function Results() {
             setPenaltyCard(penalty);
 
             if (penalty) {
-                // Use AuthContext method - handles both localStorage + Firebase
                 removeCard(penalty.name)
                     .catch(error => console.error('Failed to remove penalty:', error));
             }

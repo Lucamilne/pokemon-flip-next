@@ -66,7 +66,6 @@ export function GameProvider({ children }) {
     },
   });
 
-  // Calculate score (cards on board + cards in hand)
   const score = useMemo(() => {
     let count = 0;
     for (const key in cells) {
@@ -78,7 +77,6 @@ export function GameProvider({ children }) {
 
   // Auto-save game state to localStorage whenever it changes
   useEffect(() => {
-    // Only save if game has started (at least one card placed or hands are populated)
     const gameHasStarted =
       Object.values(cells).some(cell => cell.pokemonCard !== null) ||
       playerHand.length > 0 ||
@@ -94,13 +92,9 @@ export function GameProvider({ children }) {
     }
   }, [cells]);
 
-  // Reset game state when starting a new game (keeps selection state)
-  // Combines context state reset + localStorage clear
+  // Reset game state when starting a new game
   const resetGameState = () => {
-    // Clear localStorage
     clearLocalStorage();
-
-    // Reset context state
     setMatchCards([]);
     setIsPlayerVictory(null);
     setIsPlayerTurn(true);
