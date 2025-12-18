@@ -324,23 +324,31 @@ export default function Results() {
                         </h2>
                         {isPlayerVictory && matchCards?.some(card => card.isPlayerCard) ? (
                             <div className='p-8'>
-                                <div className='font-press-start text-center'>
-                                    <p>Your spoils of victory! These cards now belong to you.</p>
-                                </div>
-                                <div className="grid grid-cols-[repeat(auto-fit,124px)] place-content-center gap-4 mt-8">
-                                    {rewardCards.map((pokemonCard, index) => {
-                                        return (
-                                            <div className="relative aspect-square drop-shadow-md/15" key={index}>
-                                                {pokemonCard && (
-                                                    <Card pokemonCard={pokemonCard} isPlayerCard={true} index={index} isDraggable={true} startsFlipped={false} />
-                                                )}
-                                            </div>
-                                        )
-                                    })}
-                                </div>
+                                {rewardCards.length > 0 ? (
+                                    <>
+                                        <div className='font-press-start text-center'>
+                                            <p>Your spoils of victory! These cards now belong to you.</p>
+                                        </div>
+                                        <div className="grid grid-cols-[repeat(auto-fit,124px)] place-content-center gap-4 mt-8">
+                                            {rewardCards.map((pokemonCard, index) => {
+                                                return (
+                                                    <div className="relative aspect-square drop-shadow-md/15" key={index}>
+                                                        {pokemonCard && (
+                                                            <Card pokemonCard={pokemonCard} isPlayerCard={true} index={index} isDraggable={true} startsFlipped={false} />
+                                                        )}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="py-18 text-center font-press-start">
+                                        <p>You already own all the cards you captured!</p>
+                                    </div>
+                                )}
                             </div>
                         ) : isPlayerVictory === false ? (
-                            <div className="p-8 text-center">
+                            <div className="p-8">
                                 {penaltyCard ? (
                                     <>
                                         <div className='font-press-start text-center'>
@@ -359,14 +367,16 @@ export default function Results() {
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="p-8 py-18 text-center font-press-start">
+                                    <div className="py-18 text-center font-press-start">
                                         <p>Your opponent couldn't find a card worth taking...</p>
                                     </div>
                                 )}
                             </div>
                         ) : (
-                            <div className="p-8 py-18 text-center font-press-start">
-                                <p>{tieText[Math.floor(Math.random() * tieText.length)]}</p>
+                            <div className="p-8">
+                                <div className="py-18 text-center font-press-start">
+                                    <p>{tieText[Math.floor(Math.random() * tieText.length)]}</p>
+                                </div>
                             </div>
                         )}
                     </div>

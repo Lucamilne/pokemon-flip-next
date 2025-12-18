@@ -107,7 +107,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                             <p>
                                 Win a round to add all cards you captured that round to your permanent collection. Lose the round, and you must forfeit one of the cards you lost during it.
                             </p>
-                            <p>Plan your moves carefully.Every card placed can trigger a rapid change of fortunes!</p>
+                            <p>Plan your moves carefully. Every card placed can trigger a rapid change of fortunes!</p>
                         </div>
                     </div>
                 </div>

@@ -1,11 +1,12 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
+import { useAuth } from '@/contexts/AuthContext';
 import Loader from "@/components/Loader/Loader.js";
 import * as cardHelpers from '@/utils/cardHelpers.js';
-import { useAuth } from '@/contexts/AuthContext';
+import pokemon from '@/data/game-data.json';
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
-    const { user, signInWithGoogle, addAllCards, resetToStarters } = useAuth();
+    const { user, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
     const [debugMode, setDebugMode] = useState(false);
 
     useEffect(() => {
@@ -212,7 +213,10 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                     <div className='font-press-start grid grid-cols-1 gap-8'>
                         <h2 className='font-bold text-2xl text-center'>Your Collection</h2>
                         <p>
-                            Create your own hand by selecting from your pokemon library on the left.
+                            Create your own hand by selecting from your pokemon library on the left!
+                        </p>
+                        <p>
+                            Your Pokédex has {collectionCount}/{Object.keys(pokemon.cards).length} entries.
                         </p>
                         {!user && (
                             <p>

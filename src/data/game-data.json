@@ -3139,16 +3139,16 @@
         "electric"
       ],
       "stats": [
-        8,
-        6,
         4,
+        6,
+        8,
         8
       ],
       "effort_value": 2,
       "originalStats": [
-        8,
-        6,
         4,
+        6,
+        8,
         8
       ],
       "rarity": "epic",
@@ -3160,17 +3160,17 @@
         "fire"
       ],
       "stats": [
-        8,
-        6,
         5,
-        7
+        8,
+        7,
+        6
       ],
       "effort_value": 2,
       "originalStats": [
-        8,
-        6,
         5,
-        7
+        8,
+        7,
+        6
       ],
       "rarity": "epic",
       "statWeight": 525
