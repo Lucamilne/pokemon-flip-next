@@ -8,8 +8,9 @@ import VictoryImage from "@/assets/images/victory.webp";
 import DefeatImage from "@/assets/images/defeat.webp";
 import TieImage from "@/assets/images/tie.webp";
 import Card from "@/components/Card/Card.js"
-import styles from './retro.module.css';
 import PokeballSplash from '../PokeballSplash/PokeballSplash';
+import styles from './retro.module.css';
+import pokemon from '@/data/game-data.json';
 
 export default function Results() {
     const location = useLocation();
@@ -132,7 +133,7 @@ export default function Results() {
 
 
     const calculateRewardCards = (cards, collection) => {
-        const eligibleCards = cards.filter(card => card.isPlayerCard && !collection[card.name]);
+        const eligibleCards = cards.filter(card => card.isPlayerCard && !collection[card.name] && pokemon.cards[card.name]);
 
         if (eligibleCards.length <= 5) {
             return eligibleCards;
@@ -358,13 +359,13 @@ export default function Results() {
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="p-8 py-24 text-center font-press-start">
+                                    <div className="p-8 py-18 text-center font-press-start">
                                         <p>Your opponent couldn't find a card worth taking...</p>
                                     </div>
                                 )}
                             </div>
                         ) : (
-                            <div className="p-8 py-26 text-center font-press-start">
+                            <div className="p-8 py-18 text-center font-press-start">
                                 <p>{tieText[Math.floor(Math.random() * tieText.length)]}</p>
                             </div>
                         )}

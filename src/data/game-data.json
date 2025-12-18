@@ -3378,17 +3378,17 @@
         "flying"
       ],
       "stats": [
+        6,
         9,
         6,
-        8,
-        6
+        8
       ],
       "effort_value": 3,
       "originalStats": [
+        6,
         9,
         6,
-        8,
-        6
+        8
       ],
       "rarity": "epic",
       "statWeight": 580
@@ -3443,16 +3443,16 @@
       ],
       "stats": [
         7,
-        7,
+        9,
         8,
-        9
+        7
       ],
       "effort_value": 3,
       "originalStats": [
         7,
-        7,
+        9,
         8,
-        9
+        7
       ],
       "rarity": "legendary",
       "statWeight": 600
@@ -3463,17 +3463,17 @@
         "psychic"
       ],
       "stats": [
-        9,
         10,
-        9,
-        7
+        8,
+        10,
+        8
       ],
       "effort_value": 3,
       "originalStats": [
-        9,
         10,
-        9,
-        7
+        8,
+        10,
+        8
       ],
       "rarity": "legendary",
       "statWeight": 680
@@ -3484,14 +3484,14 @@
         "psychic"
       ],
       "stats": [
-        8,
+        9,
         8,
         9,
         8
       ],
       "effort_value": 3,
       "originalStats": [
-        8,
+        9,
         8,
         9,
         8

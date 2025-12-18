@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
+import GreatBallSprite from '@/assets/icons/tiers/Bag_Great_Ball_Sprite.png'
+import UltraBallSprite from '@/assets/icons/tiers/Bag_Ultra_Ball_Sprite.png'
+import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
@@ -19,6 +22,13 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
 
     const sumUpNumbersInArray = (array) => {
         return array.reduce((acc, val) => acc + val, 0);
+    };
+
+    const getBallSprite = (statWeight) => {
+        if (statWeight <= 400) return PokemonBallSprite;
+        if (statWeight < 520) return GreatBallSprite;
+        if (statWeight < 600) return UltraBallSprite;
+        return MasterBallSprite;
     };
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -196,7 +206,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
                             </div>
                         </div>
                     </div>
-                    {isOwned && <img width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={PokemonBallSprite} />}
+                    {isOwned && <img width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} />}
                     {showOverlay && (
                         <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
                             <span className='mt-4'>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>

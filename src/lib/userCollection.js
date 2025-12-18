@@ -154,6 +154,29 @@ export async function removeCardFromCollection(userId, pokemonName) {
 }
 
 /**
+ * Remove multiple cards from the user's collection at once
+ * @param {string} userId - The user's Firebase UID
+ * @param {string[]} pokemonNames - Array of pokemon names to remove
+ */
+export async function removeMultipleCards(userId, pokemonNames) {
+  if (!userId || !pokemonNames || pokemonNames.length === 0) return;
+
+  try {
+    const docRef = doc(db, 'users', userId);
+    const collection = await getUserCollection(userId);
+
+    pokemonNames.forEach(name => {
+      delete collection[name];
+    });
+
+    await setDoc(docRef, { collection });
+  } catch (error) {
+    console.error('Error removing multiple cards:', error);
+    throw error;
+  }
+}
+
+/**
  * Get count of cards in user's collection
  * @param {string} userId - The user's Firebase UID
  * @returns {Promise<number>}

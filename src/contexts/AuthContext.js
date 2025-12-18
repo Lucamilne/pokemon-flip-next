@@ -12,7 +12,7 @@ import {
   addCardToCollection,
   addMultipleCards,
   removeCardFromCollection,
-  getCollectionCount
+  removeMultipleCards,
 } from '@/lib/userCollection';
 import {
   getLocalCollection,
@@ -22,6 +22,7 @@ import {
   clearSyncState,
   getCollectionMetadata
 } from '@/utils/collectionStorage';
+import pokemon from '@/data/game-data.json';
 
 const AuthContext = createContext({});
 
@@ -47,7 +48,6 @@ export function AuthProvider({ children }) {
           const firebaseCollection = await getUserCollection(currentUser.uid);
           const merged = mergeCollections(localCollection, firebaseCollection);
 
-          await addMultipleCards(currentUser.uid, Object.keys(merged));
           saveLocalCollection(merged, currentUser.uid);
           setUserCollection(merged);
         } catch (error) {
@@ -62,6 +62,7 @@ export function AuthProvider({ children }) {
         setUserCollection(local);
         setIsLoadingCollection(false);
       }
+
       setLoading(false);
     });
 
@@ -119,6 +120,8 @@ export function AuthProvider({ children }) {
   };
 
   const addCard = async (pokemonName) => {
+    if (!pokemon.cards[pokemonName]) return;
+
     try {
       const updated = { ...userCollection, [pokemonName]: true };
       setUserCollection(updated);
@@ -139,6 +142,8 @@ export function AuthProvider({ children }) {
     try {
       const newCards = {};
       pokemonNames.forEach(name => {
+        if (!pokemon.cards[name]) return; // No debug cards!
+
         newCards[name] = true;
       });
       const updated = { ...userCollection, ...newCards };
@@ -174,6 +179,53 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const addAllCards = async () => {
+    try {
+      const allPokemonNames = Object.keys(pokemon.cards);
+      const allCards = {};
+      allPokemonNames.forEach(name => {
+        allCards[name] = true;
+      });
+
+      setUserCollection(allCards);
+      saveLocalCollection(allCards, user?.uid);
+
+      if (user) {
+        await addMultipleCards(user.uid, allPokemonNames);
+        updateSyncState(user.uid, new Date().toISOString());
+        setSyncMetadata(getCollectionMetadata());
+      }
+    } catch (error) {
+      console.error('Error adding all cards:', error);
+    }
+  };
+
+  const resetToStarters = async () => {
+    try {
+      const starterCards = {};
+      Object.keys(pokemon.cards).forEach(name => {
+        if (pokemon.cards[name].starter === true) {
+          starterCards[name] = true;
+        }
+      });
+
+      const nonStarterCards = Object.keys(userCollection).filter(
+        name => !pokemon.cards[name]?.starter
+      );
+
+      setUserCollection(starterCards);
+      saveLocalCollection(starterCards, user?.uid);
+
+      if (user) {
+        await removeMultipleCards(user.uid, nonStarterCards);
+        updateSyncState(user.uid, new Date().toISOString());
+        setSyncMetadata(getCollectionMetadata());
+      }
+    } catch (error) {
+      console.error('Error resetting to starters:', error);
+    }
+  };
+
   const collectionCount = Object.keys(userCollection).length;
 
   const value = {
@@ -188,6 +240,8 @@ export function AuthProvider({ children }) {
     addCard,
     addCards,
     removeCard,
+    addAllCards, // debug functions only
+    resetToStarters, // debug functions only
     collectionCount,
     // Sync state for UI indicators
     syncMetadata,
