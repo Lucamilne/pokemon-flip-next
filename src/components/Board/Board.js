@@ -36,6 +36,7 @@ export default function Board() {
     } = useGameContext();
 
     const navigate = useNavigate();
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     const decrementRandomStat = (stats) => {
         const randomIndex = Math.floor(Math.random() * stats.length);
@@ -215,8 +216,6 @@ export default function Board() {
 
         return capturedCells;
     }
-
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     function handleDragEnd(event) {
         const { active, over } = event;
