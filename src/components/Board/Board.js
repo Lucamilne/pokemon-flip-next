@@ -1,17 +1,18 @@
 "use client"
 
-import { useState, useEffect, useMemo } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import Balance from "../Balance/Balance.js"
-import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
+import { useState, useEffect } from 'react'
+import { DndContext } from '@dnd-kit/core';
+import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 import { fetchCardsByPlayerTierDistribution, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 import gameData from '@/data/game-data.json';
-import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 import styles from './background.module.css';
 
 export default function Board() {
