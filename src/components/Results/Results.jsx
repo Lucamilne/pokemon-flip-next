@@ -327,7 +327,7 @@ export default function Results() {
                                         <div className='font-press-start text-center text-sm md:text-base'>
                                             <p>Your spoils of victory! These cards now belong to you.</p>
                                         </div>
-                                        <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-2 md:gap-4 mt-8">
+                                        <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-1 md:gap-4 mt-8">
                                             {rewardCards.map((pokemonCard, index) => {
                                                 return (
                                                     <div className="relative aspect-square drop-shadow-md/15" key={index}>
@@ -352,7 +352,7 @@ export default function Results() {
                                         <div className='font-press-start text-center text-sm md:text-base'>
                                             <p>Your opponent claimed the <span className='capitalize'>{penaltyCard.name}</span> card from your collection!</p>
                                         </div>
-                                        <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-2 md:gap-4 mt-8">
+                                        <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-1 md:gap-4 mt-8">
                                             <div className="relative aspect-square">
                                                 <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
 
