@@ -64,15 +64,10 @@ export default function Board() {
             setPlayerHand(savedGameState.playerHand);
             setCpuHand(savedGameState.cpuHand);
             setIsPlayerTurn(savedGameState.isPlayerTurn);
-
-            if (!pokeballIsOpen) setPokeballIsOpen(true);
+            setPokeballIsOpen(true);
             return;
-        } else {
-            const randomBool = Math.random() < 0.5 ? true : false;
-            setHasWonCoinToss(randomBool); // show coin toss with who won
         }
 
-        // No saved state - start new game
         // Allocate hands
         const cpuCardsToDeal = fetchCardsByPlayerTierDistribution(selectedPlayerHand);
         const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
@@ -84,8 +79,6 @@ export default function Board() {
             navigate(`/${gameMode}/select`);
             return;
         }
-
-        if (!pokeballIsOpen) setPokeballIsOpen(true);
 
         // Gather types from both hands for elemental tiles
         const playerTypes = newPlayerHand.flatMap(card => card.types);
@@ -113,6 +106,11 @@ export default function Board() {
         setCpuHand(newCpuHand);
         setPlayerHand(newPlayerHand);
         setCells(updatedCells);
+        setPokeballIsOpen(true);
+
+        // Set coin toss result
+        const randomBool = Math.random() < 0.5 ? true : false;
+        setHasWonCoinToss(randomBool);
     }, []);
 
     useEffect(() => {
