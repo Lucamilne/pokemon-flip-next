@@ -1,5 +1,6 @@
 // Type Icons (IC_SM variants)
 import BugTypeIcon from "@/assets/icons/types/BugIC_SM.png";
+import DarkTypeIcon from "@/assets/icons/types/DarkIC_SM.png";
 import DragonTypeIcon from "@/assets/icons/types/DragonIC_SM.png";
 import ElectricTypeIcon from "@/assets/icons/types/ElectricIC_SM.png";
 import FairyTypeIcon from "@/assets/icons/types/FairyIC_SM.png";
@@ -19,6 +20,7 @@ import WaterTypeIcon from "@/assets/icons/types/WaterIC_SM.png";
 
 // Type Tiles
 import BugTypeTile from "@/assets/icons/types/bug_icon_Sleep.png";
+import DarkTypeTile from "@/assets/icons/types/dark_icon_Sleep.png";
 import DragonTypeTile from "@/assets/icons/types/dragon_icon_Sleep.png";
 import ElectricTypeTile from "@/assets/icons/types/electric_icon_Sleep.png";
 import FairyTypeTile from "@/assets/icons/types/fairy_icon_Sleep.png";
@@ -38,6 +40,7 @@ import WaterTypeTile from "@/assets/icons/types/water_icon_Sleep.png";
 
 export const typeIcons = {
   bug: BugTypeIcon,
+  dark: DarkTypeIcon,
   dragon: DragonTypeIcon,
   electric: ElectricTypeIcon,
   fairy: FairyTypeIcon,
@@ -58,6 +61,7 @@ export const typeIcons = {
 
 export const typeTiles = {
   bug: BugTypeTile,
+  dark: DarkTypeTile,
   dragon: DragonTypeTile,
   electric: ElectricTypeTile,
   fairy: FairyTypeTile,
