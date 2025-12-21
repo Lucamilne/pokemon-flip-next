@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import blueCoin from '../../assets/textures/blue-coin.webp';
 import redCoin from '../../assets/textures/red-coin.webp';
-import styles from './Coin.module.css';
+import styles from './coin.module.css';
 
 export default function Coin({ hasWonCoinToss }) {
     const [showTextToDiplay, setShowTextToDisplay] = useState(false);
@@ -13,14 +13,29 @@ export default function Coin({ hasWonCoinToss }) {
     }, []);
 
     return (
-        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+        <div className={`${styles['fade-in']} absolute inset-0 bg-black/60 flex items-center justify-center`}>
             <div className='relative w-full flex items-center justify-center pb-14'>
                 {showTextToDiplay &&
                     (
                         <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-xl lg:text-3xl text-hop`}>
-                            {textToDiplay.split('').map((char, index) => (<span key={index} style={{
-                                animationDelay: `${(index + 1) * 50}ms`
-                            }}>{char}</span>))}
+                            {textToDiplay.split('').map((char, index) => {
+                                let color;
+                                if (hasWonCoinToss) {
+                                    color = index < 4 ? 'text-theme-blue' : 'text-white';
+                                } else {
+                                    color = index < 3 ? 'text-theme-red' : 'text-white';
+                                }
+
+                                return (
+                                    <span
+                                        key={index}
+                                        className={color}
+                                        style={{ animationDelay: `${(index + 1) * 50}ms` }}
+                                    >
+                                        {char}
+                                    </span>
+                                );
+                            })}
                         </h2>
                     )}
                 <div className="drop-shadow-lg/60">

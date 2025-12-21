@@ -386,7 +386,8 @@ export default function Board() {
             return;
         }
 
-        await sleep(1250 + Math.random() * 250); // delay move by minimum of 1250ms
+        const hasGameStarted = arrayOfPlayerOccupiedCells.length > 0 || arrayOfCpuOccupiedCells.length > 0;
+        await sleep(hasGameStarted ? (1250 + Math.random() * 250) : 500);
 
         const validPlacementsSet = new Set(arrayOfCellsToPlace);
 
@@ -398,7 +399,7 @@ export default function Board() {
             )
         )];
 
-        // Analyze each potential placement cell
+        // Analyse each potential placement cell
         const cellAnalysis = arrayOfCellsToPlaceToAttack.map(cellKey => {
             const exposedDefendingStats = [];
 
