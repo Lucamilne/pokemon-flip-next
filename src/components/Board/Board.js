@@ -169,17 +169,22 @@ export default function Board() {
             const typeMatchups = gameData.typeMatchups;
 
             // First check for immunity - if immune, attack fails completely
+            // Exception: Normal-type Pokemon can always attack
             let isImmune = false;
-            for (const attackType of attackingCard.types) {
-                const matchup = typeMatchups[attackType];
+            const isNormalType = attackingCard.types.includes('normal');
 
-                for (const defendType of defendingCard.types) {
-                    if (matchup.immune.includes(defendType)) {
-                        isImmune = true;
-                        break;
+            if (!isNormalType) {
+                for (const attackType of attackingCard.types) {
+                    const matchup = typeMatchups[attackType];
+
+                    for (const defendType of defendingCard.types) {
+                        if (matchup.immune.includes(defendType)) {
+                            isImmune = true;
+                            break;
+                        }
                     }
+                    if (isImmune) break;
                 }
-                if (isImmune) break;
             }
 
             // Mark if attacking card encountered immunity
