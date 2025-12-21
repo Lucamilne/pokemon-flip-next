@@ -22,7 +22,7 @@ export default function HowToPlay({ isOpen, onClose }) {
     return (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={onClose}>
             {/* Modal Container */}
-            <div className="relative w-full max-w-4xl h-full lg:max-h-[600px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full max-w-4xl h-full lg:max-h-[620px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
                     className="flex h-full transition-transform duration-300 ease-in-out text-base"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -102,9 +102,12 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Winning the Game</h2>
                             <p>The game ends when all 9 spaces are filled. The player controlling
-                                the most cards wins! Plan your moves carefully.
+                                the most cards wins!
                             </p>
-                            <p>Every card placed can trigger a rapid change of fortunes!</p>
+                            <p>
+                                Win a round to add all cards you captured that round to your permanent collection. Lose the round, and you must forfeit one of the cards you lost during it.
+                            </p>
+                            <p>Plan your moves carefully. Every card placed can trigger a rapid change of fortunes!</p>
                         </div>
                     </div>
                 </div>

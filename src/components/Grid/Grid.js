@@ -50,9 +50,9 @@ function DroppableCell({ cellKey, cellData }) {
     );
 }
 
-export default function Grid({ cells, isPlayerTurn }) {
+export default function Grid({ cells, isPlayerTurn, hasWonCoinToss }) {
     return (
-        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-2 ${isPlayerTurn ? "bg-theme-blue" : "bg-theme-red"}`}>
+        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-2 ${hasWonCoinToss !== null ? "bg-neutral-400" : isPlayerTurn ? "bg-theme-blue" : "bg-theme-red"}`}>
             <div className="grid grid-cols-3 w-full w-auto grid-cols-[repeat(3,88px)] md:grid-cols-[repeat(3,140px)] bg-black gap-1 border-4 border-black mx-auto aspect-square shadow-xl/30" id="grid">
                 {Object.entries(cells).map(([key, value]) => (
                     <DroppableCell key={key} cellKey={key} cellData={value} />

@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInAnonymously, signInWithPopup, linkWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
@@ -35,5 +35,5 @@ if (typeof window !== "undefined") {
 }
 
 // Export with fallbacks for server-side rendering
-export { auth, db, analytics, googleProvider, signInAnonymously, signInWithPopup, linkWithPopup };
+export { auth, db, analytics, googleProvider, signInWithPopup };
 export default app;

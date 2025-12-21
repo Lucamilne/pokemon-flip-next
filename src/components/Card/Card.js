@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
+import GreatBallSprite from '@/assets/icons/tiers/Bag_Great_Ball_Sprite.png'
+import UltraBallSprite from '@/assets/icons/tiers/Bag_Ultra_Ball_Sprite.png'
+import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
+    const { hasCard } = useAuth();
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
@@ -13,12 +18,21 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
         return null;
     }
 
+    const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
+
     const sumUpNumbersInArray = (array) => {
         return array.reduce((acc, val) => acc + val, 0);
     };
 
+    const getBallSprite = (statWeight) => {
+        if (statWeight <= 400) return PokemonBallSprite;
+        if (statWeight < 520) return GreatBallSprite;
+        if (statWeight < 600) return UltraBallSprite;
+        return MasterBallSprite;
+    };
+
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: `${pokemonCard.id.toString()}-${index}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`, // unique ID includes index and player/cpu
+        id: `${pokemonCard.id.toString()}-${index}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`,
         disabled: !isDraggable,
         data: {
             pokemonCard,
@@ -184,15 +198,15 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
                         <div className="relative h-full flex flex-col items-center justify-center">
                             <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
                             <ElementalTypes types={pokemonCard.types} />
-                            <img draggable={false} width={50} height={50} className="w-1/2 h-1/2 md:w-[50px] md:h-[50px] drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} />
+                            <img draggable={false} width={60} height={60} className="w-1/2 h-1/2 md:size-[60px] drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} />
                             <div className='absolute bottom-0'>
                                 <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
-                                <div className={`pt-6 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
+                                <div className={`pt-7 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
                                 <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[6px] md:text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
                             </div>
                         </div>
                     </div>
-                    {pokemonCard.playerOwned && <img width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={PokemonBallSprite} />}
+                    {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} />}
                     {showOverlay && (
                         <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
                             <span className='mt-4'>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>

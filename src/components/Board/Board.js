@@ -1,30 +1,34 @@
 "use client"
 
-import { useState, useEffect, useMemo } from 'react'
 import Grid from "../Grid/Grid.js";
 import Card from "../Card/Card.js";
 import Balance from "../Balance/Balance.js"
-import { DndContext } from '@dnd-kit/core';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
-import { fetchBalancedTierCards, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
+import Coin from "../Coin/Coin.js";
+import { useState, useEffect } from 'react'
+import { DndContext } from '@dnd-kit/core';
+import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
+import { fetchCardsByPlayerTierDistribution, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 import gameData from '@/data/game-data.json';
-import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
+import styles from './background.module.css';
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [isGameComplete, setIsGameComplete] = useState(false);
+    const [hasWonCoinToss, setHasWonCoinToss] = useState(null);
     const location = useLocation();
     const pathname = location.pathname;
     const {
         selectedPlayerHand,
         setMatchCards,
-        isGameComplete,
-        setIsGameComplete,
         cells,
         setCells,
+        setIsPlayerVictory,
         isPlayerTurn,
         setIsPlayerTurn,
         playerHand,
@@ -35,6 +39,7 @@ export default function Board() {
     } = useGameContext();
 
     const navigate = useNavigate();
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -58,14 +63,12 @@ export default function Board() {
             setPlayerHand(savedGameState.playerHand);
             setCpuHand(savedGameState.cpuHand);
             setIsPlayerTurn(savedGameState.isPlayerTurn);
-
-            if (!pokeballIsOpen) setPokeballIsOpen(true);
+            setPokeballIsOpen(true);
             return;
         }
 
-        // No saved state - start new game
         // Allocate hands
-        const cpuCardsToDeal = fetchBalancedTierCards(false);
+        const cpuCardsToDeal = fetchCardsByPlayerTierDistribution(selectedPlayerHand);
         const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
         const newPlayerHand = selectedPlayerHand;
 
@@ -75,8 +78,6 @@ export default function Board() {
             navigate(`/${gameMode}/select`);
             return;
         }
-
-        if (!pokeballIsOpen) setPokeballIsOpen(true);
 
         // Gather types from both hands for elemental tiles
         const playerTypes = newPlayerHand.flatMap(card => card.types);
@@ -101,11 +102,26 @@ export default function Board() {
             }
         });
 
-        // Set all state at once (context will auto-save via useEffect)
         setCpuHand(newCpuHand);
         setPlayerHand(newPlayerHand);
         setCells(updatedCells);
+        setPokeballIsOpen(true);
+
+        // Set coin toss result
+        const randomBool = Math.random() < 0.5 ? true : false;
+        setHasWonCoinToss(randomBool);
     }, []);
+
+    useEffect(() => {
+        if (hasWonCoinToss === null) return;
+
+        const timer = setTimeout(() => {
+            setIsPlayerTurn(hasWonCoinToss);
+            setHasWonCoinToss(null); // hide coin toss
+        }, 3250);
+
+        return () => clearTimeout(timer);
+    }, [hasWonCoinToss])
 
     const applyTileStatModifiers = (attackingCard, cellTargetObject) => {
         if (attackingCard.types.some((type) => type === "normal")) {
@@ -215,8 +231,6 @@ export default function Board() {
         return capturedCells;
     }
 
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
     function handleDragEnd(event) {
         const { active, over } = event;
         if (!over) return; // Dropped outside a droppable area
@@ -258,7 +272,6 @@ export default function Board() {
             return newCells;
         });
 
-        // end the turn!
         setIsPlayerTurn(false)
     }
 
@@ -266,7 +279,6 @@ export default function Board() {
     const calculateModifiedStats = (card, cellKey) => {
         const cellData = cells[cellKey];
 
-        // No element on this tile - return original stats
         if (!cellData.element) {
             return card.stats;
         }
@@ -279,9 +291,9 @@ export default function Board() {
         // Apply the same logic as applyTileStatModifiers
         return card.stats.map(stat => {
             if (card.types.includes(cellData.element) && stat < 10) {
-                return stat + 1; // Boost if card type matches tile element
+                return stat + 1;
             } else if (cellData.element && stat > 1) {
-                return stat - 1; // Debuff if card doesn't match
+                return stat - 1;
             }
             return stat;
         });
@@ -361,6 +373,15 @@ export default function Board() {
             const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
 
             setMatchCards(allMatchCards);
+            const playerCardCount = allMatchCards.filter(card => card.isPlayerCard === true).length;
+            const cpuCardCount = allMatchCards.filter(card => card.isPlayerCard === false).length;
+
+            if (playerCardCount > cpuCardCount) {
+                setIsPlayerVictory(true);
+            } else if (cpuCardCount > playerCardCount) {
+                setIsPlayerVictory(false);
+            }
+
             setTimeout(() => setIsGameComplete(true), 800);
             return;
         }
@@ -589,8 +610,9 @@ export default function Board() {
     }
 
     useEffect(() => {
-        if (isPlayerTurn) return;
-
+        if (isPlayerTurn || isPlayerTurn === null) {
+            return;
+        }
         makeCpuMove();
     }, [isPlayerTurn])
 
@@ -612,7 +634,11 @@ export default function Board() {
                         })}
                     </div>
                     {/* Arena */}
-                    <div className="relative grow arena-backdrop-vertical flex items-center justify-center overflow-visible">
+                    <div className={`grow ${styles.arena} flex items-center justify-center overflow-hidden`}>
+                        <div className={styles.wrap}>
+                            <div className={styles['top-plane']} />
+                            <div className={styles['bottom-plane']} />
+                        </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
                     </div>
@@ -629,6 +655,9 @@ export default function Board() {
                             )
                         })}
                     </div>
+                    {hasWonCoinToss !== null && (
+                        <Coin hasWonCoinToss={hasWonCoinToss} />
+                    )}
                     <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                     {isGameComplete && <ResultTransition />}
                 </div>
@@ -655,24 +684,31 @@ export default function Board() {
 
                     </div>
                     {/* Arena */}
-                    <div className="relative grow arena-backdrop flex items-center justify-center overflow-visible">
+                    <div className={`grow ${styles.arena} flex items-center justify-center overflow-hidden`}>
+                        <div className={styles.wrap}>
+                            <div className={styles['top-plane']} />
+                            <div className={styles['bottom-plane']} />
+                        </div>
                         <Balance score={score} />
-                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
+                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
                     </div>
-                    <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-6 pr-4 p-2 h-full">
+                    <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-8 pr-4 p-2 h-full">
                         {cpuHand.map((pokemonCard, index) => {
                             return (
                                 <div className="relative aspect-square" key={index}>
                                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
 
                                     {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFlipped={false} />
+                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={false} startsFlipped={false} />
                                     )}
                                 </div>
                             )
                         })}
                     </div>
                 </>
+                {hasWonCoinToss !== null && (
+                    <Coin hasWonCoinToss={hasWonCoinToss} />
+                )}
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                 {isGameComplete && <ResultTransition />}
             </div>

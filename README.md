@@ -45,6 +45,8 @@ Some grid cells have elemental types:
 - The game ends when all 9 cells are filled
 - The player who controls the most cards on the board wins
 - Captured cards change color to show who owns them (blue for player, red for CPU)
+- **Win a round**: All cards you captured from the CPU are added to your permanent collection
+- **Lose a round**: You must forfeit one of the cards the CPU captured during that round from your collection
 
 ### Strategy Tips
 - Look for opportunities to use type advantages when stats are equal
@@ -55,7 +57,7 @@ Some grid cells have elemental types:
 
 ## Development
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a React application built with [Vite](https://vitejs.dev).
 
 ### Getting Started
 
@@ -77,17 +79,13 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the game.
+Open [http://localhost:5173](http://localhost:5173) with your browser to see the game.
 
 ### Tech Stack
-- **Next.js** - React framework
+- **Vite** - Build tool and dev server
 - **React** - UI library
 - **Tailwind CSS** - Styling
 - **dnd-kit** - Drag and drop functionality
 - **PokeAPI** - Pokemon data and sprites
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Firebase** - Authentication and cloud storage
+- **Nes.css** & **Snes.css** - Retro pixel-art styling

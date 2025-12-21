@@ -13,8 +13,8 @@ export function GameProvider({ children }) {
   const [selectedPlayerHand, setSelectedPlayerHand] = useState(null);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
   const [matchCards, setMatchCards] = useState([]);
-  const [isGameComplete, setIsGameComplete] = useState(false);
-  const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+  const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
+  const [isPlayerTurn, setIsPlayerTurn] = useState(null); // null = not started, true = player's turn, false = CPU's turn
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
 
@@ -66,7 +66,6 @@ export function GameProvider({ children }) {
     },
   });
 
-  // Calculate score (cards on board + cards in hand)
   const score = useMemo(() => {
     let count = 0;
     for (const key in cells) {
@@ -78,7 +77,6 @@ export function GameProvider({ children }) {
 
   // Auto-save game state to localStorage whenever it changes
   useEffect(() => {
-    // Only save if game has started (at least one card placed or hands are populated)
     const gameHasStarted =
       Object.values(cells).some(cell => cell.pokemonCard !== null) ||
       playerHand.length > 0 ||
@@ -92,18 +90,14 @@ export function GameProvider({ children }) {
         isPlayerTurn
       });
     }
-  }, [cells, playerHand, cpuHand, isPlayerTurn]);
+  }, [isPlayerTurn, cells]);
 
-  // Reset game state when starting a new game (keeps selection state)
-  // Combines context state reset + localStorage clear
+  // Reset game state when starting a new game
   const resetGameState = () => {
-    // Clear localStorage
     clearLocalStorage();
-
-    // Reset context state
-    setIsGameComplete(false);
     setMatchCards([]);
-    setIsPlayerTurn(true);
+    setIsPlayerVictory(null);
+    setIsPlayerTurn(null);
     setPlayerHand([]);
     setCpuHand([]);
     setCells({
@@ -163,10 +157,10 @@ export function GameProvider({ children }) {
       setSelectedGameMode,
       matchCards,
       setMatchCards,
-      isGameComplete,
-      setIsGameComplete,
       cells,
       setCells,
+      isPlayerVictory,
+      setIsPlayerVictory,
       isPlayerTurn,
       setIsPlayerTurn,
       playerHand,

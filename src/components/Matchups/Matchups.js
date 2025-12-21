@@ -1,6 +1,7 @@
 import React from 'react';
 import gameData from '@/data/game-data.json';
-import { typeIcons } from '@/utils/typeIcons'
+import styles from "./matchups.module.css"
+import { typeTiles } from '@/utils/typeIcons'
 
 export default function Matchups() {
     const getEffectiveness = (attackingType, defendingType) => {
@@ -17,18 +18,18 @@ export default function Matchups() {
     };
 
     const getBgStyle = (type) => {
-        return { backgroundColor: `var(--color-${type}-500)` };
+        return { backgroundColor: `var(--color-${type}-400)` };
     };
 
     return (
-        <div className='grid grid-cols-18 grid-rows-18'>
+        <div className='grid grid-cols-18 grid-rows-18 bg-neutral-200 gap-0.5'>
             {/* Empty corner cell */}
-            <div />
+            <div className="bg-white" />
 
             {/* Header row - defending types */}
             {gameData.types.map((type) => (
-                <div key={`header-${type}`} className='flex justify-center items-center'>
-                    <img draggable={false} width={48} height={18} src={typeIcons[type]} alt={`${type} type`} />
+                <div key={`header-${type}`} className="flex justify-center items-center" style={getBgStyle(type)}>
+                    <img draggable={false} width={48} height={18} src={typeTiles[type]} title={type} alt={`${type} type`} />
                 </div>
             ))}
 
@@ -36,8 +37,8 @@ export default function Matchups() {
             {gameData.types.map((attackingType) => (
                 <React.Fragment key={attackingType}>
                     {/* Row header - attacking type */}
-                    <div className='flex justify-center items-center'>
-                        <img draggable={false} width={48} height={18} src={typeIcons[attackingType]} alt={`${attackingType} type`} />
+                    <div className='flex justify-center items-center' style={getBgStyle(attackingType)}>
+                        <img draggable={false} width={48} height={18} src={typeTiles[attackingType]} title={attackingType} alt={`${attackingType} type`} />
                     </div>
 
                     {/* Effectiveness cells for this attacking type */}
@@ -46,13 +47,14 @@ export default function Matchups() {
                         return (
                             <div
                                 key={`${attackingType}-${defendingType}`}
-                                className={`aspect-square rounded text-[10px] text-center m-0 flex justify-center items-center text-white ${effectiveness === 'super' ? 'grass-tile' :
-                                    effectiveness === 'immune' ? 'steel-tile' :
-                                        ''
-                                    }`}
+                                className="aspect-square bg-white m-0 flex justify-center items-center"
                             >
-                                {effectiveness === 'super' ? 'Effective' :
-                                    effectiveness === 'immune' ? 'No Effect' : '' }
+                                {effectiveness === "super" && (
+                                    <span title="Super Effective" className={styles.check}></span>
+                                )}
+                                {effectiveness === "immune" && (
+                                    <span title="No effect" className={styles.cross}></span>
+                                )}
                             </div>
                         );
                     })}

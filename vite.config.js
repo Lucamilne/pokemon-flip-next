@@ -3,11 +3,11 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react({
     include: ['**/*.jsx', '**/*.js'], // Allow JSX in .js files
   })],
-  base: process.env.NODE_ENV === 'production' ? '/pokemon-flip-next/' : '/',
+  base: mode === 'production' ? '/pokemon-flip-next/' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -28,4 +28,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

@@ -78,7 +78,19 @@ export const fetchSecretCards = (isPlayerCard = true) => {
     return Object.keys(pokemon.legends).map((pokemonName) => createCard(pokemonName, isPlayerCard, true));
 }
 
-export const fetchBalancedTierCards = (isPlayerCard = true) => {
+// Helper function to get random items from an array
+const getRandomItems = (arr, count) => {
+    const result = [];
+    const copy = [...arr];
+    for (let i = 0; i < count && copy.length > 0; i++) {
+        const randomIndex = Math.floor(Math.random() * copy.length);
+        result.push(copy.splice(randomIndex, 1)[0]);
+    }
+    return result;
+};
+
+// Helper function to categorize cards by tier
+const categoriseCardsByTier = () => {
     const weakCards = [];
     const midCards = [];
     const strongCards = [];
@@ -90,16 +102,11 @@ export const fetchBalancedTierCards = (isPlayerCard = true) => {
         else strongCards.push(pokemonName);
     });
 
-    // Get random items without sorting entire arrays
-    const getRandomItems = (arr, count) => {
-        const result = [];
-        const copy = [...arr];
-        for (let i = 0; i < count && copy.length > 0; i++) {
-            const randomIndex = Math.floor(Math.random() * copy.length);
-            result.push(copy.splice(randomIndex, 1)[0]);
-        }
-        return result;
-    };
+    return { weakCards, midCards, strongCards };
+};
+
+export const fetchBalancedTierCards = (isPlayerCard = true) => {
+    const { weakCards, midCards, strongCards } = categoriseCardsByTier();
 
     const selectedCards = [
         ...getRandomItems(weakCards, 1),
@@ -110,6 +117,40 @@ export const fetchBalancedTierCards = (isPlayerCard = true) => {
     return selectedCards
         .sort(() => Math.random() - 0.5)
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
+}
+
+// Match the player's tier distribution for CPU hand
+export const fetchCardsByPlayerTierDistribution = (playerHand) => {
+    const { weakCards, midCards, strongCards } = categoriseCardsByTier();
+
+    // Add random variance to tier thresholds (+/- 20)
+    const weakThreshold = 400 + Math.floor(Math.random() * 41) - 20; // 380-420
+    const midThreshold = 520 + Math.floor(Math.random() * 41) - 20; // 500-540
+
+    // Count player's tier distribution
+    const playerTiers = {
+        weak: 0,
+        mid: 0,
+        strong: 0
+    };
+
+    playerHand.forEach(card => {
+        const statWeight = card.statWeight;
+        if (statWeight <= weakThreshold) playerTiers.weak++;
+        else if (statWeight < midThreshold) playerTiers.mid++;
+        else playerTiers.strong++;
+    });
+
+    // Generate CPU hand with same distribution
+    const selectedCards = [
+        ...getRandomItems(weakCards, playerTiers.weak),
+        ...getRandomItems(midCards, playerTiers.mid),
+        ...getRandomItems(strongCards, playerTiers.strong)
+    ];
+
+    return selectedCards
+        .sort(() => Math.random() - 0.5)
+        .map((pokemonName) => createCard(pokemonName, false)); // CPU cards are always isPlayerCard = false
 }
 
 export const fetchGlassCannonCards = (isPlayerCard = true) => {
