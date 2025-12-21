@@ -15,7 +15,7 @@ function TutorialDropZone({ droppedCard }) {
     return (
         <div
             ref={setNodeRef}
-            className="relative aspect-square w-[96px] md:w-[148px] border-4 border-black p-2 default-tile"
+            className="relative aspect-square w-[88px] md:w-[148px] border-4 border-black p-1 md:p-2 default-tile"
             data-cell="tutorial-drop-zone"
         >
             {/* Hover overlay */}
@@ -24,7 +24,7 @@ function TutorialDropZone({ droppedCard }) {
             )}
 
             {droppedCard && (
-                <div className="absolute inset-0 p-2 aspect-square">
+                <div className="absolute inset-0 p-1 md:p-2 aspect-square">
                     <Card
                         pokemonCard={droppedCard}
                         index={0}

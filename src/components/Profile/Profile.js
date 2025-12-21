@@ -224,44 +224,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                             </p>
                         )}
                         {debugMode && (
-                            <div className='text-[8px] md:text-base md:ml-5'>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.allocateRandomCards)} className="disabled:opacity-30 cursor-pointer">Random</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchEarlyGameCards)} className="disabled:opacity-30 cursor-pointer">Early Game Cards</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchMidGameCards)} className="disabled:opacity-30 cursor-pointer">Average Cards</button>
-                                </div>
-
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchStrongCards)} className="disabled:opacity-30 cursor-pointer">Strong Cards</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchMonoTypeCards)} className="disabled:opacity-30 cursor-pointer">Single Types Only</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchNidoFamilyCards)} className="disabled:opacity-30 cursor-pointer">The Family</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchGlassCannonCards)} className="disabled:opacity-30 cursor-pointer">Glass Cannons</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchAllStarterLineCards)} className="disabled:opacity-30 cursor-pointer">Starter Pokemon & Evolutions</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchFossilCards)} className="disabled:opacity-30 cursor-pointer">Fossil Cards</button>
-                                </div>
+                            <div className='text-[10px] md:text-base md:ml-5'>
                                 <div className="relative group">
                                     <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">Debug: 秘密</button>
@@ -272,7 +235,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                                 </div>
                                 <div className="relative group">
                                     <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset Collection</button>
+                                    <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset cards</button>
                                 </div>
                             </div>
                         )}
