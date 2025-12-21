@@ -193,7 +193,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
                 transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
                 transition: 'transform 0.3s ease-out'
             }}>
-                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden' }}>
+                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                     <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                         <div className="relative h-full flex flex-col items-center justify-center">
                             <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
@@ -213,7 +213,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
                         </div>
                     )}
                 </div>
-                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-[5px] sm:p-[9px] select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-[5px] sm:p-[9px] select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                     <div className="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
                     </div>
                 </div>
