@@ -22,7 +22,7 @@ export default function Matchups() {
     };
 
     return (
-        <div className='grid grid-cols-18 grid-rows-18 bg-neutral-200 gap-0.5'>
+        <div className='grid grid-cols-19 grid-rows-19 bg-neutral-200 gap-0.5'>
             {/* Empty corner cell */}
             <div className="bg-white" />
 

@@ -33,6 +33,20 @@
   --color-bug-900: #454e19;
   --color-bug-950: #242b08;
 
+  /* Dark type */
+  --color-dark: #50413f;
+  --color-dark-50: #f6f5f5;
+  --color-dark-100: #e7e5e4;
+  --color-dark-200: #d1cdcc;
+  --color-dark-300: #b2acaa;
+  --color-dark-400: #8e8583;
+  --color-dark-500: #736b69;
+  --color-dark-600: #50413f;
+  --color-dark-700: #4a3d3b;
+  --color-dark-800: #3f3432;
+  --color-dark-900: #372e2d;
+  --color-dark-950: #1d1716;
+
   /* Dragon type */
   --color-dragon: #7667ee;
   --color-dragon-50: #eef0ff;
@@ -288,6 +302,20 @@
   --color-bug-800: #525c18;
   --color-bug-900: #454e19;
   --color-bug-950: #242b08;
+
+  /* Dark type */
+  --color-dark: #50413f;
+  --color-dark-50: #f6f5f5;
+  --color-dark-100: #e7e5e4;
+  --color-dark-200: #d1cdcc;
+  --color-dark-300: #b2acaa;
+  --color-dark-400: #8e8583;
+  --color-dark-500: #736b69;
+  --color-dark-600: #50413f;
+  --color-dark-700: #4a3d3b;
+  --color-dark-800: #3f3432;
+  --color-dark-900: #372e2d;
+  --color-dark-950: #1d1716;
 
   /* Dragon type */
   --color-dragon: #7667ee;
@@ -781,6 +809,35 @@ body {
   width: 8px;
   height: 8px;
   background: linear-gradient(135deg, var(--color-bug-700) 50%, var(--color-bug-300) 50%);
+}
+
+.dark-tile {
+  background:
+    linear-gradient(to bottom, var(--color-dark-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to left, var(--color-dark-300) 8px, transparent 8px) top right / 100% 100%,
+    linear-gradient(to top, var(--color-dark-300) 8px, transparent 8px) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-dark-700) 8px, transparent 8px) top left / 100% 100%,
+    var(--color-dark-500);
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.dark-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, var(--color-dark-700) 50%, var(--color-dark-300) 50%);
+}
+
+.dark-tile::after {
+  content: '';
+  position: absolute;
+  inset: auto auto 0 0;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg, var(--color-dark-700) 50%, var(--color-dark-300) 50%);
 }
 
 .dragon-tile {
