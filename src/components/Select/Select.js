@@ -134,7 +134,7 @@ export default function Select() {
             </div>
             <div className='grow flex overflow-y-auto'>
                 <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(2,72px)] md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
+                    <div className="grid grid-cols-[repeat(2,72px)] md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4 mr-5 md:mr-0">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
@@ -170,7 +170,7 @@ export default function Select() {
                                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                                 >
                                                     {pokemonCard && (
-                                                        <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                                        <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={false} />
                                                     )}
                                                 </button>
                                             )
