@@ -341,6 +341,28 @@ export default function Board() {
         };
     };
 
+    const endGame = () => {
+        const cardsFromCells = Object.values(cells)
+            .map(cell => cell.pokemonCard)
+            .filter(card => card !== null);
+
+        const remainingPlayerCards = playerHand.filter(card => card !== null);
+        const remainingCpuCards = cpuHand.filter(card => card !== null);
+        const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
+
+        setMatchCards(allMatchCards);
+        const playerCardCount = allMatchCards.filter(card => card.isPlayerCard === true).length;
+        const cpuCardCount = allMatchCards.filter(card => card.isPlayerCard === false).length;
+
+        if (playerCardCount > cpuCardCount) {
+            setIsPlayerVictory(true);
+        } else if (cpuCardCount > playerCardCount) {
+            setIsPlayerVictory(false);
+        }
+
+        setTimeout(() => setIsGameComplete(true), 800);
+    };
+
     const makeCpuMove = async () => {
         //known bug: if pokemon super effective against one tile adjacent it's effective to ALL tiles adjacent. Same with No effect
         let arrayOfCellsToPlace = [];
@@ -360,28 +382,9 @@ export default function Board() {
         // Filter out null cards from CPU hand
         const availableCpuCards = cpuHand.filter(card => card !== null);
 
-        // Ends match: needs work. Only CPU can end game currently.
+        // End game if no moves available
         if (arrayOfCellsToPlace.length === 0 || availableCpuCards.length === 0) {
-            // Create a snapshot of cards in the game to determine the winner and what cards can be awarded or lost
-            const cardsFromCells = Object.values(cells)
-                .map(cell => cell.pokemonCard)
-                .filter(card => card !== null);
-
-            const remainingPlayerCards = playerHand.filter(card => card !== null);
-            const remainingCpuCards = cpuHand.filter(card => card !== null);
-            const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
-
-            setMatchCards(allMatchCards);
-            const playerCardCount = allMatchCards.filter(card => card.isPlayerCard === true).length;
-            const cpuCardCount = allMatchCards.filter(card => card.isPlayerCard === false).length;
-
-            if (playerCardCount > cpuCardCount) {
-                setIsPlayerVictory(true);
-            } else if (cpuCardCount > playerCardCount) {
-                setIsPlayerVictory(false);
-            }
-
-            setTimeout(() => setIsGameComplete(true), 800);
+            endGame();
             return;
         }
 
@@ -610,10 +613,17 @@ export default function Board() {
     }
 
     useEffect(() => {
-        if (isPlayerTurn || isPlayerTurn === null) {
-            return;
+        if (isPlayerTurn === null) return;
+
+        if (!isPlayerTurn) {
+            makeCpuMove();
+        } else {
+            const emptyCells = Object.values(cells).filter(cell => !cell.pokemonCard);
+
+            if (emptyCells.length === 0) {
+                endGame();
+            }
         }
-        makeCpuMove();
     }, [isPlayerTurn])
 
     return (
