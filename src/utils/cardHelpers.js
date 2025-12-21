@@ -51,15 +51,15 @@ export const fetchAllCards = (isPlayerCard = true) => {
 }
 
 export const fetchEarlyGameCards = (isPlayerCard = true) => {
-    return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].statWeight <= 400).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].statWeight < 395).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchMidGameCards = (isPlayerCard = true) => {
-    return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].statWeight > 400 && pokemon.cards[pokemonName].statWeight < 520).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 395 && pokemon.cards[pokemonName].statWeight < 500).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchStrongCards = (isPlayerCard = true) => {
-    return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 520).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return Object.keys(pokemon.cards).filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 500).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchSingleTypeCards = (type, isPlayerCard = true) => {
@@ -97,8 +97,8 @@ const categoriseCardsByTier = () => {
 
     Object.keys(pokemon.cards).forEach((pokemonName) => {
         const statWeight = pokemon.cards[pokemonName].statWeight;
-        if (statWeight <= 400) weakCards.push(pokemonName);
-        else if (statWeight < 520) midCards.push(pokemonName);
+        if (statWeight < 395) weakCards.push(pokemonName);
+        else if (statWeight < 500) midCards.push(pokemonName);
         else strongCards.push(pokemonName);
     });
 
@@ -124,8 +124,8 @@ export const fetchCardsByPlayerTierDistribution = (playerHand) => {
     const { weakCards, midCards, strongCards } = categoriseCardsByTier();
 
     // Add random variance to tier thresholds (+/- 20)
-    const weakThreshold = 400 + Math.floor(Math.random() * 41) - 20; // 380-420
-    const midThreshold = 520 + Math.floor(Math.random() * 41) - 20; // 500-540
+    const weakThreshold = 395 + Math.floor(Math.random() * 41) - 20; // 375-415
+    const midThreshold = 500 + Math.floor(Math.random() * 41) - 20; // 480-520
 
     // Count player's tier distribution
     const playerTiers = {
@@ -136,7 +136,7 @@ export const fetchCardsByPlayerTierDistribution = (playerHand) => {
 
     playerHand.forEach(card => {
         const statWeight = card.statWeight;
-        if (statWeight <= weakThreshold) playerTiers.weak++;
+        if (statWeight < weakThreshold) playerTiers.weak++;
         else if (statWeight < midThreshold) playerTiers.mid++;
         else playerTiers.strong++;
     });

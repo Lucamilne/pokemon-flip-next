@@ -25,8 +25,8 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
     };
 
     const getBallSprite = (statWeight) => {
-        if (statWeight <= 400) return PokemonBallSprite;
-        if (statWeight < 520) return GreatBallSprite;
+        if (statWeight < 395) return PokemonBallSprite;
+        if (statWeight < 500) return GreatBallSprite;
         if (statWeight < 600) return UltraBallSprite;
         return MasterBallSprite;
     };
