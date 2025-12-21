@@ -7,6 +7,7 @@ import {
   signInWithPopup
 } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { allPokemonNames } from "@/utils/cardHelpers.js";
 import {
   getUserCollection,
   addCardToCollection,
@@ -181,7 +182,6 @@ export function AuthProvider({ children }) {
 
   const addAllCards = async () => {
     try {
-      const allPokemonNames = Object.keys(pokemon.cards);
       const allCards = {};
       allPokemonNames.forEach(name => {
         allCards[name] = true;
@@ -203,7 +203,7 @@ export function AuthProvider({ children }) {
   const resetToStarters = async () => {
     try {
       const starterCards = {};
-      Object.keys(pokemon.cards).forEach(name => {
+      allPokemonNames.forEach(name => {
         if (pokemon.cards[name].starter === true) {
           starterCards[name] = true;
         }

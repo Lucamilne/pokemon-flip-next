@@ -18,10 +18,10 @@ export const createCard = (pokemonName, isPlayerCard = false, debugMode = false)
     };
 };
 
-const pokemonCards = Object.keys(pokemon.cards);
+export const allPokemonNames = Object.keys(pokemon.cards);
 
 export const fetchCardById = (id, isPlayerCard = true) => {
-    const pokemonName = pokemonCards.find(
+    const pokemonName = allPokemonNames.find(
         (name) => pokemon.cards[name].id === id
     );
 
@@ -33,7 +33,7 @@ export const fetchCardById = (id, isPlayerCard = true) => {
 };
 
 export const allocateRandomCards = (isPlayerCard) => {
-    const shuffledArray = pokemonCards.sort(() => Math.random() - 0.5);
+    const shuffledArray = allPokemonNames.sort(() => Math.random() - 0.5);
 
     return shuffledArray.slice(0, 5).map((el) => createCard(el, isPlayerCard));
 };
@@ -45,35 +45,35 @@ export const allocateCpuCardsFromPool = (cardPool) => {
 }
 
 export const fetchStarterCards = (isPlayerCard = true) => {
-    return pokemonCards.filter((pokemonName) => pokemon.cards[pokemonName].starter).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.filter((pokemonName) => pokemon.cards[pokemonName].starter).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchAllCards = (isPlayerCard = true) => {
-    return pokemonCards.map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchEarlyGameCards = (isPlayerCard = true) => {
-    return pokemonCards.filter((pokemonName) => pokemon.cards[pokemonName].statWeight < 395).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.filter((pokemonName) => pokemon.cards[pokemonName].statWeight < 395).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchMidGameCards = (isPlayerCard = true) => {
-    return pokemonCards.filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 395 && pokemon.cards[pokemonName].statWeight < 500).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 395 && pokemon.cards[pokemonName].statWeight < 500).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchStrongCards = (isPlayerCard = true) => {
-    return pokemonCards.filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 500).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.filter((pokemonName) => pokemon.cards[pokemonName].statWeight >= 500).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchSingleTypeCards = (type, isPlayerCard = true) => {
-    return pokemonCards.filter((pokemonName) => pokemon.cards[pokemonName].types.includes(type)).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.filter((pokemonName) => pokemon.cards[pokemonName].types.includes(type)).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchMonoTypeCards = (isPlayerCard = true) => {
-    return pokemonCards.filter((pokemonName) => pokemon.cards[pokemonName].types.length === 1).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.filter((pokemonName) => pokemon.cards[pokemonName].types.length === 1).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchNidoFamilyCards = (isPlayerCard = true) => {
-    return pokemonCards.filter((pokemonName) => pokemonName.startsWith('nido')).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return allPokemonNames.filter((pokemonName) => pokemonName.startsWith('nido')).map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchSecretCards = (isPlayerCard = true) => {
@@ -97,7 +97,7 @@ const categoriseCardsByTier = () => {
     const midCards = [];
     const strongCards = [];
 
-    pokemonCards.forEach((pokemonName) => {
+    allPokemonNames.forEach((pokemonName) => {
         const statWeight = pokemon.cards[pokemonName].statWeight;
         if (statWeight < 395) weakCards.push(pokemonName);
         else if (statWeight < 500) midCards.push(pokemonName);
@@ -156,7 +156,7 @@ export const fetchCardsByPlayerTierDistribution = (playerHand) => {
 }
 
 export const fetchGlassCannonCards = (isPlayerCard = true) => {
-    return pokemonCards
+    return allPokemonNames
         .filter((pokemonName) => {
             const card = pokemon.cards[pokemonName];
             const stats = card.stats;
@@ -169,7 +169,7 @@ export const fetchGlassCannonCards = (isPlayerCard = true) => {
 }
 
 export const fetchDualTypeCards = (isPlayerCard = true) => {
-    return pokemonCards
+    return allPokemonNames
         .filter((pokemonName) => pokemon.cards[pokemonName].types.length === 2)
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
@@ -178,14 +178,14 @@ export const fetchDualTypeCards = (isPlayerCard = true) => {
 export const fetchAllStarterLineCards = (isPlayerCard = true) => {
     const starters = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon', 'charizard',
         'squirtle', 'wartortle', 'blastoise', 'pikachu', 'raichu'];
-    return pokemonCards
+    return allPokemonNames
         .filter((pokemonName) => starters.includes(pokemonName))
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchFossilCards = (isPlayerCard = true) => {
     const fossils = ['omanyte', 'omastar', 'kabuto', 'kabutops', 'aerodactyl'];
-    return pokemonCards
+    return allPokemonNames
         .filter((pokemonName) => fossils.includes(pokemonName))
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
