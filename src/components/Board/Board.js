@@ -50,9 +50,7 @@ export default function Board() {
             decrementRandomStat(stats);
         }
     };
-
-    console.log('Board rendered');
-
+    
     //on mount
     useEffect(() => {
         // Try to load saved game state first
