@@ -5,6 +5,7 @@ import Card from "../Card/Card.js";
 import Balance from "../Balance/Balance.js"
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
+import Coin from "../Coin/Coin.js";
 import { useState, useEffect } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -18,6 +19,7 @@ import styles from './background.module.css';
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isGameComplete, setIsGameComplete] = useState(false);
+    const [hasWonCoinToss, setHasWonCoinToss] = useState(null);
     const location = useLocation();
     const pathname = location.pathname;
     const {
@@ -49,6 +51,8 @@ export default function Board() {
         }
     };
 
+    console.log('Board rendered');
+
     //on mount
     useEffect(() => {
         // Try to load saved game state first
@@ -63,6 +67,9 @@ export default function Board() {
 
             if (!pokeballIsOpen) setPokeballIsOpen(true);
             return;
+        } else {
+            const randomBool = Math.random() < 0.5 ? true : false;
+            setHasWonCoinToss(randomBool); // show coin toss with who won
         }
 
         // No saved state - start new game
@@ -103,11 +110,21 @@ export default function Board() {
             }
         });
 
-        // Set all state at once (context will auto-save via useEffect)
         setCpuHand(newCpuHand);
         setPlayerHand(newPlayerHand);
         setCells(updatedCells);
     }, []);
+
+    useEffect(() => {
+        if (hasWonCoinToss === null) return;
+
+        const timer = setTimeout(() => {
+            setIsPlayerTurn(hasWonCoinToss);
+            setHasWonCoinToss(null); // hide coin toss
+        }, 3250);
+
+        return () => clearTimeout(timer);
+    }, [hasWonCoinToss])
 
     const applyTileStatModifiers = (attackingCard, cellTargetObject) => {
         if (attackingCard.types.some((type) => type === "normal")) {
@@ -258,7 +275,6 @@ export default function Board() {
             return newCells;
         });
 
-        // end the turn!
         setIsPlayerTurn(false)
     }
 
@@ -266,7 +282,6 @@ export default function Board() {
     const calculateModifiedStats = (card, cellKey) => {
         const cellData = cells[cellKey];
 
-        // No element on this tile - return original stats
         if (!cellData.element) {
             return card.stats;
         }
@@ -279,9 +294,9 @@ export default function Board() {
         // Apply the same logic as applyTileStatModifiers
         return card.stats.map(stat => {
             if (card.types.includes(cellData.element) && stat < 10) {
-                return stat + 1; // Boost if card type matches tile element
+                return stat + 1;
             } else if (cellData.element && stat > 1) {
-                return stat - 1; // Debuff if card doesn't match
+                return stat - 1;
             }
             return stat;
         });
@@ -598,8 +613,9 @@ export default function Board() {
     }
 
     useEffect(() => {
-        if (isPlayerTurn) return;
-
+        if (isPlayerTurn || isPlayerTurn === null) {
+            return;
+        }
         makeCpuMove();
     }, [isPlayerTurn])
 
@@ -628,7 +644,7 @@ export default function Board() {
                             <div className={styles['bottom-plane']} />
                         </div>
                         <Balance score={score} />
-                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
+                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
                     </div>
                     <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-8 pr-4 p-2 h-full">
                         {cpuHand.map((pokemonCard, index) => {
@@ -637,13 +653,16 @@ export default function Board() {
                                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
 
                                     {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFlipped={false} />
+                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={false} startsFlipped={false} />
                                     )}
                                 </div>
                             )
                         })}
                     </div>
                 </>
+                {hasWonCoinToss !== null && (
+                    <Coin hasWonCoinToss={hasWonCoinToss} />
+                )}
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                 {isGameComplete && <ResultTransition />}
             </div>

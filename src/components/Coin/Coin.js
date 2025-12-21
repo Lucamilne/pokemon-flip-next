@@ -3,10 +3,10 @@ import blueCoin from '../../assets/textures/blue-coin.webp';
 import redCoin from '../../assets/textures/red-coin.webp';
 import styles from './Coin.module.css';
 
-export default function Coin({ isPlayerTurn }) {
+export default function Coin({ hasWonCoinToss }) {
     const [showTextToDiplay, setShowTextToDisplay] = useState(false);
 
-    const textToDiplay = isPlayerTurn ? "Blue start!" : "Red start!";
+    const textToDiplay = hasWonCoinToss ? "Blue start!" : "Red start!";
 
     useEffect(() => {
         setTimeout(() => setShowTextToDisplay(true), 1500);
@@ -25,8 +25,8 @@ export default function Coin({ isPlayerTurn }) {
                     )}
                 <div className="drop-shadow-lg/60">
                     <div className={`${styles.coin} ${styles['flip-scale-2-hor-bottom']}`}>
-                        <img src={blueCoin} alt="Blue coin face" className={styles.coinFace} />
-                        <img src={redCoin} alt="Red coin back" className={styles.coinBack} />
+                        <img src={hasWonCoinToss ? blueCoin : redCoin} alt="Blue coin face" className={styles.coinFace} />
+                        <img src={hasWonCoinToss ? redCoin : blueCoin} alt="Red coin back" className={styles.coinBack} />
                     </div>
                 </div>
             </div>

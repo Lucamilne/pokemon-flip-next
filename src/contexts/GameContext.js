@@ -14,7 +14,7 @@ export function GameProvider({ children }) {
   const [selectedGameMode, setSelectedGameMode] = useState(null);
   const [matchCards, setMatchCards] = useState([]);
   const [isPlayerVictory, setIsPlayerVictory] = useState(null); // null = tie, true = victory, false = defeat
-  const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+  const [isPlayerTurn, setIsPlayerTurn] = useState(null); // null = not started, true = player's turn, false = CPU's turn
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
 
@@ -90,14 +90,14 @@ export function GameProvider({ children }) {
         isPlayerTurn
       });
     }
-  }, [cells]);
+  }, [isPlayerTurn, cells]);
 
   // Reset game state when starting a new game
   const resetGameState = () => {
     clearLocalStorage();
     setMatchCards([]);
     setIsPlayerVictory(null);
-    setIsPlayerTurn(true);
+    setIsPlayerTurn(null);
     setPlayerHand([]);
     setCpuHand([]);
     setCells({

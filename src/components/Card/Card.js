@@ -32,7 +32,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
     };
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: `${pokemonCard.id.toString()}-${index}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`, // unique ID includes index and player/cpu
+        id: `${pokemonCard.id.toString()}-${index}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`,
         disabled: !isDraggable,
         data: {
             pokemonCard,
