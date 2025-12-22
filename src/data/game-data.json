@@ -3456,10 +3456,11 @@
     }
   },
   "legends": {
-    "arceus": {
-      "id": 493,
+    "celebi": {
+      "id": 251,
       "types": [
-        "normal"
+        "psychic",
+        "grass"
       ],
       "stats": [
         10,
@@ -3499,11 +3500,11 @@
       "rarity": "legendary",
       "statWeight": 999
     },
-    "giratina": {
-      "id": 487,
+    "lugia": {
+      "id": 249,
       "types": [
-        "ghost",
-        "dragon"
+        "psychic",
+        "flying"
       ],
       "stats": [
         10,

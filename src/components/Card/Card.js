@@ -8,7 +8,7 @@ import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function Card({ pokemonCard, index = 0, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
+export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const { hasCard } = useAuth();
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     const cardRef = useRef(null);
@@ -32,7 +32,7 @@ export default function Card({ pokemonCard, index = 0, isDraggable = true, isPla
     };
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id: `${pokemonCard.id.toString()}-${index}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`,
+        id: `${pokemonCard.id.toString()}-${cellKey}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`,
         disabled: !isDraggable,
         data: {
             pokemonCard,

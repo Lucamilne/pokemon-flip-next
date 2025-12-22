@@ -125,10 +125,6 @@ export const fetchBalancedTierCards = (isPlayerCard = true) => {
 export const fetchCardsByPlayerTierDistribution = (playerHand) => {
     const { weakCards, midCards, strongCards } = categoriseCardsByTier();
 
-    // Add random variance to tier thresholds (+/- 20)
-    const weakThreshold = 395 + Math.floor(Math.random() * 41) - 20; // 375-415
-    const midThreshold = 500 + Math.floor(Math.random() * 41) - 20; // 480-520
-
     // Count player's tier distribution
     const playerTiers = {
         weak: 0,
@@ -138,16 +134,27 @@ export const fetchCardsByPlayerTierDistribution = (playerHand) => {
 
     playerHand.forEach(card => {
         const statWeight = card.statWeight;
-        if (statWeight < weakThreshold) playerTiers.weak++;
-        else if (statWeight < midThreshold) playerTiers.mid++;
+        if (statWeight < 395) playerTiers.weak++;
+        else if (statWeight < 500) playerTiers.mid++;
         else playerTiers.strong++;
     });
 
-    // Generate CPU hand with same distribution
+    // Add variance by randomly swapping one card between tiers
+    const cpuTiers = { ...playerTiers };
+    const roll = Math.random();
+
+    if (roll < 0.25 && cpuTiers.weak > 0) { // Swap weak -> mid
+        cpuTiers.weak--;
+        cpuTiers.mid++;
+    } else if (roll > 0.75 && cpuTiers.strong > 0) { // Swap strong -> mid
+        cpuTiers.strong--;
+        cpuTiers.mid++;
+    }
+
     const selectedCards = [
-        ...getRandomItems(weakCards, playerTiers.weak),
-        ...getRandomItems(midCards, playerTiers.mid),
-        ...getRandomItems(strongCards, playerTiers.strong)
+        ...getRandomItems(weakCards, cpuTiers.weak),
+        ...getRandomItems(midCards, cpuTiers.mid),
+        ...getRandomItems(strongCards, cpuTiers.strong)
     ];
 
     return selectedCards
@@ -292,7 +299,7 @@ export const specialAwardDefinitions = [
     { name: 'ekans', award: 'He Who Slithers On His Belly' },
     { name: 'sandshrew', award: 'Biggest Underground Hit' },
     { name: 'nidoran-f', award: 'Voice Note Queen' },
-    { name: 'nidorina', award: 'Most Likely To Curb A Wheel' },
+    { name: 'nidorina', award: 'Most Likely To Curb Wheel' },
     { name: 'nidoran-m', award: 'Fantasy Football Commissioner' },
     { name: 'nidorino', award: 'Most Likely To Argue in Comments' },
     { name: 'clefairy', award: 'Plushiest Toy' },

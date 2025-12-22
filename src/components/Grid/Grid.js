@@ -38,7 +38,7 @@ function DroppableCell({ cellKey, cellData }) {
                 <div className="absolute inset-0 p-2 aspect-square">
                     <Card
                         pokemonCard={cellData.pokemonCard}
-                        index={0}
+                        cellKey={cellKey}
                         isDraggable={false}
                         isPlacedInGrid={true}
                         roundCorners={false}
