@@ -165,12 +165,12 @@ export default function Select() {
                                             const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
                                             return (
                                                 <button
-                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-5 ring-lime-300' : ''}`}
+                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
                                                     key={index}
                                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                                 >
                                                     {pokemonCard && (
-                                                        <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                                        <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={false} />
                                                     )}
                                                 </button>
                                             )

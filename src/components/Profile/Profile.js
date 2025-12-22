@@ -190,7 +190,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                         <li className="flex justify-between">Weight:<span>{(pokemonData.weight / 10).toFixed(1)}kg</span></li>
                         <li className="flex justify-between">Colour:<span className="capitalize">{pokemonData.color?.name || 'Unknown'}</span></li>
                         <li className="flex justify-between">Shape:<span className="capitalize">{pokemonData.shape?.name || 'Unknown'}</span></li>
-                        <li className="flex justify-between">Growth rate:<span className="capitalize">{pokemonData.growth_rate?.name.replace('-', ' ') || 'Unknown'}</span></li>
+                        <li className="flex justify-between">Growth:<span className="capitalize">{pokemonData.growth_rate?.name.replace('-', ' ') || 'Unknown'}</span></li>
                         <li className="flex justify-between">Habitat:<span className="capitalize">{pokemonData.habitat?.name || 'Unknown'}</span></li>
                     </ul>
                 </div>
@@ -223,7 +223,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                             </p>
                         )}
                         {debugMode && (
-                            <div className='text-[8px] md:text-base md:ml-5'>
+                            <div className='text-[10px] md:text-base md:ml-5'>
                                 <div className="relative group">
                                     <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => setRandomThemedPlayerHand(fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">Debug: 秘密</button>
@@ -234,7 +234,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                                 </div>
                                 <div className="relative group">
                                     <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset Collection</button>
+                                    <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset cards</button>
                                 </div>
                             </div>
                         )}

@@ -183,7 +183,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
     };
 
     return (
-        <div className={`relative select-none touch-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
+        <div className={`relative select-none ${isDraggable ? "cursor-pointer touch-none" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
             style={style}
             {...listeners}
             {...attributes}
@@ -193,7 +193,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                 transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
                 transition: 'transform 0.3s ease-out'
             }}>
-                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden' }}>
+                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                     <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                         <div className="relative h-full flex flex-col items-center justify-center">
                             <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
@@ -208,12 +208,12 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                     </div>
                     {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} />}
                     {showOverlay && (
-                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
-                            <span className='mt-4'>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
+                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
+                            <span className='mt-4 '>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
                         </div>
                     )}
                 </div>
-                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-3 select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-[5px] sm:p-[9px] select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                     <div className="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
                     </div>
                 </div>

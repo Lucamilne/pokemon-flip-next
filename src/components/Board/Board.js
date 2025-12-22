@@ -652,7 +652,7 @@ export default function Board() {
                             <div className={styles['bottom-plane']} />
                         </div>
                         <Balance score={score} />
-                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} />
+                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
                     </div>
                     <div className="grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-bottom-container p-2 pt-6 pb-4">
                         {playerHand.map((pokemonCard, index) => {

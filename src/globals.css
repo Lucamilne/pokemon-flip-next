@@ -7,6 +7,9 @@
   --background: #ffffff;
   --foreground: #171717;
 
+  /* Responsive tile border size */
+  --tile-border-size: 4px; /* Mobile default */
+
   /* Theme */
   --pokedex-red: #e61919;
   --pokedex-light-red: #f05555;
@@ -270,6 +273,13 @@
   --color-water-800: #1850b5;
   --color-water-900: #19468f;
   --color-water-950: #142c57;
+}
+
+/* Desktop: 8px tile borders */
+@media (min-width: 768px) {
+  :root {
+    --tile-border-size: 8px;
+  }
 }
 
 @theme inline {
@@ -761,10 +771,10 @@ body {
 
 .default-tile {
   background:
-    linear-gradient(to bottom, #a1a1a1 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, #fff 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, #fff 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, #a1a1a1 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, #a1a1a1 var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, #fff var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, #fff var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, #a1a1a1 var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     #e5e5e5;
   background-repeat: no-repeat;
   position: relative;
@@ -774,8 +784,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, #a1a1a1 50%, #fff 50%);
 }
 
@@ -783,17 +793,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, #a1a1a1 50%, #fff 50%);
 }
 
 .bug-tile {
   background:
-    linear-gradient(to bottom, var(--color-bug-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-bug-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-bug-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-bug-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-bug-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-bug-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-bug-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-bug-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-bug-500);
   background-repeat: no-repeat;
   position: relative;
@@ -803,8 +813,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-bug-700) 50%, var(--color-bug-300) 50%);
 }
 
@@ -812,8 +822,8 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-bug-700) 50%, var(--color-bug-300) 50%);
 }
 
@@ -848,10 +858,10 @@ body {
 
 .dragon-tile {
   background:
-    linear-gradient(to bottom, var(--color-dragon-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-dragon-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-dragon-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-dragon-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-dragon-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-dragon-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-dragon-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-dragon-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-dragon-500);
   background-repeat: no-repeat;
   position: relative;
@@ -861,8 +871,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-dragon-700) 50%, var(--color-dragon-300) 50%);
 }
 
@@ -870,17 +880,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-dragon-700) 50%, var(--color-dragon-300) 50%);
 }
 
 .electric-tile {
   background:
-    linear-gradient(to bottom, var(--color-electric-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-electric-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-electric-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-electric-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-electric-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-electric-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-electric-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-electric-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-electric-500);
   background-repeat: no-repeat;
   position: relative;
@@ -890,8 +900,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-electric-700) 50%, var(--color-electric-300) 50%);
 }
 
@@ -899,17 +909,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-electric-700) 50%, var(--color-electric-300) 50%);
 }
 
 .fairy-tile {
   background:
-    linear-gradient(to bottom, var(--color-fairy-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-fairy-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-fairy-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-fairy-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-fairy-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-fairy-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-fairy-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-fairy-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-fairy-500);
   background-repeat: no-repeat;
   position: relative;
@@ -919,8 +929,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-fairy-700) 50%, var(--color-fairy-300) 50%);
 }
 
@@ -928,17 +938,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-fairy-700) 50%, var(--color-fairy-300) 50%);
 }
 
 .fighting-tile {
   background:
-    linear-gradient(to bottom, var(--color-fighting-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-fighting-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-fighting-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-fighting-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-fighting-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-fighting-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-fighting-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-fighting-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-fighting-500);
   background-repeat: no-repeat;
   position: relative;
@@ -948,8 +958,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-fighting-700) 50%, var(--color-fighting-300) 50%);
 }
 
@@ -957,17 +967,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-fighting-700) 50%, var(--color-fighting-300) 50%);
 }
 
 .fire-tile {
   background:
-    linear-gradient(to bottom, var(--color-fire-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-fire-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-fire-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-fire-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-fire-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-fire-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-fire-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-fire-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-fire-500);
   background-repeat: no-repeat;
   position: relative;
@@ -977,8 +987,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-fire-700) 50%, var(--color-fire-300) 50%);
 }
 
@@ -986,17 +996,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-fire-700) 50%, var(--color-fire-300) 50%);
 }
 
 .flying-tile {
   background:
-    linear-gradient(to bottom, var(--color-flying-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-flying-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-flying-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-flying-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-flying-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-flying-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-flying-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-flying-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-flying-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1006,8 +1016,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-flying-700) 50%, var(--color-flying-300) 50%);
 }
 
@@ -1015,17 +1025,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-flying-700) 50%, var(--color-flying-300) 50%);
 }
 
 .ghost-tile {
   background:
-    linear-gradient(to bottom, var(--color-ghost-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-ghost-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-ghost-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-ghost-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-ghost-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-ghost-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-ghost-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-ghost-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-ghost-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1035,8 +1045,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-ghost-700) 50%, var(--color-ghost-300) 50%);
 }
 
@@ -1044,17 +1054,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-ghost-700) 50%, var(--color-ghost-300) 50%);
 }
 
 .grass-tile {
   background:
-    linear-gradient(to bottom, var(--color-grass-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-grass-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-grass-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-grass-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-grass-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-grass-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-grass-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-grass-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-grass-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1064,8 +1074,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-grass-700) 50%, var(--color-grass-300) 50%);
 }
 
@@ -1073,17 +1083,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-grass-700) 50%, var(--color-grass-300) 50%);
 }
 
 .ground-tile {
   background:
-    linear-gradient(to bottom, var(--color-ground-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-ground-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-ground-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-ground-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-ground-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-ground-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-ground-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-ground-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-ground-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1093,8 +1103,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-ground-700) 50%, var(--color-ground-300) 50%);
 }
 
@@ -1102,17 +1112,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-ground-700) 50%, var(--color-ground-300) 50%);
 }
 
 .ice-tile {
   background:
-    linear-gradient(to bottom, var(--color-ice-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-ice-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-ice-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-ice-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-ice-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-ice-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-ice-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-ice-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-ice-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1122,8 +1132,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-ice-700) 50%, var(--color-ice-300) 50%);
 }
 
@@ -1131,17 +1141,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-ice-700) 50%, var(--color-ice-300) 50%);
 }
 
 .normal-tile {
   background:
-    linear-gradient(to bottom, var(--color-normal-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-normal-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-normal-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-normal-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-normal-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-normal-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-normal-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-normal-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-normal-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1151,8 +1161,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-normal-700) 50%, var(--color-normal-300) 50%);
 }
 
@@ -1160,17 +1170,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-normal-700) 50%, var(--color-normal-300) 50%);
 }
 
 .poison-tile {
   background:
-    linear-gradient(to bottom, var(--color-poison-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-poison-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-poison-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-poison-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-poison-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-poison-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-poison-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-poison-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-poison-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1180,8 +1190,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-poison-700) 50%, var(--color-poison-300) 50%);
 }
 
@@ -1189,17 +1199,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-poison-700) 50%, var(--color-poison-300) 50%);
 }
 
 .psychic-tile {
   background:
-    linear-gradient(to bottom, var(--color-psychic-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-psychic-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-psychic-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-psychic-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-psychic-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-psychic-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-psychic-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-psychic-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-psychic-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1209,8 +1219,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-psychic-700) 50%, var(--color-psychic-300) 50%);
 }
 
@@ -1218,17 +1228,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-psychic-700) 50%, var(--color-psychic-300) 50%);
 }
 
 .rock-tile {
   background:
-    linear-gradient(to bottom, var(--color-rock-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-rock-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-rock-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-rock-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-rock-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-rock-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-rock-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-rock-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-rock-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1238,8 +1248,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-rock-700) 50%, var(--color-rock-300) 50%);
 }
 
@@ -1247,17 +1257,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-rock-700) 50%, var(--color-rock-300) 50%);
 }
 
 .steel-tile {
   background:
-    linear-gradient(to bottom, var(--color-steel-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-steel-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-steel-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-steel-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-steel-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-steel-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-steel-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-steel-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-steel-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1267,8 +1277,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-steel-700) 50%, var(--color-steel-300) 50%);
 }
 
@@ -1276,17 +1286,17 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-steel-700) 50%, var(--color-steel-300) 50%);
 }
 
 .water-tile {
   background:
-    linear-gradient(to bottom, var(--color-water-700) 8px, transparent 8px) top left / 100% 100%,
-    linear-gradient(to left, var(--color-water-300) 8px, transparent 8px) top right / 100% 100%,
-    linear-gradient(to top, var(--color-water-300) 8px, transparent 8px) bottom left / 100% 100%,
-    linear-gradient(to right, var(--color-water-700) 8px, transparent 8px) top left / 100% 100%,
+    linear-gradient(to bottom, var(--color-water-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
+    linear-gradient(to left, var(--color-water-300) var(--tile-border-size), transparent var(--tile-border-size)) top right / 100% 100%,
+    linear-gradient(to top, var(--color-water-300) var(--tile-border-size), transparent var(--tile-border-size)) bottom left / 100% 100%,
+    linear-gradient(to right, var(--color-water-700) var(--tile-border-size), transparent var(--tile-border-size)) top left / 100% 100%,
     var(--color-water-500);
   background-repeat: no-repeat;
   position: relative;
@@ -1296,8 +1306,8 @@ body {
   content: '';
   position: absolute;
   inset: 0 0 auto auto;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-water-700) 50%, var(--color-water-300) 50%);
 }
 
@@ -1305,8 +1315,8 @@ body {
   content: '';
   position: absolute;
   inset: auto auto 0 0;
-  width: 8px;
-  height: 8px;
+  width: var(--tile-border-size);
+  height: var(--tile-border-size);
   background: linear-gradient(135deg, var(--color-water-700) 50%, var(--color-water-300) 50%);
 }
 

@@ -47,7 +47,7 @@ export default function GoogleSignInButton() {
 
 
   return (
-    <div className="absolute top-5 right-5 z-50">
+    <div className="hidden md:inline-block absolute top-5 right-5 z-50">
       {!user ? (
         <button
           onClick={handleSignIn}

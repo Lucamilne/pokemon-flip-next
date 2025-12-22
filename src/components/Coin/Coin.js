@@ -17,7 +17,7 @@ export default function Coin({ hasWonCoinToss }) {
             <div className='relative w-full flex items-center justify-center pb-14'>
                 {showTextToDiplay &&
                     (
-                        <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-xl lg:text-3xl text-hop`}>
+                        <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-2xl lg:text-3xl text-hop whitespace-nowrap`}>
                             {textToDiplay.split('').map((char, index) => {
                                 let color;
                                 if (hasWonCoinToss) {

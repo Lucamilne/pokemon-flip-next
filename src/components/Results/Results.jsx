@@ -230,7 +230,7 @@ export default function Results() {
         <div className={`h-full overflow-y-auto ${isPlayerVictory ? 'bg-pokedex-lighter-blue' : isPlayerVictory === false ? 'bg-pokedex-light-red' : 'bg-white'}`}>
             {mounted && (
                 <div className="relative flex flex-col gap-4 m-8 justify-center fade-in">
-                    <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="w-1/2 mx-auto drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
+                    <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="md:w-1/2 mx-auto drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
                     <div className='bg-white border-4 border-block shadow-lg/30'>
                         <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
                             {isPlayerVictory === false ? 'Penalty' : 'Rewards'}
@@ -239,10 +239,10 @@ export default function Results() {
                             <div className='p-8'>
                                 {rewardCards.length > 0 ? (
                                     <>
-                                        <div className='font-press-start text-center'>
+                                        <div className='font-press-start text-center text-sm md:text-base'>
                                             <p>Your spoils of victory! These cards now belong to you.</p>
                                         </div>
-                                        <div className="grid grid-cols-[repeat(auto-fit,124px)] place-content-center gap-4 mt-8">
+                                        <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-1 md:gap-4 mt-8">
                                             {rewardCards.map((pokemonCard, index) => {
                                                 return (
                                                     <div className="relative aspect-square drop-shadow-md/15" key={index}>
@@ -255,7 +255,7 @@ export default function Results() {
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="py-18 text-center font-press-start">
+                                    <div className="md:py-18 text-center font-press-start text-sm md:text-base">
                                         <p>You already own all the cards you captured!</p>
                                     </div>
                                 )}
@@ -264,10 +264,10 @@ export default function Results() {
                             <div className="p-8">
                                 {penaltyCard ? (
                                     <>
-                                        <div className='font-press-start text-center'>
+                                        <div className='font-press-start text-center text-sm md:text-base'>
                                             <p>Your opponent claimed the <span className='capitalize'>{penaltyCard.name}</span> card from your collection!</p>
                                         </div>
-                                        <div className="grid grid-cols-[repeat(auto-fit,124px)] place-content-center gap-4 mt-8">
+                                        <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-1 md:gap-4 mt-8">
                                             <div className="relative aspect-square">
                                                 <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
 
@@ -280,14 +280,14 @@ export default function Results() {
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="py-18 text-center font-press-start">
+                                    <div className="md:py-18 text-center font-press-start text-sm md:text-base">
                                         <p>Your opponent couldn't find a card worth taking...</p>
                                     </div>
                                 )}
                             </div>
                         ) : (
                             <div className="p-8">
-                                <div className="py-18 text-center font-press-start">
+                                <div className="md:py-18 text-center font-press-start text-sm md:text-base">
                                     <p>{tieText[Math.floor(Math.random() * tieText.length)]}</p>
                                 </div>
                             </div>
@@ -301,9 +301,9 @@ export default function Results() {
                                     <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
                                         Match Awards
                                     </h2>
-                                    <div className="grid grid-cols-3 gap-4 p-8">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8">
                                         {matchAwards.map((award, index) => (
-                                            <div key={index} className="default-tile px-4 py-8 border-4 border-black">
+                                            <div key={index} className="default-tile py-4 md:py-8 border-4 border-black">
                                                 {/* Award Title */}
                                                 <div className="text-center mb-4">
                                                     <span className="font-press-start text-[10px]">
@@ -313,7 +313,7 @@ export default function Results() {
 
                                                 {/* Award Card */}
                                                 <div className="flex justify-center">
-                                                    <div className="w-[124px] drop-shadow-md/15">
+                                                    <div className="w-[72px] md:w-[124px] drop-shadow-md/15">
                                                         <Card pokemonCard={award.card} isDraggable={false} />
                                                     </div>
                                                 </div>
