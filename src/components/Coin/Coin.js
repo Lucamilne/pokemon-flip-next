@@ -14,10 +14,10 @@ export default function Coin({ hasWonCoinToss }) {
 
     return (
         <div className={`${styles['fade-in']} absolute inset-0 bg-black/60 flex items-center justify-center`}>
-            <div className='relative w-full flex items-center justify-center pb-14'>
+            <div className='relative w-full flex items-center justify-center pb-16'>
                 {showTextToDiplay &&
                     (
-                        <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-xl lg:text-3xl text-hop`}>
+                        <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-xl lg:text-4xl text-hop`}>
                             {textToDiplay.split('').map((char, index) => {
                                 let color;
                                 if (hasWonCoinToss) {

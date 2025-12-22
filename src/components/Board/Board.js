@@ -9,7 +9,7 @@ import Coin from "../Coin/Coin.js";
 import { useState, useEffect } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
-import { fetchCardsByPlayerTierDistribution, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
+import { fetchCpuCardsByPlayerStrength, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -67,7 +67,7 @@ export default function Board() {
         }
 
         // Allocate hands
-        const cpuCardsToDeal = fetchCardsByPlayerTierDistribution(selectedPlayerHand);
+        const cpuCardsToDeal = fetchCpuCardsByPlayerStrength(selectedPlayerHand);
         const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
         const newPlayerHand = selectedPlayerHand;
 
@@ -92,7 +92,7 @@ export default function Board() {
         const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
         gridCells.forEach((cell) => {
-            if (tilesPlaced < maxTiles && Math.random() < 0.2 && availableTypes.length > 0) {
+            if (tilesPlaced < maxTiles && Math.random() < 0.15 && availableTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * availableTypes.length);
                 const randomElement = availableTypes[randomIndex];
                 updatedCells[cell] = { ...updatedCells[cell], element: randomElement };

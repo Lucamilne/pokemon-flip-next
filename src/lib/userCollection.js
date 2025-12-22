@@ -10,7 +10,7 @@ const starterPokemon = allPokemonNames.filter(
 );
 
 /**
- * Initialize a new user's collection with starter Pokemon
+ * Initialise a new user's collection with starter Pokemon
  * @param {string} userId - The user's Firebase UID
  * @returns {Promise<Object>} The initialized collection
  */
