@@ -21,9 +21,9 @@ export default function Coin({ hasWonCoinToss }) {
                             {textToDiplay.split('').map((char, index) => {
                                 let color;
                                 if (hasWonCoinToss) {
-                                    color = index < 4 ? 'text-theme-blue' : 'text-white';
+                                    color = index < 4 ? 'text-[#1cb1d2]' : 'text-white';
                                 } else {
-                                    color = index < 3 ? 'text-theme-red' : 'text-white';
+                                    color = index < 3 ? 'text-[#ec3139]' : 'text-white';
                                 }
 
                                 return (
