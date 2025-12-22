@@ -1,7 +1,6 @@
 {
   "types": [
     "bug",
-    "dark",
     "dragon",
     "electric",
     "fairy",
@@ -16,7 +15,6 @@
     "poison",
     "psychic",
     "rock",
-    "steel",
     "water"
   ],
   "typeMatchups": {
