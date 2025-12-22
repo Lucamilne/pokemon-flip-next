@@ -50,7 +50,7 @@ export default function Board() {
             decrementRandomStat(stats);
         }
     };
-    
+
     //on mount
     useEffect(() => {
         // Try to load saved game state first
@@ -168,22 +168,18 @@ export default function Board() {
             const typeMatchups = gameData.typeMatchups;
 
             // First check for immunity - if immune, attack fails completely
-            // Exception: Normal-type Pokemon can always attack
             let isImmune = false;
-            const isNormalType = attackingCard.types.includes('normal');
 
-            if (!isNormalType) {
-                for (const attackType of attackingCard.types) {
-                    const matchup = typeMatchups[attackType];
+            for (const attackType of attackingCard.types) {
+                const matchup = typeMatchups[attackType];
 
-                    for (const defendType of defendingCard.types) {
-                        if (matchup.immune.includes(defendType)) {
-                            isImmune = true;
-                            break;
-                        }
+                for (const defendType of defendingCard.types) {
+                    if (matchup.immune.includes(defendType)) {
+                        isImmune = true;
+                        break;
                     }
-                    if (isImmune) break;
                 }
+                if (isImmune) break;
             }
 
             // Mark if attacking card encountered immunity

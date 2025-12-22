@@ -278,7 +278,8 @@
     "bulbasaur": {
       "id": 1,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         5,
@@ -300,7 +301,8 @@
     "ivysaur": {
       "id": 2,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         7,
@@ -321,7 +323,8 @@
     "venusaur": {
       "id": 3,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         8,
@@ -385,7 +388,8 @@
     "charizard": {
       "id": 6,
       "types": [
-        "fire"
+        "fire",
+        "flying"
       ],
       "stats": [
         5,
@@ -513,7 +517,8 @@
     "butterfree": {
       "id": 12,
       "types": [
-        "bug"
+        "bug",
+        "flying"
       ],
       "stats": [
         7,
@@ -534,7 +539,8 @@
     "weedle": {
       "id": 13,
       "types": [
-        "bug"
+        "bug",
+        "poison"
       ],
       "stats": [
         2,
@@ -556,7 +562,8 @@
     "kakuna": {
       "id": 14,
       "types": [
-        "bug"
+        "bug",
+        "poison"
       ],
       "stats": [
         3,
@@ -577,7 +584,8 @@
     "beedrill": {
       "id": 15,
       "types": [
-        "bug"
+        "bug",
+        "poison"
       ],
       "stats": [
         3,
@@ -916,7 +924,8 @@
     "nidoqueen": {
       "id": 31,
       "types": [
-        "poison"
+        "poison",
+        "ground"
       ],
       "stats": [
         4,
@@ -979,7 +988,8 @@
     "nidoking": {
       "id": 34,
       "types": [
-        "poison"
+        "poison",
+        "ground"
       ],
       "stats": [
         7,
@@ -1126,7 +1136,8 @@
     "zubat": {
       "id": 41,
       "types": [
-        "poison"
+        "poison",
+        "flying"
       ],
       "stats": [
         4,
@@ -1147,7 +1158,8 @@
     "golbat": {
       "id": 42,
       "types": [
-        "poison"
+        "poison",
+        "flying"
       ],
       "stats": [
         5,
@@ -1168,7 +1180,8 @@
     "oddish": {
       "id": 43,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         3,
@@ -1189,7 +1202,8 @@
     "gloom": {
       "id": 44,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         6,
@@ -1210,7 +1224,8 @@
     "vileplume": {
       "id": 45,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         7,
@@ -1231,7 +1246,8 @@
     "paras": {
       "id": 46,
       "types": [
-        "bug"
+        "bug",
+        "grass"
       ],
       "stats": [
         5,
@@ -1252,7 +1268,8 @@
     "parasect": {
       "id": 47,
       "types": [
-        "bug"
+        "bug",
+        "grass"
       ],
       "stats": [
         5,
@@ -1273,7 +1290,8 @@
     "venonat": {
       "id": 48,
       "types": [
-        "bug"
+        "bug",
+        "poison"
       ],
       "stats": [
         5,
@@ -1294,7 +1312,8 @@
     "venomoth": {
       "id": 49,
       "types": [
-        "bug"
+        "bug",
+        "poison"
       ],
       "stats": [
         9,
@@ -1567,7 +1586,8 @@
     "poliwrath": {
       "id": 62,
       "types": [
-        "water"
+        "water",
+        "fighting"
       ],
       "stats": [
         3,
@@ -1714,7 +1734,8 @@
     "bellsprout": {
       "id": 69,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         7,
@@ -1735,7 +1756,8 @@
     "weepinbell": {
       "id": 70,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         5,
@@ -1756,7 +1778,8 @@
     "victreebel": {
       "id": 71,
       "types": [
-        "grass"
+        "grass",
+        "poison"
       ],
       "stats": [
         6,
@@ -1777,7 +1800,8 @@
     "tentacool": {
       "id": 72,
       "types": [
-        "water"
+        "water",
+        "poison"
       ],
       "stats": [
         4,
@@ -1798,7 +1822,8 @@
     "tentacruel": {
       "id": 73,
       "types": [
-        "water"
+        "water",
+        "poison"
       ],
       "stats": [
         10,
@@ -1819,7 +1844,8 @@
     "geodude": {
       "id": 74,
       "types": [
-        "rock"
+        "rock",
+        "ground"
       ],
       "stats": [
         2,
@@ -1840,7 +1866,8 @@
     "graveler": {
       "id": 75,
       "types": [
-        "rock"
+        "rock",
+        "ground"
       ],
       "stats": [
         8,
@@ -1861,7 +1888,8 @@
     "golem": {
       "id": 76,
       "types": [
-        "rock"
+        "rock",
+        "ground"
       ],
       "stats": [
         5,
@@ -1924,7 +1952,8 @@
     "slowpoke": {
       "id": 79,
       "types": [
-        "water"
+        "water",
+        "psychic"
       ],
       "stats": [
         2,
@@ -1945,7 +1974,8 @@
     "slowbro": {
       "id": 80,
       "types": [
-        "water"
+        "water",
+        "psychic"
       ],
       "stats": [
         6,
@@ -1966,7 +1996,8 @@
     "magnemite": {
       "id": 81,
       "types": [
-        "electric"
+        "electric",
+        "steel"
       ],
       "stats": [
         4,
@@ -1987,7 +2018,8 @@
     "magneton": {
       "id": 82,
       "types": [
-        "electric"
+        "electric",
+        "steel"
       ],
       "stats": [
         6,
@@ -2092,7 +2124,8 @@
     "dewgong": {
       "id": 87,
       "types": [
-        "water"
+        "water",
+        "ice"
       ],
       "stats": [
         6,
@@ -2176,7 +2209,8 @@
     "cloyster": {
       "id": 91,
       "types": [
-        "water"
+        "water",
+        "ice"
       ],
       "stats": [
         7,
@@ -2197,7 +2231,8 @@
     "gastly": {
       "id": 92,
       "types": [
-        "ghost"
+        "ghost",
+        "poison"
       ],
       "stats": [
         2,
@@ -2218,7 +2253,8 @@
     "haunter": {
       "id": 93,
       "types": [
-        "ghost"
+        "ghost",
+        "poison"
       ],
       "stats": [
         6,
@@ -2239,7 +2275,8 @@
     "gengar": {
       "id": 94,
       "types": [
-        "ghost"
+        "ghost",
+        "poison"
       ],
       "stats": [
         4,
@@ -2260,7 +2297,8 @@
     "onix": {
       "id": 95,
       "types": [
-        "rock"
+        "rock",
+        "ground"
       ],
       "stats": [
         4,
@@ -2407,7 +2445,8 @@
     "exeggcute": {
       "id": 102,
       "types": [
-        "grass"
+        "grass",
+        "psychic"
       ],
       "stats": [
         3,
@@ -2428,7 +2467,8 @@
     "exeggutor": {
       "id": 103,
       "types": [
-        "grass"
+        "grass",
+        "psychic"
       ],
       "stats": [
         6,
@@ -2596,7 +2636,8 @@
     "rhyhorn": {
       "id": 111,
       "types": [
-        "ground"
+        "ground",
+        "rock"
       ],
       "stats": [
         6,
@@ -2617,7 +2658,8 @@
     "rhydon": {
       "id": 112,
       "types": [
-        "ground"
+        "ground",
+        "rock"
       ],
       "stats": [
         7,
@@ -2806,7 +2848,8 @@
     "starmie": {
       "id": 121,
       "types": [
-        "water"
+        "water",
+        "psychic"
       ],
       "stats": [
         8,
@@ -2827,7 +2870,8 @@
     "mr-mime": {
       "id": 122,
       "types": [
-        "psychic"
+        "psychic",
+        "fairy"
       ],
       "stats": [
         5,
@@ -2848,7 +2892,8 @@
     "scyther": {
       "id": 123,
       "types": [
-        "bug"
+        "bug",
+        "flying"
       ],
       "stats": [
         7,
@@ -2869,7 +2914,8 @@
     "jynx": {
       "id": 124,
       "types": [
-        "ice"
+        "ice",
+        "psychic"
       ],
       "stats": [
         6,
@@ -2995,7 +3041,8 @@
     "gyarados": {
       "id": 130,
       "types": [
-        "water"
+        "water",
+        "flying"
       ],
       "stats": [
         6,
@@ -3016,7 +3063,8 @@
     "lapras": {
       "id": 131,
       "types": [
-        "water"
+        "water",
+        "ice"
       ],
       "stats": [
         9,
@@ -3163,7 +3211,8 @@
     "omanyte": {
       "id": 138,
       "types": [
-        "rock"
+        "rock",
+        "water"
       ],
       "stats": [
         5,
@@ -3184,7 +3233,8 @@
     "omastar": {
       "id": 139,
       "types": [
-        "rock"
+        "rock",
+        "water"
       ],
       "stats": [
         8,
@@ -3205,7 +3255,8 @@
     "kabuto": {
       "id": 140,
       "types": [
-        "rock"
+        "rock",
+        "water"
       ],
       "stats": [
         1,
@@ -3226,7 +3277,8 @@
     "kabutops": {
       "id": 141,
       "types": [
-        "rock"
+        "rock",
+        "water"
       ],
       "stats": [
         5,
@@ -3247,7 +3299,8 @@
     "aerodactyl": {
       "id": 142,
       "types": [
-        "rock"
+        "rock",
+        "flying"
       ],
       "stats": [
         8,
@@ -3289,7 +3342,8 @@
     "articuno": {
       "id": 144,
       "types": [
-        "ice"
+        "ice",
+        "flying"
       ],
       "stats": [
         7,
@@ -3310,7 +3364,8 @@
     "zapdos": {
       "id": 145,
       "types": [
-        "electric"
+        "electric",
+        "flying"
       ],
       "stats": [
         9,
@@ -3331,7 +3386,8 @@
     "moltres": {
       "id": 146,
       "types": [
-        "fire"
+        "fire",
+        "flying"
       ],
       "stats": [
         6,
@@ -3394,7 +3450,8 @@
     "dragonite": {
       "id": 149,
       "types": [
-        "dragon"
+        "dragon",
+        "flying"
       ],
       "stats": [
         7,
