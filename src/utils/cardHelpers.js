@@ -18,7 +18,7 @@ export const createCard = (pokemonName, isPlayerCard = false, debugMode = false)
     };
 };
 
-export const allPokemonNames = Object.keys(pokemon.cards);
+export const allPokemonNames = Object.keys(pokemon.cards)
 
 export const fetchCardById = (id, isPlayerCard = true) => {
     const pokemonName = allPokemonNames.find(
