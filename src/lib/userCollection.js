@@ -1,9 +1,11 @@
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
+import { allPokemonNames } from "@/utils/cardHelpers.js";
+
 import pokemon from '@/data/game-data.json';
 
 // Starter Pokemon that every player begins with (loaded from game data)
-const starterPokemon = Object.keys(pokemon.cards).filter(
+const starterPokemon = allPokemonNames.filter(
   (pokemonName) => pokemon.cards[pokemonName].starter
 );
 

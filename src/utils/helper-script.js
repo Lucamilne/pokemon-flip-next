@@ -23,6 +23,17 @@ for (const pokemon of pokemonList) {
 
 const statModifier = 20;
 
+const decrementRandomStat = (stats) => {
+    const randomIndex = Math.floor(Math.random() * stats.length);
+
+    if (stats[randomIndex] > 1) {
+        stats[randomIndex] -= 1;
+    } else {
+        // If it's 1 or less, recursively call the function again
+        decrementRandomStat(stats);
+    }
+};
+
 const allocateStatsByPokemon = (pokemonName) => {
     const currentPokemon = pokemon.data[pokemonName];
     let statSum = Math.round(currentPokemon.stats / statModifier);

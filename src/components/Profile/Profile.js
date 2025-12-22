@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
 import Loader from "@/components/Loader/Loader.js";
-import * as cardHelpers from '@/utils/cardHelpers.js';
-import pokemon from '@/data/game-data.json';
+import { allPokemonNames, fetchSingleTypeCards, fetchSecretCards } from "@/utils/cardHelpers.js";
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
     const { user, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
@@ -104,7 +103,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
 
     const setRandomPlayerHandByType = (type) => {
         try {
-            const array = cardHelpers.fetchSingleTypeCards(type, true);
+            const array = fetchSingleTypeCards(type, true);
             const shuffled = [...array].sort(() => Math.random() - 0.5);
             const hand = shuffled.slice(0, 5);
             setPlayerHand(hand);
@@ -215,8 +214,8 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                         <p className='text-[10px] md:text-base'>
                             Create your own hand by selecting from your pokemon library on the left!
                         </p>
-                        <p className='text-[10px] md:text-base'>
-                            Your Pokédex has {collectionCount}/{Object.keys(pokemon.cards).length} entries.
+                        <p>
+                            Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
                         </p>
                         {!user && (
                             <p className='text-[10px] md:text-base'>
@@ -227,44 +226,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                             <div className='text-[8px] md:text-base md:ml-5'>
                                 <div className="relative group">
                                     <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.allocateRandomCards)} className="disabled:opacity-30 cursor-pointer">Random</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchEarlyGameCards)} className="disabled:opacity-30 cursor-pointer">Early Game Cards</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchMidGameCards)} className="disabled:opacity-30 cursor-pointer">Average Cards</button>
-                                </div>
-
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchStrongCards)} className="disabled:opacity-30 cursor-pointer">Strong Cards</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchMonoTypeCards)} className="disabled:opacity-30 cursor-pointer">Single Types Only</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchNidoFamilyCards)} className="disabled:opacity-30 cursor-pointer">The Family</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchGlassCannonCards)} className="disabled:opacity-30 cursor-pointer">Glass Cannons</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchAllStarterLineCards)} className="disabled:opacity-30 cursor-pointer">Starter Pokemon & Evolutions</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchFossilCards)} className="disabled:opacity-30 cursor-pointer">Fossil Cards</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setRandomThemedPlayerHand(cardHelpers.fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">Debug: 秘密</button>
+                                    <button onClick={() => setRandomThemedPlayerHand(fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">Debug: 秘密</button>
                                 </div>
                                 <div className="relative group">
                                     <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />

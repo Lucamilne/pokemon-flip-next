@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { clearLocalStorage } from '@/utils/gameStorage';
+import { specialAwardDefinitions } from '@/utils/cardHelpers';
 
 import VictoryImage from "@/assets/images/victory.webp";
 import DefeatImage from "@/assets/images/defeat.webp";
@@ -43,92 +44,6 @@ export default function Results() {
             navigate(`/quickplay/select`);
         }, 600);
     }
-
-    const specialAwardDefinitions = [
-        { name: 'jigglypuff', award: 'Worst Singer' },
-        { name: 'magikarp', award: 'Most Useless' },
-        { name: 'psyduck', award: 'Most Confused' },
-        { name: 'snorlax', award: 'Sleepiest' },
-        { name: 'mewtwo', award: 'Most Intimidating' },
-        { name: 'ditto', award: 'Best Impression' },
-        { name: 'slowpoke', award: 'Slowest to React' },
-        { name: 'pikachu', award: 'Fan Favorite' },
-        { name: 'charizard', award: 'Hottest' },
-        { name: 'squirtle', award: 'Coolest' },
-        { name: 'bulbasaur', award: 'Best Starter' },
-        { name: 'eevee', award: 'Most Versatile' },
-        { name: 'gengar', award: 'Spookiest' },
-        { name: 'dragonite', award: 'Goofiest' },
-        { name: 'alakazam', award: 'Biggest Brain' },
-        { name: 'machamp', award: 'Most Swole' },
-        { name: 'mew', award: 'Most Mysterious' },
-        { name: 'gyarados', award: 'Angriest' },
-        { name: 'lapras', award: 'Best Transport' },
-        { name: 'articuno', award: 'Chillest' },
-        { name: 'zapdos', award: 'Most Tangy' },
-        { name: 'moltres', award: 'Most Meteoric' },
-        { name: 'cubone', award: 'Loneliest' },
-        { name: 'electrode', award: 'Most Explosive' },
-        { name: 'chansey', award: 'Luckiest' },
-        { name: 'kangaskhan', award: 'Best Parent' },
-        { name: 'onix', award: 'Longest' },
-        { name: 'hitmonlee', award: 'Best Kicks' },
-        { name: 'hitmonchan', award: 'Best Punches' },
-        { name: 'lickitung', award: 'Longest Tongue' },
-        { name: 'tangela', award: 'Worst Hair' },
-        { name: 'seaking', award: 'Most Fabulous' },
-        { name: 'starmie', award: 'Most Cosmic' },
-        { name: 'scyther', award: 'Sharpest Blades' },
-        { name: 'pinsir', award: 'Most Pinchy' },
-        { name: 'tauros', award: 'Most Aggressive' },
-        { name: 'exeggutor', award: 'Tallest' },
-        { name: 'marowak', award: 'Bravest' },
-        { name: 'porygon', award: 'Most Digital' },
-        { name: 'aerodactyl', award: 'Most Prehistoric' },
-        { name: 'farfetchd', award: 'Most Prepared' },
-        { name: 'dodrio', award: 'Most Heads' },
-        { name: 'dewgong', award: 'Most Graceful' },
-        { name: 'muk', award: 'Most Toxic' },
-        { name: 'cloyster', award: 'Most Defensive' },
-        { name: 'hypno', award: 'Sleepiest Hypnotist' },
-        { name: 'kingler', award: 'Biggest Claw' },
-        { name: 'voltorb', award: 'Most Explosive' },
-        { name: 'mr-mime', award: 'Best Performer' },
-        { name: 'jynx', award: 'Best Dancer' },
-        { name: 'electabuzz', award: 'Most Energetic' },
-        { name: 'magmar', award: 'Hottest Temper' },
-        { name: 'kabutops', award: 'Best Fossil' },
-        { name: 'omastar', award: 'Most Spiraled' },
-        { name: 'wigglytuff', award: 'Fluffiest' },
-        { name: 'clefable', award: 'Most Mystical' },
-        { name: 'ninetales', award: 'Most Elegant' },
-        { name: 'arcanine', award: 'Most Loyal' },
-        { name: 'poliwrath', award: 'Strongest Swimmer' },
-        { name: 'victreebel', award: 'Hungriest' },
-        { name: 'tentacruel', award: 'Most Tentacles' },
-        { name: 'geodude', award: 'Skipped Leg Day' },
-        { name: 'golem', award: 'Most Rock Solid' },
-        { name: 'ponyta', award: 'Fastest Runner' },
-        { name: 'rapidash', award: 'Most Majestic' },
-        { name: 'dugtrio', award: 'Most Underground' },
-        { name: 'persian', award: 'Most Pampered' },
-        { name: 'golduck', award: 'Most Psychic' },
-        { name: 'primeape', award: 'Most Furious' },
-        { name: 'arbok', award: 'Most Venomous' },
-        { name: 'raichu', award: 'Most Electrifying' },
-        { name: 'sandslash', award: 'Spikiest' },
-        { name: 'nidoking', award: 'Most Royal' },
-        { name: 'nidoqueen', award: 'Most Regal' },
-        { name: 'vileplume', award: 'Smelliest' },
-        { name: 'parasect', award: 'Most Possessed' },
-        { name: 'venomoth', award: 'Most Hypnotic' },
-        { name: 'blastoise', award: 'Best Cannons' },
-        { name: 'venusaur', award: 'Biggest Bloom' },
-        { name: 'pidgeot', award: 'Most Majestic Bird' },
-        { name: 'fearow', award: 'Most Intimidating' },
-        { name: 'weezing', award: 'Most Polluted' },
-        { name: 'rhydon', award: 'Most Armored' }
-    ];
 
     const calculateRewardCards = (cards, collection) => {
         const eligibleCards = cards.filter(card => card.isPlayerCard && !collection[card.name] && pokemon.cards[card.name]);
@@ -388,10 +303,10 @@ export default function Results() {
                                     </h2>
                                     <div className="grid grid-cols-3 gap-4 p-8">
                                         {matchAwards.map((award, index) => (
-                                            <div key={index} className="default-tile py-8 border-4 border-black">
+                                            <div key={index} className="default-tile px-4 py-8 border-4 border-black">
                                                 {/* Award Title */}
                                                 <div className="text-center mb-4">
-                                                    <span className="font-press-start text-sm">
+                                                    <span className="font-press-start text-[10px]">
                                                         {award.label}
                                                     </span>
                                                 </div>

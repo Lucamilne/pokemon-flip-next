@@ -88,15 +88,9 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Type Immunities</h2>
                             <p>Some types have no effect, and cannot flip defending cards, no matter the stat advantage.</p>
-                            <p>
-                                <span className="text-white py-1 px-3"
-                                    style={{ backgroundColor: `var(--color-normal-500)` }}
-                                >Normal</span> type Pokemon have no type advantages or disadvantages. All
-                                attacks hit them normally, and they ignore type-based immunities.</p>
                         </div>
                         <SlideE nextSlide={nextSlide} />
                     </div>
-
                     {/* Slide F */}
                     <div className="min-w-full h-full p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
