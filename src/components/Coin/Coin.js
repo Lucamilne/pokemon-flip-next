@@ -14,7 +14,7 @@ export default function Coin({ hasWonCoinToss }) {
 
     return (
         <div className={`${styles['fade-in']} absolute inset-0 bg-black/60 flex items-center justify-center`}>
-            <div className='relative w-full flex items-center justify-center pb-16'>
+            <div className='relative w-full flex items-center justify-center pb-14 md:pb-16'>
                 {showTextToDiplay &&
                     (
                         <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-2xl lg:text-4xl text-hop whitespace-nowrap`}>

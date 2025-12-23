@@ -238,7 +238,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                         <p className='text-[10px] md:text-base'>
                             Create your own hand by selecting from your pokemon library on the left!
                         </p>
-                        <p>
+                        <p className='text-[10px] md:text-base'>
                             Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
                         </p>
                         {!user && (
