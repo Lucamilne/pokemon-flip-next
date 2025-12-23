@@ -205,7 +205,7 @@ export default function Select() {
                     <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
-                    <button onClick={() => { setPlayerHand([null, null, null, null, null]); setShowConfirm(false); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Cancel</button>
+                    <button onClick={() => { setPlayerHand([null, null, null, null, null]); setShowConfirm(false); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>
                     <button onClick={closePokeball} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
                 </div>
             </div>
