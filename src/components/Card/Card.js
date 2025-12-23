@@ -176,7 +176,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
     };
 
     return (
-        <div className={`relative select-none touch-none ${isDraggable ? "cursor-pointer" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
+        <div className={`relative select-none ${isDraggable ? "cursor-pointer touch-none" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
             style={style}
             {...listeners}
             {...attributes}
@@ -186,27 +186,27 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                 transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
                 transition: 'transform 0.3s ease-out'
             }}>
-                <div className={`relative p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden' }}>
+                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                     <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                         <div className="relative h-full flex flex-col items-center justify-center">
                             <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
                             <ElementalTypes types={pokemonCard.types} />
-                            <img draggable={false} width={60} height={60} className="drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} />
+                            <img draggable={false} width={60} height={60} className="w-1/2 h-1/2 md:size-[60px] drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} />
                             <div className='absolute bottom-0'>
-                                <svg className="w-full -my-px drop-shadow-md rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
+                                <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
                                 <div className={`pt-7 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
-                                <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
+                                <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[6px] md:text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
                             </div>
                         </div>
                     </div>
-                    {isOwned && <img width={24} height={24} alt="Player owned card" className="absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} />}
+                    {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} />}
                     {showOverlay && (
-                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
-                            <span className='mt-4'>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
+                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
+                            <span className='mt-4 '>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
                         </div>
                     )}
                 </div>
-                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-3 select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-[5px] sm:p-[9px] select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                     <div className="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
                     </div>
                 </div>

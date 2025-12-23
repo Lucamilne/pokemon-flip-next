@@ -96,13 +96,13 @@ export default function Select() {
     }
 
     return (
-        <div className="overflow-hidden relative h-full flex flex-col rounded-xl" >
+        <div className="overflow-hidden relative h-full flex flex-col md:rounded-xl" >
             <div className="px-7 pt-4 pb-6 flex justify-between gap-4 items-center hand-top-container">
                 <div className="relative font-press-start">
                     <input
                         type="text"
                         id="search"
-                        className={`${styles['snes-input']}`}
+                        className={`${styles['snes-input']} w-full md:w-auto`}
                         style={{
                             borderImageSource: `url('${basePath}/images/border-image.png')`,
                             borderImageSlice: '12',
@@ -125,7 +125,7 @@ export default function Select() {
                         </button>
                     )}
                 </div>
-                <h1 className="text-right header-text text-xl lg:text-2xl text-hop">
+                <h1 className="hidden md:block text-right header-text text-xl lg:text-2xl text-hop">
                     {helperText.split('').map((char, index) => (<span key={index} style={{
                         animationDelay: `${(index + 1) * 50}ms`
                     }}>{char}</span>))}
@@ -133,8 +133,8 @@ export default function Select() {
                 </h1>
             </div>
             <div className='grow flex overflow-y-auto'>
-                <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-4 ${isLoadingCollection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(3,124px)] auto-rows-min gap-4">
+                <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+                    <div className="grid grid-cols-[repeat(2,72px)] md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
@@ -165,12 +165,12 @@ export default function Select() {
                                             const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
                                             return (
                                                 <button
-                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-5 ring-lime-300' : ''}`}
+                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
                                                     key={index}
                                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                                 >
                                                     {pokemonCard && (
-                                                        <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={true} />
+                                                        <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={false} />
                                                     )}
                                                 </button>
                                             )
@@ -185,12 +185,12 @@ export default function Select() {
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/40" />
             )}
-            <div className={`${showConfirm ? '-translate-y-20' : 'translate-y-0'} transition-transform relative grid grid-cols-[repeat(5,124px)] items-center gap-4 hand-bottom-container pt-8 p-4 w-full justify-center`}>
+            <div className={`${showConfirm ? '-translate-y-20' : 'translate-y-0'} transition-transform relative grid grid-cols-[repeat(5,72px)] md:grid-cols-[repeat(5,124px)] items-center gap-1 md:gap-4 hand-bottom-container pt-7 p-3 md:pt-8 md:p-4 w-full justify-center`}>
                 {playerHand.map((pokemonCard, index) => {
                     return (
                         <button className={`relative aspect-square ${pokemonCard && !showConfirm ? "cursor-pointer" : ""}`} key={index} onClick={() => togglePokemonCardSelection(pokemonCard)} disabled={showConfirm}>
                             <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue flex justify-center items-center">
-                                <span className='header-text text-2xl'>{index + 1}</span>
+                                <span className='header-text text-xl md:text-2xl'>{index + 1}</span>
                             </div>
 
                             {pokemonCard && (
@@ -202,7 +202,7 @@ export default function Select() {
                     )
                 })}
                 {playerHand.every(card => card === null) && (
-                    <Help customClass="!absolute !-top-16 !right-4" text="Add cards to your hand!" />
+                    <Help customClass="!hidden md:!block !absolute !-top-16 !right-4" text="Add cards to your hand!" />
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); setShowConfirm(false); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>

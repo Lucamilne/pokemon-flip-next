@@ -8,21 +8,20 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 rounded-xl" >
-        <div className="absolute z-10 bottom-8 left-1/2 -translate-x-1/2 font-press-start grid grid-cols-1 gap-2 text-xl">
-          <div className="relative group text-center">
-            <div className="arrow absolute -left-2 top-1 -translate-y-1/2 transition-opacity opacity-100" />
+      <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 md:rounded-xl" >
+        <div className="absolute w-full z-10 bottom-8 left-1/2 -translate-x-1/2 font-press-start grid grid-cols-1 gap-2 text-xl">
+          <div className="relative group text-center mx-auto">
+            <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 transition-opacity opacity-100" />
             <button className={`cursor-pointer`} onClick={() => {
               setHasStartedGame(true);
             }}>Start Game</button>
           </div>
-          <div className="relative group text-center">
-            <div className={`arrow absolute -left-2 top-1 -translate-y-1/2 transition-opacity opacity-0 group-hover:opacity-100 group-focus-within:opacity-100`} />
+          <div className="relative group text-center mx-auto">
+          <div className={`arrow absolute -left-6 top-1/2 -translate-y-1/2 transition-opacity opacity-0 group-hover:opacity-100 group-focus-within:opacity-100`} />
             <button className={`cursor-pointer`} onClick={() => {
               setIsOpen(true);
             }}>How to Play</button>
           </div>
-
         </div>
         <PokeballSplash href={hasStartedGame ? "quickplay/select" : null} buttonText="Press!" />
         {isOpen && (
