@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
-import Loader from "@/components/Loader/Loader.js";
 import { allPokemonNames, fetchSingleTypeCards, fetchSecretCards } from "@/utils/cardHelpers.js";
+
+import Loader from "@/components/Loader/Loader.js";
+import styles from "./retro.module.css";
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
     const { user, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
@@ -22,9 +24,23 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    function capitaliseFirstLetter(val) {
+    const capitaliseFirstLetter = (val) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
     }
+
+    const getStatWeightTierByPokemon = (pokemonData) => {
+        const sumBaseStats = pokemonData.stats.reduce((sum, stat) => sum + stat.base_stat, 0);
+
+        const minStat = 195;
+        const maxStat = 680;
+        const segmentSize = 48.5;
+
+        // Clamp to valid range
+        if (sumBaseStats < minStat) return 1;
+        if (sumBaseStats >= maxStat) return 10;
+
+        return Math.floor((sumBaseStats - minStat) / segmentSize) + 1;
+    };
 
     const TypeList = ({ types = [] }) => {
         return types.map((type) => {
@@ -101,17 +117,6 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
         }
     };
 
-    const setRandomPlayerHandByType = (type) => {
-        try {
-            const array = fetchSingleTypeCards(type, true);
-            const shuffled = [...array].sort(() => Math.random() - 0.5);
-            const hand = shuffled.slice(0, 5);
-            setPlayerHand(hand);
-        } catch (error) {
-            console.error('Error setting themed hand:', error);
-        }
-    }
-
     const EvolutionChain = ({ chain }) => {
         if (!chain) return null;
 
@@ -164,6 +169,19 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
     const ProfileContent = () => {
         if (!pokemonData) return null;
 
+        const statTier = getStatWeightTierByPokemon(pokemonData);
+        const cardPowerLevelColour = () => {
+            if (statTier < 3) return 'is-error';
+            if (statTier < 7) return 'is-warning';
+            return 'is-success';
+        }
+
+        const powerLevelColour = useMemo(() => {
+            if (statTier < 3) return 'is-error';
+            if (statTier < 7) return 'is-warning';
+            return 'is-success';
+        }, [statTier]);
+
         return (
             <div className='h-full p-3 md:p-8 overflow-y-auto hide-scrollbar'>
                 <div>
@@ -172,6 +190,12 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                         <span>#{pokemonData?.id}</span>
                     </h3>
                     <TypeList types={pokemonData?.types?.map(t => t.type.name)} />
+                </div>
+                <div>
+                    <h3 className='text-xs mt-4 mb-2 md:text-base'>
+                        Card Power Level
+                    </h3>
+                    <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]}`} value={statTier} max="10" />
                 </div>
                 <hr className="border-2 border-black my-3" />
                 <div>
