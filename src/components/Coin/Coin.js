@@ -14,16 +14,16 @@ export default function Coin({ hasWonCoinToss }) {
 
     return (
         <div className={`${styles['fade-in']} absolute inset-0 bg-black/60 flex items-center justify-center`}>
-            <div className='relative w-full flex items-center justify-center pb-14'>
+            <div className='relative w-full flex items-center justify-center pb-16'>
                 {showTextToDiplay &&
                     (
-                        <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-2xl lg:text-3xl text-hop whitespace-nowrap`}>
+                        <h2 className={`${styles['slide-in-elliptic-top-fwd']} uppercase absolute bottom-0 left-1/2 -translate-x-1/2 header-text text-2xl lg:text-4xl text-hop whitespace-nowrap`}>
                             {textToDiplay.split('').map((char, index) => {
                                 let color;
                                 if (hasWonCoinToss) {
-                                    color = index < 4 ? 'text-theme-blue' : 'text-white';
+                                    color = index < 4 ? 'text-[#1cb1d2]' : 'text-white';
                                 } else {
-                                    color = index < 3 ? 'text-theme-red' : 'text-white';
+                                    color = index < 3 ? 'text-[#ec3139]' : 'text-white';
                                 }
 
                                 return (

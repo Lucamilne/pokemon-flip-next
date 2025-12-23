@@ -166,13 +166,6 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
         }
     }, [])
 
-    // used for rarity border, unused currently
-    const getBgStyle = () => {
-        return {
-            backgroundImage: `linear-gradient(to right, var(--color-${pokemonCard.types[0]}-500), var(--color-${pokemonCard.types[1]}-500))`
-        };
-    };
-
     const getNameBgStyle = () => {
         if (pokemonCard.types.length === 1) {
             return { backgroundColor: `var(--color-${pokemonCard.types[0]}-500)` };

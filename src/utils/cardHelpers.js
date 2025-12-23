@@ -121,45 +121,43 @@ export const fetchBalancedTierCards = (isPlayerCard = true) => {
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
-// Match the player's tier distribution for CPU hand
-export const fetchCardsByPlayerTierDistribution = (playerHand) => {
-    const { weakCards, midCards, strongCards } = categoriseCardsByTier();
+// Select CPU cards based on player's average statWeight
+export const fetchCpuCardsByPlayerStrength = (playerHand) => {
+    // Calculate average statWeight of player's hand
+    const totalStatWeight = playerHand.reduce((sum, card) => sum + card.statWeight, 0);
+    const avgStatWeight = totalStatWeight / playerHand.length;
 
-    // Count player's tier distribution
-    const playerTiers = {
-        weak: 0,
-        mid: 0,
-        strong: 0
-    };
+    // Define search range with bounds [195, 680]
+    const minStatWeight = Math.max(195, avgStatWeight - 100);
+    const maxStatWeight = Math.min(680, avgStatWeight + 100);
 
-    playerHand.forEach(card => {
-        const statWeight = card.statWeight;
-        if (statWeight < 395) playerTiers.weak++;
-        else if (statWeight < 500) playerTiers.mid++;
-        else playerTiers.strong++;
+    // Get all pokemon within the bounded range
+    const eligibleCards = allPokemonNames.filter(pokemonName => {
+        const statWeight = pokemon.cards[pokemonName].statWeight;
+        return statWeight >= minStatWeight && statWeight <= maxStatWeight;
     });
 
-    // Add variance by randomly swapping one card between tiers
-    const cpuTiers = { ...playerTiers };
-    const roll = Math.random();
+    // If not enough cards OR high-level player, expand to -100/+200
+    let cardsToSelect = eligibleCards;
+    
+    if (cardsToSelect.length < 5 || avgStatWeight >= 500) {
+        const expandedMinStatWeight = Math.max(195, avgStatWeight - 100);
+        const expandedMaxStatWeight = Math.min(680, avgStatWeight + 200);
 
-    if (roll < 0.25 && cpuTiers.weak > 0) { // Swap weak -> mid
-        cpuTiers.weak--;
-        cpuTiers.mid++;
-    } else if (roll > 0.75 && cpuTiers.strong > 0) { // Swap strong -> mid
-        cpuTiers.strong--;
-        cpuTiers.mid++;
+        cardsToSelect = allPokemonNames.filter(pokemonName => {
+            const statWeight = pokemon.cards[pokemonName].statWeight;
+            return statWeight >= expandedMinStatWeight && statWeight <= expandedMaxStatWeight;
+        });
     }
 
-    const selectedCards = [
-        ...getRandomItems(weakCards, cpuTiers.weak),
-        ...getRandomItems(midCards, cpuTiers.mid),
-        ...getRandomItems(strongCards, cpuTiers.strong)
-    ];
+    // Fallback to all cards if still not enough. May need work
+    if (cardsToSelect.length < 5) {
+        cardsToSelect = allPokemonNames;
+    }
 
-    return selectedCards
-        .sort(() => Math.random() - 0.5)
-        .map((pokemonName) => createCard(pokemonName, false)); // CPU cards are always isPlayerCard = false
+    // Select 5 random cards from eligible pool
+    return getRandomItems(cardsToSelect, 5)
+        .map((pokemonName) => createCard(pokemonName, false));
 }
 
 export const fetchGlassCannonCards = (isPlayerCard = true) => {
