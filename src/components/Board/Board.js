@@ -15,7 +15,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import gameData from '@/data/game-data.json';
 import styles from './background.module.css';
-import GoogleSignInButton from "../Auth/GoogleSignInButton.js";
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
@@ -704,9 +703,6 @@ export default function Board() {
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
-                        {isMobile && (
-                            <GoogleSignInButton />
-                        )}
                     </div>
                     <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-8 pr-4 p-2 h-full">
                         {cpuHand.map((pokemonCard, index) => {
