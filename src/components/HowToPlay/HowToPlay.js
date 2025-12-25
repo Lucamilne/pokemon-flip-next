@@ -137,7 +137,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                             <button
                                 key={i}
                                 onClick={() => setCurrentSlide(i)}
-                                className="cursor-pointer w-3 h-3 rounded-full bg-neutral-400"
+                                className="cursor-pointer w-4 h-4 rounded-full bg-neutral-400"
                             />
                         )
                     ))}
