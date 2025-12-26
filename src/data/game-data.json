@@ -291,6 +291,11 @@
         4,
         1
       ],
+      "ability": {
+        "name": "overgrow",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 318
     },
     "ivysaur": {
@@ -310,6 +315,11 @@
         1,
         7
       ],
+      "ability": {
+        "name": "overgrow",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 405
     },
     "venusaur": {
@@ -329,6 +339,11 @@
         6,
         8
       ],
+      "ability": {
+        "name": "overgrow",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 525
     },
     "charmander": {
@@ -1098,8 +1113,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 320
     },
@@ -1122,8 +1137,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 395
     },
@@ -1146,8 +1161,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 490
     },
@@ -1607,8 +1622,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 300
     },
@@ -1631,8 +1646,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 390
     },
@@ -1655,8 +1670,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 490
     },
@@ -1812,7 +1827,7 @@
       ],
       "ability": {
         "name": "oblivious",
-        "trigger": "onElementalTilePlace",
+        "trigger": "onMatchStart",
         "description": "Oblivious to elemental tile penalties"
       },
       "statWeight": 315
@@ -1836,7 +1851,7 @@
       ],
       "ability": {
         "name": "oblivious",
-        "trigger": "onElementalTilePlace",
+        "trigger": "onMatchStart",
         "description": "Oblivious to elemental tile penalties"
       },
       "statWeight": 490
@@ -2259,8 +2274,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 325
     },
@@ -2283,8 +2298,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 530
     },
@@ -2497,8 +2512,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 435
     },

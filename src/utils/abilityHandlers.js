@@ -64,17 +64,22 @@ const oblivious = (card, cellId, gameState) => {
     return card.stats.map(updateStatOnElementalTile);
 }
 
-const chlorophyll = (card, cellId, gameState) => {
+const overgrow = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
     if (!tileElement) return card;
 
     return card.stats.map(stat => updateStatOnElementalTileByModifier(stat, card.types, tileElement, 2));
 }
 
+const chlorophyll = (card, cellId, gameState) => {
+    return card.stats; // do nothing for now
+}
+
 export const abilityHandlers = {
     transform,
     oblivious,
-    chlorophyll
+    chlorophyll,
+    overgrow
 };
 
 /**
