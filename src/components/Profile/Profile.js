@@ -124,7 +124,7 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
 
         // No evolution
         if (!chain.evolves_to || chain.evolves_to.length === 0) {
-            return <div className="text-sm"><span className='capitalize'>{chain.species.name}</span> does not evolve.</div>;
+            return <div className="text-[10px] md:text-sm"><span className='capitalize'>{chain.species.name}</span> does not evolve.</div>;
         }
 
         // Render evolution rows
