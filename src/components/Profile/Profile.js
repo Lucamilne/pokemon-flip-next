@@ -170,11 +170,6 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
         if (!pokemonData) return null;
 
         const statTier = getStatWeightTierByPokemon(pokemonData);
-        const cardPowerLevelColour = () => {
-            if (statTier < 3) return 'is-error';
-            if (statTier < 7) return 'is-warning';
-            return 'is-success';
-        }
 
         const powerLevelColour = useMemo(() => {
             if (statTier < 3) return 'is-error';
