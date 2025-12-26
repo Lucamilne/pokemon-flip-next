@@ -617,6 +617,13 @@ export default function Board() {
         const cellTarget = bestCellToPlace;
         const attackingCard = bestCardToPlay;
 
+        attackingCard = triggerAbilities(
+            attackingCard,
+            'onGridPlace',
+            cellTarget,
+            { cells, playerHand, cpuHand }
+        );
+
         // Find the original index in cpuHand
         const originalIndex = cpuHand.findIndex(card => card === attackingCard);
 
