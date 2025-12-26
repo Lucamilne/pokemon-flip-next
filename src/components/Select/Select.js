@@ -166,7 +166,7 @@ export default function Select() {
                                             return (
                                                 <button
                                                     className={`relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
-                                                    key={index}
+                                                    key={pokemonCard.id}
                                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                                 >
                                                     {pokemonCard && (
