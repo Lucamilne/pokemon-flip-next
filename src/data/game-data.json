@@ -2776,17 +2776,22 @@
         "normal"
       ],
       "stats": [
-        4,
-        4,
-        4,
-        4
+        1,
+        1,
+        1,
+        1
       ],
       "originalStats": [
-        4,
-        4,
-        4,
-        4
+        1,
+        1,
+        1,
+        1
       ],
+      "ability": {
+        "name": "imposter",
+        "trigger": "onGridPlace",
+        "description": "Copies the stats of the strongest adjacent Pokemon when placed on the grid"
+      },
       "statWeight": 288
     },
     "eevee": {

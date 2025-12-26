@@ -6,6 +6,8 @@ import Balance from "../Balance/Balance.js"
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
 import Coin from "../Coin/Coin.js";
+
+import { triggerAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -239,6 +241,13 @@ export default function Board() {
         let cellTarget = over.id; // e.g. A1
 
         let attackingCard = active.data.current.pokemonCard;
+
+        attackingCard = triggerAbilities(
+            attackingCard,
+            'onGridPlace',
+            cellTarget,
+            { cells, playerHand, cpuHand }
+        );
 
         const sourceIndex = active.data.current.index;
         // Remove card from the player hand

@@ -96,7 +96,7 @@ export default function Select() {
     }
 
     return (
-        <div className="overflow-hidden relative h-full flex flex-col md:rounded-xl" >
+        <div className="relative h-full flex flex-col md:rounded-xl" >
             <div className="px-7 pt-4 pb-6 flex justify-between gap-4 items-center hand-top-container">
                 <div className="relative font-press-start">
                     <input
@@ -133,7 +133,7 @@ export default function Select() {
                 </h1>
             </div>
             <div className='grow flex overflow-y-auto'>
-                <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+                <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
                     <div className="grid grid-cols-[repeat(2,72px)] md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>

@@ -122,7 +122,7 @@ export const fetchBalancedTierCards = (isPlayerCard = true) => {
 }
 
 // Select CPU cards based on player's average statWeight
-export const fetchCpuCardsByPlayerStrength = (playerHand) => {
+export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) => {
     // Calculate average statWeight of player's hand
     const totalStatWeight = playerHand.reduce((sum, card) => sum + card.statWeight, 0);
     const avgStatWeight = totalStatWeight / playerHand.length;
@@ -139,7 +139,7 @@ export const fetchCpuCardsByPlayerStrength = (playerHand) => {
 
     // If not enough cards OR high-level player, expand to -100/+200
     let cardsToSelect = eligibleCards;
-    
+
     if (cardsToSelect.length < 5 || avgStatWeight >= 500) {
         const expandedMinStatWeight = Math.max(195, avgStatWeight - 100);
         const expandedMaxStatWeight = Math.min(680, avgStatWeight + 200);
@@ -150,13 +150,19 @@ export const fetchCpuCardsByPlayerStrength = (playerHand) => {
         });
     }
 
-    // Fallback to all cards if still not enough. May need work
+    // Fallback to all cards if still not enough
     if (cardsToSelect.length < 5) {
         cardsToSelect = allPokemonNames;
     }
 
-    // Select 5 random cards from eligible pool
-    return getRandomItems(cardsToSelect, 5)
+    // Prefer cards the user doesn't own
+    const unownedCards = cardsToSelect.filter(pokemonName => !userCollection[pokemonName]);
+
+    // Use unowned cards if we have at least 5, otherwise use all eligible cards
+    const finalCardsToSelect = unownedCards.length >= 5 ? unownedCards : cardsToSelect;
+
+    // Select 5 random cards from final pool
+    return getRandomItems(finalCardsToSelect, 5)
         .map((pokemonName) => createCard(pokemonName, false));
 }
 
