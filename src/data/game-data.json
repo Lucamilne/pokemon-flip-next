@@ -1769,17 +1769,22 @@
         "water"
       ],
       "stats": [
-        2,
-        6,
+        3,
+        5,
         5,
         3
       ],
       "originalStats": [
-        2,
-        6,
+        3,
+        5,
         5,
         3
       ],
+      "ability": {
+        "name": "oblivious",
+        "trigger": "onElementalTilePlace",
+        "description": "Oblivious to elemental tile penalties"
+      },
       "statWeight": 315
     },
     "slowbro": {
@@ -1799,6 +1804,11 @@
         7,
         6
       ],
+      "ability": {
+        "name": "oblivious",
+        "trigger": "onElementalTilePlace",
+        "description": "Oblivious to elemental tile penalties"
+      },
       "statWeight": 490
     },
     "magnemite": {
@@ -2788,7 +2798,7 @@
         1
       ],
       "ability": {
-        "name": "imposter",
+        "name": "transform",
         "trigger": "onGridPlace",
         "description": "Copies the stats of the strongest adjacent Pokemon when placed on the grid"
       },

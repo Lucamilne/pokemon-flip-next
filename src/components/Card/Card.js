@@ -253,7 +253,6 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                         ) : (
                             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-black" />
                         )}
-
                     </div>
                 </div>
             )}

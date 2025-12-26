@@ -125,7 +125,9 @@ export default function Board() {
         return () => clearTimeout(timer);
     }, [hasWonCoinToss])
 
-    const applyTileStatModifiers = (attackingCard, cellTargetObject) => {
+    const applyTileStatModifiers = (attackingCard, cellTarget) => {
+        const cellTargetObject = cells[cellTarget];
+
         if (attackingCard.types.some((type) => type === "normal")) {
             return attackingCard.stats; // normal pokemon are not affected by elemental tiles
         }
@@ -141,14 +143,25 @@ export default function Board() {
             return stat; // No change
         };
 
-        return attackingCard.stats.map(updateStatOnElementalTile);
+        if (attackingCard?.ability.trigger === 'onElementalTilePlace') {
+            attackingCard = triggerAbilities(
+                attackingCard,
+                'onElementalTilePlace',
+                cellTarget,
+                { cells, playerHand, cpuHand }
+            );
+        } else {
+            attackingCard.stats.map(updateStatOnElementalTile);
+        }
+
+        return attackingCard;
     };
 
     const placeAttackingCard = (cellTarget, attackingCard) => {
         const cellTargetObject = cells[cellTarget];
 
         if (cellTargetObject.element) {
-            attackingCard.stats = applyTileStatModifiers(attackingCard, cellTargetObject); // add or remove stats on placement of attacking card on tile
+            attackingCard.stats = applyTileStatModifiers(attackingCard, cellTarget); // add or remove stats on placement of attacking card on tile
         }
 
         // Track if this card captured any cards due to type effectiveness
@@ -359,7 +372,25 @@ export default function Board() {
 
         const remainingPlayerCards = playerHand.filter(card => card !== null);
         const remainingCpuCards = cpuHand.filter(card => card !== null);
-        const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
+        let allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
+
+        allMatchCards = allMatchCards.map((card) => {
+            if (card.name === 'ditto') {
+                const ditto = gameData.cards.ditto;
+
+                return {
+                    ...card,
+                    id: ditto.id,
+                    types: ditto.types,
+                    stats: card.originalStats
+                };
+            }
+
+            return {
+                ...card,
+                stats: card.originalStats
+            };
+        });
 
         setMatchCards(allMatchCards);
         const playerCardCount = allMatchCards.filter(card => card.isPlayerCard === true).length;

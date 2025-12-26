@@ -24,11 +24,7 @@ const findStrongestAdjacentCard = (adjacentCellIds, cells) => {
     return strongestCard;
 };
 
-/**
- * Ability: Imposter
- * Copies the stats of the strongest adjacent Pokemon when placed on the grid
- */
-const imposter = (card, cellId, gameState) => {
+const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
 
@@ -36,13 +32,31 @@ const imposter = (card, cellId, gameState) => {
         // Copy stats from adjacent card
         card.stats = [...adjacentCard.stats];
         card.types = [...adjacentCard.types];
+        card.id = adjacentCard.id;
     }
 
     return card;
 };
 
+const oblivious = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    if (!tileElement) return card;
+
+    const updateStatOnElementalTile = (stat) => {
+        if (card.types.includes(tileElement) && stat < 10) {
+            return stat + 1;
+        }
+
+        return stat;
+    };
+
+
+    return card.stats.map(updateStatOnElementalTile);
+}
+
 export const abilityHandlers = {
-    imposter
+    transform,
+    oblivious
 };
 
 /**
