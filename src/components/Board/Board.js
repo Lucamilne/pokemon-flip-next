@@ -352,6 +352,24 @@ export default function Board() {
         const remainingCpuCards = cpuHand.filter(card => card !== null);
         const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
 
+        allMatchCards = allMatchCards.map((card) => {
+            if (card.name === 'ditto') {
+                const ditto = gameData.cards.ditto;
+
+                return {
+                    ...card,
+                    id: ditto.id,
+                    types: ditto.types,
+                    stats: card.originalStats
+                };
+            }
+
+            return {
+                ...card,
+                stats: card.originalStats
+            };
+        });
+
         setMatchCards(allMatchCards);
         const playerCardCount = allMatchCards.filter(card => card.isPlayerCard === true).length;
         const cpuCardCount = allMatchCards.filter(card => card.isPlayerCard === false).length;
