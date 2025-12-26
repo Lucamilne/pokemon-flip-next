@@ -143,18 +143,16 @@ export default function Board() {
             return stat; // No change
         };
 
-        if (attackingCard?.ability.trigger === 'onElementalTilePlace') {
-            attackingCard = triggerAbilities(
+        if (attackingCard.ability?.trigger === 'onElementalTilePlace') {
+            return attackingCard.stats = triggerAbilities(
                 attackingCard,
                 'onElementalTilePlace',
                 cellTarget,
                 { cells, playerHand, cpuHand }
             );
         } else {
-            attackingCard.stats.map(updateStatOnElementalTile);
+            return attackingCard.stats.map(updateStatOnElementalTile);
         }
-
-        return attackingCard;
     };
 
     const placeAttackingCard = (cellTarget, attackingCard) => {
@@ -615,7 +613,7 @@ export default function Board() {
         }
 
         const cellTarget = bestCellToPlace;
-        const attackingCard = bestCardToPlay;
+        let attackingCard = bestCardToPlay;
 
         attackingCard = triggerAbilities(
             attackingCard,

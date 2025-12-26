@@ -1096,6 +1096,11 @@
         2,
         4
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 320
     },
     "gloom": {
@@ -1115,6 +1120,11 @@
         8,
         2
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 395
     },
     "vileplume": {
@@ -1134,6 +1144,11 @@
         5,
         5
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 490
     },
     "paras": {
@@ -1590,6 +1605,11 @@
         2,
         1
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 300
     },
     "weepinbell": {
@@ -1609,6 +1629,11 @@
         3,
         8
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 390
     },
     "victreebel": {
@@ -1628,6 +1653,11 @@
         6,
         5
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 490
     },
     "tentacool": {
@@ -1794,15 +1824,15 @@
       ],
       "stats": [
         6,
+        6,
         7,
-        7,
-        6
+        7
       ],
       "originalStats": [
         6,
+        6,
         7,
-        7,
-        6
+        7
       ],
       "ability": {
         "name": "oblivious",
@@ -2227,6 +2257,11 @@
         2,
         6
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 325
     },
     "exeggutor": {
@@ -2237,15 +2272,20 @@
       "stats": [
         6,
         7,
-        9,
-        5
+        8,
+        6
       ],
       "originalStats": [
         6,
         7,
-        9,
-        5
+        8,
+        6
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 530
     },
     "cubone": {
@@ -2444,17 +2484,22 @@
         "grass"
       ],
       "stats": [
-        3,
+        4,
         7,
-        8,
-        4
+        4,
+        7
       ],
       "originalStats": [
-        3,
+        4,
         7,
-        8,
-        4
+        4,
+        7
       ],
+      "ability": {
+        "name": "chlorophyll",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 435
     },
     "kangaskhan": {

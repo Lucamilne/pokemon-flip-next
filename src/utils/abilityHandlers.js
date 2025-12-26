@@ -24,6 +24,17 @@ const findStrongestAdjacentCard = (adjacentCellIds, cells) => {
     return strongestCard;
 };
 
+const updateStatOnElementalTileByModifier = (stat, types, tileElement, modifier = 1) => {
+    if (types.includes(tileElement) && stat < 10) {
+        // stat cannot be increased above 10
+        return stat + modifier;
+    } else if (!types.includes(tileElement) && stat > 1) {
+        // stat cannot be decreased below 1
+        return stat - 1;
+    }
+    return stat; // No change
+};
+
 const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
@@ -50,13 +61,20 @@ const oblivious = (card, cellId, gameState) => {
         return stat;
     };
 
-
     return card.stats.map(updateStatOnElementalTile);
+}
+
+const chlorophyll = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    if (!tileElement) return card;
+
+    return card.stats.map(stat => updateStatOnElementalTileByModifier(stat, card.types, tileElement, 2));
 }
 
 export const abilityHandlers = {
     transform,
-    oblivious
+    oblivious,
+    chlorophyll
 };
 
 /**
