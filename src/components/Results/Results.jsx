@@ -17,7 +17,7 @@ export default function Results() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { isPlayerVictory, matchCards } = useGameContext();
+    const { isPlayerVictory, matchCards, score } = useGameContext();
     const { userCollection, addCards, removeCard } = useAuth();
 
     const [matchAwards, setMatchAwards] = useState(null);

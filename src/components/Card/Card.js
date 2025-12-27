@@ -5,33 +5,44 @@ import UltraBallSprite from '@/assets/icons/tiers/Bag_Ultra_Ball_Sprite.png'
 import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
+
 import { useDraggable } from '@dnd-kit/core';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameContext } from '@/contexts/GameContext';
+import { useTooltip } from '@/hooks/useTooltip';
+import gameData from '@/data/game-data.json';
+
+const { abilities } = gameData;
+
+// Utility functions
+const sumUpNumbersInArray = (array) => {
+    return array.reduce((acc, val) => acc + val, 0);
+};
+
+const getBallSprite = (statWeight) => {
+    if (statWeight < 395) return PokemonBallSprite;
+    if (statWeight < 500) return GreatBallSprite;
+    if (statWeight < 600) return UltraBallSprite;
+    return MasterBallSprite;
+};
 
 export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const { hasCard } = useAuth();
+    const { cells } = useGameContext();
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
+    const { isVisible, handlers } = useTooltip(500); // 500ms long press
+    const [tooltipPosition, setTooltipPosition] = useState('top');
 
     if (!pokemonCard) {
         return null;
     }
 
+    const hasAbility = pokemonCard.ability;
     const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
 
-    const sumUpNumbersInArray = (array) => {
-        return array.reduce((acc, val) => acc + val, 0);
-    };
-
-    const getBallSprite = (statWeight) => {
-        if (statWeight < 395) return PokemonBallSprite;
-        if (statWeight < 500) return GreatBallSprite;
-        if (statWeight < 600) return UltraBallSprite;
-        return MasterBallSprite;
-    };
-
-    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
         id: `${pokemonCard.id.toString()}-${cellKey}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`,
         disabled: !isDraggable,
         data: {
@@ -129,6 +140,8 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
             setTimeout(() => setShowOverlay(false), 400);
         }
 
+        if (!cellKey || !cells[cellKey]?.element) return;
+
         const totalStats = sumUpNumbersInArray(pokemonCard.stats);
         const totalOriginalStats = sumUpNumbersInArray(pokemonCard.originalStats);
 
@@ -166,20 +179,34 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
         }
     }, [])
 
-    const getNameBgStyle = () => {
+    useEffect(() => {
+        if (isVisible && cardRef.current) {
+            const rect = cardRef.current.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            const cardCenter = rect.top + rect.height / 2;
+
+            // If card is in top half, show tooltip below; if in bottom half, show above
+            setTooltipPosition(cardCenter < viewportHeight / 2 ? 'bottom' : 'top');
+        }
+    }, [isVisible])
+
+    const nameBgStyle = useMemo(() => {
         if (pokemonCard.types.length === 1) {
             return { backgroundColor: `var(--color-${pokemonCard.types[0]}-500)` };
         }
         return {
             backgroundImage: `linear-gradient(to right, var(--color-${pokemonCard.types[0]}-500) 50%, var(--color-${pokemonCard.types[1]}-500) 50%)`
         };
-    };
+    }, [pokemonCard.types]);
 
     return (
-        <div className={`relative select-none ${isDraggable ? "cursor-pointer touch-none" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`} ref={setNodeRef}
+        <div
+            className={`relative select-none ${isDraggable ? "cursor-pointer touch-none" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`}
+            ref={setNodeRef}
             style={style}
             {...listeners}
             {...attributes}
+            {...(hasAbility ? handlers : {})}
         >
             <div ref={cardRef} className="relative" style={{
                 transformStyle: 'preserve-3d',
@@ -195,7 +222,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                             <div className='absolute bottom-0'>
                                 <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
                                 <div className={`pt-7 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
-                                <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[6px] md:text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
+                                <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[6px] md:text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={nameBgStyle}>{pokemonCard.name}</div>
                             </div>
                         </div>
                     </div>
@@ -211,6 +238,26 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                     </div>
                 </div>
             </div>
+
+            {/* Ability Tooltip */}
+            {hasAbility && isVisible && !isDragging && (
+                <div className={`fade-in-b absolute left-1/2 -translate-x-1/2 z-50 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'}`}>
+                    <div className='border border-black tooltip p-2 w-[80px] md:w-[140px] shadow-md/30'>
+                        <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={nameBgStyle}>
+                            {abilities[pokemonCard.ability]?.name}
+                        </div>
+                        <p className="text-[8px] md:text-[10px] my-2 text-center">
+                            {abilities[pokemonCard.ability]?.description}
+                        </p>
+                        {/* Arrow */}
+                        {tooltipPosition === 'top' ? (
+                            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-black" />
+                        ) : (
+                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-black" />
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

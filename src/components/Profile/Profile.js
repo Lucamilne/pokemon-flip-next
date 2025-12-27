@@ -1,13 +1,13 @@
 import { useEffect, useState, useMemo } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
-import { allPokemonNames, fetchSingleTypeCards, fetchSecretCards } from "@/utils/cardHelpers.js";
+import { allPokemonNames, fetchDebugCards, fetchSecretCards } from "@/utils/cardHelpers.js";
 
 import Loader from "@/components/Loader/Loader.js";
 import styles from "./retro.module.css";
 
 export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSelected }) {
-    const { user, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
+    const { user, signInWithGoogle, addAllCards, resetToStarters, collectionCount, addCustomCards } = useAuth();
     const [debugMode, setDebugMode] = useState(false);
 
     useEffect(() => {
@@ -254,6 +254,10 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                                 <div className="relative group">
                                     <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset cards</button>
+                                </div>
+                                <div className="relative group">
+                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <button onClick={() => setRandomThemedPlayerHand(fetchDebugCards)} className="disabled:opacity-30 cursor-pointer">Debug: Custom cards</button>
                                 </div>
                             </div>
                         )}
