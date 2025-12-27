@@ -51,7 +51,7 @@ const transform = (card, cellId, gameState) => {
 
 const oblivious = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
-    if (!tileElement) return card;
+    if (!tileElement) return card.stats;
 
     const updateStatOnElementalTile = (stat) => {
         if (card.types.includes(tileElement) && stat < 10) {
@@ -66,20 +66,56 @@ const oblivious = (card, cellId, gameState) => {
 
 const overgrow = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
-    if (!tileElement) return card;
+    if (!tileElement) return card.stats;
 
     return card.stats.map(stat => updateStatOnElementalTileByModifier(stat, card.types, tileElement, 2));
 }
 
+const blaze = overgrow;
+const torrent = overgrow;
+
 const chlorophyll = (card, cellId, gameState) => {
-    return card.stats; // do nothing for now
+    const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
+
+    // Count grass-type cards in both hands
+    const cardTypeCount = collectiveHand.filter(c =>
+        c.types.includes(card.types[0])
+    ).length;
+
+    if (cardTypeCount === 0) return card;
+
+    // Create a new stats array
+    const newStats = [...card.stats];
+
+    // Boost random stats based on grass card count
+    for (let i = 0; i < cardTypeCount; i++) {
+        // Pick a random stat index (0-3)
+        const randomStatIndex = Math.floor(Math.random() * newStats.length);
+
+        // Increase by +1, but cap at 10
+        if (newStats[randomStatIndex] < 10) {
+            newStats[randomStatIndex] += 1;
+        }
+    }
+
+    return {
+        ...card,
+        stats: newStats
+    };
 }
 
+const flashFire = chlorophyll;
+const swiftSwim = chlorophyll;
+
 export const abilityHandlers = {
-    transform,
-    oblivious,
+    blaze,
     chlorophyll,
-    overgrow
+    flashFire,
+    oblivious,
+    overgrow,
+    swiftSwim,
+    torrent,
+    transform
 };
 
 /**
