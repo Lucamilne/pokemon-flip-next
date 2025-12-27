@@ -291,6 +291,11 @@
         4,
         1
       ],
+      "ability": {
+        "name": "overgrow",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 318
     },
     "ivysaur": {
@@ -310,6 +315,11 @@
         1,
         7
       ],
+      "ability": {
+        "name": "overgrow",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 405
     },
     "venusaur": {
@@ -329,6 +339,11 @@
         6,
         8
       ],
+      "ability": {
+        "name": "overgrow",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on grass tiles"
+      },
       "statWeight": 525
     },
     "charmander": {
@@ -349,6 +364,11 @@
         2,
         6
       ],
+      "ability": {
+        "name": "blaze",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on fire tiles"
+      },
       "statWeight": 309
     },
     "charmeleon": {
@@ -368,6 +388,11 @@
         7,
         5
       ],
+      "ability": {
+        "name": "blaze",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on fire tiles"
+      },
       "statWeight": 405
     },
     "charizard": {
@@ -387,6 +412,11 @@
         9,
         7
       ],
+      "ability": {
+        "name": "blaze",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on fire tiles"
+      },
       "statWeight": 534
     },
     "squirtle": {
@@ -407,6 +437,11 @@
         6,
         2
       ],
+      "ability": {
+        "name": "torrent",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on water tiles"
+      },
       "statWeight": 314
     },
     "wartortle": {
@@ -426,6 +461,11 @@
         5,
         4
       ],
+      "ability": {
+        "name": "torrent",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on water tiles"
+      },
       "statWeight": 405
     },
     "blastoise": {
@@ -445,6 +485,11 @@
         5,
         6
       ],
+      "ability": {
+        "name": "torrent",
+        "trigger": "onElementalTilePlace",
+        "description": "Doubles stat bonuses when placed on water tiles"
+      },
       "statWeight": 530
     },
     "caterpie": {
@@ -982,6 +1027,11 @@
         3,
         3
       ],
+      "ability": {
+        "name": "flashFire",
+        "trigger": "onMatchStart",
+        "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 299
     },
     "ninetales": {
@@ -1001,6 +1051,11 @@
         4,
         5
       ],
+      "ability": {
+        "name": "flashFire",
+        "trigger": "onMatchStart",
+        "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 505
     },
     "jigglypuff": {
@@ -1098,8 +1153,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 320
     },
@@ -1122,8 +1177,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 395
     },
@@ -1146,8 +1201,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 490
     },
@@ -1320,6 +1375,11 @@
         2,
         1
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 320
     },
     "golduck": {
@@ -1339,6 +1399,11 @@
         6,
         8
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 500
     },
     "mankey": {
@@ -1396,6 +1461,11 @@
         4,
         6
       ],
+      "ability": {
+        "name": "flashFire",
+        "trigger": "onMatchStart",
+        "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 350
     },
     "arcanine": {
@@ -1415,6 +1485,11 @@
         10,
         5
       ],
+      "ability": {
+        "name": "flashFire",
+        "trigger": "onMatchStart",
+        "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 555
     },
     "poliwag": {
@@ -1434,6 +1509,11 @@
         2,
         6
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 300
     },
     "poliwhirl": {
@@ -1453,6 +1533,11 @@
         5,
         5
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 385
     },
     "poliwrath": {
@@ -1472,6 +1557,11 @@
         8,
         8
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 510
     },
     "abra": {
@@ -1607,8 +1697,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 300
     },
@@ -1631,8 +1721,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 390
     },
@@ -1655,8 +1745,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 490
     },
@@ -1772,6 +1862,11 @@
         5,
         7
       ],
+      "ability": {
+        "name": "flashFire",
+        "trigger": "onMatchStart",
+        "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 410
     },
     "rapidash": {
@@ -1791,6 +1886,11 @@
         6,
         7
       ],
+      "ability": {
+        "name": "flashFire",
+        "trigger": "onMatchStart",
+        "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 500
     },
     "slowpoke": {
@@ -2259,8 +2359,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 325
     },
@@ -2283,8 +2383,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 530
     },
@@ -2497,8 +2597,8 @@
       ],
       "ability": {
         "name": "chlorophyll",
-        "trigger": "onElementalTilePlace",
-        "description": "Doubles stat bonuses when placed on grass tiles"
+        "trigger": "onMatchStart",
+        "description": "For each Grass-type in the current match, a random stat is increased by 1"
       },
       "statWeight": 435
     },
@@ -2538,6 +2638,11 @@
         7,
         4
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 295
     },
     "seadra": {
@@ -2576,6 +2681,11 @@
         3,
         5
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 320
     },
     "seaking": {
@@ -2595,6 +2705,11 @@
         4,
         6
       ],
+      "ability": {
+        "name": "swiftSwim",
+        "trigger": "onMatchStart",
+        "description": "For each Water-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 450
     },
     "staryu": {
@@ -2923,6 +3038,11 @@
         7,
         6
       ],
+      "ability": {
+        "name": "flashFire",
+        "trigger": "onMatchStart",
+        "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      },
       "statWeight": 525
     },
     "porygon": {
