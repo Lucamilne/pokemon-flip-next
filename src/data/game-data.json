@@ -3297,13 +3297,13 @@
     "chlorophyll": {
       "name": "Chlorophyll",
       "trigger": "onMatchStart",
-      "description": "For each Grass-type in the current match, a random stat is increased by 1",
+      "description": "For each additional Grass-type in the current match, a random stat is increased by 1",
       "type": "grass"
     },
     "flashFire": {
       "name": "Flash Fire",
       "trigger": "onMatchStart",
-      "description": "For each Fire-type in the current match, a random stat is increased by 1",
+      "description": "For each additional Fire-type in the current match, a random stat is increased by 1",
       "type": "fire"
     },
     "evolve": {
@@ -3315,7 +3315,7 @@
     "swiftSwim": {
       "name": "Swift Swim",
       "trigger": "onMatchStart",
-      "description": "For each Water-type in the current match, a random stat is increased by 1",
+      "description": "For each additional Water-type in the current match, a random stat is increased by 1",
       "type": "water"
     },
     "oblivious": {

@@ -231,8 +231,6 @@ export default function Results() {
             {mounted && (
                 <div className="relative flex flex-col gap-4 m-8 justify-center fade-in">
                     <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="md:w-1/2 mx-auto drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
-                    <Balance score={score} />
-
                     <div className='bg-white border-4 border-block shadow-lg/30'>
                         <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
                             {isPlayerVictory === false ? 'Penalty' : 'Rewards'}

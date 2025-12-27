@@ -14,6 +14,18 @@ import gameData from '@/data/game-data.json';
 
 const { abilities } = gameData;
 
+// Utility functions
+const sumUpNumbersInArray = (array) => {
+    return array.reduce((acc, val) => acc + val, 0);
+};
+
+const getBallSprite = (statWeight) => {
+    if (statWeight < 395) return PokemonBallSprite;
+    if (statWeight < 500) return GreatBallSprite;
+    if (statWeight < 600) return UltraBallSprite;
+    return MasterBallSprite;
+};
+
 export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const { hasCard } = useAuth();
     const { cells } = useGameContext();
@@ -29,17 +41,6 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
 
     const hasAbility = pokemonCard.ability;
     const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
-
-    const sumUpNumbersInArray = (array) => {
-        return array.reduce((acc, val) => acc + val, 0);
-    };
-
-    const getBallSprite = (statWeight) => {
-        if (statWeight < 395) return PokemonBallSprite;
-        if (statWeight < 500) return GreatBallSprite;
-        if (statWeight < 600) return UltraBallSprite;
-        return MasterBallSprite;
-    };
 
     const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
         id: `${pokemonCard.id.toString()}-${cellKey}-${pokemonCard.isPlayerCard ? "player" : "cpu"}`,
@@ -189,20 +190,14 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
         }
     }, [isVisible])
 
-    const getNameBgStyle = () => {
+    const nameBgStyle = useMemo(() => {
         if (pokemonCard.types.length === 1) {
             return { backgroundColor: `var(--color-${pokemonCard.types[0]}-500)` };
         }
         return {
             backgroundImage: `linear-gradient(to right, var(--color-${pokemonCard.types[0]}-500) 50%, var(--color-${pokemonCard.types[1]}-500) 50%)`
         };
-    };
-
-    const getTypeTextStyle = () => {
-        if (pokemonCard.types[0]) {
-            return { color: `var(--color-${pokemonCard.types[0]}-500)` };
-        }
-    };
+    }, [pokemonCard.types]);
 
     return (
         <div
@@ -227,7 +222,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                             <div className='absolute bottom-0'>
                                 <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
                                 <div className={`pt-7 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
-                                <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[6px] md:text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={getNameBgStyle()}>{pokemonCard.name}</div>
+                                <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[6px] md:text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={nameBgStyle}>{pokemonCard.name}</div>
                             </div>
                         </div>
                     </div>
@@ -248,7 +243,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
             {hasAbility && isVisible && !isDragging && (
                 <div className={`fade-in-b absolute left-1/2 -translate-x-1/2 z-50 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'}`}>
                     <div className='border border-black tooltip p-2 w-[80px] md:w-[140px] shadow-md/30'>
-                        <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={getNameBgStyle()}>
+                        <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={nameBgStyle}>
                             {abilities[pokemonCard.ability]?.name}
                         </div>
                         <p className="text-[8px] md:text-[10px] my-2">

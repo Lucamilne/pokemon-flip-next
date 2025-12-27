@@ -113,9 +113,9 @@ const chlorophyll = (card, cellId, gameState) => {
     // Count type cards in both hands
     const cardTypeCount = collectiveHand.filter(c =>
         c.types.includes(card.types[0])
-    ).length;
+    ).length - 1;
 
-    if (cardTypeCount === 0) return card;
+    if (cardTypeCount < 1) return card;
 
     // Create a new stats array
     const newStats = [...card.stats];
