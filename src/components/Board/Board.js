@@ -122,7 +122,7 @@ export default function Board() {
         const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
         gridCells.forEach((cell) => {
-            if (tilesPlaced < maxTiles && Math.random() < 0.15 && availableTypes.length > 0) {
+            if (tilesPlaced < maxTiles && Math.random() < 0.99 && availableTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * availableTypes.length);
                 const randomElement = availableTypes[randomIndex];
                 updatedCells[cell] = { ...updatedCells[cell], element: randomElement };
@@ -155,8 +155,19 @@ export default function Board() {
     const applyTileStatModifiers = (attackingCard, cellTarget) => {
         const cellTargetObject = cells[cellTarget];
 
+        // Check if card has an onElementalTilePlace ability first
+        if (attackingCard.ability && abilities[attackingCard.ability]?.trigger === 'onElementalTilePlace') {
+            return triggerAbilities(
+                attackingCard,
+                'onElementalTilePlace',
+                cellTarget,
+                { cells, playerHand, cpuHand }
+            );
+        }
+
+        // Normal pokemon are not affected by elemental tiles (unless they have an ability)
         if (attackingCard.types.some((type) => type === "normal")) {
-            return attackingCard.stats; // normal pokemon are not affected by elemental tiles
+            return attackingCard;
         }
 
         const updateStatOnElementalTile = (stat) => {
@@ -170,23 +181,17 @@ export default function Board() {
             return stat; // No change
         };
 
-        if (attackingCard.ability && abilities[attackingCard.ability]?.trigger === 'onElementalTilePlace') {
-            return attackingCard.stats = triggerAbilities(
-                attackingCard,
-                'onElementalTilePlace',
-                cellTarget,
-                { cells, playerHand, cpuHand }
-            );
-        } else {
-            return attackingCard.stats.map(updateStatOnElementalTile);
-        }
+        return {
+            ...attackingCard,
+            stats: attackingCard.stats.map(updateStatOnElementalTile)
+        };
     };
 
     const placeAttackingCard = (cellTarget, attackingCard) => {
         const cellTargetObject = cells[cellTarget];
 
         if (cellTargetObject.element) {
-            attackingCard.stats = applyTileStatModifiers(attackingCard, cellTarget); // add or remove stats on placement of attacking card on tile
+            attackingCard = applyTileStatModifiers(attackingCard, cellTarget); // add or remove stats on placement of attacking card on tile
         }
 
         // Track if this card captured any cards due to type effectiveness
@@ -269,7 +274,7 @@ export default function Board() {
             }
         });
 
-        return capturedCells;
+        return { attackingCard, capturedCells };
     }
 
     function handleDragEnd(event) {
@@ -291,7 +296,7 @@ export default function Board() {
         // Remove card from the player hand
         setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
 
-        const capturedCells = placeAttackingCard(cellTarget, attackingCard);
+        const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard);
 
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
         // Force re-render by creating a new cells object so React detects defending card changes
@@ -314,7 +319,7 @@ export default function Board() {
             });
             newCells[cellTarget] = {
                 ...prev[cellTarget],
-                pokemonCard: attackingCard
+                pokemonCard: modifiedCard
             };
 
             return newCells;
@@ -660,6 +665,9 @@ export default function Board() {
         const cellTarget = bestCellToPlace;
         let attackingCard = bestCardToPlay;
 
+        // Find the original index in cpuHand BEFORE triggering abilities
+        const originalIndex = cpuHand.findIndex(card => card === attackingCard);
+
         attackingCard = triggerAbilities(
             attackingCard,
             'onGridPlace',
@@ -667,12 +675,9 @@ export default function Board() {
             { cells, playerHand, cpuHand }
         );
 
-        // Find the original index in cpuHand
-        const originalIndex = cpuHand.findIndex(card => card === attackingCard);
-
         setCpuHand(prev => prev.map((card, index) => index === originalIndex ? null : card));
 
-        const capturedCells = placeAttackingCard(cellTarget, attackingCard);
+        const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard);
 
         // Place the card in the selected cell
         // Force re-render by creating a new cells object so React detects defending card changes
@@ -695,7 +700,7 @@ export default function Board() {
             });
             newCells[cellTarget] = {
                 ...prevCells[cellTarget],
-                pokemonCard: attackingCard
+                pokemonCard: modifiedCard
             };
 
             return newCells;
@@ -706,6 +711,25 @@ export default function Board() {
 
     useEffect(() => {
         if (isPlayerTurn === null) return;
+
+        // Trigger onTurnStart abilities for all cards in hands
+        const updatedPlayerHand = playerHand.map(card => {
+            if (card && card.ability && abilities[card.ability]?.trigger === 'onTurnStart') {
+                return triggerAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
+            }
+            return card;
+        });
+
+        const updatedCpuHand = cpuHand.map(card => {
+            if (card && card.ability && abilities[card.ability]?.trigger === 'onTurnStart') {
+                return triggerAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
+            }
+            return card;
+        });
+
+        setPlayerHand(updatedPlayerHand);
+        setCpuHand(updatedCpuHand);
+        // end
 
         if (!isPlayerTurn) {
             makeCpuMove();

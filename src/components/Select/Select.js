@@ -105,6 +105,7 @@ export default function Select() {
                         type="text"
                         id="search"
                         className={`${styles['snes-input']} w-full md:w-auto`}
+                        autoComplete="off"
                         style={{
                             borderImageSource: `url('${basePath}/images/border-image.png')`,
                             borderImageSlice: '12',
@@ -208,7 +209,7 @@ export default function Select() {
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>
-p                    <button onClick={closePokeball} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
+                    <button onClick={closePokeball} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
                 </div>
             </div>
             <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />

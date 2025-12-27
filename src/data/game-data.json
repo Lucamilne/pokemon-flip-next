@@ -724,6 +724,7 @@
         3,
         3
       ],
+      "ability": "intimidate",
       "statWeight": 288
     },
     "arbok": {
@@ -743,6 +744,7 @@
         6,
         6
       ],
+      "ability": "intimidate",
       "statWeight": 448
     },
     "pikachu": {
@@ -2745,6 +2747,7 @@
         5,
         10
       ],
+      "ability": "intimidate",
       "statWeight": 490
     },
     "magikarp": {
@@ -2841,6 +2844,7 @@
         3,
         5
       ],
+      "ability": "evolve",
       "statWeight": 325
     },
     "vaporeon": {
@@ -3032,6 +3036,7 @@
         6,
         10
       ],
+      "ability": "rest",
       "statWeight": 540
     },
     "articuno": {
@@ -3290,49 +3295,70 @@
   },
   "abilities": {
     "chlorophyll": {
-      "name": "chlorophyll",
+      "name": "Chlorophyll",
       "trigger": "onMatchStart",
-      "description": "For each Grass-type in the current match, a random stat is increased by 1"
+      "description": "For each Grass-type in the current match, a random stat is increased by 1",
+      "type": "grass"
     },
     "flashFire": {
-      "name": "flashFire",
+      "name": "Flash Fire",
       "trigger": "onMatchStart",
-      "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      "description": "For each Fire-type in the current match, a random stat is increased by 1",
+      "type": "fire"
     },
-    "oblivious": {
-      "name": "oblivious",
+    "evolve": {
+      "name": "Evolve",
       "trigger": "onElementalTilePlace",
-      "description": "Oblivious to elemental tile penalties"
+      "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on",
+      "type": "normal"
     },
     "swiftSwim": {
-      "name": "swiftSwim",
+      "name": "Swift Swim",
       "trigger": "onMatchStart",
-      "description": "For each Water-type in the current match, a random stat is increased by 1"
+      "description": "For each Water-type in the current match, a random stat is increased by 1",
+      "type": "water"
+    },
+    "oblivious": {
+      "name": "Oblivious",
+      "trigger": "onElementalTilePlace",
+      "description": "Oblivious to elemental tile penalties",
+      "type": "psychic"
     },
     "transform": {
-      "name": "transform",
+      "name": "Transform",
       "trigger": "onGridPlace",
-      "description": "Copies the stats of the strongest adjacent Pokemon when placed on the grid"
+      "description": "Copies the stats of the strongest adjacent Pokemon when placed on the grid",
+      "type": "normal"
     },
     "intimidate": {
-      "name": "intimidate",
+      "name": "Intimidate",
       "trigger": "onGridPlace",
-      "description": "Lowers the Attack stat of all adjacent enemy Pokemon by 1 when placed on the grid"
+      "description": "Lowers the Attack stat of all adjacent enemy Pokemon by 1 when placed on the grid",
+      "type": "normal"
     },
     "blaze": {
-      "name": "blaze",
-      "trigger": "onMatchStart",
-      "description": "For each Fire-type in the current match, a random stat is increased by 1"
+      "name": "Blaze",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Fire-type tiles",
+      "type": "fire"
     },
     "torrent": {
-      "name": "torrent",
-      "trigger": "onMatchStart",
-      "description": "For each Water-type in the current match, a random stat is increased by 1"
+      "name": "Torrent",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Water-type tiles",
+      "type": "water"
     },
     "overgrow": {
-      "name": "overgrow",
-      "trigger": "onMatchStart",
-      "description": "For each Grass-type in the current match, a random stat is increased by 1"
+      "name": "Overgrow",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Grass-type tiles",
+      "type": "grass"
+    },
+    "rest": {
+      "name": "Rest",
+      "trigger": "onTurnStart",
+      "description": "This Pokémon gains +1 to a stat for every turn it stays in the player’s hand after the game starts",
+      "type": "psychic"
     }
   }
 }

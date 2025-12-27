@@ -8,6 +8,7 @@ import Stats from '../Stats/Stats.js';
 
 import { useDraggable } from '@dnd-kit/core';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameContext } from '@/contexts/GameContext';
 import { useTooltip } from '@/hooks/useTooltip';
 import gameData from '@/data/game-data.json';
 
@@ -15,6 +16,7 @@ const { abilities } = gameData;
 
 export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const { hasCard } = useAuth();
+    const { cells } = useGameContext();
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
@@ -136,6 +138,8 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
             setShowOverlay(true);
             setTimeout(() => setShowOverlay(false), 400);
         }
+
+        if (!cellKey || !cells[cellKey]?.element) return;
 
         const totalStats = sumUpNumbersInArray(pokemonCard.stats);
         const totalOriginalStats = sumUpNumbersInArray(pokemonCard.originalStats);
