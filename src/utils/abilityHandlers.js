@@ -1,3 +1,7 @@
+import gameData from '@/data/game-data.json';
+
+const { abilities } = gameData;
+
 const getAdjacentCells = (cellId, cells) => {
     const cell = cells[cellId];
     if (!cell) return [];
@@ -126,8 +130,8 @@ export const triggerAbilities = (card, trigger, cellId, gameState) => {
 
     let modifiedCard = { ...card };
 
-    if (card.ability.trigger === trigger && abilityHandlers[card.ability.name]) {
-        modifiedCard = abilityHandlers[card.ability.name](modifiedCard, cellId, gameState);
+    if (abilities[card.ability]?.trigger === trigger && abilityHandlers[card.ability]) {
+        modifiedCard = abilityHandlers[card.ability](modifiedCard, cellId, gameState);
     }
 
     return modifiedCard;

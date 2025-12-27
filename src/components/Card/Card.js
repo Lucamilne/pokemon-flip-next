@@ -9,6 +9,9 @@ import Stats from '../Stats/Stats.js';
 import { useDraggable } from '@dnd-kit/core';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTooltip } from '@/hooks/useTooltip';
+import gameData from '@/data/game-data.json';
+
+const { abilities } = gameData;
 
 export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const { hasCard } = useAuth();
@@ -242,10 +245,10 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                 <div className={`fade-in-b absolute left-1/2 -translate-x-1/2 z-50 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'}`}>
                     <div className='border border-black tooltip p-2 w-[80px] md:w-[140px] shadow-md/30'>
                         <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={getNameBgStyle()}>
-                            {pokemonCard.ability.name}
+                            {abilities[pokemonCard.ability]?.name}
                         </div>
                         <p className="text-[8px] md:text-[10px] my-2">
-                            {pokemonCard.ability.description}
+                            {abilities[pokemonCard.ability]?.description}
                         </p>
                         {/* Arrow */}
                         {tooltipPosition === 'top' ? (

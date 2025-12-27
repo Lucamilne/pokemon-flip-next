@@ -18,6 +18,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import gameData from '@/data/game-data.json';
 import styles from './background.module.css';
 
+const { abilities } = gameData;
+
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -76,7 +78,7 @@ export default function Board() {
 
         // onMatchStart - trigger abilities for both hands
         const processedCpuHand = newCpuHand.map(card => {
-            if (card.ability?.trigger === 'onMatchStart') {
+            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
                 return triggerAbilities(
                     card,
                     'onMatchStart',
@@ -88,7 +90,7 @@ export default function Board() {
         });
 
         const processedPlayerHand = newPlayerHand.map(card => {
-            if (card.ability?.trigger === 'onMatchStart') {
+            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
                 return triggerAbilities(
                     card,
                     'onMatchStart',
@@ -168,7 +170,7 @@ export default function Board() {
             return stat; // No change
         };
 
-        if (attackingCard.ability?.trigger === 'onElementalTilePlace') {
+        if (attackingCard.ability && abilities[attackingCard.ability]?.trigger === 'onElementalTilePlace') {
             return attackingCard.stats = triggerAbilities(
                 attackingCard,
                 'onElementalTilePlace',

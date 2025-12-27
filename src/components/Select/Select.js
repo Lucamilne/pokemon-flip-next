@@ -167,7 +167,7 @@ export default function Select() {
                                             const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
                                             return (
                                                 <button
-                                                    className={`relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
+                                                    className={`cursor-pointer relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
                                                     key={pokemonCard.id}
                                                     onClick={() => togglePokemonCardSelection(pokemonCard)}
                                                 >
@@ -208,7 +208,7 @@ export default function Select() {
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>
-                    <button onClick={closePokeball} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
+p                    <button onClick={closePokeball} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
                 </div>
             </div>
             <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />
