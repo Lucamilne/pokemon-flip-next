@@ -512,6 +512,7 @@
         6,
         2
       ],
+      "ability": "swarm",
       "statWeight": 395
     },
     "weedle": {
@@ -570,6 +571,7 @@
         3,
         7
       ],
+      "ability": "swarm",
       "statWeight": 395
     },
     "pidgey": {
@@ -724,7 +726,6 @@
         3,
         3
       ],
-      "ability": "intimidate",
       "statWeight": 288
     },
     "arbok": {
@@ -744,7 +745,6 @@
         6,
         6
       ],
-      "ability": "intimidate",
       "statWeight": 448
     },
     "pikachu": {
@@ -765,6 +765,7 @@
         6,
         4
       ],
+      "ability": "lightningRod",
       "statWeight": 320
     },
     "raichu": {
@@ -784,6 +785,7 @@
         4,
         6
       ],
+      "ability": "lightningRod",
       "statWeight": 485
     },
     "sandshrew": {
@@ -1321,7 +1323,6 @@
         2,
         1
       ],
-      "ability": "swiftSwim",
       "statWeight": 320
     },
     "golduck": {
@@ -1341,7 +1342,6 @@
         6,
         8
       ],
-      "ability": "swiftSwim",
       "statWeight": 500
     },
     "mankey": {
@@ -2247,7 +2247,6 @@
         2,
         6
       ],
-      "ability": "chlorophyll",
       "statWeight": 325
     },
     "exeggutor": {
@@ -2267,7 +2266,6 @@
         8,
         6
       ],
-      "ability": "chlorophyll",
       "statWeight": 530
     },
     "cubone": {
@@ -2516,7 +2514,6 @@
         7,
         4
       ],
-      "ability": "swiftSwim",
       "statWeight": 295
     },
     "seadra": {
@@ -2555,7 +2552,6 @@
         3,
         5
       ],
-      "ability": "swiftSwim",
       "statWeight": 320
     },
     "seaking": {
@@ -2575,7 +2571,6 @@
         4,
         6
       ],
-      "ability": "swiftSwim",
       "statWeight": 450
     },
     "staryu": {
@@ -2690,6 +2685,7 @@
         8,
         4
       ],
+      "ability": "staticElectricity",
       "statWeight": 490
     },
     "magmar": {
@@ -2747,7 +2743,6 @@
         5,
         10
       ],
-      "ability": "intimidate",
       "statWeight": 490
     },
     "magikarp": {
@@ -2767,6 +2762,7 @@
         2,
         2
       ],
+      "ability": "desperation",
       "statWeight": 200
     },
     "gyarados": {
@@ -2775,16 +2771,16 @@
         "water"
       ],
       "stats": [
-        6,
+        7,
         8,
         7,
-        8
+        7
       ],
       "originalStats": [
-        6,
+        7,
         8,
         7,
-        8
+        7
       ],
       "statWeight": 540
     },
@@ -2805,6 +2801,7 @@
         9,
         5
       ],
+      "ability": "surf",
       "statWeight": 535
     },
     "ditto": {
@@ -2864,6 +2861,7 @@
         7,
         7
       ],
+      "ability": "swiftSwim",
       "statWeight": 525
     },
     "jolteon": {
@@ -2883,6 +2881,7 @@
         8,
         8
       ],
+      "ability": "staticElectricity",
       "statWeight": 525
     },
     "flareon": {
@@ -3075,6 +3074,7 @@
         6,
         9
       ],
+      "ability": "staticElectricity",
       "statWeight": 580
     },
     "moltres": {
@@ -3094,6 +3094,7 @@
         6,
         8
       ],
+      "ability": "flashFire",
       "statWeight": 580
     },
     "dratini": {
@@ -3189,6 +3190,7 @@
         9,
         6
       ],
+      "ability": "synchronise",
       "statWeight": 600
     }
   },
@@ -3300,6 +3302,12 @@
       "description": "For each additional Grass-type in the current match, a random stat is increased by 1",
       "type": "grass"
     },
+    "desperation": {
+      "name": "Desperation",
+      "trigger": "onGridPlace",
+      "description": "Transforms into Gyarados when placed while losing with 3 or fewer empty spaces remaining",
+      "type": "water"
+    },
     "flashFire": {
       "name": "Flash Fire",
       "trigger": "onMatchStart",
@@ -3312,10 +3320,46 @@
       "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on",
       "type": "normal"
     },
+    "lick": {
+      "name": "Lick",
+      "trigger": "onGridPlace",
+      "description": "Paralyzes adjacent enemies, setting one random stat to 1",
+      "type": "normal"
+    },
+    "lightningRod": {
+      "name": "Lightning Rod",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Electric-type tiles",
+      "type": "electric"
+    },
     "swiftSwim": {
       "name": "Swift Swim",
       "trigger": "onMatchStart",
       "description": "For each additional Water-type in the current match, a random stat is increased by 1",
+      "type": "water"
+    },
+    "synchronise": {
+      "name": "Synchronise",
+      "trigger": "onMatchStart",
+      "description": "For each additional Psychic-type in the current match, a random stat is increased by 1",
+      "type": "psychic"
+    },
+    "swarm": {
+      "name": "Swarm",
+      "trigger": "onMatchStart",
+      "description": "For each additional Bug-type in the current match, a random stat is increased by 1",
+      "type": "bug"
+    },
+    "staticElectricity": {
+      "name": "Static",
+      "trigger": "onMatchStart",
+      "description": "For each additional Electric-type in the current match, a random stat is increased by 1",
+      "type": "electric"
+    },
+    "surf": {
+      "name": "Surf",
+      "trigger": "onElementalTilePlace",
+      "description": "Ride the wave to maximum power on water tiles",
       "type": "water"
     },
     "oblivious": {

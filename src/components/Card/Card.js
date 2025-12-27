@@ -246,7 +246,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                         <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={nameBgStyle}>
                             {abilities[pokemonCard.ability]?.name}
                         </div>
-                        <p className="text-[8px] md:text-[10px] my-2">
+                        <p className="text-[8px] md:text-[10px] my-2 text-center">
                             {abilities[pokemonCard.ability]?.description}
                         </p>
                         {/* Arrow */}

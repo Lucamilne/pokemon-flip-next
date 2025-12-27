@@ -122,7 +122,7 @@ export default function Board() {
         const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
         gridCells.forEach((cell) => {
-            if (tilesPlaced < maxTiles && Math.random() < 0.99 && availableTypes.length > 0) {
+            if (tilesPlaced < maxTiles && Math.random() < 0.15 && availableTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * availableTypes.length);
                 const randomElement = availableTypes[randomIndex];
                 updatedCells[cell] = { ...updatedCells[cell], element: randomElement };

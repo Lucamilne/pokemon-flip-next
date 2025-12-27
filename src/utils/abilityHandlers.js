@@ -106,6 +106,7 @@ const evolve = (card, cellId, gameState) => {
 
 const blaze = overgrow;
 const torrent = overgrow;
+const lightningRod = overgrow;
 
 const chlorophyll = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
@@ -139,6 +140,9 @@ const chlorophyll = (card, cellId, gameState) => {
 
 const flashFire = chlorophyll;
 const swiftSwim = chlorophyll;
+const staticElectricity = chlorophyll;
+const swarm = chlorophyll;
+const synchronise = chlorophyll;
 
 const rest = (card, cellId, gameState) => {
     const hasCardsOnGrid = Object.values(gameState.cells).some(cell => cell.pokemonCard);
@@ -189,18 +193,87 @@ const intimidate = (card, cellId, gameState) => {
     return card;
 };
 
+const desperation = (card, cellId, gameState) => {
+    const emptySpaces = Object.values(gameState.cells)
+        .filter(cell => cell.pokemonCard === null).length;
+
+    if (emptySpaces > 3) return card;
+
+    const gridCards = Object.values(gameState.cells)
+        .map(cell => cell.pokemonCard)
+        .filter(c => c !== null);
+
+    const playerCards = gridCards.filter(c => c.isPlayerCard).length;
+    const cpuCards = gridCards.filter(c => !c.isPlayerCard).length;
+
+    // Check if losing
+    const isLosing = card.isPlayerCard
+        ? cpuCards > playerCards
+        : playerCards > cpuCards;
+
+    // Transform only if losing in late game
+    if (isLosing) {
+        const gyarados = gameData.cards.gyarados;
+        return {
+            ...card,
+            id: gyarados.id,
+            types: [...gyarados.types],
+            stats: [...gyarados.stats],
+        };
+    }
+
+    return card;
+};
+
+const surf = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    if (!tileElement) return card;
+
+    return {
+        ...card,
+        stats: card.stats.map(stat => stat = 10)
+    };
+}
+
+const lick = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Paralyze each adjacent enemy
+    adjacentCellIds.forEach(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            // Paralyze: set one random stat to 1
+            const randomStatIndex = Math.floor(Math.random() * 4);
+
+            // Create new array with paralyzed stat
+            adjacentCell.pokemonCard.stats = adjacentCell.pokemonCard.stats.map((stat, index) =>
+                index === randomStatIndex ? 1 : stat
+            );
+        }
+    });
+
+    return card;
+};
+
 export const abilityHandlers = {
     blaze,
     chlorophyll,
+    desperation,
     evolve,
     flashFire,
     intimidate,
+    lick,
+    lightningRod,
     oblivious,
     overgrow,
     rest,
+    staticElectricity,
+    surf,
+    swarm,
     swiftSwim,
+    synchronise,
     torrent,
-    transform
+    transform,
 };
 
 /**
