@@ -4,10 +4,16 @@ import SlideB from "@/components/HowToPlay/Slides/B";
 import SlideC from "@/components/HowToPlay/Slides/C";
 import SlideD from "@/components/HowToPlay/Slides/D";
 import SlideE from "@/components/HowToPlay/Slides/E";
+import SlideF from "@/components/HowToPlay/Slides/F";
+
+import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
+import GreatBallSprite from '@/assets/icons/tiers/Bag_Great_Ball_Sprite.png'
+import UltraBallSprite from '@/assets/icons/tiers/Bag_Ultra_Ball_Sprite.png'
+import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 
 export default function HowToPlay({ isOpen, onClose }) {
     const [currentSlide, setCurrentSlide] = useState(0)
-    const totalSlides = 6
+    const totalSlides = 7
 
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % totalSlides)
@@ -21,14 +27,13 @@ export default function HowToPlay({ isOpen, onClose }) {
 
     return (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={onClose}>
-            {/* Modal Container */}
-            <div className="relative w-full max-w-4xl h-full lg:max-h-[620px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full max-w-4xl h-full lg:max-h-[660px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
                     className="flex h-full transition-transform duration-300 ease-in-out text-base"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                     {/* Slide A */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Game Objective</h2>
                             <p>Control more cards than your opponent by placing yours strategically to capture Pokémon and dominate the arena.
@@ -41,7 +46,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide B */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Core Combat</h2>
                             <p>Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
@@ -51,7 +56,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide C */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Elemental Tiles</h2>
                             <p>Some grid spaces have elemental symbols. Placing a card on a
@@ -67,7 +72,18 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide D */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
+                        <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
+                            <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
+                            <p>Some Pokémon cards have special abilities that change how they play.</p>
+                            <p>Cards with abilities are marked with a <img className="inline md:size-[24px]" src={PokemonBallSprite} />, <img className="inline md:size-[24px]" src={GreatBallSprite} />, <img className="inline md:size-[24px]" src={UltraBallSprite} /> or <img className="inline md:size-[24px]" src={MasterBallSprite} /> icon, depending on the power of the card.</p>
+                            <p>Hover over a card with an ability to see what it does!</p>
+                        </div>
+                        <SlideD nextSlide={nextSlide} />
+                    </div>
+
+                    {/* Slide E */}
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Type Advantages</h2>
                             <p className='font-press-start'>Pokemon types matter! Super-effective attacks (like
@@ -81,18 +97,18 @@ export default function HowToPlay({ isOpen, onClose }) {
                                 You will be able to flip a defending card with equal or higher facing stats.
                             </p>
                         </div>
-                        <SlideD nextSlide={nextSlide} />
+                        <SlideE nextSlide={nextSlide} />
                     </div>
-                    {/* Slide E */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 md:justify-between p-8 md:px-24 md:p-14">
+                    {/* Slide F */}
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Type Immunities</h2>
                             <p>Some types have no effect, and cannot flip defending cards, no matter the stat advantage.</p>
                         </div>
-                        <SlideE nextSlide={nextSlide} />
+                        <SlideF nextSlide={nextSlide} />
                     </div>
-                    {/* Slide F */}
-                    <div className="min-w-full h-full p-8 md:px-24 md:p-14">
+                    {/* Slide G */}
+                    <div className="min-w-full h-full p-8 md:px-24 md:p-14 flex flex-col justify-center md:justify-between">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Winning the Game</h2>
                             <p>The game ends when all 9 spaces are filled. The player controlling
@@ -114,7 +130,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                 <button
                     onClick={prevSlide}
                     disabled={currentSlide === 0}
-                    className="hidden md:block cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 h-10 flex items-center justify-center w-10 disabled:opacity-50 disabled:hidden md:block -auto"
+                    className="cursor-pointer absolute left-4 bottom-3 md:top-1/2 md:-translate-y-1/2 h-10 flex items-center justify-center w-10 disabled:opacity-50 disabled:cursor-auto"
                 >
                     <div className='arrow-relative rotate-180' />
                 </button>
@@ -122,7 +138,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                 <button
                     onClick={nextSlide}
                     disabled={currentSlide === totalSlides - 1}
-                    className="hidden md:block cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 h-10 flex items-center justify-center w-10 disabled:opacity-50 disabled:cursor-auto"
+                    className="cursor-pointer absolute right-4 bottom-3 md:top-1/2 md:-translate-y-1/2 h-10 flex items-center justify-center w-10 disabled:opacity-50 disabled:cursor-auto"
                 >
                     <div className='arrow-relative' />
                 </button>

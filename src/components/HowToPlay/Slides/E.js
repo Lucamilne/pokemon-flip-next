@@ -12,10 +12,11 @@ function TutorialDropZone({ droppedCard }) {
         }
     });
 
-    let defendingCard = fetchCardById(16, false);
+    let defendingCard = fetchCardById(5, false);
 
     if (droppedCard) {
-        droppedCard.wasNoEffect = true
+        droppedCard.wasSuperEffective = true
+        defendingCard.isPlayerCard = true;
     }
 
     return (
@@ -59,8 +60,8 @@ function TutorialDropZone({ droppedCard }) {
     );
 }
 
-export default function E({ nextSlide }) {
-    const pokemonCard = fetchCardById(76);
+export default function D({ nextSlide }) {
+    const pokemonCard = fetchCardById(8);
     const [droppedCard, setDroppedCard] = useState(null);
     const [isBeingDragged, setIsBeingDragged] = useState(false)
 
@@ -80,7 +81,7 @@ export default function E({ nextSlide }) {
 
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-            <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-normal p-2 md:p-4 border-y-6 border-black">
+            <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-theme-red p-2 md:p-4 border-y-6 border-black">
                 <div className={`relative aspect-square w-[72px] md:w-[124px] rounded-md`}>
                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
                     {!droppedCard && (
@@ -91,7 +92,7 @@ export default function E({ nextSlide }) {
                 <div className="relative">
                     <TutorialDropZone droppedCard={droppedCard} />
                     {!isBeingDragged && !droppedCard && (
-                        <Help direction="from-right" customClass="!whitespace-nowrap scale-80 md:scale-100 !absolute !-top-16 !right-0" text="No threat!" />
+                        <Help direction="from-right" customClass="!whitespace-nowrap scale-80 md:scale-100 !absolute !-top-16 !right-0" text="Yikes!" />
                     )}
                 </div>
             </div>

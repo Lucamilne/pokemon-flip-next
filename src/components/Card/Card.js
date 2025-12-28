@@ -213,7 +213,14 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                 transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
                 transition: 'transform 0.3s ease-out'
             }}>
-                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
+                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square ${isDraggable && !isPlacedInGrid ? 'card-ring' : ''}`}
+                    style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        '--glow-color-light': `var(--color-${pokemonCard.types[0]}-300)`,
+                        '--glow-color-dark': `var(--color-${pokemonCard.types[0]}-500)`
+                    }}
+                >
                     <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
                         <div className="relative h-full flex flex-col items-center justify-center">
                             <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
@@ -226,7 +233,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                             </div>
                         </div>
                     </div>
-                    {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} />}
+                    {hasAbility && <img width={24} height={24} alt="Ability enabled card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} />}
                     {showOverlay && (
                         <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
                             <span className='mt-4 '>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
@@ -242,11 +249,11 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
             {/* Ability Tooltip */}
             {hasAbility && isVisible && !isDragging && (
                 <div className={`fade-in-b absolute left-1/2 -translate-x-1/2 z-50 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'}`}>
-                    <div className='border border-black tooltip p-2 w-[80px] md:w-[140px] shadow-md/30'>
+                    <div className='border border-black tooltip p-1 md:p-2 w-[90px] md:w-[140px] shadow-md/30'>
                         <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={nameBgStyle}>
                             {abilities[pokemonCard.ability]?.name}
                         </div>
-                        <p className="text-[8px] md:text-[10px] my-2 text-center">
+                        <p className="text-[8px] md:text-[10px] my-1 md:my-2 text-center">
                             {abilities[pokemonCard.ability]?.description}
                         </p>
                         {/* Arrow */}

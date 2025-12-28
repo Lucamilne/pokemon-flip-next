@@ -12,10 +12,10 @@ function TutorialDropZone({ droppedCard }) {
         }
     });
 
-    let defendingCard = fetchCardById(129, false);
+    let defendingCard = fetchCardById(16, false);
 
     if (droppedCard) {
-        defendingCard.isPlayerCard = true;
+        droppedCard.wasNoEffect = true
     }
 
     return (
@@ -59,8 +59,8 @@ function TutorialDropZone({ droppedCard }) {
     );
 }
 
-export default function B({ nextSlide }) {
-    const pokemonCard = fetchCardById(150);
+export default function E({ nextSlide }) {
+    const pokemonCard = fetchCardById(76);
     const [droppedCard, setDroppedCard] = useState(null);
     const [isBeingDragged, setIsBeingDragged] = useState(false)
 
@@ -91,7 +91,7 @@ export default function B({ nextSlide }) {
                 <div className="relative">
                     <TutorialDropZone droppedCard={droppedCard} />
                     {!isBeingDragged && !droppedCard && (
-                        <Help direction="from-right" customClass="!whitespace-nowrap scale-80 md:scale-100 !absolute !-top-16 !right-0" text="Gulp!" />
+                        <Help direction="from-right" customClass="!whitespace-nowrap scale-80 md:scale-100 !absolute !-top-16 !right-0" text="No threat!" />
                     )}
                 </div>
             </div>

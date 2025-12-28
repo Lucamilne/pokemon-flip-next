@@ -3323,7 +3323,7 @@
     "desperation": {
       "name": "Desperation",
       "trigger": "onGridPlace",
-      "description": "Transforms into Gyarados when placed while losing with 3 or fewer empty spaces remaining",
+      "description": "Transforms into Gyarados when placed while losing and with 3 or fewer empty spaces remaining",
       "type": "water"
     },
     "flashFire": {

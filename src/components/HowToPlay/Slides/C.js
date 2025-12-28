@@ -77,7 +77,7 @@ export default function C({ nextSlide }) {
 
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-            <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-fire p-2 md:p-4 border-y-6 border-black">
+            <div className="relative flex justify-around items-center w-full bg-linear-to-r from-theme-blue via-white to-normal p-2 md:p-4 border-y-6 border-black">
                 <div className={`relative aspect-square w-[72px] md:w-[124px] rounded-md`}>
                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
                     {!droppedCard && (
