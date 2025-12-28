@@ -60,7 +60,7 @@ function TutorialDropZone({ droppedCard }) {
 }
 
 export default function E({ nextSlide }) {
-    const pokemonCard = fetchCardById(76);
+    const pokemonCard = fetchCardById(28);
     const [droppedCard, setDroppedCard] = useState(null);
     const [isBeingDragged, setIsBeingDragged] = useState(false)
 

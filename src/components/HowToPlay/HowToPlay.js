@@ -76,7 +76,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
                             <p>Some Pokémon cards have special abilities that change how they play.</p>
-                            <p>Cards with abilities are marked with a <img className="inline md:size-[24px]" src={PokemonBallSprite} />, <img className="inline md:size-[24px]" src={GreatBallSprite} />, <img className="inline md:size-[24px]" src={UltraBallSprite} /> or <img className="inline md:size-[24px]" src={MasterBallSprite} /> icon, depending on the power of the card.</p>
+                            <p>Cards with abilities are marked with a <img className="inline md:size-[24px]" src={PokemonBallSprite} /> icon.</p>
                             <p>Hover over a card with an ability to see what it does!</p>
                         </div>
                         <SlideD nextSlide={nextSlide} />
@@ -103,7 +103,12 @@ export default function HowToPlay({ isOpen, onClose }) {
                     <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Type Immunities</h2>
-                            <p>Some types have no effect, and cannot flip defending cards, no matter the stat advantage.</p>
+                            <p>Some types have no effect (like
+                                <span className="text-white py-1 px-3 ml-2"
+                                    style={{ backgroundColor: `var(--color-ground-500)` }}
+                                >Ground</span> vs <span className="text-white py-1 px-3"
+                                    style={{ backgroundColor: `var(--color-flying-500)` }}
+                                >Flying</span>), and cannot flip defending cards regardless of the stat advantage.</p>
                         </div>
                         <SlideF nextSlide={nextSlide} />
                     </div>

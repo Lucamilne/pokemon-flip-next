@@ -182,22 +182,46 @@ const rest = (card, cellId, gameState) => {
     };
 };
 
-const intimidate = (card, cellId, gameState) => {
+const harden = rest;
+
+const pressure = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
-    // Lower stats of all adjacent enemy cards
-    adjacentCellIds.forEach(adjacentCellId => {
+    // Count adjacent cells with any pokemon (friend or foe)
+    const occupiedAdjacentCells = adjacentCellIds.filter(adjacentCellId => {
         const adjacentCell = gameState.cells[adjacentCellId];
-        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            // Lower all stats by 1, but don't go below 1
-            adjacentCell.pokemonCard.stats = adjacentCell.pokemonCard.stats.map(stat =>
-                stat > 1 ? stat - 1 : 1
-            );
-        }
-    });
+        return adjacentCell?.pokemonCard;
+    }).length;
 
-    return card;
+    // If no adjacent cards, return card unchanged
+    if (occupiedAdjacentCells === 0) return card;
+
+    // Create a new stats array
+    const newStats = [...card.stats];
+
+    // Boost random stats based on occupied cell count
+    for (let i = 0; i < occupiedAdjacentCells; i++) {
+        // Pick a random stat index (0-3)
+        const randomStatIndex = Math.floor(Math.random() * newStats.length);
+
+        // Increase by +1, but cap at 10
+        if (newStats[randomStatIndex] < 10) {
+            newStats[randomStatIndex] += 1;
+        }
+    }
+
+    return {
+        ...card,
+        stats: newStats
+    };
 };
+
+const selfDestruct = (card, cellId, gameState) => {
+    return {
+        ...card,
+        stats: [1, 1, 1, 1]
+    };
+}
 
 const desperation = (card, cellId, gameState) => {
     const emptySpaces = Object.values(gameState.cells)
@@ -289,26 +313,88 @@ const lonely = (card, cellId, gameState) => {
     };
 };
 
+const download = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Find the largest stat among all adjacent pokemon
+    let largestStat = 0;
+
+    adjacentCellIds.forEach(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        if (adjacentCell?.pokemonCard) {
+            const maxStatInCard = Math.max(...adjacentCell.pokemonCard.stats);
+            if (maxStatInCard > largestStat) {
+                largestStat = maxStatInCard;
+            }
+        }
+    });
+
+    // If no adjacent cards found, return card unchanged
+    if (largestStat === 0) return card;
+
+    // Apply the largest stat to all stats on this card
+    return {
+        ...card,
+        stats: [largestStat, largestStat, largestStat, largestStat]
+    };
+};
+
+const pickup = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Count empty adjacent cells
+    const emptyAdjacentCells = adjacentCellIds.filter(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        return !adjacentCell?.pokemonCard;
+    }).length;
+
+    // If no empty cells, return card unchanged
+    if (emptyAdjacentCells === 0) return card;
+
+    // Create a new stats array
+    const newStats = [...card.stats];
+
+    // Boost random stats based on empty cell count
+    for (let i = 0; i < emptyAdjacentCells; i++) {
+        // Pick a random stat index (0-3)
+        const randomStatIndex = Math.floor(Math.random() * newStats.length);
+
+        // Increase by +1, but cap at 10
+        if (newStats[randomStatIndex] < 10) {
+            newStats[randomStatIndex] += 1;
+        }
+    }
+
+    return {
+        ...card,
+        stats: newStats
+    };
+};
+
 export const abilityHandlers = {
     blaze,
     chlorophyll,
     clearBody,
     desperation,
+    download,
     evolve,
     flashFire,
     guts,
+    harden,
     iceBody,
-    intimidate,
     lick,
     lightningRod,
+    lonely,
     oblivious,
     overgrow,
+    pickup,
+    pressure,
     rest,
     sandVeil,
+    selfDestruct,
     shellArmor,
     shieldDust,
     staticElectricity,
-    lonely,
     swarm,
     swiftSwim,
     synchronise,

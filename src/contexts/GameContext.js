@@ -17,6 +17,7 @@ export function GameProvider({ children }) {
   const [isPlayerTurn, setIsPlayerTurn] = useState(null); // null = not started, true = player's turn, false = CPU's turn
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
+  const [lastSelectedHand, setLastSelectedHand] = useState([]);
 
   const [cells, setCells] = useState({
     A1: {
@@ -167,6 +168,8 @@ export function GameProvider({ children }) {
       setPlayerHand,
       cpuHand,
       setCpuHand,
+      lastSelectedHand,
+      setLastSelectedHand,
       score,
       resetGameState
     }}>

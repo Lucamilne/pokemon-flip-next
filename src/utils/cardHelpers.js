@@ -202,7 +202,7 @@ export const fetchFossilCards = (isPlayerCard = true) => {
 }
 
 export const fetchDebugCards = (isPlayerCard = true) => {
-    const fossils = ['lapras', 'lickitung', 'tauros', 'porygon', 'mewtwo'];
+    const fossils = ['voltorb', 'electrode', 'tauros', 'porygon', 'mewtwo'];
     return allPokemonNames
         .filter((pokemonName) => fossils.includes(pokemonName))
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));

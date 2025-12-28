@@ -262,6 +262,13 @@ export default function Board() {
                 // Track this cell as having been captured (don't mutate the original object)
                 capturedCells[adjacentCellKey] = attackingCard.isPlayerCard;
 
+                attackingCard = triggerAbilities(
+                    attackingCard,
+                    'onCapture',
+                    cellTarget,
+                    { cells, playerHand, cpuHand }
+                );
+
                 // Update match stats
                 attackingCard.matchStats.capturesMade++;
                 defendingCard.matchStats.timesFlipped++;

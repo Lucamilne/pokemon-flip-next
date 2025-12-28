@@ -20,11 +20,11 @@ export default function Select() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const { setSelectedPlayerHand, resetGameState } = useGameContext();
+    const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand } = useGameContext();
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
     const [playerCardLibrary, setPlayerCardLibrary] = useState([]);
-    const { user, userCollection, isLoadingCollection } = useAuth();
+    const { userCollection, isLoadingCollection } = useAuth();
 
     useEffect(() => {
         // Reset game state when arriving at select screen (prepares for new game)
@@ -183,7 +183,7 @@ export default function Select() {
                         )}
                     </div>
                 </div>
-                <Profile playerHand={playerHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
+                <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/40" />
@@ -209,7 +209,7 @@ export default function Select() {
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>
-                    <button onClick={closePokeball} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
+                    <button onClick={() => {closePokeball(); setLastSelectedHand(playerHand) }} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
                 </div>
             </div>
             <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />
