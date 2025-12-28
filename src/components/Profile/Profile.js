@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef, useLayoutEffect } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
 import { allPokemonNames, fetchDebugCards, fetchSecretCards } from "@/utils/cardHelpers.js";
@@ -9,6 +9,12 @@ import styles from "./retro.module.css";
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected }) {
     const { user, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
     const [debugMode, setDebugMode] = useState(false);
+    const scrollContainerRef = useRef(null);
+    const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+    const [pokemonData, setPokemonData] = useState(null);
+    const [evolutionChain, setEvolutionChain] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Enable debug mode in development or when ?debug=true is in URL
@@ -19,10 +25,32 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         }
     }, []);
 
-    const [pokemonData, setPokemonData] = useState(null);
-    const [evolutionChain, setEvolutionChain] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const checkScrollIndicator = () => {
+        if (!scrollContainerRef.current) return;
+
+        const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+        const isAtTop = scrollTop === 0;
+        const hasOverflow = scrollHeight > clientHeight;
+
+        setShowScrollIndicator(isAtTop && hasOverflow);
+    };
+
+    // Check after layout changes (when content switches)
+    useLayoutEffect(() => {
+        checkScrollIndicator();
+    }, [playerHand, isLoading]);
+
+    // Set up scroll listener once
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        container.addEventListener('scroll', checkScrollIndicator);
+
+        return () => {
+            container.removeEventListener('scroll', checkScrollIndicator);
+        };
+    }, []);
 
     const capitaliseFirstLetter = (val) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -178,7 +206,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         }, [statTier]);
 
         return (
-            <div className='h-full p-3 md:p-8 overflow-y-auto hide-scrollbar'>
+            <div className='h-full p-3 md:p-8'>
                 <div>
                     <h3 className="md:mb-2 text-xs md:text-lg font-bold">
                         <span className="capitalize mr-1 md:mr-4">{pokemonData?.name}</span>
@@ -190,7 +218,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     <h3 className='text-xs mt-4 mb-2 md:text-base'>
                         Card Power Level
                     </h3>
-                    <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]}`} value={statTier} max="10" />
+                    <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]} md:h-8`} value={statTier} max="10" />
                 </div>
                 <hr className="border-2 border-black my-3" />
                 <div>
@@ -225,60 +253,63 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     return (
-        <div className='relative flex-1 default-tile border-x-4 border-black font-press-start p-2'>
-            {playerHand.every(card => card === null) ? (
-                <div className="min-w-full h-full flex flex-col gap-3 md:gap-8 justify-between p-3 md:p-8 overflow-y-auto hide-scrollbar">
-                    <div className='ont-press-start grid grid-cols-1 gap-3 md:gap-8'>
-                        <h2 className='font-bold text-sm md:text-2xl text-center'>Your Collection</h2>
-                        <p className='text-[10px] md:text-base'>
-                            Create your own hand by selecting from your pokemon library on the left!
-                        </p>
-                        <p className='text-[10px] md:text-base'>
-                            Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
-                        </p>
-                        {!user && (
-                            <p className='text-[10px] md:text-base'>
-                                <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
+        <div className='relative flex-1 default-tile border-b-4 md:border-x-4 border-black font-press-start p-2'>
+            <div ref={scrollContainerRef} className="h-full overflow-y-auto hide-scrollbar">
+                {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
+                    <div className="min-w-full h-full flex flex-col gap-3 md:gap-8 justify-between p-3 md:p-8">
+                        <div className='ont-press-start grid grid-cols-1 gap-3 md:gap-8 text-[10px] md:text-base text-center md:text-left'>
+                            <h2 className='font-bold text-sm md:text-2xl text-center'>Your Collection</h2>
+                            <p>
+                                Create your own hand by selecting from your pokemon library <span className='inline md:hidden'>below!</span><span className='hidden md:inline'>on the left!</span>
                             </p>
-                        )}
+                            <p>
+                                Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
+                            </p>
+                            {!user && (
+                                <p>
+                                    <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
+                                </p>
+                            )}
 
-                        <div className='text-[10px] md:text-base md:ml-5'>
-                            {debugMode && (
-                                <>
+                            <div className='text-[10px] md:text-base text-left md:ml-5'>
+                                {debugMode && (
+                                    <>
+                                        <div className="relative group">
+                                            <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                            <button onClick={() => setRandomThemedPlayerHand(fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">Debug: 秘密</button>
+                                        </div>
+                                        <div className="relative group">
+                                            <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                            <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer">Debug: Add all cards</button>
+                                        </div>
+                                        <div className="relative group">
+                                            <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                            <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset cards</button>
+                                        </div>
+                                        <div className="relative group">
+                                            <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                            <button onClick={() => setRandomThemedPlayerHand(fetchDebugCards)} className="disabled:opacity-30 cursor-pointer">Debug: Custom cards</button>
+                                        </div>
+                                    </>
+                                )}
+                                {lastSelectedHand && lastSelectedHand.length > 0 && (
                                     <div className="relative group">
                                         <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => setRandomThemedPlayerHand(fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">Debug: 秘密</button>
+                                        <button onClick={() => setPlayerHand(lastSelectedHand)} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left truncate w-full">Select Last Played Hand</button>
                                     </div>
-                                    <div className="relative group">
-                                        <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer">Debug: Add all cards</button>
-                                    </div>
-                                    <div className="relative group">
-                                        <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset cards</button>
-                                    </div>
-                                    <div className="relative group">
-                                        <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => setRandomThemedPlayerHand(fetchDebugCards)} className="disabled:opacity-30 cursor-pointer">Debug: Custom cards</button>
-                                    </div>
-                                </>
-                            )}
-                            {lastSelectedHand && lastSelectedHand.length > 0 && (
-                                <div className="relative group">
-                                    <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setPlayerHand(lastSelectedHand)} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left truncate w-full">Select Last Played Hand</button>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ) : (
-                isLoading ? (
-                    <Loader />
                 ) : (
-                    <ProfileContent />
-                )
-            )}
+                    isLoading ? (
+                        <Loader />
+                    ) : (
+                        <ProfileContent />
+                    )
+                )}
+            </div>
+            {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-3 right-3 md:bottom-4 md:right-4 blink" />}
         </div>
     );
 }

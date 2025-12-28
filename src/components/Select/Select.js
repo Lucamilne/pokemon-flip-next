@@ -135,9 +135,10 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className='grow flex overflow-y-auto'>
+            <div className='relative grow grid grid-rows-[250px_auto] md:flex md:flex-row-reverse overflow-y-auto'>
+                <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
                 <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(2,72px)] md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
+                    <div className="grid grid-cols-[repeat(5,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
@@ -183,7 +184,6 @@ export default function Select() {
                         )}
                     </div>
                 </div>
-                <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/40" />
@@ -209,7 +209,7 @@ export default function Select() {
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>
-                    <button onClick={() => {closePokeball(); setLastSelectedHand(playerHand) }} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
+                    <button onClick={() => { closePokeball(); setLastSelectedHand(playerHand) }} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
                 </div>
             </div>
             <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />
