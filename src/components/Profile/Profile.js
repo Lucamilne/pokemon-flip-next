@@ -244,19 +244,19 @@ export default function Profile({ playerHand, setPlayerHand, lastPokemonCardSele
                         {debugMode && (
                             <div className='text-[10px] md:text-base md:ml-5'>
                                 <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => setRandomThemedPlayerHand(fetchSecretCards)} className="disabled:opacity-30 cursor-pointer">Debug: 秘密</button>
                                 </div>
                                 <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer">Debug: Add all cards</button>
                                 </div>
                                 <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer">Debug: Reset cards</button>
                                 </div>
                                 <div className="relative group">
-                                    <div className="arrow absolute -left-2 top-1 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => setRandomThemedPlayerHand(fetchDebugCards)} className="disabled:opacity-30 cursor-pointer">Debug: Custom cards</button>
                                 </div>
                             </div>
