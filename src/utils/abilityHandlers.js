@@ -71,6 +71,11 @@ const oblivious = (card, cellId, gameState) => {
     };
 }
 
+const shieldDust = oblivious;
+const shellArmor = oblivious;
+const sandVeil = oblivious;
+const clearBody = oblivious;
+
 const overgrow = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
     if (!tileElement) return card;
@@ -107,6 +112,7 @@ const evolve = (card, cellId, gameState) => {
 const blaze = overgrow;
 const torrent = overgrow;
 const lightningRod = overgrow;
+const iceBody = overgrow;
 
 const chlorophyll = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
@@ -264,20 +270,45 @@ const guts = (card, cellId, gameState) => {
     };
 };
 
+const lonely = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Check if any adjacent cells have pokemon cards
+    const hasAdjacentCards = adjacentCellIds.some(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        return adjacentCell?.pokemonCard;
+    });
+
+    // Only boost if no adjacent cards exist
+    if (hasAdjacentCards) return card;
+
+    // Boost all stats by +1, capped at 10
+    return {
+        ...card,
+        stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
+    };
+};
+
 export const abilityHandlers = {
     blaze,
     chlorophyll,
+    clearBody,
     desperation,
     evolve,
     flashFire,
     guts,
+    iceBody,
     intimidate,
     lick,
     lightningRod,
     oblivious,
     overgrow,
     rest,
+    sandVeil,
+    shellArmor,
+    shieldDust,
     staticElectricity,
+    lonely,
     swarm,
     swiftSwim,
     synchronise,

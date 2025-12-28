@@ -474,6 +474,7 @@
         1,
         3
       ],
+      "ability": "shieldDust",
       "statWeight": 195
     },
     "metapod": {
@@ -533,6 +534,7 @@
         1,
         6
       ],
+      "ability": "shieldDust",
       "statWeight": 195
     },
     "kakuna": {
@@ -1228,6 +1230,7 @@
         5,
         3
       ],
+      "ability": "shieldDust",
       "statWeight": 450
     },
     "diglett": {
@@ -1247,6 +1250,7 @@
         4,
         1
       ],
+      "ability": "sandVeil",
       "statWeight": 265
     },
     "dugtrio": {
@@ -1266,6 +1270,7 @@
         4,
         4
       ],
+      "ability": "sandVeil",
       "statWeight": 425
     },
     "meowth": {
@@ -1676,6 +1681,7 @@
         2,
         6
       ],
+      "ability": "clearBody",
       "statWeight": 335
     },
     "tentacruel": {
@@ -1695,6 +1701,7 @@
         6,
         5
       ],
+      "ability": "clearBody",
       "statWeight": 515
     },
     "geodude": {
@@ -2288,6 +2295,7 @@
         4,
         5
       ],
+      "ability": "lonely",
       "statWeight": 320
     },
     "marowak": {
@@ -2804,6 +2812,7 @@
         9,
         5
       ],
+      "ability": "shellArmor",
       "statWeight": 535
     },
     "ditto": {
@@ -3057,6 +3066,7 @@
         9,
         9
       ],
+      "ability": "iceBody",
       "statWeight": 580
     },
     "zapdos": {
@@ -3076,7 +3086,7 @@
         6,
         9
       ],
-      "ability": "staticElectricity",
+      "ability": "lightningRod",
       "statWeight": 580
     },
     "moltres": {
@@ -3096,7 +3106,7 @@
         6,
         8
       ],
-      "ability": "flashFire",
+      "ability": "blaze",
       "statWeight": 580
     },
     "dratini": {
@@ -3304,6 +3314,12 @@
       "description": "For each additional Grass-type in the current match, a random stat is increased by 1",
       "type": "grass"
     },
+    "clearBody": {
+      "name": "Clear body",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "water"
+    },
     "desperation": {
       "name": "Desperation",
       "trigger": "onGridPlace",
@@ -3325,7 +3341,7 @@
     "guts": {
       "name": "Guts",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 1 when adjacent to 2 or more enemy cards",
+      "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards",
       "type": "fighting"
     },
     "lick": {
@@ -3376,6 +3392,12 @@
       "description": "Copies the stats of the strongest adjacent Pokemon when placed on the grid",
       "type": "normal"
     },
+    "iceBody": {
+      "name": "Ice Body",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Ice-type tiles",
+      "type": "ice"
+    },
     "intimidate": {
       "name": "Intimidate",
       "trigger": "onGridPlace",
@@ -3405,6 +3427,30 @@
       "trigger": "onTurnStart",
       "description": "This Pokémon gains +1 to a stat for every turn it stays in the player’s hand after the game starts",
       "type": "psychic"
+    },
+    "sandVeil": {
+      "name": "Sand Veil",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "ground"
+    },
+    "shellArmor": {
+      "name": "Shell Armor",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "water"
+    },
+    "shieldDust": {
+      "name": "Shield Dust",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "bug"
+    },
+    "lonely": {
+      "name": "Lonely",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when placed with no cards adjacent",
+      "type": "normal"
     }
   }
 }
