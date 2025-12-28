@@ -31,6 +31,7 @@ function DroppableCell({ cellKey, cellData }) {
                     width={100}
                     height={100}
                     alt={`${cellData.element} type tile`}
+                    style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }}
                 />
             )}
 
