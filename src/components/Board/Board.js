@@ -6,6 +6,8 @@ import Balance from "../Balance/Balance.js"
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
 import Coin from "../Coin/Coin.js";
+
+import { triggerAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -15,6 +17,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import gameData from '@/data/game-data.json';
 import styles from './background.module.css';
+
+const { abilities } = gameData;
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
@@ -72,6 +76,31 @@ export default function Board() {
         const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
         const newPlayerHand = selectedPlayerHand;
 
+        // onMatchStart - trigger abilities for both hands
+        const processedCpuHand = newCpuHand.map(card => {
+            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
+                return triggerAbilities(
+                    card,
+                    'onMatchStart',
+                    null,
+                    { playerHand: newPlayerHand, cpuHand: newCpuHand }
+                );
+            }
+            return card;
+        });
+
+        const processedPlayerHand = newPlayerHand.map(card => {
+            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
+                return triggerAbilities(
+                    card,
+                    'onMatchStart',
+                    null,
+                    { playerHand: newPlayerHand, cpuHand: newCpuHand }
+                );
+            }
+            return card;
+        });
+
         if (!newPlayerHand) {
             // Extract game mode from pathname (e.g., /quickplay/select/play -> quickplay)
             const gameMode = pathname.split('/').filter(Boolean)[0];
@@ -80,8 +109,8 @@ export default function Board() {
         }
 
         // Gather types from both hands for elemental tiles
-        const playerTypes = newPlayerHand.flatMap(card => card.types);
-        const cpuTypes = newCpuHand.flatMap(card => card.types);
+        const playerTypes = processedPlayerHand.flatMap(card => card.types);
+        const cpuTypes = processedCpuHand.flatMap(card => card.types);
         const allHandTypes = [...playerTypes, ...cpuTypes];
         const arrayOfPokemonTypes = [...new Set(allHandTypes)].filter((type) => type !== "normal");
 
@@ -102,8 +131,8 @@ export default function Board() {
             }
         });
 
-        setCpuHand(newCpuHand);
-        setPlayerHand(newPlayerHand);
+        setCpuHand(processedCpuHand);
+        setPlayerHand(processedPlayerHand);
         setCells(updatedCells);
         setPokeballIsOpen(true);
 
@@ -123,9 +152,22 @@ export default function Board() {
         return () => clearTimeout(timer);
     }, [hasWonCoinToss])
 
-    const applyTileStatModifiers = (attackingCard, cellTargetObject) => {
+    const applyTileStatModifiers = (attackingCard, cellTarget) => {
+        const cellTargetObject = cells[cellTarget];
+
+        // Check if card has an onElementalTilePlace ability first
+        if (attackingCard.ability && abilities[attackingCard.ability]?.trigger === 'onElementalTilePlace') {
+            return triggerAbilities(
+                attackingCard,
+                'onElementalTilePlace',
+                cellTarget,
+                { cells, playerHand, cpuHand }
+            );
+        }
+
+        // Normal pokemon are not affected by elemental tiles (unless they have an ability)
         if (attackingCard.types.some((type) => type === "normal")) {
-            return attackingCard.stats; // normal pokemon are not affected by elemental tiles
+            return attackingCard;
         }
 
         const updateStatOnElementalTile = (stat) => {
@@ -139,14 +181,17 @@ export default function Board() {
             return stat; // No change
         };
 
-        return attackingCard.stats.map(updateStatOnElementalTile);
+        return {
+            ...attackingCard,
+            stats: attackingCard.stats.map(updateStatOnElementalTile)
+        };
     };
 
     const placeAttackingCard = (cellTarget, attackingCard) => {
         const cellTargetObject = cells[cellTarget];
 
         if (cellTargetObject.element) {
-            attackingCard.stats = applyTileStatModifiers(attackingCard, cellTargetObject); // add or remove stats on placement of attacking card on tile
+            attackingCard = applyTileStatModifiers(attackingCard, cellTarget); // add or remove stats on placement of attacking card on tile
         }
 
         // Track if this card captured any cards due to type effectiveness
@@ -229,7 +274,7 @@ export default function Board() {
             }
         });
 
-        return capturedCells;
+        return { attackingCard, capturedCells };
     }
 
     function handleDragEnd(event) {
@@ -240,38 +285,44 @@ export default function Board() {
 
         let attackingCard = active.data.current.pokemonCard;
 
+        attackingCard = triggerAbilities(
+            attackingCard,
+            'onGridPlace',
+            cellTarget,
+            { cells, playerHand, cpuHand }
+        );
+
         const sourceIndex = active.data.current.index;
         // Remove card from the player hand
         setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
 
-        const capturedCells = placeAttackingCard(cellTarget, attackingCard);
+        const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard);
 
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
         // Force re-render by creating a new cells object so React detects defending card changes
         setCells(prev => {
             const newCells = { ...prev };
-            // Spread all cells AND pokemonCards to trigger re-renders on captured cards
-            Object.keys(newCells).forEach(key => {
-                if (newCells[key].pokemonCard) {
-                    newCells[key] = {
-                        ...newCells[key],
-                        pokemonCard: {
-                            ...newCells[key].pokemonCard,
-                            // Update isPlayerCard for captured cards
-                            ...(capturedCells[key] !== undefined && { isPlayerCard: capturedCells[key] })
-                        }
-                    };
-                } else {
-                    newCells[key] = { ...newCells[key] };
-                }
+
+            // Update captured cells (flip their ownership)
+            Object.keys(capturedCells).forEach(key => {
+                newCells[key] = {
+                    ...prev[key],
+                    pokemonCard: {
+                        ...prev[key].pokemonCard,
+                        isPlayerCard: capturedCells[key]
+                    }
+                };
             });
+
+            // Place the attacking card
             newCells[cellTarget] = {
                 ...prev[cellTarget],
-                pokemonCard: attackingCard
+                pokemonCard: modifiedCard
             };
 
             return newCells;
         });
+
 
         setIsPlayerTurn(false)
     }
@@ -350,7 +401,25 @@ export default function Board() {
 
         const remainingPlayerCards = playerHand.filter(card => card !== null);
         const remainingCpuCards = cpuHand.filter(card => card !== null);
-        const allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
+        let allMatchCards = [...cardsFromCells, ...remainingPlayerCards, ...remainingCpuCards];
+
+        allMatchCards = allMatchCards.map((card) => {
+            if (card.name === 'ditto') {
+                const ditto = gameData.cards.ditto;
+
+                return {
+                    ...card,
+                    id: ditto.id,
+                    types: ditto.types,
+                    stats: card.originalStats
+                };
+            }
+
+            return {
+                ...card,
+                stats: card.originalStats
+            };
+        });
 
         allMatchCards = allMatchCards.map((card) => {
             if (card.name === 'ditto') {
@@ -593,47 +662,72 @@ export default function Board() {
         }
 
         const cellTarget = bestCellToPlace;
-        const attackingCard = bestCardToPlay;
+        let attackingCard = bestCardToPlay;
 
-        // Find the original index in cpuHand
+        // Find the original index in cpuHand BEFORE triggering abilities
         const originalIndex = cpuHand.findIndex(card => card === attackingCard);
+
+        attackingCard = triggerAbilities(
+            attackingCard,
+            'onGridPlace',
+            cellTarget,
+            { cells, playerHand, cpuHand }
+        );
 
         setCpuHand(prev => prev.map((card, index) => index === originalIndex ? null : card));
 
-        const capturedCells = placeAttackingCard(cellTarget, attackingCard);
+        const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard);
 
         // Place the card in the selected cell
         // Force re-render by creating a new cells object so React detects defending card changes
-        setCells(prevCells => {
-            const newCells = { ...prevCells };
-            // Spread all cells AND pokemonCards to trigger re-renders on captured cards
-            Object.keys(newCells).forEach(key => {
-                if (newCells[key].pokemonCard) {
-                    newCells[key] = {
-                        ...newCells[key],
-                        pokemonCard: {
-                            ...newCells[key].pokemonCard,
-                            // Update isPlayerCard for captured cards
-                            ...(capturedCells[key] !== undefined && { isPlayerCard: capturedCells[key] })
-                        }
-                    };
-                } else {
-                    newCells[key] = { ...newCells[key] };
-                }
+        setCells(prev => {
+            const newCells = { ...prev };
+
+            // Update captured cells (flip their ownership)
+            Object.keys(capturedCells).forEach(key => {
+                newCells[key] = {
+                    ...prev[key],
+                    pokemonCard: {
+                        ...prev[key].pokemonCard,
+                        isPlayerCard: capturedCells[key]
+                    }
+                };
             });
+
+            // Place the attacking card
             newCells[cellTarget] = {
-                ...prevCells[cellTarget],
-                pokemonCard: attackingCard
+                ...prev[cellTarget],
+                pokemonCard: modifiedCard
             };
 
             return newCells;
         });
+
 
         setIsPlayerTurn(true); // end the turn!
     }
 
     useEffect(() => {
         if (isPlayerTurn === null) return;
+
+        // Trigger onTurnStart abilities for all cards in hands
+        const updatedPlayerHand = playerHand.map(card => {
+            if (card && card.ability && abilities[card.ability]?.trigger === 'onTurnStart') {
+                return triggerAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
+            }
+            return card;
+        });
+
+        const updatedCpuHand = cpuHand.map(card => {
+            if (card && card.ability && abilities[card.ability]?.trigger === 'onTurnStart') {
+                return triggerAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
+            }
+            return card;
+        });
+
+        setPlayerHand(updatedPlayerHand);
+        setCpuHand(updatedCpuHand);
+        // end
 
         if (!isPlayerTurn) {
             makeCpuMove();

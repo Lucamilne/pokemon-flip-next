@@ -291,6 +291,7 @@
         4,
         1
       ],
+      "ability": "overgrow",
       "statWeight": 318
     },
     "ivysaur": {
@@ -310,6 +311,7 @@
         1,
         7
       ],
+      "ability": "overgrow",
       "statWeight": 405
     },
     "venusaur": {
@@ -329,6 +331,7 @@
         6,
         8
       ],
+      "ability": "overgrow",
       "statWeight": 525
     },
     "charmander": {
@@ -349,6 +352,7 @@
         2,
         6
       ],
+      "ability": "blaze",
       "statWeight": 309
     },
     "charmeleon": {
@@ -368,6 +372,7 @@
         7,
         5
       ],
+      "ability": "blaze",
       "statWeight": 405
     },
     "charizard": {
@@ -387,6 +392,7 @@
         9,
         7
       ],
+      "ability": "blaze",
       "statWeight": 534
     },
     "squirtle": {
@@ -407,6 +413,7 @@
         6,
         2
       ],
+      "ability": "torrent",
       "statWeight": 314
     },
     "wartortle": {
@@ -426,6 +433,7 @@
         5,
         4
       ],
+      "ability": "torrent",
       "statWeight": 405
     },
     "blastoise": {
@@ -445,6 +453,7 @@
         5,
         6
       ],
+      "ability": "torrent",
       "statWeight": 530
     },
     "caterpie": {
@@ -465,6 +474,7 @@
         1,
         3
       ],
+      "ability": "shieldDust",
       "statWeight": 195
     },
     "metapod": {
@@ -503,6 +513,7 @@
         6,
         2
       ],
+      "ability": "swarm",
       "statWeight": 395
     },
     "weedle": {
@@ -523,6 +534,7 @@
         1,
         6
       ],
+      "ability": "shieldDust",
       "statWeight": 195
     },
     "kakuna": {
@@ -561,6 +573,7 @@
         3,
         7
       ],
+      "ability": "swarm",
       "statWeight": 395
     },
     "pidgey": {
@@ -754,6 +767,7 @@
         6,
         4
       ],
+      "ability": "lightningRod",
       "statWeight": 320
     },
     "raichu": {
@@ -773,6 +787,7 @@
         4,
         6
       ],
+      "ability": "lightningRod",
       "statWeight": 485
     },
     "sandshrew": {
@@ -982,6 +997,7 @@
         3,
         3
       ],
+      "ability": "flashFire",
       "statWeight": 299
     },
     "ninetales": {
@@ -1001,6 +1017,7 @@
         4,
         5
       ],
+      "ability": "flashFire",
       "statWeight": 505
     },
     "jigglypuff": {
@@ -1096,6 +1113,7 @@
         2,
         4
       ],
+      "ability": "chlorophyll",
       "statWeight": 320
     },
     "gloom": {
@@ -1115,6 +1133,7 @@
         8,
         2
       ],
+      "ability": "chlorophyll",
       "statWeight": 395
     },
     "vileplume": {
@@ -1134,6 +1153,7 @@
         5,
         5
       ],
+      "ability": "chlorophyll",
       "statWeight": 490
     },
     "paras": {
@@ -1210,6 +1230,7 @@
         5,
         3
       ],
+      "ability": "shieldDust",
       "statWeight": 450
     },
     "diglett": {
@@ -1229,6 +1250,7 @@
         4,
         1
       ],
+      "ability": "sandVeil",
       "statWeight": 265
     },
     "dugtrio": {
@@ -1248,6 +1270,7 @@
         4,
         4
       ],
+      "ability": "sandVeil",
       "statWeight": 425
     },
     "meowth": {
@@ -1381,6 +1404,7 @@
         4,
         6
       ],
+      "ability": "flashFire",
       "statWeight": 350
     },
     "arcanine": {
@@ -1400,6 +1424,7 @@
         10,
         5
       ],
+      "ability": "flashFire",
       "statWeight": 555
     },
     "poliwag": {
@@ -1419,6 +1444,7 @@
         2,
         6
       ],
+      "ability": "swiftSwim",
       "statWeight": 300
     },
     "poliwhirl": {
@@ -1438,6 +1464,7 @@
         5,
         5
       ],
+      "ability": "swiftSwim",
       "statWeight": 385
     },
     "poliwrath": {
@@ -1457,6 +1484,7 @@
         8,
         8
       ],
+      "ability": "swiftSwim",
       "statWeight": 510
     },
     "abra": {
@@ -1533,6 +1561,7 @@
         1,
         9
       ],
+      "ability": "guts",
       "statWeight": 305
     },
     "machoke": {
@@ -1552,6 +1581,7 @@
         6,
         2
       ],
+      "ability": "guts",
       "statWeight": 405
     },
     "machamp": {
@@ -1571,6 +1601,7 @@
         4,
         7
       ],
+      "ability": "guts",
       "statWeight": 505
     },
     "bellsprout": {
@@ -1590,6 +1621,7 @@
         2,
         1
       ],
+      "ability": "chlorophyll",
       "statWeight": 300
     },
     "weepinbell": {
@@ -1609,6 +1641,7 @@
         3,
         8
       ],
+      "ability": "chlorophyll",
       "statWeight": 390
     },
     "victreebel": {
@@ -1628,6 +1661,7 @@
         6,
         5
       ],
+      "ability": "chlorophyll",
       "statWeight": 490
     },
     "tentacool": {
@@ -1647,6 +1681,7 @@
         2,
         6
       ],
+      "ability": "clearBody",
       "statWeight": 335
     },
     "tentacruel": {
@@ -1666,6 +1701,7 @@
         6,
         5
       ],
+      "ability": "clearBody",
       "statWeight": 515
     },
     "geodude": {
@@ -1742,6 +1778,7 @@
         5,
         7
       ],
+      "ability": "flashFire",
       "statWeight": 410
     },
     "rapidash": {
@@ -1761,6 +1798,7 @@
         6,
         7
       ],
+      "ability": "flashFire",
       "statWeight": 500
     },
     "slowpoke": {
@@ -1769,17 +1807,18 @@
         "water"
       ],
       "stats": [
-        2,
-        6,
+        3,
+        5,
         5,
         3
       ],
       "originalStats": [
-        2,
-        6,
+        3,
+        5,
         5,
         3
       ],
+      "ability": "oblivious",
       "statWeight": 315
     },
     "slowbro": {
@@ -1789,16 +1828,17 @@
       ],
       "stats": [
         6,
+        6,
         7,
-        7,
-        6
+        7
       ],
       "originalStats": [
         6,
+        6,
         7,
-        7,
-        6
+        7
       ],
+      "ability": "oblivious",
       "statWeight": 490
     },
     "magnemite": {
@@ -2227,14 +2267,14 @@
       "stats": [
         6,
         7,
-        9,
-        5
+        8,
+        6
       ],
       "originalStats": [
         6,
         7,
-        9,
-        5
+        8,
+        6
       ],
       "statWeight": 530
     },
@@ -2255,6 +2295,7 @@
         4,
         5
       ],
+      "ability": "lonely",
       "statWeight": 320
     },
     "marowak": {
@@ -2434,17 +2475,18 @@
         "grass"
       ],
       "stats": [
-        3,
+        4,
         7,
-        8,
-        4
+        4,
+        7
       ],
       "originalStats": [
-        3,
+        4,
         7,
-        8,
-        4
+        4,
+        7
       ],
+      "ability": "chlorophyll",
       "statWeight": 435
     },
     "kangaskhan": {
@@ -2654,6 +2696,7 @@
         8,
         4
       ],
+      "ability": "staticElectricity",
       "statWeight": 490
     },
     "magmar": {
@@ -2730,6 +2773,7 @@
         2,
         2
       ],
+      "ability": "desperation",
       "statWeight": 200
     },
     "gyarados": {
@@ -2738,16 +2782,16 @@
         "water"
       ],
       "stats": [
-        6,
+        7,
         8,
         7,
-        8
+        7
       ],
       "originalStats": [
-        6,
+        7,
         8,
         7,
-        8
+        7
       ],
       "statWeight": 540
     },
@@ -2768,6 +2812,7 @@
         9,
         5
       ],
+      "ability": "shellArmor",
       "statWeight": 535
     },
     "ditto": {
@@ -2776,17 +2821,18 @@
         "normal"
       ],
       "stats": [
-        4,
-        4,
-        4,
-        4
+        1,
+        1,
+        1,
+        1
       ],
       "originalStats": [
-        4,
-        4,
-        4,
-        4
+        1,
+        1,
+        1,
+        1
       ],
+      "ability": "transform",
       "statWeight": 288
     },
     "eevee": {
@@ -2806,6 +2852,7 @@
         3,
         5
       ],
+      "ability": "evolve",
       "statWeight": 325
     },
     "vaporeon": {
@@ -2825,6 +2872,7 @@
         7,
         7
       ],
+      "ability": "swiftSwim",
       "statWeight": 525
     },
     "jolteon": {
@@ -2844,6 +2892,7 @@
         8,
         8
       ],
+      "ability": "staticElectricity",
       "statWeight": 525
     },
     "flareon": {
@@ -2863,6 +2912,7 @@
         7,
         6
       ],
+      "ability": "flashFire",
       "statWeight": 525
     },
     "porygon": {
@@ -2996,6 +3046,7 @@
         6,
         10
       ],
+      "ability": "rest",
       "statWeight": 540
     },
     "articuno": {
@@ -3015,6 +3066,7 @@
         9,
         9
       ],
+      "ability": "iceBody",
       "statWeight": 580
     },
     "zapdos": {
@@ -3034,6 +3086,7 @@
         6,
         9
       ],
+      "ability": "lightningRod",
       "statWeight": 580
     },
     "moltres": {
@@ -3053,6 +3106,7 @@
         6,
         8
       ],
+      "ability": "blaze",
       "statWeight": 580
     },
     "dratini": {
@@ -3148,6 +3202,7 @@
         9,
         6
       ],
+      "ability": "synchronise",
       "statWeight": 600
     }
   },
@@ -3250,6 +3305,152 @@
         10
       ],
       "statWeight": 999
+    }
+  },
+  "abilities": {
+    "chlorophyll": {
+      "name": "Chlorophyll",
+      "trigger": "onMatchStart",
+      "description": "For each additional Grass-type in the current match, a random stat is increased by 1",
+      "type": "grass"
+    },
+    "clearBody": {
+      "name": "Clear body",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "water"
+    },
+    "desperation": {
+      "name": "Desperation",
+      "trigger": "onGridPlace",
+      "description": "Transforms into Gyarados when placed while losing and with 3 or fewer empty spaces remaining",
+      "type": "water"
+    },
+    "flashFire": {
+      "name": "Flash Fire",
+      "trigger": "onMatchStart",
+      "description": "For each additional Fire-type in the current match, a random stat is increased by 1",
+      "type": "fire"
+    },
+    "evolve": {
+      "name": "Evolve",
+      "trigger": "onElementalTilePlace",
+      "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on",
+      "type": "normal"
+    },
+    "guts": {
+      "name": "Guts",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards",
+      "type": "fighting"
+    },
+    "lick": {
+      "name": "Lick",
+      "trigger": "onGridPlace",
+      "description": "Paralyzes adjacent enemies, setting one random stat to 1",
+      "type": "normal"
+    },
+    "lightningRod": {
+      "name": "Lightning Rod",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Electric-type tiles",
+      "type": "electric"
+    },
+    "swiftSwim": {
+      "name": "Swift Swim",
+      "trigger": "onMatchStart",
+      "description": "For each additional Water-type in the current match, a random stat is increased by 1",
+      "type": "water"
+    },
+    "synchronise": {
+      "name": "Synchronise",
+      "trigger": "onMatchStart",
+      "description": "For each additional Psychic-type in the current match, a random stat is increased by 1",
+      "type": "psychic"
+    },
+    "swarm": {
+      "name": "Swarm",
+      "trigger": "onMatchStart",
+      "description": "For each additional Bug-type in the current match, a random stat is increased by 1",
+      "type": "bug"
+    },
+    "staticElectricity": {
+      "name": "Static",
+      "trigger": "onMatchStart",
+      "description": "For each additional Electric-type in the current match, a random stat is increased by 1",
+      "type": "electric"
+    },
+    "oblivious": {
+      "name": "Oblivious",
+      "trigger": "onElementalTilePlace",
+      "description": "Oblivious to elemental tile penalties",
+      "type": "psychic"
+    },
+    "transform": {
+      "name": "Transform",
+      "trigger": "onGridPlace",
+      "description": "Copies the stats of the strongest adjacent Pokemon when placed on the grid",
+      "type": "normal"
+    },
+    "iceBody": {
+      "name": "Ice Body",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Ice-type tiles",
+      "type": "ice"
+    },
+    "intimidate": {
+      "name": "Intimidate",
+      "trigger": "onGridPlace",
+      "description": "Lowers the Attack stat of all adjacent enemy Pokemon by 1 when placed on the grid",
+      "type": "normal"
+    },
+    "blaze": {
+      "name": "Blaze",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Fire-type tiles",
+      "type": "fire"
+    },
+    "torrent": {
+      "name": "Torrent",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Water-type tiles",
+      "type": "water"
+    },
+    "overgrow": {
+      "name": "Overgrow",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Grass-type tiles",
+      "type": "grass"
+    },
+    "rest": {
+      "name": "Rest",
+      "trigger": "onTurnStart",
+      "description": "This Pokémon gains +1 to a stat for every turn it stays in the player’s hand after the game starts",
+      "type": "psychic"
+    },
+    "sandVeil": {
+      "name": "Sand Veil",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "ground"
+    },
+    "shellArmor": {
+      "name": "Shell Armor",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "water"
+    },
+    "shieldDust": {
+      "name": "Shield Dust",
+      "trigger": "onElementalTilePlace",
+      "description": "Shielded from elemental tile penalties",
+      "type": "bug"
+    },
+    "lonely": {
+      "name": "Lonely",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when placed with no cards adjacent",
+      "type": "normal"
     }
   }
 }
