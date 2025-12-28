@@ -9,6 +9,7 @@
 
   /* Responsive tile border size */
   --tile-border-size: 4px; /* Mobile default */
+  --card-ring-size: -2px;
 
   /* Theme */
   --pokedex-red: #e61919;
@@ -279,6 +280,7 @@
 @media (min-width: 768px) {
   :root {
     --tile-border-size: 8px;
+    --card-ring-size: -4px;
   }
 }
 
@@ -1944,7 +1946,7 @@ body {
 .card-ring::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: var(--card-ring-size);
   border-radius: 0.5rem;
   background: linear-gradient(45deg, var(--glow-color-light), var(--glow-color-dark), var(--glow-color-light), var(--glow-color-dark));
   background-size: 200% 200%;
