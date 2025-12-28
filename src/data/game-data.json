@@ -1556,6 +1556,7 @@
         1,
         9
       ],
+      "ability": "guts",
       "statWeight": 305
     },
     "machoke": {
@@ -1575,6 +1576,7 @@
         6,
         2
       ],
+      "ability": "guts",
       "statWeight": 405
     },
     "machamp": {
@@ -1594,6 +1596,7 @@
         4,
         7
       ],
+      "ability": "guts",
       "statWeight": 505
     },
     "bellsprout": {
@@ -2801,7 +2804,6 @@
         9,
         5
       ],
-      "ability": "surf",
       "statWeight": 535
     },
     "ditto": {
@@ -3320,6 +3322,12 @@
       "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on",
       "type": "normal"
     },
+    "guts": {
+      "name": "Guts",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when adjacent to 2 or more enemy cards",
+      "type": "fighting"
+    },
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
@@ -3355,12 +3363,6 @@
       "trigger": "onMatchStart",
       "description": "For each additional Electric-type in the current match, a random stat is increased by 1",
       "type": "electric"
-    },
-    "surf": {
-      "name": "Surf",
-      "trigger": "onElementalTilePlace",
-      "description": "Ride the wave to maximum power on water tiles",
-      "type": "water"
     },
     "oblivious": {
       "name": "Oblivious",

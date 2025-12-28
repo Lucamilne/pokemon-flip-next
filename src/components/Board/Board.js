@@ -302,21 +302,19 @@ export default function Board() {
         // Force re-render by creating a new cells object so React detects defending card changes
         setCells(prev => {
             const newCells = { ...prev };
-            // Spread all cells AND pokemonCards to trigger re-renders on captured cards
-            Object.keys(newCells).forEach(key => {
-                if (newCells[key].pokemonCard) {
-                    newCells[key] = {
-                        ...newCells[key],
-                        pokemonCard: {
-                            ...newCells[key].pokemonCard,
-                            // Update isPlayerCard for captured cards
-                            ...(capturedCells[key] !== undefined && { isPlayerCard: capturedCells[key] })
-                        }
-                    };
-                } else {
-                    newCells[key] = { ...newCells[key] };
-                }
+
+            // Update captured cells (flip their ownership)
+            Object.keys(capturedCells).forEach(key => {
+                newCells[key] = {
+                    ...prev[key],
+                    pokemonCard: {
+                        ...prev[key].pokemonCard,
+                        isPlayerCard: capturedCells[key]
+                    }
+                };
             });
+
+            // Place the attacking card
             newCells[cellTarget] = {
                 ...prev[cellTarget],
                 pokemonCard: modifiedCard
@@ -324,6 +322,7 @@ export default function Board() {
 
             return newCells;
         });
+
 
         setIsPlayerTurn(false)
     }
@@ -681,30 +680,29 @@ export default function Board() {
 
         // Place the card in the selected cell
         // Force re-render by creating a new cells object so React detects defending card changes
-        setCells(prevCells => {
-            const newCells = { ...prevCells };
-            // Spread all cells AND pokemonCards to trigger re-renders on captured cards
-            Object.keys(newCells).forEach(key => {
-                if (newCells[key].pokemonCard) {
-                    newCells[key] = {
-                        ...newCells[key],
-                        pokemonCard: {
-                            ...newCells[key].pokemonCard,
-                            // Update isPlayerCard for captured cards
-                            ...(capturedCells[key] !== undefined && { isPlayerCard: capturedCells[key] })
-                        }
-                    };
-                } else {
-                    newCells[key] = { ...newCells[key] };
-                }
+        setCells(prev => {
+            const newCells = { ...prev };
+
+            // Update captured cells (flip their ownership)
+            Object.keys(capturedCells).forEach(key => {
+                newCells[key] = {
+                    ...prev[key],
+                    pokemonCard: {
+                        ...prev[key].pokemonCard,
+                        isPlayerCard: capturedCells[key]
+                    }
+                };
             });
+
+            // Place the attacking card
             newCells[cellTarget] = {
-                ...prevCells[cellTarget],
+                ...prev[cellTarget],
                 pokemonCard: modifiedCard
             };
 
             return newCells;
         });
+
 
         setIsPlayerTurn(true); // end the turn!
     }

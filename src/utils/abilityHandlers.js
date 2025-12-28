@@ -225,16 +225,6 @@ const desperation = (card, cellId, gameState) => {
     return card;
 };
 
-const surf = (card, cellId, gameState) => {
-    const tileElement = gameState.cells[cellId].element;
-    if (!tileElement) return card;
-
-    return {
-        ...card,
-        stats: card.stats.map(stat => stat = 10)
-    };
-}
-
 const lick = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
@@ -255,12 +245,32 @@ const lick = (card, cellId, gameState) => {
     return card;
 };
 
+const guts = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Count adjacent enemy cards
+    const enemyCount = adjacentCellIds.filter(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        return adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard;
+    }).length;
+
+    // Only boost if 2 or more enemies are adjacent
+    if (enemyCount < 2) return card;
+
+    // Boost all stats by +1, capped at 10
+    return {
+        ...card,
+        stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
+    };
+};
+
 export const abilityHandlers = {
     blaze,
     chlorophyll,
     desperation,
     evolve,
     flashFire,
+    guts,
     intimidate,
     lick,
     lightningRod,
@@ -268,7 +278,6 @@ export const abilityHandlers = {
     overgrow,
     rest,
     staticElectricity,
-    surf,
     swarm,
     swiftSwim,
     synchronise,
