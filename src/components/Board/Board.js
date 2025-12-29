@@ -706,7 +706,7 @@ export default function Board() {
     useEffect(() => {
         if (isPlayerTurn === null) return;
 
-        // Trigger onTurnStart abilities for all cards in hands
+        // Trigger onTurnStart abilities for all cards
         const updatedPlayerHand = playerHand.map(card => {
             if (card && card.ability && abilities[card.ability]?.trigger === 'onTurnStart') {
                 return triggerAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
@@ -721,8 +721,23 @@ export default function Board() {
             return card;
         });
 
+        // const updatedCells = Object.fromEntries(
+        //     Object.entries(cells).map(([cellKey, cellData]) => {
+        //         if (cellData.pokemonCard && cellData.pokemonCard.ability && abilities[cellData.pokemonCard.ability]?.trigger === 'onTurnStartGrid') {
+        //             return [cellKey, {
+        //                 ...cellData,
+        //                 pokemonCard: triggerAbilities(cellData.pokemonCard, 'onTurnStartGrid', cellKey, { cells, playerHand, cpuHand, isPlayerTurn })
+        //             }];
+        //         }
+        //         return [cellKey, cellData];
+        //     })
+        // );
+
+        // console.log("board", updatedCells)
+
         setPlayerHand(updatedPlayerHand);
         setCpuHand(updatedCpuHand);
+        // setCells(updatedCells);
         // end
 
         if (!isPlayerTurn) {

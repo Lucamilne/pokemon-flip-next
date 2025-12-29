@@ -494,6 +494,7 @@
         3,
         3
       ],
+      "ability": "harden",
       "statWeight": 205
     },
     "butterfree": {
@@ -554,6 +555,7 @@
         2,
         3
       ],
+      "ability": "harden",
       "statWeight": 205
     },
     "beedrill": {
@@ -864,6 +866,7 @@
         2,
         4
       ],
+      "ability": "poisonPoint",
       "statWeight": 365
     },
     "nidoqueen": {
@@ -921,6 +924,7 @@
         6,
         5
       ],
+      "ability": "poisonPoint",
       "statWeight": 365
     },
     "nidoking": {
@@ -3341,7 +3345,7 @@
     "download": {
       "name": "Download",
       "trigger": "onGridPlace",
-      "description": "Analyses adjacent foes and copies their highest stat across all attributes",
+      "description": "Processes data from adjacent foes and sets its stats to their average across all attributes",
       "type": "normal"
     },
     "evolve": {
@@ -3410,6 +3414,12 @@
       "description": "Scavenges empty spaces, gaining 1 stat for each vacant adjacent cell",
       "type": "normal"
     },
+    "poisonPoint": {
+      "name": "Poison Point",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Poison-type tiles",
+      "type": "Poison"
+    },
     "pressure": {
       "name": "Pressure",
       "trigger": "onGridPlace",
@@ -3469,6 +3479,12 @@
       "trigger": "onMatchStart",
       "description": "For each additional Psychic-type in the current match, a random stat is increased by 1",
       "type": "psychic"
+    },
+    "test": {
+      "name": "Test",
+      "trigger": "onTurnStartGrid",
+      "description": "This is a test ability",
+      "type": "normal"
     },
     "torrent": {
       "name": "Torrent",
