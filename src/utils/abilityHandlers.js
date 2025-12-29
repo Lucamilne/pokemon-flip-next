@@ -75,6 +75,7 @@ const shieldDust = oblivious;
 const shellArmor = oblivious;
 const sandVeil = oblivious;
 const clearBody = oblivious;
+const sturdy = oblivious;
 
 const overgrow = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
@@ -113,6 +114,8 @@ const blaze = overgrow;
 const torrent = overgrow;
 const lightningRod = overgrow;
 const iceBody = overgrow;
+const poisonPoint = overgrow;
+const rockHead = overgrow;
 
 const chlorophyll = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
@@ -149,6 +152,8 @@ const swiftSwim = chlorophyll;
 const staticElectricity = chlorophyll;
 const swarm = chlorophyll;
 const synchronise = chlorophyll;
+const rockSlide = chlorophyll;
+const earthquake = chlorophyll;
 
 const rest = (card, cellId, gameState) => {
     const hasCardsOnGrid = Object.values(gameState.cells).some(cell => cell.pokemonCard);
@@ -181,6 +186,32 @@ const rest = (card, cellId, gameState) => {
         stats: newStats
     };
 };
+
+const test = (card, cellId, gameState) => {
+    if (!cellId) return;
+
+    const newStats = [...card.stats];
+
+    // Find all stat indices that are not already at max (10)
+    const availableStatIndices = newStats
+        .map((stat, index) => ({ stat, index }))
+        .filter(({ stat }) => stat < 10)
+        .map(({ index }) => index);
+
+    // If all stats are at 10, do nothing
+    if (availableStatIndices.length === 0) return card;
+
+    // Pick a random stat from available indices
+    const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+    const statIndexToBoost = availableStatIndices[randomIndex];
+
+    newStats[statIndexToBoost] += 1;
+
+    return {
+        ...card,
+        stats: newStats
+    };
+}
 
 const harden = rest;
 
@@ -388,6 +419,7 @@ export const abilityHandlers = {
     oblivious,
     overgrow,
     pickup,
+    poisonPoint,
     pressure,
     rest,
     sandVeil,
@@ -395,9 +427,11 @@ export const abilityHandlers = {
     shellArmor,
     shieldDust,
     staticElectricity,
+    sturdy,
     swarm,
     swiftSwim,
     synchronise,
+    test,
     torrent,
     transform,
 };

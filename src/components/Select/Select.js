@@ -115,7 +115,7 @@ export default function Select() {
 
     return (
         <div className="relative h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
-            <div className="px-7 pt-4 pb-6 flex justify-between gap-4 items-center hand-top-container z-10">
+            <div className="px-7 pt-4 pb-6 flex justify-between gap-4 items-center hand-top-container">
                 <div className="relative font-press-start">
                     <input
                         type="text"
