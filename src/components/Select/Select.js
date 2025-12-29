@@ -14,7 +14,6 @@ const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
 export default function Select() {
     const location = useLocation();
     const pathname = location.pathname;
-    // Extract root path (e.g., "/quickplay/select" -> "/quickplay")
     const rootPath = '/' + pathname.split('/').filter(Boolean)[0];
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
@@ -137,7 +136,7 @@ export default function Select() {
             </div>
             <div className='relative grow grid grid-rows-[auto_250px] md:flex md:flex-row overflow-y-auto'>
                 <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(5,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
+                    <div className="grid grid-cols-[repeat(4,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (

@@ -34,6 +34,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
     const prevIsPlayerCard = useRef();
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
     const [tooltipPosition, setTooltipPosition] = useState('top');
+    const [isMobile, setIsMobile] = useState(false);
 
     if (!pokemonCard) {
         return null;
@@ -176,18 +177,38 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                 setIsFlipped(true)
             }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
         }
+        
+        // const mediaQuery = window.matchMedia('(max-width: 767px)');
+
+        // setIsMobile(mediaQuery.matches);
+
+        // const handler = (e) => setIsMobile(e.matches);
+        // mediaQuery.addEventListener('change', handler);
+
+        // return () => mediaQuery.removeEventListener('change', handler);
     }, [])
+
+    useEffect(() => {
+
+    }, []);
 
     useEffect(() => {
         if (isVisible && cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
             const cardCenter = rect.top + rect.height / 2;
+            const cardCenterX = rect.left + rect.width / 2;
 
-            // If card is in top half, show tooltip below; if in bottom half, show above
-            setTooltipPosition(cardCenter < viewportHeight / 4 ? 'bottom' : 'top');
+            // if (isMobile) {
+            //     // On mobile, position left or right based on horizontal position
+            //     setTooltipPosition(cardCenterX < viewportWidth / 2 ? 'right' : 'left');
+            // } else {
+                // On desktop, position top or bottom based on vertical position
+                setTooltipPosition(cardCenter < viewportHeight / 4 ? 'bottom' : 'top');
+            // }
         }
-    }, [isVisible])
+    }, [isVisible, isMobile])
 
     const nameBgStyle = useMemo(() => {
         if (pokemonCard.types.length === 1) {
@@ -245,7 +266,11 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
 
             {/* Ability Tooltip */}
             {hasAbility && isVisible && !isDragging && (
-                <div className={`fade-in-b absolute left-1/2 -translate-x-1/2 z-10 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'}`}>
+                <div className={`fade-in-b absolute z-10 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'left-1/2 -translate-x-1/2 bottom-full mb-2' :
+                    tooltipPosition === 'bottom' ? 'left-1/2 -translate-x-1/2 top-full mt-2' :
+                        tooltipPosition === 'left' ? 'right-full mr-2 top-1/2 -translate-y-1/2' :
+                            'left-full ml-2 top-1/2 -translate-y-1/2'
+                    }`}>
                     <div className='border border-black tooltip p-1 md:p-2 w-[90px] md:w-[140px] shadow-md/30'>
                         <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={nameBgStyle}>
                             {abilities[pokemonCard.ability]?.name}
@@ -254,10 +279,17 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                             {abilities[pokemonCard.ability]?.description}
                         </p>
                         {/* Arrow */}
-                        {tooltipPosition === 'top' ? (
+                        {tooltipPosition === 'top' && (
                             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-black" />
-                        ) : (
+                        )}
+                        {tooltipPosition === 'bottom' && (
                             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-black" />
+                        )}
+                        {tooltipPosition === 'left' && (
+                            <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[8px] border-l-black" />
+                        )}
+                        {tooltipPosition === 'right' && (
+                            <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-black" />
                         )}
                     </div>
                 </div>
