@@ -16,4 +16,4 @@ export const GENERATIONS = {
   }
 }
 
-export const TYPES_PER_CARD = 2;
+export const TYPES_PER_CARD = 1;

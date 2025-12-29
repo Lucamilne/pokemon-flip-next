@@ -186,11 +186,11 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
             const cardCenter = rect.top + rect.height / 2;
             const cardCenterX = rect.left + rect.width / 2;
 
-            if (isMobile) {
-                setTooltipPosition(cardCenterX < viewportWidth / 2 ? 'right' : 'left');
-            } else {
+            // if (isMobile) {
+            //     setTooltipPosition(cardCenterX < viewportWidth / 2 ? 'right' : 'left');
+            // } else {
                 setTooltipPosition(cardCenter < viewportHeight / 4 ? 'bottom' : 'top');
-            }
+            // }
         }
     }, [isVisible])
 
