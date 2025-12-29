@@ -135,8 +135,7 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className='relative grow grid grid-rows-[250px_auto] md:flex md:flex-row-reverse overflow-y-auto'>
-                <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
+            <div className='relative grow grid grid-rows-[auto_250px] md:flex md:flex-row overflow-y-auto'>
                 <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
                     <div className="grid grid-cols-[repeat(5,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
@@ -184,6 +183,7 @@ export default function Select() {
                         )}
                     </div>
                 </div>
+                <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/40" />

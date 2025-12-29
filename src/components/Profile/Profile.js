@@ -253,7 +253,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     return (
-        <div className='relative flex-1 default-tile border-b-4 md:border-x-4 border-black font-press-start p-2'>
+        <div className='relative flex-1 tooltip border-b-4 border-b-0 border-t-4 md:border-t-0 md:border-x-4 border-black font-press-start p-2'>
             <div ref={scrollContainerRef} className="h-full overflow-y-auto hide-scrollbar">
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
                     <div className="min-w-full h-full flex flex-col gap-3 md:gap-8 justify-between p-3 md:p-8">
