@@ -19,10 +19,12 @@ export default function Select() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
-    const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand } = useGameContext();
+    const [isInputBlurred, setIsInputBlurred] = useState(true);
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
     const [playerCardLibrary, setPlayerCardLibrary] = useState([]);
+
+    const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
     const { userCollection, isLoadingCollection } = useAuth();
 
     useEffect(() => {
@@ -115,6 +117,8 @@ export default function Select() {
                         placeholder='Search Cards'
                         value={searchString}
                         onChange={(e) => setSearchString(e.target.value)}
+                        onFocus={() => isMobile && setIsInputBlurred(false)}
+                        onBlur={() => isMobile && setIsInputBlurred(true)}
                         maxLength={18}
                     />
                     {searchString !== "" && (
@@ -134,9 +138,12 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className='relative grow grid grid-rows-[auto_250px] md:flex md:flex-row overflow-y-auto'>
+            <div className={`relative grow grid ${isInputBlurred ? "grid-rows-[200px_auto]" : ""} md:flex md:flex-row-reverse overflow-y-auto`}>
+                {isInputBlurred && (
+                    <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
+                )}
                 <div className={`relative bg-pokedex-lighter-blue hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(4,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
+                    <div className="grid grid-cols-[repeat(5,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
@@ -182,7 +189,6 @@ export default function Select() {
                         )}
                     </div>
                 </div>
-                <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/40" />

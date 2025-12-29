@@ -19,6 +19,7 @@ const sumUpNumbersInArray = (array) => {
     return array.reduce((acc, val) => acc + val, 0);
 };
 
+// Unused currently, may make a return
 const getBallSprite = (statWeight) => {
     if (statWeight < 395) return PokemonBallSprite;
     if (statWeight < 500) return GreatBallSprite;
@@ -27,14 +28,12 @@ const getBallSprite = (statWeight) => {
 };
 
 export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
-    const { hasCard } = useAuth();
-    const { cells } = useGameContext();
+    const { isMobile } = useGameContext();
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
     const [tooltipPosition, setTooltipPosition] = useState('top');
-    const [isMobile, setIsMobile] = useState(false);
 
     if (!pokemonCard) {
         return null;
@@ -177,20 +176,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                 setIsFlipped(true)
             }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
         }
-        
-        // const mediaQuery = window.matchMedia('(max-width: 767px)');
-
-        // setIsMobile(mediaQuery.matches);
-
-        // const handler = (e) => setIsMobile(e.matches);
-        // mediaQuery.addEventListener('change', handler);
-
-        // return () => mediaQuery.removeEventListener('change', handler);
     }, [])
-
-    useEffect(() => {
-
-    }, []);
 
     useEffect(() => {
         if (isVisible && cardRef.current) {
@@ -200,15 +186,13 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
             const cardCenter = rect.top + rect.height / 2;
             const cardCenterX = rect.left + rect.width / 2;
 
-            // if (isMobile) {
-            //     // On mobile, position left or right based on horizontal position
-            //     setTooltipPosition(cardCenterX < viewportWidth / 2 ? 'right' : 'left');
-            // } else {
-                // On desktop, position top or bottom based on vertical position
+            if (isMobile) {
+                setTooltipPosition(cardCenterX < viewportWidth / 2 ? 'right' : 'left');
+            } else {
                 setTooltipPosition(cardCenter < viewportHeight / 4 ? 'bottom' : 'top');
-            // }
+            }
         }
-    }, [isVisible, isMobile])
+    }, [isVisible])
 
     const nameBgStyle = useMemo(() => {
         if (pokemonCard.types.length === 1) {

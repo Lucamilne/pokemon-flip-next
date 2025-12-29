@@ -22,7 +22,6 @@ const { abilities } = gameData;
 
 export default function Board() {
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
     const [isGameComplete, setIsGameComplete] = useState(false);
     const [hasWonCoinToss, setHasWonCoinToss] = useState(null);
     const location = useLocation();
@@ -32,6 +31,7 @@ export default function Board() {
         setMatchCards,
         cells,
         setCells,
+        isMobile,
         setIsPlayerVictory,
         isPlayerTurn,
         setIsPlayerTurn,
@@ -44,17 +44,6 @@ export default function Board() {
 
     const navigate = useNavigate();
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(max-width: 767px)');
-
-        setIsMobile(mediaQuery.matches);
-
-        const handler = (e) => setIsMobile(e.matches);
-        mediaQuery.addEventListener('change', handler);
-
-        return () => mediaQuery.removeEventListener('change', handler);
-    }, []);
 
     //on mount
     useEffect(() => {

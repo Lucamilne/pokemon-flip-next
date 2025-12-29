@@ -18,6 +18,18 @@ export function GameProvider({ children }) {
   const [playerHand, setPlayerHand] = useState([]);
   const [cpuHand, setCpuHand] = useState([]);
   const [lastSelectedHand, setLastSelectedHand] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+
+    setIsMobile(mediaQuery.matches);
+
+    const handler = (e) => setIsMobile(e.matches);
+    mediaQuery.addEventListener('change', handler);
+
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   const [cells, setCells] = useState({
     A1: {
@@ -160,6 +172,7 @@ export function GameProvider({ children }) {
       setMatchCards,
       cells,
       setCells,
+      isMobile,
       isPlayerVictory,
       setIsPlayerVictory,
       isPlayerTurn,
