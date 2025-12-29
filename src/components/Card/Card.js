@@ -255,11 +255,11 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                         tooltipPosition === 'left' ? 'right-full mr-2 top-1/2 -translate-y-1/2' :
                             'left-full ml-2 top-1/2 -translate-y-1/2'
                     }`}>
-                    <div className='border border-black tooltip p-1 md:p-2 w-[90px] md:w-[140px] shadow-md/30'>
+                    <div className='border border-black tooltip p-1 w-[90px] md:w-[140px] shadow-md/30'>
                         <div className="truncate text-[8px] md:text-sm uppercase tracking-wider text-center font-bold text-white" style={nameBgStyle}>
                             {abilities[pokemonCard.ability]?.name}
                         </div>
-                        <p className="text-[8px] md:text-[10px] my-1 md:my-2 text-center">
+                        <p className="text-[8px] md:text-[10px] py-2 md:px-1 text-center">
                             {abilities[pokemonCard.ability]?.description}
                         </p>
                         {/* Arrow */}
