@@ -148,7 +148,7 @@ export default function Select() {
             <div className="relative grow flex md:flex-row-reverse overflow-y-auto">
                 <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
                 <div className={`relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(3,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
+                    <div className="grid grid-cols-[repeat(2,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (

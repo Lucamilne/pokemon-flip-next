@@ -160,12 +160,12 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
         // Render evolution rows
         const renderEvolution = (basePokemon, evolvedPokemon) => (
-            <div key={`${basePokemon.species.name}-${evolvedPokemon.species.name}`} className="grid grid-cols-[1fr_auto_1fr] justify-between items-center gap-2 mb-2">
+            <div key={`${basePokemon.species.name}-${evolvedPokemon.species.name}`} className="grid grid-cols-[1fr_auto_1fr] justify-between items-center mb-2">
                 <div className="flex flex-col items-center">
                     <img
                         alt={basePokemon.species.name}
                         src={`${baseImgURL}${getIdFromUrl(basePokemon.species.url)}.png`}
-                        className="w-16 h-16"
+                        className="size-16"
                     />
                     <span className="hidden md:block text-xs capitalize">{basePokemon.species.name}</span>
                 </div>
@@ -176,7 +176,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     <img
                         alt={evolvedPokemon.species.name}
                         src={`${baseImgURL}${getIdFromUrl(evolvedPokemon.species.url)}.png`}
-                        className="w-16 h-16"
+                        className="size-16"
                     />
                     <span className="hidden md:block text-xs capitalize">{evolvedPokemon.species.name}</span>
                 </div>
@@ -209,7 +209,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         }, [statTier]);
 
         return (
-            <div className='h-full p-3 md:p-8'>
+            <div className='h-full p-4 md:p-8'>
                 <div>
                     <h3 className="mb-2 text-xs md:text-lg font-bold">
                         <span className="capitalize mr-1 md:mr-4">{pokemonData?.name}</span>
@@ -247,9 +247,6 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
                         <span className="truncate">Morph:</span>
                         <span className="capitalize shrink-0">{pokemonData.shape?.name || 'Unknown'}</span>
-
-                        <span className="truncate">Growth:</span>
-                        <span className="capitalize shrink-0">{pokemonData.growth_rate?.name.replace('-', ' ') || 'Unknown'}</span>
                     </ul>
                 </div>
                 <hr className="border-2 border-black my-3" />
@@ -269,7 +266,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
                     <div className="min-w-full h-full flex flex-col gap-3 md:gap-8 justify-between p-3 md:p-8">
                         <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[10px] md:text-base'>
-                            <h2 className='font-bold text-sm md:text-2xl text-center'>Your Collection</h2>
+                            <h2 className='font-bold text-xs md:text-2xl text-center w-full'>Your Collection</h2>
                             <p>
                                 Create your own hand by selecting from your pokemon library on the <span className='inline md:hidden'>right!</span><span className='hidden md:inline'>left!</span>
                             </p>
