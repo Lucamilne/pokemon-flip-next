@@ -1074,6 +1074,7 @@
         7,
         4
       ],
+      "ability": "frisk",
       "statWeight": 435
     },
     "zubat": {
@@ -3394,6 +3395,12 @@
       "description": "For each additional Fire-type in the current match, a random stat is increased by 1",
       "type": "fire"
     },
+    "frisk": {
+      "name": "Frisk",
+      "trigger": "onGridPlace",
+      "description": "Frisk down adjacent Pokémon, gaining 1 stat for each",
+      "type": "psychic"
+    },
     "guts": {
       "name": "Guts",
       "trigger": "onGridPlace",
@@ -3505,7 +3512,7 @@
     "sing": {
       "name": "Sing",
       "trigger": "onGridPlace",
-      "description": "Gains 1 stat for each adjacent listener cornered nearby",
+      "description": "Gains 1 stat for each trapped listener on the grid",
       "type": "normal"
     },
     "staticElectricity": {

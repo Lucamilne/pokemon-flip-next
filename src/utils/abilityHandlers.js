@@ -322,7 +322,41 @@ const pressure = (card, cellId, gameState) => {
 };
 
 const magnetPull = pressure;
-const sing = pressure;
+const frisk = pressure;
+
+const sing = (card, cellId, gameState) => {
+    // Count all pokemon already on the grid
+    const pokemonOnGrid = Object.values(gameState.cells).filter(cell => cell.pokemonCard).length;
+
+    // If no pokemon on grid, return card unchanged
+    if (pokemonOnGrid === 0) return card;
+
+    // Create a new stats array
+    const newStats = [...card.stats];
+
+    // Boost random stats based on pokemon count on grid
+    for (let i = 0; i < pokemonOnGrid; i++) {
+        // Find all stat indices that are below 10
+        const availableStatIndices = newStats
+            .map((stat, index) => ({ stat, index }))
+            .filter(({ stat }) => stat < 10)
+            .map(({ index }) => index);
+
+        // If all stats are at 10, stop boosting
+        if (availableStatIndices.length === 0) break;
+
+        // Pick a random stat from available indices
+        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+        const statIndexToBoost = availableStatIndices[randomIndex];
+
+        newStats[statIndexToBoost] += 1;
+    }
+
+    return {
+        ...card,
+        stats: newStats
+    };
+};
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -480,6 +514,7 @@ export const abilityHandlers = {
     evolve,
     familyBond,
     flashFire,
+    frisk,
     guts,
     harden,
     iceBody,
