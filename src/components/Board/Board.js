@@ -7,7 +7,7 @@ import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
 import Coin from "../Coin/Coin.js";
 
-import { triggerAbilities } from '@/utils/abilityHandlers.js';
+import { applySelfAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -68,7 +68,7 @@ export default function Board() {
         // onMatchStart - trigger abilities for both hands
         const processedCpuHand = newCpuHand.map(card => {
             if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
-                return triggerAbilities(
+                return applySelfAbilities(
                     card,
                     'onMatchStart',
                     null,
@@ -80,7 +80,7 @@ export default function Board() {
 
         const processedPlayerHand = newPlayerHand.map(card => {
             if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
-                return triggerAbilities(
+                return applySelfAbilities(
                     card,
                     'onMatchStart',
                     null,
@@ -146,7 +146,7 @@ export default function Board() {
 
         // Check if card has an onElementalTilePlace ability first
         if (attackingCard.ability && abilities[attackingCard.ability]?.trigger === 'onElementalTilePlace') {
-            return triggerAbilities(
+            return applySelfAbilities(
                 attackingCard,
                 'onElementalTilePlace',
                 cellTarget,
@@ -251,7 +251,7 @@ export default function Board() {
                 // Track this cell as having been captured (don't mutate the original object)
                 capturedCells[adjacentCellKey] = attackingCard.isPlayerCard;
 
-                attackingCard = triggerAbilities(
+                attackingCard = applySelfAbilities(
                     attackingCard,
                     'onCapture',
                     cellTarget,
@@ -281,7 +281,7 @@ export default function Board() {
 
         let attackingCard = active.data.current.pokemonCard;
 
-        attackingCard = triggerAbilities(
+        attackingCard = applySelfAbilities(
             attackingCard,
             'onGridPlace',
             cellTarget,
@@ -663,7 +663,7 @@ export default function Board() {
         // Find the original index in cpuHand BEFORE triggering abilities
         const originalIndex = cpuHand.findIndex(card => card === attackingCard);
 
-        attackingCard = triggerAbilities(
+        attackingCard = applySelfAbilities(
             attackingCard,
             'onGridPlace',
             cellTarget,
@@ -709,35 +709,20 @@ export default function Board() {
         // Trigger onTurnStart abilities for all cards
         const updatedPlayerHand = playerHand.map(card => {
             if (card && card.ability && abilities[card.ability]?.trigger === 'onTurnStart') {
-                return triggerAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
+                return applySelfAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
             }
             return card;
         });
 
         const updatedCpuHand = cpuHand.map(card => {
             if (card && card.ability && abilities[card.ability]?.trigger === 'onTurnStart') {
-                return triggerAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
+                return applySelfAbilities(card, 'onTurnStart', null, { cells, playerHand, cpuHand, isPlayerTurn });
             }
             return card;
         });
 
-        // const updatedCells = Object.fromEntries(
-        //     Object.entries(cells).map(([cellKey, cellData]) => {
-        //         if (cellData.pokemonCard && cellData.pokemonCard.ability && abilities[cellData.pokemonCard.ability]?.trigger === 'onTurnStartGrid') {
-        //             return [cellKey, {
-        //                 ...cellData,
-        //                 pokemonCard: triggerAbilities(cellData.pokemonCard, 'onTurnStartGrid', cellKey, { cells, playerHand, cpuHand, isPlayerTurn })
-        //             }];
-        //         }
-        //         return [cellKey, cellData];
-        //     })
-        // );
-
-        // console.log("board", updatedCells)
-
         setPlayerHand(updatedPlayerHand);
         setCpuHand(updatedCpuHand);
-        // setCells(updatedCells);
         // end
 
         if (!isPlayerTurn) {

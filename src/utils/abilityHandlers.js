@@ -667,7 +667,7 @@ export const abilityHandlers = {
 /**
  * @param {Object} gameState - Current game state { cells, playerHand, cpuHand }
  */
-export const triggerAbilities = (card, trigger, cellId, gameState) => {
+export const applySelfAbilities = (card, trigger, cellId, gameState) => {
     if (!card.ability) return card;
 
     let modifiedCard = { ...card };
