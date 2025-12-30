@@ -368,11 +368,6 @@ const selfDestruct = (card, cellId, gameState) => {
 }
 
 const desperation = (card, cellId, gameState) => {
-    const emptySpaces = Object.values(gameState.cells)
-        .filter(cell => cell.pokemonCard === null).length;
-
-    if (emptySpaces > 3) return card;
-
     const gridCards = Object.values(gameState.cells)
         .map(cell => cell.pokemonCard)
         .filter(c => c !== null);
@@ -380,13 +375,12 @@ const desperation = (card, cellId, gameState) => {
     const playerCards = gridCards.filter(c => c.isPlayerCard).length;
     const cpuCards = gridCards.filter(c => !c.isPlayerCard).length;
 
-    // Check if losing
-    const isLosing = card.isPlayerCard
-        ? cpuCards > playerCards
-        : playerCards > cpuCards;
+    // Determine friendly and enemy counts based on who owns this card
+    const friendlyCount = card.isPlayerCard ? playerCards : cpuCards;
+    const enemyCount = card.isPlayerCard ? cpuCards : playerCards;
 
-    // Transform only if losing in late game
-    if (isLosing) {
+    // Only trigger if losing badly: 3 or fewer friendly cards vs 7 or more enemy cards
+    if (friendlyCount <= 3 && enemyCount >= 7) {
         const gyarados = gameData.cards.gyarados;
         return {
             ...card,

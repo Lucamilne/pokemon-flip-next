@@ -3395,7 +3395,7 @@
     "desperation": {
       "name": "Desperation",
       "trigger": "onGridPlace",
-      "description": "Transforms into Gyarados when placed while losing and with 3 or fewer empty spaces remaining",
+      "description": "Transforms into Gyarados when placed with only 3 or less allied cards",
       "type": "water"
     },
     "dig": {
@@ -3407,7 +3407,7 @@
     "download": {
       "name": "Download",
       "trigger": "onGridPlace",
-      "description": "Copies the stats and type of the strongest adjacent card when placed on the grid",
+      "description": "Copies the stats and type of the strongest adjacent card when placed",
       "type": "normal"
     },
     "evolve": {
