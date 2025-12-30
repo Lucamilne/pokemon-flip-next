@@ -57,6 +57,27 @@ const oblivious = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
     if (!tileElement) return card;
 
+    return {
+        ...card,
+        stats: card.stats.map(stat => stat < 10 ? stat + 1 : stat)
+    };
+}
+
+const magicGuard = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    if (!tileElement) return card;
+
+    return {
+        ...card,
+        types: [tileElement],
+        stats: card.stats.map(stat => stat < 10 ? stat + 1 : stat)
+    };
+}
+
+const shieldDust = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    if (!tileElement) return card;
+
     const updateStatOnElementalTile = (stat) => {
         if (card.types.includes(tileElement) && stat < 10) {
             return stat + 1;
@@ -71,11 +92,10 @@ const oblivious = (card, cellId, gameState) => {
     };
 }
 
-const shieldDust = oblivious;
-const shellArmor = oblivious;
-const sandVeil = oblivious;
-const clearBody = oblivious;
-const sturdy = oblivious;
+const shellArmor = shieldDust;
+const sandVeil = shieldDust;
+const clearBody = shieldDust;
+const sturdy = shieldDust;
 
 const overgrow = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
@@ -110,12 +130,30 @@ const evolve = (card, cellId, gameState) => {
     };
 }
 
-const blaze = overgrow;
-const torrent = overgrow;
-const lightningRod = overgrow;
-const iceBody = overgrow;
-const poisonPoint = overgrow;
-const rockHead = overgrow;
+// "bug",
+// "dragon",
+// "electric",
+// "fairy",
+// "fighting",
+// "fire",
+// "flying",
+// "ghost",
+// "grass",
+// "ground",
+// "ice",
+// "normal",
+// "poison",
+// "psychic",
+// "rock",
+// "water"
+
+const blaze = overgrow; // fire
+const torrent = overgrow; // water
+const lightningRod = overgrow; // electric
+const iceBody = overgrow; // ice
+const poisonTouch = overgrow; // poison
+const rockHead = overgrow; // rock
+const bigPecks = overgrow; // flying
 
 const chlorophyll = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
@@ -132,13 +170,20 @@ const chlorophyll = (card, cellId, gameState) => {
 
     // Boost random stats based on type card count
     for (let i = 0; i < cardTypeCount; i++) {
-        // Pick a random stat index (0-3)
-        const randomStatIndex = Math.floor(Math.random() * newStats.length);
+        // Find all stat indices that are below 10
+        const availableStatIndices = newStats
+            .map((stat, index) => ({ stat, index }))
+            .filter(({ stat }) => stat < 10)
+            .map(({ index }) => index);
 
-        // Increase by +1, but cap at 10
-        if (newStats[randomStatIndex] < 10) {
-            newStats[randomStatIndex] += 1;
-        }
+        // If all stats are at 10, stop boosting
+        if (availableStatIndices.length === 0) break;
+
+        // Pick a random stat from available indices
+        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+        const statIndexToBoost = availableStatIndices[randomIndex];
+
+        newStats[statIndexToBoost] += 1;
     }
 
     return {
@@ -147,13 +192,68 @@ const chlorophyll = (card, cellId, gameState) => {
     };
 }
 
-const flashFire = chlorophyll;
-const swiftSwim = chlorophyll;
-const staticElectricity = chlorophyll;
-const swarm = chlorophyll;
-const synchronise = chlorophyll;
-const rockSlide = chlorophyll;
-const earthquake = chlorophyll;
+// "bug",
+// "dragon",
+// "electric",
+// "fairy",
+// "fighting",
+// "fire",
+// "flying",
+// "ghost",
+// "grass",
+// "ground",
+// "ice",
+// "normal",
+// "poison",
+// "psychic",
+// "rock",
+// "water"
+
+const flashFire = chlorophyll; // fire
+const keenEye = chlorophyll; // flying
+const rockSlide = chlorophyll; // rock
+const swiftSwim = chlorophyll; // water
+const staticElectricity = chlorophyll; // electric
+const swarm = chlorophyll; // bug
+const synchronise = chlorophyll; // psychic
+
+const familyBond = (card, cellId, gameState) => {
+    const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
+
+    // Count Nido family members in both hands (excluding this card)
+    const nidoFamilyCount = collectiveHand.filter(c =>
+        c.name.toLowerCase().startsWith('nido')
+    ).length - 1;
+
+    if (nidoFamilyCount < 1) return card;
+
+    // Create a new stats array
+    const newStats = [...card.stats];
+
+    // Boost random stats based on Nido family count
+    for (let i = 0; i < nidoFamilyCount; i++) {
+        // Find all stat indices that are below 10
+        const availableStatIndices = newStats
+            .map((stat, index) => ({ stat, index }))
+            .filter(({ stat }) => stat < 10)
+            .map(({ index }) => index);
+
+        // If all stats are at 10, stop boosting
+        if (availableStatIndices.length === 0) break;
+
+        // Pick a random stat from available indices
+        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+        const statIndexToBoost = availableStatIndices[randomIndex];
+
+        newStats[statIndexToBoost] += 1;
+    }
+
+    return {
+        ...card,
+        stats: newStats
+    };
+}
+
 
 const rest = (card, cellId, gameState) => {
     const hasCardsOnGrid = Object.values(gameState.cells).some(cell => cell.pokemonCard);
@@ -186,32 +286,6 @@ const rest = (card, cellId, gameState) => {
         stats: newStats
     };
 };
-
-const test = (card, cellId, gameState) => {
-    if (!cellId) return;
-
-    const newStats = [...card.stats];
-
-    // Find all stat indices that are not already at max (10)
-    const availableStatIndices = newStats
-        .map((stat, index) => ({ stat, index }))
-        .filter(({ stat }) => stat < 10)
-        .map(({ index }) => index);
-
-    // If all stats are at 10, do nothing
-    if (availableStatIndices.length === 0) return card;
-
-    // Pick a random stat from available indices
-    const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
-    const statIndexToBoost = availableStatIndices[randomIndex];
-
-    newStats[statIndexToBoost] += 1;
-
-    return {
-        ...card,
-        stats: newStats
-    };
-}
 
 const harden = rest;
 
@@ -246,6 +320,8 @@ const pressure = (card, cellId, gameState) => {
         stats: newStats
     };
 };
+
+const magnetPull = pressure;
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -344,31 +420,21 @@ const lonely = (card, cellId, gameState) => {
     };
 };
 
+const dig = lonely;
+
 const download = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+    const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
 
-    // Find the largest stat among all adjacent pokemon
-    let largestStat = 0;
+    if (adjacentCard) {
+        // Copy stats from adjacent card
+        card.stats = [...adjacentCard.stats];
+        card.types = [...adjacentCard.types];
+    }
 
-    adjacentCellIds.forEach(adjacentCellId => {
-        const adjacentCell = gameState.cells[adjacentCellId];
-        if (adjacentCell?.pokemonCard) {
-            const maxStatInCard = Math.max(...adjacentCell.pokemonCard.stats);
-            if (maxStatInCard > largestStat) {
-                largestStat = maxStatInCard;
-            }
-        }
-    });
-
-    // If no adjacent cards found, return card unchanged
-    if (largestStat === 0) return card;
-
-    // Apply the largest stat to all stats on this card
-    return {
-        ...card,
-        stats: [largestStat, largestStat, largestStat, largestStat]
-    };
+    return card;
 };
+
 
 const pickup = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -403,25 +469,32 @@ const pickup = (card, cellId, gameState) => {
 };
 
 export const abilityHandlers = {
+    bigPecks,
     blaze,
     chlorophyll,
     clearBody,
     desperation,
+    dig,
     download,
     evolve,
+    familyBond,
     flashFire,
     guts,
     harden,
     iceBody,
+    keenEye,
     lick,
     lightningRod,
     lonely,
+    magnetPull,
+    magicGuard,
     oblivious,
     overgrow,
     pickup,
-    poisonPoint,
     pressure,
     rest,
+    rockHead,
+    rockSlide,
     sandVeil,
     selfDestruct,
     shellArmor,

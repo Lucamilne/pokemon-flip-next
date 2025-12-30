@@ -596,6 +596,7 @@
         1,
         7
       ],
+      "ability": "keenEye",
       "statWeight": 251
     },
     "pidgeotto": {
@@ -615,6 +616,7 @@
         6,
         7
       ],
+      "ability": "keenEye",
       "statWeight": 349
     },
     "pidgeot": {
@@ -634,6 +636,7 @@
         4,
         8
       ],
+      "ability": "keenEye",
       "statWeight": 479
     },
     "rattata": {
@@ -692,6 +695,7 @@
         5,
         1
       ],
+      "ability": "keenEye",
       "statWeight": 262
     },
     "fearow": {
@@ -711,6 +715,7 @@
         4,
         8
       ],
+      "ability": "keenEye",
       "statWeight": 442
     },
     "ekans": {
@@ -847,6 +852,7 @@
         2,
         5
       ],
+      "ability": "familyBond",
       "statWeight": 275
     },
     "nidorina": {
@@ -866,7 +872,7 @@
         2,
         4
       ],
-      "ability": "poisonPoint",
+      "ability": "familyBond",
       "statWeight": 365
     },
     "nidoqueen": {
@@ -886,6 +892,7 @@
         6,
         8
       ],
+      "ability": "familyBond",
       "statWeight": 505
     },
     "nidoran-m": {
@@ -905,6 +912,7 @@
         3,
         5
       ],
+      "ability": "familyBond",
       "statWeight": 273
     },
     "nidorino": {
@@ -924,7 +932,7 @@
         6,
         5
       ],
-      "ability": "poisonPoint",
+      "ability": "familyBond",
       "statWeight": 365
     },
     "nidoking": {
@@ -944,6 +952,7 @@
         6,
         6
       ],
+      "ability": "familyBond",
       "statWeight": 505
     },
     "clefairy": {
@@ -963,6 +972,7 @@
         4,
         2
       ],
+      "ability": "magicGuard",
       "statWeight": 323
     },
     "clefable": {
@@ -982,6 +992,7 @@
         8,
         6
       ],
+      "ability": "magicGuard",
       "statWeight": 483
     },
     "vulpix": {
@@ -1254,7 +1265,7 @@
         4,
         1
       ],
-      "ability": "sandVeil",
+      "ability": "dig",
       "statWeight": 265
     },
     "dugtrio": {
@@ -1274,7 +1285,7 @@
         4,
         4
       ],
-      "ability": "sandVeil",
+      "ability": "dig",
       "statWeight": 425
     },
     "meowth": {
@@ -1863,6 +1874,7 @@
         1,
         8
       ],
+      "ability": "magnetPull",
       "statWeight": 325
     },
     "magneton": {
@@ -1882,6 +1894,7 @@
         8,
         1
       ],
+      "ability": "magnetPull",
       "statWeight": 465
     },
     "farfetchd": {
@@ -2213,10 +2226,10 @@
         "electric"
       ],
       "stats": [
-        8,
-        8,
-        8,
-        8
+        7,
+        7,
+        7,
+        7
       ],
       "originalStats": [
         6,
@@ -2819,7 +2832,7 @@
         9,
         5
       ],
-      "ability": "shellArmor",
+      "ability": "lonely",
       "statWeight": 535
     },
     "ditto": {
@@ -3318,6 +3331,12 @@
     }
   },
   "abilities": {
+    "bigPecks": {
+      "name": "Big Pecks",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Flying-type tiles",
+      "type": "fire"
+    },
     "blaze": {
       "name": "Blaze",
       "trigger": "onElementalTilePlace",
@@ -3342,10 +3361,16 @@
       "description": "Transforms into Gyarados when placed while losing and with 3 or fewer empty spaces remaining",
       "type": "water"
     },
+    "dig": {
+      "name": "Dig",
+      "trigger": "onGridPlace",
+      "description": "Dig in! Boosts all stats by 1 when placed with no cards adjacent",
+      "type": "ground"
+    },
     "download": {
       "name": "Download",
       "trigger": "onGridPlace",
-      "description": "Processes data from adjacent foes and sets its stats to their average across all attributes",
+      "description": "Copies the stats and type of the strongest adjacent Pokemon when placed on the grid",
       "type": "normal"
     },
     "evolve": {
@@ -3353,6 +3378,12 @@
       "trigger": "onElementalTilePlace",
       "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on",
       "type": "normal"
+    },
+    "familyBond": {
+      "name": "Family Bond",
+      "trigger": "onMatchStart",
+      "description": "For each additional member of the Nido family in the current match, a random stat is increased by 1",
+      "type": "poison"
     },
     "flashFire": {
       "name": "Flash Fire",
@@ -3378,6 +3409,12 @@
       "description": "Doubles stat bonuses when placed on Ice-type tiles",
       "type": "ice"
     },
+    "keenEye": {
+      "name": "Keen Eye",
+      "trigger": "onMatchStart",
+      "description": "For each additional Flying-type in the current match, a random stat is increased by 1",
+      "type": "flying"
+    },
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
@@ -3396,10 +3433,22 @@
       "description": "Boosts all stats by 1 when placed with no cards adjacent",
       "type": "normal"
     },
+    "magicGuard": {
+      "name": "Magic Guard",
+      "trigger": "onElementalTilePlace",
+      "description": "Inherits the type and stat bonus of any elemental tile it's placed on",
+      "type": "fairy"
+    },
+    "magnetPull": {
+      "name": "Magnet Pull",
+      "trigger": "onGridPlace",
+      "description": "Gains 1 stat for each adjacent Pokémon",
+      "type": "psychic"
+    },
     "oblivious": {
       "name": "Oblivious",
       "trigger": "onElementalTilePlace",
-      "description": "Oblivious to elemental tile penalties",
+      "description": "Oblivious to its surroundings. Gains 1 to all stats on any elemental tile",
       "type": "psychic"
     },
     "overgrow": {
@@ -3413,12 +3462,6 @@
       "trigger": "onGridPlace",
       "description": "Scavenges empty spaces, gaining 1 stat for each vacant adjacent cell",
       "type": "normal"
-    },
-    "poisonPoint": {
-      "name": "Poison Point",
-      "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Poison-type tiles",
-      "type": "Poison"
     },
     "pressure": {
       "name": "Pressure",
@@ -3495,7 +3538,7 @@
     "transform": {
       "name": "Transform",
       "trigger": "onGridPlace",
-      "description": "Copies the stats of the strongest adjacent Pokemon when placed on the grid",
+      "description": "Transforms into the strongest adjacent Pokemon when placed on the grid",
       "type": "normal"
     }
   }

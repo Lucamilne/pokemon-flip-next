@@ -88,7 +88,7 @@ export default function Select() {
     const togglePokemonCardSelection = useCallback((pokemonCard) => {
         if (!pokemonCard) return;
 
-        setSearchString("");
+        // setSearchString("");
 
         setPlayerHand(prev => {
             // Check if card is already in hand
