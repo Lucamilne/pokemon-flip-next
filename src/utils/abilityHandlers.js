@@ -322,6 +322,7 @@ const pressure = (card, cellId, gameState) => {
 };
 
 const magnetPull = pressure;
+const sing = pressure;
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -499,6 +500,7 @@ export const abilityHandlers = {
     selfDestruct,
     shellArmor,
     shieldDust,
+    sing,
     staticElectricity,
     sturdy,
     swarm,

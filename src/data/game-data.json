@@ -814,6 +814,7 @@
         1,
         4
       ],
+      "ability": "sandVeil",
       "statWeight": 300
     },
     "sandslash": {
@@ -827,6 +828,7 @@
         6,
         5
       ],
+      "ability": "sandVeil",
       "originalStats": [
         6,
         6,
@@ -1052,6 +1054,7 @@
         3,
         4
       ],
+      "ability": "sing",
       "statWeight": 270
     },
     "wigglytuff": {
@@ -3498,6 +3501,12 @@
       "trigger": "onElementalTilePlace",
       "description": "Shielded from elemental tile penalties",
       "type": "bug"
+    },
+    "sing": {
+      "name": "Sing",
+      "trigger": "onGridPlace",
+      "description": "Gains 1 stat for each adjacent listener cornered nearby",
+      "type": "normal"
     },
     "staticElectricity": {
       "name": "Static",
