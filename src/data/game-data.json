@@ -413,7 +413,7 @@
         6,
         2
       ],
-      "ability": "torrent",
+      "ability": "waterGun",
       "statWeight": 314
     },
     "wartortle": {
@@ -433,7 +433,7 @@
         5,
         4
       ],
-      "ability": "torrent",
+      "ability": "waterGun",
       "statWeight": 405
     },
     "blastoise": {
@@ -453,7 +453,7 @@
         5,
         6
       ],
-      "ability": "torrent",
+      "ability": "waterGun",
       "statWeight": 530
     },
     "caterpie": {
@@ -467,7 +467,6 @@
         1,
         3
       ],
-      "starter": true,
       "originalStats": [
         2,
         4,
@@ -488,6 +487,7 @@
         3,
         3
       ],
+      "starter": true,
       "originalStats": [
         2,
         3,
@@ -528,7 +528,6 @@
         1,
         6
       ],
-      "starter": true,
       "originalStats": [
         2,
         1,
@@ -596,7 +595,7 @@
         1,
         7
       ],
-      "ability": "keenEye",
+      "ability": "mirrorMove",
       "statWeight": 251
     },
     "pidgeotto": {
@@ -616,7 +615,7 @@
         6,
         7
       ],
-      "ability": "keenEye",
+      "ability": "mirrorMove",
       "statWeight": 349
     },
     "pidgeot": {
@@ -636,7 +635,7 @@
         4,
         8
       ],
-      "ability": "keenEye",
+      "ability": "mirrorMove",
       "statWeight": 479
     },
     "rattata": {
@@ -650,7 +649,6 @@
         5,
         4
       ],
-      "starter": true,
       "originalStats": [
         1,
         3,
@@ -695,7 +693,7 @@
         5,
         1
       ],
-      "ability": "keenEye",
+      "ability": "mirrorMove",
       "statWeight": 262
     },
     "fearow": {
@@ -715,7 +713,7 @@
         4,
         8
       ],
-      "ability": "keenEye",
+      "ability": "mirrorMove",
       "statWeight": 442
     },
     "ekans": {
@@ -767,7 +765,6 @@
         6,
         4
       ],
-      "starter": true,
       "originalStats": [
         4,
         2,
@@ -808,6 +805,7 @@
         1,
         4
       ],
+      "starter": true,
       "originalStats": [
         1,
         9,
@@ -1048,6 +1046,7 @@
         3,
         4
       ],
+      "starter": true,
       "originalStats": [
         2,
         5,
@@ -1074,7 +1073,7 @@
         7,
         4
       ],
-      "ability": "frisk",
+      "ability": "cuteCharm",
       "statWeight": 435
     },
     "zubat": {
@@ -1230,6 +1229,7 @@
         2,
         7
       ],
+      "ability": "leechLife",
       "statWeight": 305
     },
     "venomoth": {
@@ -1249,7 +1249,7 @@
         5,
         3
       ],
-      "ability": "shieldDust",
+      "ability": "leechLife",
       "statWeight": 450
     },
     "diglett": {
@@ -1258,16 +1258,16 @@
         "ground"
       ],
       "stats": [
-        4,
-        4,
-        4,
-        1
+        1,
+        2,
+        5,
+        5
       ],
       "originalStats": [
-        4,
-        4,
-        4,
-        1
+        1,
+        2,
+        5,
+        5
       ],
       "ability": "dig",
       "statWeight": 265
@@ -1289,7 +1289,7 @@
         4,
         4
       ],
-      "ability": "dig",
+      "ability": "triAttack",
       "statWeight": 425
     },
     "meowth": {
@@ -1303,13 +1303,14 @@
         5,
         3
       ],
+      "starter": true,
       "originalStats": [
         6,
         1,
         5,
         3
       ],
-      "ability": "pickup",
+      "ability": "payDay",
       "statWeight": 290
     },
     "persian": {
@@ -1386,6 +1387,7 @@
         4,
         4
       ],
+      "ability": "guts",
       "statWeight": 305
     },
     "primeape": {
@@ -1405,6 +1407,7 @@
         6,
         6
       ],
+      "ability": "guts",
       "statWeight": 455
     },
     "growlithe": {
@@ -1444,7 +1447,7 @@
         10,
         5
       ],
-      "ability": "flashFire",
+      "ability": "roar",
       "statWeight": 555
     },
     "poliwag": {
@@ -1464,7 +1467,7 @@
         2,
         6
       ],
-      "ability": "swiftSwim",
+      "ability": "torrent",
       "statWeight": 300
     },
     "poliwhirl": {
@@ -1484,7 +1487,7 @@
         5,
         5
       ],
-      "ability": "swiftSwim",
+      "ability": "torrent",
       "statWeight": 385
     },
     "poliwrath": {
@@ -1504,7 +1507,7 @@
         8,
         8
       ],
-      "ability": "swiftSwim",
+      "ability": "torrent",
       "statWeight": 510
     },
     "abra": {
@@ -1524,6 +1527,7 @@
         4,
         3
       ],
+      "ability": "teleport",
       "statWeight": 310
     },
     "kadabra": {
@@ -1956,6 +1960,7 @@
         5,
         3
       ],
+      "ability": "triAttack",
       "statWeight": 470
     },
     "seel": {
@@ -2013,6 +2018,7 @@
         6,
         1
       ],
+      "ability": "acidArmor",
       "statWeight": 325
     },
     "muk": {
@@ -2032,6 +2038,7 @@
         2,
         7
       ],
+      "ability": "acidArmor",
       "statWeight": 500
     },
     "shellder": {
@@ -2089,6 +2096,7 @@
         4,
         6
       ],
+      "ability": "confuseRay",
       "statWeight": 310
     },
     "haunter": {
@@ -2108,6 +2116,7 @@
         4,
         9
       ],
+      "ability": "confuseRay",
       "statWeight": 405
     },
     "gengar": {
@@ -2127,6 +2136,7 @@
         8,
         6
       ],
+      "ability": "confuseRay",
       "statWeight": 500
     },
     "onix": {
@@ -2235,6 +2245,7 @@
         7,
         7
       ],
+      "starter": true,
       "originalStats": [
         6,
         3,
@@ -2663,6 +2674,7 @@
         5,
         7
       ],
+      "ability": "mimic",
       "statWeight": 460
     },
     "scyther": {
@@ -2791,6 +2803,7 @@
         2,
         2
       ],
+      "starter": true,
       "originalStats": [
         2,
         2,
@@ -2850,6 +2863,7 @@
         4,
         4
       ],
+      "starter": true,
       "originalStats": [
         4,
         4,
@@ -2870,6 +2884,7 @@
         3,
         5
       ],
+      "starter": true,
       "originalStats": [
         5,
         3,
@@ -2896,7 +2911,7 @@
         7,
         7
       ],
-      "ability": "swiftSwim",
+      "ability": "torrent",
       "statWeight": 525
     },
     "jolteon": {
@@ -3092,7 +3107,7 @@
         9,
         9
       ],
-      "ability": "iceBody",
+      "ability": "mist",
       "statWeight": 580
     },
     "zapdos": {
@@ -3335,6 +3350,12 @@
     }
   },
   "abilities": {
+    "acidArmor": {
+      "name": "Acid Armor",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Poison-type tiles",
+      "type": "poison"
+    },
     "bigPecks": {
       "name": "Big Pecks",
       "trigger": "onElementalTilePlace",
@@ -3354,10 +3375,22 @@
       "type": "grass"
     },
     "clearBody": {
-      "name": "Clear body",
+      "name": "Clear Body",
       "trigger": "onElementalTilePlace",
-      "description": "Shielded from elemental tile penalties",
-      "type": "water"
+      "description": "Inherits the type and stat bonus of any elemental tile it's placed on",
+      "type": "fairy"
+    },
+    "confuseRay": {
+      "name": "Confuse Ray",
+      "trigger": "onMatchStart",
+      "description": "On match start, shuffle this card's stats. Small chance to gain +1 to a stat",
+      "type": "ghost"
+    },
+    "cuteCharm": {
+      "name": "Cute Charm",
+      "trigger": "onGridPlace",
+      "description": "Infatuates those in contact, gaining 1 stat for each adjacent card",
+      "type": "psychic"
     },
     "desperation": {
       "name": "Desperation",
@@ -3374,7 +3407,7 @@
     "download": {
       "name": "Download",
       "trigger": "onGridPlace",
-      "description": "Copies the stats and type of the strongest adjacent Pokemon when placed on the grid",
+      "description": "Copies the stats and type of the strongest adjacent card when placed on the grid",
       "type": "normal"
     },
     "evolve": {
@@ -3395,12 +3428,6 @@
       "description": "For each additional Fire-type in the current match, a random stat is increased by 1",
       "type": "fire"
     },
-    "frisk": {
-      "name": "Frisk",
-      "trigger": "onGridPlace",
-      "description": "Frisk down adjacent Pokémon, gaining 1 stat for each",
-      "type": "psychic"
-    },
     "guts": {
       "name": "Guts",
       "trigger": "onGridPlace",
@@ -3410,20 +3437,32 @@
     "harden": {
       "name": "Harden",
       "trigger": "onTurnStart",
-      "description": "While this Pokémon waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1",
+      "description": "While this card waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1",
       "type": "bug"
     },
-    "iceBody": {
-      "name": "Ice Body",
+    "mimic": {
+      "name": "Mimic",
+      "trigger": "onGridPlace",
+      "description": "Mimics the stats and type of the strongest adjacent card when placed on the grid",
+      "type": "normal"
+    },
+    "mist": {
+      "name": "Mist",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Ice-type tiles",
       "type": "ice"
     },
-    "keenEye": {
-      "name": "Keen Eye",
+    "mirrorMove": {
+      "name": "Mirror Move",
       "trigger": "onMatchStart",
       "description": "For each additional Flying-type in the current match, a random stat is increased by 1",
       "type": "flying"
+    },
+    "leechLife": {
+      "name": "Leech Life",
+      "trigger": "onGridPlace",
+      "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random",
+      "type": "ghost"
     },
     "lick": {
       "name": "Lick",
@@ -3446,13 +3485,13 @@
     "magicGuard": {
       "name": "Magic Guard",
       "trigger": "onElementalTilePlace",
-      "description": "Inherits the type and stat bonus of any elemental tile it's placed on",
+      "description": "Boosts all stats by 1 per adjacent elemental tile",
       "type": "fairy"
     },
     "magnetPull": {
       "name": "Magnet Pull",
       "trigger": "onGridPlace",
-      "description": "Gains 1 stat for each adjacent Pokémon",
+      "description": "Gains 1 stat for each adjacent card",
       "type": "psychic"
     },
     "oblivious": {
@@ -3467,8 +3506,8 @@
       "description": "Doubles stat bonuses when placed on Grass-type tiles",
       "type": "grass"
     },
-    "pickup": {
-      "name": "Pickup",
+    "payDay": {
+      "name": "Pay Day",
       "trigger": "onGridPlace",
       "description": "Scavenges empty spaces, gaining 1 stat for each vacant adjacent cell",
       "type": "normal"
@@ -3476,14 +3515,20 @@
     "pressure": {
       "name": "Pressure",
       "trigger": "onGridPlace",
-      "description": "Exerts intense pressure on surrounding foes, gaining 1 stat for each adjacent Pokémon",
+      "description": "Exerts intense pressure on surrounding foes, gaining 1 stat for each adjacent card",
       "type": "psychic"
     },
     "rest": {
       "name": "Rest",
       "trigger": "onTurnStart",
-      "description": "This Pokémon gains 1 stat for every turn it stays in the player's hand after the game starts",
+      "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts",
       "type": "psychic"
+    },
+    "roar": {
+      "name": "Roar",
+      "trigger": "onGridPlace",
+      "description": "When placed, Gain 1 random stat for each card on the grid",
+      "type": "fire"
     },
     "sandVeil": {
       "name": "Sand Veil",
@@ -3512,7 +3557,7 @@
     "sing": {
       "name": "Sing",
       "trigger": "onGridPlace",
-      "description": "Gains 1 stat for each trapped listener on the grid",
+      "description": "Every listener strengthens the song! When placed, gain 1 random stat for each card on the grid",
       "type": "normal"
     },
     "staticElectricity": {
@@ -3527,26 +3572,14 @@
       "description": "For each additional Bug-type in the current match, a random stat is increased by 1",
       "type": "bug"
     },
-    "swiftSwim": {
-      "name": "Swift Swim",
-      "trigger": "onMatchStart",
-      "description": "For each additional Water-type in the current match, a random stat is increased by 1",
-      "type": "water"
-    },
     "synchronise": {
       "name": "Synchronise",
       "trigger": "onMatchStart",
       "description": "For each additional Psychic-type in the current match, a random stat is increased by 1",
       "type": "psychic"
     },
-    "test": {
-      "name": "Test",
-      "trigger": "onTurnStartGrid",
-      "description": "This is a test ability",
-      "type": "normal"
-    },
-    "torrent": {
-      "name": "Torrent",
+    "waterGun": {
+      "name": "Water Gun",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Water-type tiles",
       "type": "water"
@@ -3554,8 +3587,26 @@
     "transform": {
       "name": "Transform",
       "trigger": "onGridPlace",
-      "description": "Transforms into the strongest adjacent Pokemon when placed on the grid",
+      "description": "Transforms into the strongest adjacent card when placed on the grid",
       "type": "normal"
+    },
+    "triAttack": {
+      "name": "Tri Attack",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 2 when placed adjacent to 3 or more enemy cards",
+      "type": "flying"
+    },
+    "teleport": {
+      "name": "Teleport",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when placed with no cards adjacent",
+      "type": "psychic"
+    },
+    "torrent": {
+      "name": "Torrent",
+      "trigger": "onMatchStart",
+      "description": "For each additional Water-type in the current match, a random stat is increased by 1",
+      "type": "water"
     }
   }
 }

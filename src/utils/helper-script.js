@@ -104,7 +104,7 @@ const allocateStatsByPokemon = (pokemonName) => {
 //     "mold-breaker":1, cannot have stats raised or lowered
 //     "soundproof":3, cannot be combo'd
 //     "static":5, todo
-//     "pickup":1, todo
+//     "payDay":1, todo
 //     "water-veil":2, cannot be flipped, nor flip when set on a water tile
 //     "effect-spore":2, contact todo
 //     "dry-skin":2, random stats increased by 2 when placed on a water tile, or 1 per adjacent water type

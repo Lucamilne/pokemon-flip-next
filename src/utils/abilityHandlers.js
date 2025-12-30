@@ -63,7 +63,7 @@ const oblivious = (card, cellId, gameState) => {
     };
 }
 
-const magicGuard = (card, cellId, gameState) => {
+const clearBody = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
     if (!tileElement) return card;
 
@@ -94,7 +94,7 @@ const shieldDust = (card, cellId, gameState) => {
 
 const shellArmor = shieldDust;
 const sandVeil = shieldDust;
-const clearBody = shieldDust;
+// const clearBody = shieldDust;
 const sturdy = shieldDust;
 
 const overgrow = (card, cellId, gameState) => {
@@ -148,10 +148,10 @@ const evolve = (card, cellId, gameState) => {
 // "water"
 
 const blaze = overgrow; // fire
-const torrent = overgrow; // water
+const waterGun = overgrow; // water
 const lightningRod = overgrow; // electric
-const iceBody = overgrow; // ice
-const poisonTouch = overgrow; // poison
+const mist = overgrow; // ice
+const acidArmor = overgrow; // poison
 const rockHead = overgrow; // rock
 const bigPecks = overgrow; // flying
 
@@ -210,9 +210,9 @@ const chlorophyll = (card, cellId, gameState) => {
 // "water"
 
 const flashFire = chlorophyll; // fire
-const keenEye = chlorophyll; // flying
+const mirrorMove = chlorophyll; // flying
 const rockSlide = chlorophyll; // rock
-const swiftSwim = chlorophyll; // water
+const torrent = chlorophyll; // water
 const staticElectricity = chlorophyll; // electric
 const swarm = chlorophyll; // bug
 const synchronise = chlorophyll; // psychic
@@ -322,7 +322,7 @@ const pressure = (card, cellId, gameState) => {
 };
 
 const magnetPull = pressure;
-const frisk = pressure;
+const cuteCharm = pressure;
 
 const sing = (card, cellId, gameState) => {
     // Count all pokemon already on the grid
@@ -357,6 +357,8 @@ const sing = (card, cellId, gameState) => {
         stats: newStats
     };
 };
+
+const roar = sing;
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -436,6 +438,25 @@ const guts = (card, cellId, gameState) => {
     };
 };
 
+const triAttack = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Count adjacent enemy cards
+    const enemyCount = adjacentCellIds.filter(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        return adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard;
+    }).length;
+
+    // Only boost if 2 or more enemies are adjacent
+    if (enemyCount < 3) return card;
+
+    // Boost all stats by +2, capped at 10
+    return {
+        ...card,
+        stats: card.stats.map(stat => stat < 10 ? stat + 2 : 10)
+    };
+};
+
 const lonely = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
@@ -456,6 +477,95 @@ const lonely = (card, cellId, gameState) => {
 };
 
 const dig = lonely;
+const teleport = lonely;
+
+const magicGuard = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Count adjacent cells with elemental tiles (not null)
+    const elementalTilesCount = adjacentCellIds.filter(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        return adjacentCell?.element !== null && adjacentCell?.element !== undefined;
+    }).length;
+
+    // If no elemental tiles, return card unchanged
+    if (elementalTilesCount === 0) return card;
+
+    // Boost all stats by +1 for each elemental tile, capped at 10
+    const newStats = card.stats.map(stat => {
+        const boostedStat = stat + elementalTilesCount;
+        return boostedStat > 10 ? 10 : boostedStat;
+    });
+
+    return {
+        ...card,
+        stats: newStats
+    };
+};
+
+const leechLife = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+
+    // Find highest stat from all adjacent cards
+    let highestStat = 0;
+    adjacentCellIds.forEach(adjacentCellId => {
+        const adjacentCell = gameState.cells[adjacentCellId];
+        if (adjacentCell?.pokemonCard) {
+            const maxStatInCard = Math.max(...adjacentCell.pokemonCard.stats);
+            if (maxStatInCard > highestStat) {
+                highestStat = maxStatInCard;
+            }
+        }
+    });
+
+    // If no adjacent cards, return unchanged
+    if (highestStat === 0) return card;
+
+    // Find all stat indices that are lower than the highest stat
+    const newStats = [...card.stats];
+    const lowerStatIndices = newStats
+        .map((stat, index) => ({ stat, index }))
+        .filter(({ stat }) => stat < highestStat)
+        .map(({ index }) => index);
+
+    // If no stats are lower than the highest stat, return unchanged
+    if (lowerStatIndices.length === 0) return card;
+
+    // Pick a random stat from the lower stat indices
+    const randomIndex = Math.floor(Math.random() * lowerStatIndices.length);
+    const statIndexToReplace = lowerStatIndices[randomIndex];
+    newStats[statIndexToReplace] = highestStat;
+
+    return {
+        ...card,
+        stats: newStats
+    };
+};
+
+const confuseRay = (card, cellId, gameState) => {
+    let newStats = [...card.stats];
+
+    for (let i = newStats.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newStats[i], newStats[j]] = [newStats[j], newStats[i]];
+    }
+
+    let originalStats = [...newStats];
+
+    // 15% chance to add +1 to each stat
+    newStats = newStats.map(stat => {
+        if (Math.random() < 0.15 && stat < 10) {
+            return stat + 1;
+        }
+        return stat;
+    });
+
+    return {
+        ...card,
+        originalStats: originalStats,
+        stats: newStats
+    };
+};
 
 const download = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -470,8 +580,10 @@ const download = (card, cellId, gameState) => {
     return card;
 };
 
+const mimic = download;
 
-const pickup = (card, cellId, gameState) => {
+
+const payDay = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
     // Count empty adjacent cells
@@ -504,31 +616,36 @@ const pickup = (card, cellId, gameState) => {
 };
 
 export const abilityHandlers = {
+    acidArmor,
     bigPecks,
     blaze,
     chlorophyll,
     clearBody,
+    confuseRay,
+    cuteCharm,
     desperation,
     dig,
     download,
     evolve,
     familyBond,
     flashFire,
-    frisk,
     guts,
     harden,
-    iceBody,
-    keenEye,
     lick,
+    leechLife,
     lightningRod,
     lonely,
     magnetPull,
     magicGuard,
+    mimic,
+    mirrorMove,
+    mist,
     oblivious,
     overgrow,
-    pickup,
+    payDay,
     pressure,
     rest,
+    roar,
     rockHead,
     rockSlide,
     sandVeil,
@@ -539,10 +656,12 @@ export const abilityHandlers = {
     staticElectricity,
     sturdy,
     swarm,
-    swiftSwim,
     synchronise,
+    teleport,
     torrent,
     transform,
+    triAttack,
+    waterGun
 };
 
 /**
