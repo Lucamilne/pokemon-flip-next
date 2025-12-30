@@ -3395,7 +3395,7 @@
     "desperation": {
       "name": "Desperation",
       "trigger": "onGridPlace",
-      "description": "Transforms into Gyarados when placed with only 3 or less allied cards",
+      "description": "Transforms into Gyarados when placed while losing with 3 or fewer empty spaces remaining",
       "type": "water"
     },
     "dig": {
