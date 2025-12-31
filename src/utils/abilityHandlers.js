@@ -192,23 +192,6 @@ const chlorophyll = (card, cellId, gameState) => {
     };
 }
 
-// "bug",
-// "dragon",
-// "electric",
-// "fairy",
-// "fighting",
-// "fire",
-// "flying",
-// "ghost",
-// "grass",
-// "ground",
-// "ice",
-// "normal",
-// "poison",
-// "psychic",
-// "rock",
-// "water"
-
 const flashFire = chlorophyll; // fire
 const mirrorMove = chlorophyll; // flying
 const rockSlide = chlorophyll; // rock
@@ -542,29 +525,34 @@ const leechLife = (card, cellId, gameState) => {
     };
 };
 
-const confuseRay = (card, cellId, gameState) => {
-    let newStats = [...card.stats];
+const confuseRay = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
 
-    for (let i = newStats.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [newStats[i], newStats[j]] = [newStats[j], newStats[i]];
-    }
+    adjacentCellIds.forEach(adjacentCellId => {
+        const adjacentCell = modifiedCells[adjacentCellId];
 
-    let originalStats = [...newStats];
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            // Sattolo's algorithm - ensures no stat stays in original position
+            let shuffledStats = [...adjacentCell.pokemonCard.stats];
 
-    // 15% chance to add +1 to each stat
-    newStats = newStats.map(stat => {
-        if (Math.random() < 0.15 && stat < 10) {
-            return stat + 1;
+            for (let i = shuffledStats.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * i);
+                [shuffledStats[i], shuffledStats[j]] = [shuffledStats[j], shuffledStats[i]];
+            }
+
+            // Create new references for React to detect changes
+            modifiedCells[adjacentCellId] = {
+                ...adjacentCell,
+                pokemonCard: {
+                    ...adjacentCell.pokemonCard,
+                    stats: shuffledStats
+                }
+            };
         }
-        return stat;
     });
 
-    return {
-        ...card,
-        originalStats: originalStats,
-        stats: newStats
-    };
+    return modifiedCells;
 };
 
 const download = (card, cellId, gameState) => {
@@ -615,13 +603,12 @@ const payDay = (card, cellId, gameState) => {
     };
 };
 
-export const abilityHandlers = {
+export const selfAbilityHandlers = {
     acidArmor,
     bigPecks,
     blaze,
     chlorophyll,
     clearBody,
-    confuseRay,
     cuteCharm,
     desperation,
     dig,
@@ -664,6 +651,10 @@ export const abilityHandlers = {
     waterGun
 };
 
+export const statusAbilityHandlers = {
+    confuseRay,
+}
+
 /**
  * @param {Object} gameState - Current game state { cells, playerHand, cpuHand }
  */
@@ -672,9 +663,22 @@ export const applySelfAbilities = (card, trigger, cellId, gameState) => {
 
     let modifiedCard = { ...card };
 
-    if (abilities[card.ability]?.trigger === trigger && abilityHandlers[card.ability]) {
-        modifiedCard = abilityHandlers[card.ability](modifiedCard, cellId, gameState);
+    if (abilities[card.ability]?.trigger === trigger && selfAbilityHandlers[card.ability]) {
+        modifiedCard = selfAbilityHandlers[card.ability](modifiedCard, cellId, gameState);
     }
 
     return modifiedCard;
 };
+
+export const applyStatusAbilities = (card, trigger, cellId, cells) => {
+    if (!card.ability) return cells;
+
+    let modifiedCells = { ...cells };
+
+    if (abilities[card.ability]?.trigger === trigger && statusAbilityHandlers[card.ability]) {
+        modifiedCells = statusAbilityHandlers[card.ability](card, cellId, cells);
+    }
+
+    return modifiedCells;
+}
+

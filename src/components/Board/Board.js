@@ -7,7 +7,7 @@ import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
 import Coin from "../Coin/Coin.js";
 
-import { applySelfAbilities } from '@/utils/abilityHandlers.js';
+import { applySelfAbilities, applyStatusAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -176,8 +176,8 @@ export default function Board() {
         };
     };
 
-    const placeAttackingCard = (cellTarget, attackingCard) => {
-        const cellTargetObject = cells[cellTarget];
+    const placeAttackingCard = (cellTarget, attackingCard, cellsToUse) => {
+        const cellTargetObject = cellsToUse[cellTarget];
 
         if (cellTargetObject.element) {
             attackingCard = applyTileStatModifiers(attackingCard, cellTarget); // add or remove stats on placement of attacking card on tile
@@ -192,10 +192,10 @@ export default function Board() {
 
         // apply attack logic against adjacent cards
         cellTargetObject.adjacentCells.forEach((adjacentCellKey, statIndex) => {
-            if (!adjacentCellKey || !cells[adjacentCellKey].pokemonCard) return; // No adjacent cell or no adjacent defending card present
+            if (!adjacentCellKey || !cellsToUse[adjacentCellKey].pokemonCard) return; // No adjacent cell or no adjacent defending card present
 
-            const defendingCard = cells[adjacentCellKey].pokemonCard;
-            const defendingStatIndex = cells[adjacentCellKey].adjacentCells.indexOf(cellTarget); // index of the attacking cell in the defending cell's adjacentCells
+            const defendingCard = cellsToUse[adjacentCellKey].pokemonCard;
+            const defendingStatIndex = cellsToUse[adjacentCellKey].adjacentCells.indexOf(cellTarget); // index of the attacking cell in the defending cell's adjacentCells
             const defendingStat = defendingCard.stats[defendingStatIndex];
             let attackingStat = attackingCard.stats[statIndex];
 
@@ -255,7 +255,7 @@ export default function Board() {
                     attackingCard,
                     'onCapture',
                     cellTarget,
-                    { cells, playerHand, cpuHand }
+                    { cells: cellsToUse, playerHand, cpuHand }
                 );
 
                 // Update match stats
@@ -292,23 +292,37 @@ export default function Board() {
         // Remove card from the player hand
         setPlayerHand(prev => prev.map((card, index) => index === sourceIndex ? null : card));
 
-        const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard);
-
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
         // Force re-render by creating a new cells object so React detects defending card changes
         setCells(prev => {
-            const newCells = { ...prev };
+            let newCells = { ...prev };
+
+            newCells = applyStatusAbilities(
+                attackingCard,
+                'onGridPlace',
+                cellTarget,
+                newCells
+            );
+
+            const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard, newCells);
 
             // Update captured cells (flip their ownership)
             Object.keys(capturedCells).forEach(key => {
                 newCells[key] = {
-                    ...prev[key],
+                    ...newCells[key],
                     pokemonCard: {
-                        ...prev[key].pokemonCard,
+                        ...newCells[key].pokemonCard,
                         isPlayerCard: capturedCells[key]
                     }
                 };
             });
+
+            // newCells = applyStatusAbilities(
+            //     attackingCard,
+            //     'afterGridPlace',
+            //     cellTarget,
+            //     newCells
+            // );
 
             // Place the attacking card
             newCells[cellTarget] = {
@@ -672,19 +686,26 @@ export default function Board() {
 
         setCpuHand(prev => prev.map((card, index) => index === originalIndex ? null : card));
 
-        const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard);
-
         // Place the card in the selected cell
         // Force re-render by creating a new cells object so React detects defending card changes
         setCells(prev => {
-            const newCells = { ...prev };
+            let newCells = { ...prev };
+
+            newCells = applyStatusAbilities(
+                attackingCard,
+                'onGridPlace',
+                cellTarget,
+                newCells
+            );
+
+            const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard, newCells);
 
             // Update captured cells (flip their ownership)
             Object.keys(capturedCells).forEach(key => {
                 newCells[key] = {
-                    ...prev[key],
+                    ...newCells[key],
                     pokemonCard: {
-                        ...prev[key].pokemonCard,
+                        ...newCells[key].pokemonCard,
                         isPlayerCard: capturedCells[key]
                     }
                 };

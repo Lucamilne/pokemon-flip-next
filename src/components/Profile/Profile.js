@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useRef, useLayoutEffect } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
-import { allPokemonNames, fetchDebugCards, fetchSecretCards } from "@/utils/cardHelpers.js";
+import { allPokemonNames, fetchSecretCards } from "@/utils/cardHelpers.js";
 import { TYPES_PER_CARD } from '@/constants/index.js';
 
 import Loader from "@/components/Loader/Loader.js";
@@ -293,10 +293,6 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                                         <div className="relative group">
                                             <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                             <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Debug: Reset cards</button>
-                                        </div>
-                                        <div className="relative group">
-                                            <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                            <button onClick={() => setRandomThemedPlayerHand(fetchDebugCards)} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Debug: Custom cards</button>
                                         </div>
                                     </>
                                 )}

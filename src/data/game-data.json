@@ -3353,260 +3353,217 @@
     "acidArmor": {
       "name": "Acid Armor",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Poison-type tiles",
-      "type": "poison"
+      "description": "Doubles stat bonuses when placed on Poison-type tiles"
     },
     "bigPecks": {
       "name": "Big Pecks",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Flying-type tiles",
-      "type": "fire"
+      "description": "Doubles stat bonuses when placed on Flying-type tiles"
     },
     "blaze": {
       "name": "Blaze",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Fire-type tiles",
-      "type": "fire"
+      "description": "Doubles stat bonuses when placed on Fire-type tiles"
     },
     "chlorophyll": {
       "name": "Chlorophyll",
       "trigger": "onMatchStart",
-      "description": "For each additional Grass-type in the current match, a random stat is increased by 1",
-      "type": "grass"
+      "description": "For each additional Grass-type in the current match, a random stat is increased by 1"
     },
     "clearBody": {
       "name": "Clear Body",
       "trigger": "onElementalTilePlace",
-      "description": "Inherits the type and stat bonus of any elemental tile it's placed on",
-      "type": "fairy"
+      "description": "Inherits the type and stat bonus of any elemental tile it's placed on"
     },
     "confuseRay": {
       "name": "Confuse Ray",
-      "trigger": "onMatchStart",
-      "description": "On match start, shuffle this card's stats. Small chance to gain +1 to a stat",
-      "type": "ghost"
+      "trigger": "onGridPlace",
+      "description": "Disorients adjacent enemies, shuffling their stats for better or worse"
     },
     "cuteCharm": {
       "name": "Cute Charm",
       "trigger": "onGridPlace",
-      "description": "Infatuates those in contact, gaining 1 stat for each adjacent card",
-      "type": "psychic"
+      "description": "Infatuates those in contact when placed, gaining 1 stat for each adjacent card"
     },
     "desperation": {
       "name": "Desperation",
       "trigger": "onGridPlace",
-      "description": "Transforms into Gyarados when placed while losing with 3 or fewer empty spaces remaining",
-      "type": "water"
+      "description": "Transforms into Gyarados when placed while losing with 3 or fewer empty spaces remaining"
     },
     "dig": {
       "name": "Dig",
       "trigger": "onGridPlace",
-      "description": "Dig in! Boosts all stats by 1 when placed with no cards adjacent",
-      "type": "ground"
+      "description": "Dig in! Boosts all stats by 1 when placed with no cards adjacent"
     },
     "download": {
       "name": "Download",
       "trigger": "onGridPlace",
-      "description": "Copies the stats and type of the strongest adjacent card when placed",
-      "type": "normal"
+      "description": "Copies the stats and type of the strongest adjacent card when placed"
     },
     "evolve": {
       "name": "Evolve",
       "trigger": "onElementalTilePlace",
-      "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on",
-      "type": "normal"
+      "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on"
     },
     "familyBond": {
       "name": "Family Bond",
       "trigger": "onMatchStart",
-      "description": "For each additional member of the Nido family in the current match, a random stat is increased by 1",
-      "type": "poison"
+      "description": "For each additional member of the Nido family in the current match, a random stat is increased by 1"
     },
     "flashFire": {
       "name": "Flash Fire",
       "trigger": "onMatchStart",
-      "description": "For each additional Fire-type in the current match, a random stat is increased by 1",
-      "type": "fire"
+      "description": "For each additional Fire-type in the current match, a random stat is increased by 1"
     },
     "guts": {
       "name": "Guts",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards",
-      "type": "fighting"
+      "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards"
     },
     "harden": {
       "name": "Harden",
       "trigger": "onTurnStart",
-      "description": "While this card waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1",
-      "type": "bug"
+      "description": "While this card waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1"
     },
     "mimic": {
       "name": "Mimic",
       "trigger": "onGridPlace",
-      "description": "Mimics the stats and type of the strongest adjacent card when placed on the grid",
-      "type": "normal"
+      "description": "Mimics the stats and type of the strongest adjacent card when placed on the grid"
     },
     "mist": {
       "name": "Mist",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Ice-type tiles",
-      "type": "ice"
+      "description": "Doubles stat bonuses when placed on Ice-type tiles"
     },
     "mirrorMove": {
       "name": "Mirror Move",
       "trigger": "onMatchStart",
-      "description": "For each additional Flying-type in the current match, a random stat is increased by 1",
-      "type": "flying"
+      "description": "For each additional Flying-type in the current match, a random stat is increased by 1"
     },
     "leechLife": {
       "name": "Leech Life",
       "trigger": "onGridPlace",
-      "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random",
-      "type": "ghost"
+      "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random"
     },
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
-      "description": "Paralyzes adjacent enemies, setting one random stat to 1",
-      "type": "normal"
+      "description": "Paralyzes adjacent enemies, setting one random stat to 1"
     },
     "lightningRod": {
       "name": "Lightning Rod",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Electric-type tiles",
-      "type": "electric"
+      "description": "Doubles stat bonuses when placed on Electric-type tiles"
     },
     "lonely": {
       "name": "Lonely",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 1 when placed with no cards adjacent",
-      "type": "normal"
+      "description": "Boosts all stats by 1 when placed with no cards adjacent"
     },
     "magicGuard": {
       "name": "Magic Guard",
       "trigger": "onElementalTilePlace",
-      "description": "Boosts all stats by 1 per adjacent elemental tile",
-      "type": "fairy"
+      "description": "Boosts all stats by 1 per adjacent elemental tile"
     },
     "magnetPull": {
       "name": "Magnet Pull",
       "trigger": "onGridPlace",
-      "description": "Gains 1 stat for each adjacent card",
-      "type": "psychic"
+      "description": "Gains 1 stat for each adjacent card"
     },
     "oblivious": {
       "name": "Oblivious",
       "trigger": "onElementalTilePlace",
-      "description": "Oblivious to its surroundings. Gains 1 to all stats on any elemental tile",
-      "type": "psychic"
+      "description": "Oblivious to its surroundings. Gains 1 to all stats on any elemental tile"
     },
     "overgrow": {
       "name": "Overgrow",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Grass-type tiles",
-      "type": "grass"
+      "description": "Doubles stat bonuses when placed on Grass-type tiles"
     },
     "payDay": {
       "name": "Pay Day",
       "trigger": "onGridPlace",
-      "description": "Scavenges empty spaces, gaining 1 stat for each vacant adjacent cell",
-      "type": "normal"
+      "description": "Scavenges empty spaces, gaining 1 stat for each vacant adjacent cell"
     },
     "pressure": {
       "name": "Pressure",
       "trigger": "onGridPlace",
-      "description": "Exerts intense pressure on surrounding foes, gaining 1 stat for each adjacent card",
-      "type": "psychic"
+      "description": "Exerts intense pressure on surrounding foes, gaining 1 stat for each adjacent card"
     },
     "rest": {
       "name": "Rest",
       "trigger": "onTurnStart",
-      "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts",
-      "type": "psychic"
+      "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts"
     },
     "roar": {
       "name": "Roar",
       "trigger": "onGridPlace",
-      "description": "When placed, Gain 1 random stat for each card on the grid",
-      "type": "fire"
+      "description": "When placed, Gain 1 random stat for each card on the grid"
     },
     "sandVeil": {
       "name": "Sand Veil",
       "trigger": "onElementalTilePlace",
-      "description": "Shielded from elemental tile penalties",
-      "type": "ground"
+      "description": "Shielded from elemental tile penalties"
     },
     "selfDestruct": {
       "name": "Self Destruct",
       "trigger": "onCapture",
-      "description": "On successful capture, reduces all stats to 1",
-      "type": "electric"
+      "description": "On successful capture, reduces all stats to 1"
     },
     "shellArmor": {
       "name": "Shell Armor",
       "trigger": "onElementalTilePlace",
-      "description": "Shielded from elemental tile penalties",
-      "type": "water"
+      "description": "Shielded from elemental tile penalties"
     },
     "shieldDust": {
       "name": "Shield Dust",
       "trigger": "onElementalTilePlace",
-      "description": "Shielded from elemental tile penalties",
-      "type": "bug"
+      "description": "Shielded from elemental tile penalties"
     },
     "sing": {
       "name": "Sing",
       "trigger": "onGridPlace",
-      "description": "Every listener strengthens the song! When placed, gain 1 random stat for each card on the grid",
-      "type": "normal"
+      "description": "Every listener strengthens the song! When placed, gain 1 random stat for each card on the grid"
     },
     "staticElectricity": {
       "name": "Static",
       "trigger": "onMatchStart",
-      "description": "For each additional Electric-type in the current match, a random stat is increased by 1",
-      "type": "electric"
+      "description": "For each additional Electric-type in the current match, a random stat is increased by 1"
     },
     "swarm": {
       "name": "Swarm",
       "trigger": "onMatchStart",
-      "description": "For each additional Bug-type in the current match, a random stat is increased by 1",
-      "type": "bug"
+      "description": "For each additional Bug-type in the current match, a random stat is increased by 1"
     },
     "synchronise": {
       "name": "Synchronise",
       "trigger": "onMatchStart",
-      "description": "For each additional Psychic-type in the current match, a random stat is increased by 1",
-      "type": "psychic"
+      "description": "For each additional Psychic-type in the current match, a random stat is increased by 1"
     },
     "waterGun": {
       "name": "Water Gun",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Water-type tiles",
-      "type": "water"
+      "description": "Doubles stat bonuses when placed on Water-type tiles"
     },
     "transform": {
       "name": "Transform",
       "trigger": "onGridPlace",
-      "description": "Transforms into the strongest adjacent card when placed on the grid",
-      "type": "normal"
+      "description": "Transforms into the strongest adjacent card when placed on the grid"
     },
     "triAttack": {
       "name": "Tri Attack",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 2 when placed adjacent to 3 or more enemy cards",
-      "type": "flying"
+      "description": "Boosts all stats by 2 when placed adjacent to 3 or more enemy cards"
     },
     "teleport": {
       "name": "Teleport",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 1 when placed with no cards adjacent",
-      "type": "psychic"
+      "description": "Boosts all stats by 1 when placed with no cards adjacent"
     },
     "torrent": {
       "name": "Torrent",
       "trigger": "onMatchStart",
-      "description": "For each additional Water-type in the current match, a random stat is increased by 1",
-      "type": "water"
+      "description": "For each additional Water-type in the current match, a random stat is increased by 1"
     }
   }
 }

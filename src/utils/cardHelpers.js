@@ -201,13 +201,6 @@ export const fetchFossilCards = (isPlayerCard = true) => {
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
-export const fetchDebugCards = (isPlayerCard = true) => {
-    const fossils = ['voltorb', 'electrode', 'tauros', 'porygon', 'mewtwo'];
-    return allPokemonNames
-        .filter((pokemonName) => fossils.includes(pokemonName))
-        .map((pokemonName) => createCard(pokemonName, isPlayerCard));
-}
-
 export const specialAwardDefinitions = [
     { name: 'jigglypuff', award: 'Worst Singer' },
     { name: 'magikarp', award: 'Most Useless' },
