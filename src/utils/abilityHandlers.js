@@ -152,7 +152,7 @@ const evolve = (card, cellId, gameState) => {
 // "water"
 
 const blaze = overgrow; // fire
-const waterGun = overgrow; // water
+const hydroPump = overgrow; // water
 const lightningRod = overgrow; // electric
 const mist = overgrow; // ice
 const acidArmor = overgrow; // poison
@@ -736,7 +736,7 @@ export const selfAbilityHandlers = {
     torrent,
     transform,
     triAttack,
-    waterGun
+    hydroPump
 };
 
 export const statusAbilityHandlers = {

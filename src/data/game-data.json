@@ -413,7 +413,7 @@
         6,
         2
       ],
-      "ability": "waterGun",
+      "ability": "hydroPump",
       "statWeight": 314
     },
     "wartortle": {
@@ -433,7 +433,7 @@
         5,
         4
       ],
-      "ability": "waterGun",
+      "ability": "hydroPump",
       "statWeight": 405
     },
     "blastoise": {
@@ -453,7 +453,7 @@
         5,
         6
       ],
-      "ability": "waterGun",
+      "ability": "hydroPump",
       "statWeight": 530
     },
     "caterpie": {
@@ -3568,8 +3568,8 @@
       "trigger": "onMatchStart",
       "description": "For each additional Psychic-type in the current match, a random stat is increased by 1"
     },
-    "waterGun": {
-      "name": "Water Gun",
+    "hydroPump": {
+      "name": "Hydro Pump",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Water-type tiles"
     },
