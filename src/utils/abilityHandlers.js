@@ -560,9 +560,7 @@ const download = (card, cellId, gameState) => {
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
 
     if (adjacentCard) {
-        // Copy stats from adjacent card
         card.stats = [...adjacentCard.stats];
-        card.types = [...adjacentCard.types];
     }
 
     return card;

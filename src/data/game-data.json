@@ -3398,7 +3398,7 @@
     "download": {
       "name": "Download",
       "trigger": "onGridPlace",
-      "description": "Copies the stats and type of the strongest adjacent card when placed"
+      "description": "Copies the stats of the strongest adjacent card when placed"
     },
     "evolve": {
       "name": "Evolve",
@@ -3428,7 +3428,7 @@
     "mimic": {
       "name": "Mimic",
       "trigger": "onGridPlace",
-      "description": "Mimics the stats and type of the strongest adjacent card when placed on the grid"
+      "description": "Mimics the stats of the strongest adjacent card when placed"
     },
     "mist": {
       "name": "Mist",
@@ -3498,7 +3498,7 @@
     "roar": {
       "name": "Roar",
       "trigger": "onGridPlace",
-      "description": "When placed, Gain 1 random stat for each card on the grid"
+      "description": "When placed, Gain 1 random stat for each card in the arena"
     },
     "sandVeil": {
       "name": "Sand Veil",
@@ -3523,7 +3523,7 @@
     "sing": {
       "name": "Sing",
       "trigger": "onGridPlace",
-      "description": "Every listener strengthens the song! When placed, gain 1 random stat for each card on the grid"
+      "description": "Every listener strengthens the song! When placed, gain 1 random stat for each card in the arena"
     },
     "staticElectricity": {
       "name": "Static",
@@ -3548,7 +3548,7 @@
     "transform": {
       "name": "Transform",
       "trigger": "onGridPlace",
-      "description": "Transforms into the strongest adjacent card when placed on the grid"
+      "description": "Transforms into the strongest adjacent card when placed"
     },
     "triAttack": {
       "name": "Tri Attack",

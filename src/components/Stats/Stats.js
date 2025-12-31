@@ -8,7 +8,7 @@ export default function Stats({ stats, originalStats }) {
         if (stat > 9) {
             return 'text-yellow-500';
         } else if (stat > originalStat) {
-            return 'text-green-500';
+            return 'text-lime-500';
         } else if (stat < originalStat) {
             return 'text-red-500';
         } else {
