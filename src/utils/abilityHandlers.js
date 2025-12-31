@@ -39,6 +39,31 @@ const updateStatOnElementalTileByModifier = (stat, types, tileElement, modifier 
     return stat; // No change
 };
 
+const shieldDust = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    if (!tileElement) return card;
+
+    const updateStatOnElementalTile = (stat) => {
+        if (card.types.includes(tileElement) && stat < 10) {
+            return stat + 1;
+        }
+
+        return stat;
+    };
+
+    return {
+        ...card,
+        stats: card.stats.map(updateStatOnElementalTile)
+    };
+}
+
+const shellArmor = shieldDust;
+const sandVeil = shieldDust;
+const sturdy = shieldDust;
+
+const statLoweringImmunityAbilities = ["shieldDust", "shellArmor", "sandVeil", "sturdy"]
+
+
 const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
@@ -74,28 +99,7 @@ const clearBody = (card, cellId, gameState) => {
     };
 }
 
-const shieldDust = (card, cellId, gameState) => {
-    const tileElement = gameState.cells[cellId].element;
-    if (!tileElement) return card;
-
-    const updateStatOnElementalTile = (stat) => {
-        if (card.types.includes(tileElement) && stat < 10) {
-            return stat + 1;
-        }
-
-        return stat;
-    };
-
-    return {
-        ...card,
-        stats: card.stats.map(updateStatOnElementalTile)
-    };
-}
-
-const shellArmor = shieldDust;
-const sandVeil = shieldDust;
-// const clearBody = shieldDust;
-const sturdy = shieldDust;
+const magicGuard = clearBody;
 
 const overgrow = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
@@ -152,7 +156,6 @@ const waterGun = overgrow; // water
 const lightningRod = overgrow; // electric
 const mist = overgrow; // ice
 const acidArmor = overgrow; // poison
-const rockHead = overgrow; // rock
 const bigPecks = overgrow; // flying
 
 const chlorophyll = (card, cellId, gameState) => {
@@ -341,7 +344,6 @@ const sing = (card, cellId, gameState) => {
     };
 };
 
-const roar = sing;
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -382,24 +384,44 @@ const desperation = (card, cellId, gameState) => {
     return card;
 };
 
-const lick = (card, cellId, gameState) => {
-    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+const lick = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
 
-    // Paralyze each adjacent enemy
     adjacentCellIds.forEach(adjacentCellId => {
-        const adjacentCell = gameState.cells[adjacentCellId];
-        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            // Paralyze: set one random stat to 1
-            const randomStatIndex = Math.floor(Math.random() * 4);
+        if (adjacentCellId === null) return;
 
-            // Create new array with paralyzed stat
-            adjacentCell.pokemonCard.stats = adjacentCell.pokemonCard.stats.map((stat, index) =>
-                index === randomStatIndex ? 1 : stat
+        const adjacentCell = modifiedCells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            const stats = adjacentCell.pokemonCard.stats;
+
+            // Find the highest stat value
+            const highestStat = Math.max(...stats);
+
+            // Find the index of the highest stat (first occurrence if multiple)
+            const highestStatIndex = stats.indexOf(highestStat);
+
+            // Halve it, round up, minimum 1
+            const halvedValue = Math.max(1, Math.ceil(highestStat / 2));
+
+            // Create new stats array with the highest stat halved
+            const newStats = stats.map((stat, index) =>
+                index === highestStatIndex ? halvedValue : stat
             );
+
+            // Create new references for React to detect changes
+            modifiedCells[adjacentCellId] = {
+                ...adjacentCell,
+                pokemonCard: {
+                    ...adjacentCell.pokemonCard,
+                    stats: newStats
+                }
+            };
         }
     });
 
-    return card;
+    return modifiedCells;
 };
 
 const guts = (card, cellId, gameState) => {
@@ -462,7 +484,7 @@ const lonely = (card, cellId, gameState) => {
 const dig = lonely;
 const teleport = lonely;
 
-const magicGuard = (card, cellId, gameState) => {
+const retiredAbilityMagicGuard = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
     // Count adjacent cells with elemental tiles (not null)
@@ -546,7 +568,8 @@ const confuseRay = (card, cellId, cells) => {
                 ...adjacentCell,
                 pokemonCard: {
                     ...adjacentCell.pokemonCard,
-                    stats: shuffledStats
+                    stats: shuffledStats,
+                    originalStats: shuffledStats
                 }
             };
         }
@@ -554,6 +577,76 @@ const confuseRay = (card, cellId, cells) => {
 
     return modifiedCells;
 };
+
+const growl = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+
+    // adjacentCells is ordered: [left, top, right, bottom]
+    // If attacking card is to the left (index 0), adjacent card's right stat (index 2) faces it
+    const oppositeDirections = [2, 3, 0, 1];
+
+    adjacentCellIds.forEach((adjacentCellId, directionIndex) => {
+        if (adjacentCellId === null) return;
+
+        const adjacentCell = modifiedCells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            // Check if adjacent card has stat-lowering immunity
+            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
+                return;
+            }
+
+            const statIndexToLower = oppositeDirections[directionIndex];
+            const newStats = [...adjacentCell.pokemonCard.stats];
+
+            // Lower the stat by 1, minimum 1
+            if (newStats[statIndexToLower] > 1) {
+                newStats[statIndexToLower] -= 1;
+            }
+
+            // Create new references for React to detect changes
+            modifiedCells[adjacentCellId] = {
+                ...adjacentCell,
+                pokemonCard: {
+                    ...adjacentCell.pokemonCard,
+                    stats: newStats
+                }
+            };
+        }
+    });
+
+    return modifiedCells;
+}
+
+const intimidate = growl;
+const flameBody = growl;
+
+const safePassage = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+
+    adjacentCellIds.forEach((adjacentCellId, directionIndex) => {
+        if (adjacentCellId === null) return;
+
+        const adjacentCell = modifiedCells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard === card.isPlayerCard) {
+            const newStats = [...adjacentCell.pokemonCard.stats].map(stat => stat < 10 ? stat + 1 : 10);
+
+            // Create new references for React to detect changes
+            modifiedCells[adjacentCellId] = {
+                ...adjacentCell,
+                pokemonCard: {
+                    ...adjacentCell.pokemonCard,
+                    stats: newStats
+                }
+            };
+        }
+    });
+
+    return modifiedCells;
+}
 
 const download = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -616,7 +709,6 @@ export const selfAbilityHandlers = {
     flashFire,
     guts,
     harden,
-    lick,
     leechLife,
     lightningRod,
     lonely,
@@ -630,8 +722,7 @@ export const selfAbilityHandlers = {
     payDay,
     pressure,
     rest,
-    roar,
-    rockHead,
+    sturdy,
     rockSlide,
     sandVeil,
     selfDestruct,
@@ -639,7 +730,6 @@ export const selfAbilityHandlers = {
     shieldDust,
     sing,
     staticElectricity,
-    sturdy,
     swarm,
     synchronise,
     teleport,
@@ -651,6 +741,11 @@ export const selfAbilityHandlers = {
 
 export const statusAbilityHandlers = {
     confuseRay,
+    flameBody,
+    growl,
+    intimidate,
+    lick,
+    safePassage
 }
 
 /**

@@ -1427,7 +1427,7 @@
         4,
         6
       ],
-      "ability": "flashFire",
+      "ability": "growl",
       "statWeight": 350
     },
     "arcanine": {
@@ -1447,7 +1447,7 @@
         10,
         5
       ],
-      "ability": "roar",
+      "ability": "growl",
       "statWeight": 555
     },
     "poliwag": {
@@ -1547,6 +1547,7 @@
         5,
         1
       ],
+      "ability": "synchronise",
       "statWeight": 400
     },
     "alakazam": {
@@ -1566,6 +1567,7 @@
         8,
         7
       ],
+      "ability": "synchronise",
       "statWeight": 500
     },
     "machop": {
@@ -1745,6 +1747,7 @@
         7,
         5
       ],
+      "ability": "sturdy",
       "statWeight": 300
     },
     "graveler": {
@@ -1764,6 +1767,7 @@
         7,
         2
       ],
+      "ability": "sturdy",
       "statWeight": 390
     },
     "golem": {
@@ -1783,6 +1787,7 @@
         6,
         7
       ],
+      "ability": "sturdy",
       "statWeight": 495
     },
     "ponyta": {
@@ -2407,6 +2412,7 @@
         3,
         3
       ],
+      "ability": "lick",
       "statWeight": 385
     },
     "koffing": {
@@ -2752,6 +2758,7 @@
         4,
         6
       ],
+      "ability": "flameBody",
       "statWeight": 495
     },
     "pinsir": {
@@ -2790,6 +2797,7 @@
         5,
         10
       ],
+      "ability": "intimidate",
       "statWeight": 490
     },
     "magikarp": {
@@ -2849,7 +2857,7 @@
         5,
         5
       ],
-      "ability": "lonely",
+      "ability": "safePassage",
       "statWeight": 535
     },
     "ditto": {
@@ -3410,10 +3418,20 @@
       "trigger": "onMatchStart",
       "description": "For each additional member of the Nido family in the current match, a random stat is increased by 1"
     },
+    "flameBody": {
+      "name": "Flame Body",
+      "trigger": "onGridPlace",
+      "description": "Scorches nearby enemies. Lowers the facing stat of each adjacent foe by 1"
+    },
     "flashFire": {
       "name": "Flash Fire",
       "trigger": "onMatchStart",
       "description": "For each additional Fire-type in the current match, a random stat is increased by 1"
+    },
+    "growl": {
+      "name": "Growl",
+      "trigger": "onGridPlace",
+      "description": "An intimidating snarl that weakens an adjacent foes facing stat when placed"
     },
     "guts": {
       "name": "Guts",
@@ -3424,6 +3442,11 @@
       "name": "Harden",
       "trigger": "onTurnStart",
       "description": "While this card waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1"
+    },
+    "intimidate": {
+      "name": "Intimidate",
+      "trigger": "onGridPlace",
+      "description": "A menacing presence that unnerves nearby foes. Lowers the facing stat of each adjacent enemy by 1"
     },
     "mimic": {
       "name": "Mimic",
@@ -3448,7 +3471,7 @@
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
-      "description": "Paralyzes adjacent enemies, setting one random stat to 1"
+      "description": "Paralyses nearby foes. Halves the highest stat of each adjacent enemy"
     },
     "lightningRod": {
       "name": "Lightning Rod",
@@ -3463,12 +3486,12 @@
     "magicGuard": {
       "name": "Magic Guard",
       "trigger": "onElementalTilePlace",
-      "description": "Boosts all stats by 1 per adjacent elemental tile"
+      "description": "Transforms to match he type and stat bonus of any elemental tile it's placed on"
     },
     "magnetPull": {
       "name": "Magnet Pull",
       "trigger": "onGridPlace",
-      "description": "Gains 1 stat for each adjacent card"
+      "description": "Gains 1 random stat for each adjacent card"
     },
     "oblivious": {
       "name": "Oblivious",
@@ -3495,15 +3518,15 @@
       "trigger": "onTurnStart",
       "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts"
     },
-    "roar": {
-      "name": "Roar",
+    "safePassage": {
+      "name": "Safe Passage",
       "trigger": "onGridPlace",
-      "description": "When placed, Gain 1 random stat for each card in the arena"
+      "description": "A protective presence that strengthens nearby allies. Increases all stats of adjacent friendly cards by 1"
     },
     "sandVeil": {
       "name": "Sand Veil",
       "trigger": "onElementalTilePlace",
-      "description": "Shielded from elemental tile penalties"
+      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
     "selfDestruct": {
       "name": "Self Destruct",
@@ -3513,12 +3536,12 @@
     "shellArmor": {
       "name": "Shell Armor",
       "trigger": "onElementalTilePlace",
-      "description": "Shielded from elemental tile penalties"
+      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
     "shieldDust": {
       "name": "Shield Dust",
       "trigger": "onElementalTilePlace",
-      "description": "Shielded from elemental tile penalties"
+      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
     "sing": {
       "name": "Sing",
@@ -3529,6 +3552,11 @@
       "name": "Static",
       "trigger": "onMatchStart",
       "description": "For each additional Electric-type in the current match, a random stat is increased by 1"
+    },
+    "sturdy": {
+      "name": "Rock Head",
+      "trigger": "onElementalTilePlace",
+      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
     "swarm": {
       "name": "Swarm",

@@ -7,7 +7,6 @@ import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 
 import { useDraggable } from '@dnd-kit/core';
-import { useAuth } from '@/contexts/AuthContext';
 import { useGameContext } from '@/contexts/GameContext';
 import { useTooltip } from '@/hooks/useTooltip';
 import gameData from '@/data/game-data.json';
@@ -28,12 +27,14 @@ const getBallSprite = (statWeight) => {
 };
 
 export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
-    const { isMobile } = useGameContext();
+    const { isVisible, handlers } = useTooltip(500); // 500ms long press
+    const { cells } = useGameContext();
+
+    const [tooltipPosition, setTooltipPosition] = useState('top');
     const [isFlipped, setIsFlipped] = useState(startsFlipped);
+
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
-    const { isVisible, handlers } = useTooltip(500); // 500ms long press
-    const [tooltipPosition, setTooltipPosition] = useState('top');
 
     if (!pokemonCard) {
         return null;
@@ -122,7 +123,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
 
     const [showOverlay, setShowOverlay] = useState(false);
 
-    const runAnimations = async () => {
+    const runPlacementAnimations = async () => {
         if (!pokemonCard.isPlayerCard) {
             await dropCard(); // Wait for drop to finish
         }
@@ -140,7 +141,9 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
         }
 
         // if (!cellKey || !cells[cellKey]?.element) return;
+    };
 
+    const runStatAnimations = async () => {
         const totalStats = sumUpNumbersInArray(pokemonCard.stats);
         const totalOriginalStats = sumUpNumbersInArray(pokemonCard.originalStats);
 
@@ -149,13 +152,19 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
         } else if (totalStats > totalOriginalStats) {
             await strengthenCard();
         }
-    };
+    }
 
     useEffect(() => {
         if (isPlacedInGrid) {
-            runAnimations();
+            runPlacementAnimations();
         }
     }, [isPlacedInGrid])
+
+    useEffect(() => {
+        if (cellKey) {
+            runStatAnimations();
+        }
+    }, [pokemonCard.stats])
 
     useEffect(() => {
         if (prevIsPlayerCard.current !== undefined && prevIsPlayerCard.current !== pokemonCard.isPlayerCard) {
@@ -186,11 +195,8 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
             const cardCenter = rect.top + rect.height / 2;
             const cardCenterX = rect.left + rect.width / 2;
 
-            // if (isMobile) {
-            //     setTooltipPosition(cardCenterX < viewportWidth / 2 ? 'right' : 'left');
-            // } else {
-                setTooltipPosition(cardCenter < viewportHeight / 4 ? 'bottom' : 'top');
-            // }
+
+            setTooltipPosition(cardCenter < viewportHeight / 4 ? 'bottom' : 'top');
         }
     }, [isVisible])
 
