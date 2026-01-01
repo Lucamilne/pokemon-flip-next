@@ -655,6 +655,7 @@
         5,
         4
       ],
+      "ability": "quickAttack",
       "statWeight": 253
     },
     "raticate": {
@@ -674,6 +675,7 @@
         7,
         3
       ],
+      "ability": "quickAttack",
       "statWeight": 413
     },
     "spearow": {
@@ -771,7 +773,7 @@
         6,
         4
       ],
-      "ability": "lightningRod",
+      "ability": "thunderWave",
       "statWeight": 320
     },
     "raichu": {
@@ -791,7 +793,7 @@
         4,
         6
       ],
-      "ability": "lightningRod",
+      "ability": "thunderWave",
       "statWeight": 485
     },
     "sandshrew": {
@@ -1093,6 +1095,7 @@
         1,
         2
       ],
+      "ability": "supersonic",
       "statWeight": 245
     },
     "golbat": {
@@ -1112,6 +1115,7 @@
         4,
         7
       ],
+      "ability": "supersonic",
       "statWeight": 455
     },
     "oddish": {
@@ -1278,18 +1282,18 @@
         "ground"
       ],
       "stats": [
-        7,
-        6,
-        4,
-        4
+        8,
+        8,
+        2,
+        3
       ],
       "originalStats": [
-        7,
-        6,
-        4,
-        4
+        8,
+        8,
+        2,
+        3
       ],
-      "ability": "triAttack",
+      "ability": "dig",
       "statWeight": 425
     },
     "meowth": {
@@ -1330,6 +1334,7 @@
         7,
         5
       ],
+      "ability": "technician",
       "statWeight": 440
     },
     "psyduck": {
@@ -1349,6 +1354,7 @@
         2,
         1
       ],
+      "ability": "confusion",
       "statWeight": 320
     },
     "golduck": {
@@ -1368,6 +1374,7 @@
         6,
         8
       ],
+      "ability": "confusion",
       "statWeight": 500
     },
     "mankey": {
@@ -1916,17 +1923,18 @@
         "flying"
       ],
       "stats": [
-        6,
         5,
-        7,
-        1
+        5,
+        5,
+        4
       ],
       "originalStats": [
-        6,
         5,
-        7,
-        1
+        5,
+        5,
+        4
       ],
+      "ability": "swordsDance",
       "statWeight": 377
     },
     "doduo": {
@@ -1985,6 +1993,7 @@
         1,
         5
       ],
+      "ability": "thickFat",
       "statWeight": 325
     },
     "dewgong": {
@@ -2004,6 +2013,7 @@
         7,
         6
       ],
+      "ability": "thickFat",
       "statWeight": 475
     },
     "grimer": {
@@ -2180,6 +2190,7 @@
         2,
         2
       ],
+      "ability": "hypnosis",
       "statWeight": 328
     },
     "hypno": {
@@ -2199,6 +2210,7 @@
         8,
         6
       ],
+      "ability": "hypnosis",
       "statWeight": 483
     },
     "krabby": {
@@ -2355,6 +2367,7 @@
         5,
         6
       ],
+      "ability": "bonemerang",
       "statWeight": 425
     },
     "hitmonlee": {
@@ -2508,6 +2521,7 @@
         6,
         7
       ],
+      "ability": "softBoiled",
       "statWeight": 450
     },
     "tangela": {
@@ -2527,7 +2541,7 @@
         4,
         7
       ],
-      "ability": "chlorophyll",
+      "ability": "leafGuard",
       "statWeight": 435
     },
     "kangaskhan": {
@@ -2700,6 +2714,7 @@
         4,
         6
       ],
+      "ability": "swordsDance",
       "statWeight": 500
     },
     "jynx": {
@@ -3373,6 +3388,11 @@
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Fire-type tiles"
     },
+    "bonemerang": {
+      "name": "Bonemerang",
+      "trigger": "onGridPlace",
+      "description": "Placing this unit at the center of the arena boosts all stats by 1"
+    },
     "chlorophyll": {
       "name": "Chlorophyll",
       "trigger": "onMatchStart",
@@ -3388,6 +3408,11 @@
       "trigger": "onGridPlace",
       "description": "Disorients adjacent enemies, shuffling their stats for better or worse"
     },
+    "confusion": {
+      "name": "Confusion",
+      "trigger": "onGridPlace",
+      "description": "Confuses adjacent enemies, shuffling their stats for better or worse"
+    },
     "cuteCharm": {
       "name": "Cute Charm",
       "trigger": "onGridPlace",
@@ -3401,7 +3426,7 @@
     "dig": {
       "name": "Dig",
       "trigger": "onGridPlace",
-      "description": "Dig in! Boosts all stats by 1 when placed with no cards adjacent"
+      "description": "Dig in! Placing this card in the corner of the arena boosts a random stat by 1"
     },
     "download": {
       "name": "Download",
@@ -3416,7 +3441,7 @@
     "familyBond": {
       "name": "Family Bond",
       "trigger": "onMatchStart",
-      "description": "For each additional member of the Nido family in the current match, a random stat is increased by 1"
+      "description": "Each Nido family card in play boosts a random stat by 1, with a small chance for a 2-point boost"
     },
     "flameBody": {
       "name": "Flame Body",
@@ -3427,6 +3452,11 @@
       "name": "Flash Fire",
       "trigger": "onMatchStart",
       "description": "For each additional Fire-type in the current match, a random stat is increased by 1"
+    },
+    "forewarn": {
+      "name": "Forewarn",
+      "trigger": "onGridPlace",
+      "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
     },
     "growl": {
       "name": "Growl",
@@ -3442,6 +3472,11 @@
       "name": "Harden",
       "trigger": "onTurnStart",
       "description": "While this card waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1"
+    },
+    "hypnosis": {
+      "name": "Hypnosis",
+      "trigger": "onGridPlace",
+      "description": "When placed, all adjacent cards have their stats randomly shifted, ranging from −1 to +1"
     },
     "intimidate": {
       "name": "Intimidate",
@@ -3463,6 +3498,11 @@
       "trigger": "onMatchStart",
       "description": "For each additional Flying-type in the current match, a random stat is increased by 1"
     },
+    "leafGuard": {
+      "name": "Leaf Guard",
+      "trigger": "onElementalTilePlace",
+      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+    },
     "leechLife": {
       "name": "Leech Life",
       "trigger": "onGridPlace",
@@ -3471,7 +3511,7 @@
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
-      "description": "Paralyses nearby foes. Halves the highest stat of each adjacent enemy"
+      "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
     },
     "lightningRod": {
       "name": "Lightning Rod",
@@ -3546,7 +3586,12 @@
     "sing": {
       "name": "Sing",
       "trigger": "onGridPlace",
-      "description": "Every listener strengthens the song! When placed, gain 1 random stat for each card in the arena"
+      "description": "Uh oh! Sings a soothing melody when placed, reducing all stats by 1 for every card in the arena"
+    },
+    "softBoiled": {
+      "name": "Soft Boiled",
+      "trigger": "onGridPlace",
+      "description": "A healing presence that strengthens nearby allies. increases all stats of adjacent friendly cards by 1"
     },
     "staticElectricity": {
       "name": "Static",
@@ -3558,10 +3603,20 @@
       "trigger": "onElementalTilePlace",
       "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
+    "supersonic": {
+      "name": "Supersonic",
+      "trigger": "onGridPlace",
+      "description": "When placed, all adjacent cards have their stats randomly shifted, ranging from −1 to +1"
+    },
     "swarm": {
       "name": "Swarm",
       "trigger": "onMatchStart",
       "description": "For each additional Bug-type in the current match, a random stat is increased by 1"
+    },
+    "swordsDance": {
+      "name": "Swords Dance",
+      "trigger": "onGridPlace",
+      "description": "Placing this unit at the center of the arena boosts all stats by 1"
     },
     "synchronise": {
       "name": "Synchronise",
@@ -3573,6 +3628,11 @@
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Water-type tiles"
     },
+    "thunderWave": {
+      "name": "Thunder Wave",
+      "trigger": "onGridPlace",
+      "description": "Releases a paralyzing shock! Lowers the facing stat of each adjacent foe by 1"
+    },
     "transform": {
       "name": "Transform",
       "trigger": "onGridPlace",
@@ -3581,17 +3641,32 @@
     "triAttack": {
       "name": "Tri Attack",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 2 when placed adjacent to 3 or more enemy cards"
+      "description": "Boosts all stats by 2 when placed adjacent to 3 or more cards"
+    },
+    "technician": {
+      "name": "Technician",
+      "trigger": "onGridPlace",
+      "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
     },
     "teleport": {
       "name": "Teleport",
       "trigger": "onGridPlace",
       "description": "Boosts all stats by 1 when placed with no cards adjacent"
     },
+    "thickFat": {
+      "name": "Thick Fat",
+      "trigger": "onElementalTilePlace",
+      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+    },
     "torrent": {
       "name": "Torrent",
       "trigger": "onMatchStart",
       "description": "For each additional Water-type in the current match, a random stat is increased by 1"
+    },
+    "quickAttack": {
+      "name": "Quick Attack",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when placed as the first card in the arena"
     }
   }
 }

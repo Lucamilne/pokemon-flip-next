@@ -60,9 +60,10 @@ const shieldDust = (card, cellId, gameState) => {
 const shellArmor = shieldDust;
 const sandVeil = shieldDust;
 const sturdy = shieldDust;
+const thickFat = shieldDust
+const leafGuard = shieldDust;
 
-const statLoweringImmunityAbilities = ["shieldDust", "shellArmor", "sandVeil", "sturdy"]
-
+const statLoweringImmunityAbilities = ["leafGuard", "shieldDust", "shellArmor", "sandVeil", "sturdy", "thickFat"]
 
 const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -134,6 +135,17 @@ const evolve = (card, cellId, gameState) => {
     };
 }
 
+const swordsDance = (card, cellId, gameState) => {
+    if (cellId !== "B2") return card;
+
+    return {
+        ...card,
+        stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
+    };
+}
+
+const bonemerang = swordsDance;
+
 // "bug",
 // "dragon",
 // "electric",
@@ -201,6 +213,7 @@ const rockSlide = chlorophyll; // rock
 const torrent = chlorophyll; // water
 const staticElectricity = chlorophyll; // electric
 const swarm = chlorophyll; // bug
+const toxic = chlorophyll; // poison
 const synchronise = chlorophyll; // psychic
 
 const familyBond = (card, cellId, gameState) => {
@@ -231,7 +244,9 @@ const familyBond = (card, cellId, gameState) => {
         const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
         const statIndexToBoost = availableStatIndices[randomIndex];
 
-        newStats[statIndexToBoost] += 1;
+        // 10% chance to boost by 2, otherwise boost by 1 (never exceed 10)
+        const boostAmount = Math.random() < 0.1 ? 2 : 1;
+        newStats[statIndexToBoost] = Math.min(10, newStats[statIndexToBoost] + boostAmount);
     }
 
     return {
@@ -310,40 +325,48 @@ const pressure = (card, cellId, gameState) => {
 const magnetPull = pressure;
 const cuteCharm = pressure;
 
-const sing = (card, cellId, gameState) => {
-    // Count all pokemon already on the grid
-    const pokemonOnGrid = Object.values(gameState.cells).filter(cell => cell.pokemonCard).length;
+const sing = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
 
-    // If no pokemon on grid, return card unchanged
-    if (pokemonOnGrid === 0) return card;
+    // Reduce all stats for every pokemon on the grid (friendly and enemy)
+    Object.keys(modifiedCells).forEach(currentCellId => {
+        const currentCell = modifiedCells[currentCellId];
 
-    // Create a new stats array
-    const newStats = [...card.stats];
+        if (currentCell?.pokemonCard) {
+            // Check if the pokemon has stat-lowering immunity
+            if (statLoweringImmunityAbilities.includes(currentCell.pokemonCard.ability)) {
+                return;
+            }
 
-    // Boost random stats based on pokemon count on grid
-    for (let i = 0; i < pokemonOnGrid; i++) {
-        // Find all stat indices that are below 10
-        const availableStatIndices = newStats
-            .map((stat, index) => ({ stat, index }))
-            .filter(({ stat }) => stat < 10)
-            .map(({ index }) => index);
+            // Reduce all stats by 1, minimum 1
+            const newStats = currentCell.pokemonCard.stats.map(stat =>
+                stat > 1 ? stat - 1 : 1
+            );
 
-        // If all stats are at 10, stop boosting
-        if (availableStatIndices.length === 0) break;
 
-        // Pick a random stat from available indices
-        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
-        const statIndexToBoost = availableStatIndices[randomIndex];
+            modifiedCells[currentCellId] = {
+                ...currentCell,
+                pokemonCard: {
+                    ...currentCell.pokemonCard,
+                    stats: newStats
+                }
+            };
+        }
+    });
 
-        newStats[statIndexToBoost] += 1;
-    }
+    return modifiedCells;
+};
+
+const quickAttack = (card, cellId, gameState) => {
+    const otherCardsOnGrid = Object.values(gameState.cells).filter(cell => cell.pokemonCard).length;
+
+    if (otherCardsOnGrid > 0) return card;
 
     return {
         ...card,
-        stats: newStats
+        stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
     };
-};
-
+}
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -395,22 +418,17 @@ const lick = (card, cellId, cells) => {
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
             const stats = adjacentCell.pokemonCard.stats;
-
-            // Find the highest stat value
             const highestStat = Math.max(...stats);
 
-            // Find the index of the highest stat (first occurrence if multiple)
+            // Only reduce if the highest stat is 7 or over
+            if (highestStat < 7) return;
+
             const highestStatIndex = stats.indexOf(highestStat);
-
-            // Halve it, round up, minimum 1
-            const halvedValue = Math.max(1, Math.ceil(highestStat / 2));
-
-            // Create new stats array with the highest stat halved
+            const reducedValue = Math.max(1, highestStat - 2);
             const newStats = stats.map((stat, index) =>
-                index === highestStatIndex ? halvedValue : stat
+                index === highestStatIndex ? reducedValue : stat
             );
 
-            // Create new references for React to detect changes
             modifiedCells[adjacentCellId] = {
                 ...adjacentCell,
                 pokemonCard: {
@@ -423,6 +441,9 @@ const lick = (card, cellId, cells) => {
 
     return modifiedCells;
 };
+
+const technician = lick;
+const forewarn = lick;
 
 const guts = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -446,14 +467,14 @@ const guts = (card, cellId, gameState) => {
 const triAttack = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
-    // Count adjacent enemy cards
-    const enemyCount = adjacentCellIds.filter(adjacentCellId => {
+    // Count all adjacent cards (friendly and enemy)
+    const adjacentCardCount = adjacentCellIds.filter(adjacentCellId => {
         const adjacentCell = gameState.cells[adjacentCellId];
-        return adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard;
+        return adjacentCell?.pokemonCard;
     }).length;
 
-    // Only boost if 2 or more enemies are adjacent
-    if (enemyCount < 3) return card;
+    // Only boost if 3 or more cards are adjacent
+    if (adjacentCardCount < 3) return card;
 
     // Boost all stats by +2, capped at 10
     return {
@@ -481,8 +502,38 @@ const lonely = (card, cellId, gameState) => {
     };
 };
 
-const dig = lonely;
 const teleport = lonely;
+
+const dig = (card, cellId, gameState) => {
+    const cornerCells = ["A1", "A3", "C1", "C3"];
+
+    // Only boost if placed on a corner cell
+    if (!cornerCells.includes(cellId)) return card;
+
+    // Create a new stats array
+    const newStats = [...card.stats];
+
+    // Find all stat indices that are below 10
+    const availableStatIndices = newStats
+        .map((stat, index) => ({ stat, index }))
+        .filter(({ stat }) => stat < 10)
+        .map(({ index }) => index);
+
+    // If all stats are at 10, return unchanged
+    if (availableStatIndices.length === 0) return card;
+
+    // Pick a random stat from available indices
+    const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+    const statIndexToBoost = availableStatIndices[randomIndex];
+
+    newStats[statIndexToBoost] += 1;
+
+    return {
+        ...card,
+        stats: newStats
+    };
+}
+
 
 const retiredAbilityMagicGuard = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -563,7 +614,7 @@ const confuseRay = (card, cellId, cells) => {
                 [shuffledStats[i], shuffledStats[j]] = [shuffledStats[j], shuffledStats[i]];
             }
 
-            // Create new references for React to detect changes
+
             modifiedCells[adjacentCellId] = {
                 ...adjacentCell,
                 pokemonCard: {
@@ -577,6 +628,50 @@ const confuseRay = (card, cellId, cells) => {
 
     return modifiedCells;
 };
+
+const confusion = confuseRay;
+
+const hypnosis = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+
+    adjacentCellIds.forEach(adjacentCellId => {
+        if (adjacentCellId === null) return;
+
+        const adjacentCell = modifiedCells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            const stats = [...adjacentCell.pokemonCard.stats];
+            const hasStatLoweringImmunity = statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability);
+
+            // Randomly redistribute stats by -1 to +1 for each stat
+            const newStats = stats.map(stat => {
+                const change = Math.floor(Math.random() * 3) - 1; // Random number from -1 to +1
+                const newStat = stat + change;
+
+                // If the pokemon has stat-lowering immunity, prevent stat reductions
+                if (hasStatLoweringImmunity && newStat < stat) {
+                    return stat; // Keep original stat if it would be lowered
+                }
+
+                // Clamp between 1 and 10
+                return Math.max(1, Math.min(10, newStat));
+            });
+
+            modifiedCells[adjacentCellId] = {
+                ...adjacentCell,
+                pokemonCard: {
+                    ...adjacentCell.pokemonCard,
+                    stats: newStats
+                }
+            };
+        }
+    });
+
+    return modifiedCells;
+};
+
+const supersonic = hypnosis;
 
 const growl = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
@@ -605,7 +700,7 @@ const growl = (card, cellId, cells) => {
                 newStats[statIndexToLower] -= 1;
             }
 
-            // Create new references for React to detect changes
+
             modifiedCells[adjacentCellId] = {
                 ...adjacentCell,
                 pokemonCard: {
@@ -621,6 +716,7 @@ const growl = (card, cellId, cells) => {
 
 const intimidate = growl;
 const flameBody = growl;
+const thunderWave = growl;
 
 const safePassage = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
@@ -634,7 +730,7 @@ const safePassage = (card, cellId, cells) => {
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard === card.isPlayerCard) {
             const newStats = [...adjacentCell.pokemonCard.stats].map(stat => stat < 10 ? stat + 1 : 10);
 
-            // Create new references for React to detect changes
+
             modifiedCells[adjacentCellId] = {
                 ...adjacentCell,
                 pokemonCard: {
@@ -648,6 +744,8 @@ const safePassage = (card, cellId, cells) => {
     return modifiedCells;
 }
 
+const softBoiled = safePassage;
+
 const download = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
@@ -660,7 +758,6 @@ const download = (card, cellId, gameState) => {
 };
 
 const mimic = download;
-
 
 const payDay = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -698,6 +795,7 @@ export const selfAbilityHandlers = {
     acidArmor,
     bigPecks,
     blaze,
+    bonemerang,
     chlorophyll,
     clearBody,
     cuteCharm,
@@ -709,6 +807,8 @@ export const selfAbilityHandlers = {
     flashFire,
     guts,
     harden,
+    hydroPump,
+    leafGuard,
     leechLife,
     lightningRod,
     lonely,
@@ -723,29 +823,39 @@ export const selfAbilityHandlers = {
     pressure,
     rest,
     sturdy,
+    thickFat,
     rockSlide,
     sandVeil,
     selfDestruct,
     shellArmor,
     shieldDust,
-    sing,
     staticElectricity,
     swarm,
+    swordsDance,
     synchronise,
     teleport,
     torrent,
+    toxic,
     transform,
     triAttack,
-    hydroPump
+    quickAttack
 };
 
 export const statusAbilityHandlers = {
     confuseRay,
+    confusion,
     flameBody,
+    forewarn,
     growl,
+    hypnosis,
     intimidate,
     lick,
-    safePassage
+    safePassage,
+    sing,
+    softBoiled,
+    supersonic,
+    technician,
+    thunderWave
 }
 
 /**
