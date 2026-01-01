@@ -216,6 +216,27 @@ const swarm = chlorophyll; // bug
 const toxic = chlorophyll; // poison
 const synchronise = chlorophyll; // psychic
 
+const ancientPower = (card, cellId, gameState) => {
+    const newStats = [...card.stats];
+
+    const availableStatIndices = newStats
+        .map((stat, index) => ({ stat, index }))
+        .filter(({ stat }) => stat < 10)
+        .map(({ index }) => index);
+
+    if (availableStatIndices.length === 0) return card;
+
+    const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+    const statIndexToBoost = availableStatIndices[randomIndex];
+
+    newStats[statIndexToBoost] += 1;
+
+    return {
+        ...card,
+        stats: newStats
+    };
+}
+
 const familyBond = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
 
@@ -610,6 +631,8 @@ const leechLife = (card, cellId, gameState) => {
     };
 };
 
+const leechSeed = leechLife;
+
 const confuseRay = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
     const adjacentCellIds = modifiedCells[cellId].adjacentCells;
@@ -730,6 +753,46 @@ const intimidate = growl;
 const flameBody = growl;
 const thunderWave = growl;
 
+const hornDrill = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+
+    adjacentCellIds.forEach(adjacentCellId => {
+        if (adjacentCellId === null) return;
+
+        const adjacentCell = modifiedCells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
+                return;
+            }
+
+            const roll = Math.random();
+
+            if (roll < 0.3) {
+                const stats = [...adjacentCell.pokemonCard.stats];
+
+                const randomStatIndex = Math.floor(Math.random() * stats.length);
+                const newStats = stats.map((stat, index) =>
+                    index === randomStatIndex ? 1 : stat
+                );
+
+                modifiedCells[adjacentCellId] = {
+                    ...adjacentCell,
+                    pokemonCard: {
+                        ...adjacentCell.pokemonCard,
+                        stats: newStats
+                    }
+                };
+            }
+        }
+    });
+
+    return modifiedCells;
+};
+
+const guillotine = hornDrill;
+
 const safePassage = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
     const adjacentCellIds = modifiedCells[cellId].adjacentCells;
@@ -805,6 +868,7 @@ const payDay = (card, cellId, gameState) => {
 
 export const selfAbilityHandlers = {
     acidArmor,
+    ancientPower,
     bigPecks,
     blaze,
     bonemerang,
@@ -823,6 +887,7 @@ export const selfAbilityHandlers = {
     hydroPump,
     leafGuard,
     leechLife,
+    leechSeed,
     lightningRod,
     lonely,
     magnetPull,
@@ -860,6 +925,8 @@ export const statusAbilityHandlers = {
     flameBody,
     forewarn,
     growl,
+    guillotine,
+    hornDrill,
     hypnosis,
     intimidate,
     lick,

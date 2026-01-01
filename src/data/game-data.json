@@ -1754,7 +1754,7 @@
         7,
         5
       ],
-      "ability": "sturdy",
+      "ability": "rockSlide",
       "statWeight": 300
     },
     "graveler": {
@@ -1774,7 +1774,7 @@
         7,
         2
       ],
-      "ability": "sturdy",
+      "ability": "rockSlide",
       "statWeight": 390
     },
     "golem": {
@@ -1794,7 +1794,7 @@
         6,
         7
       ],
-      "ability": "sturdy",
+      "ability": "rockSlide",
       "statWeight": 495
     },
     "ponyta": {
@@ -1943,17 +1943,18 @@
         "flying"
       ],
       "stats": [
-        1,
+        6,
         7,
-        5,
-        3
+        1,
+        2
       ],
       "originalStats": [
-        1,
+        6,
         7,
-        5,
-        3
+        1,
+        2
       ],
+      "ability": "quickAttack",
       "statWeight": 310
     },
     "dodrio": {
@@ -2073,6 +2074,7 @@
         5,
         1
       ],
+      "ability": "shellArmor",
       "statWeight": 305
     },
     "cloyster": {
@@ -2092,6 +2094,7 @@
         3,
         8
       ],
+      "ability": "shellArmor",
       "statWeight": 525
     },
     "gastly": {
@@ -2171,6 +2174,7 @@
         7,
         4
       ],
+      "ability": "sturdy",
       "statWeight": 385
     },
     "drowzee": {
@@ -2230,6 +2234,7 @@
         7,
         1
       ],
+      "ability": "guillotine",
       "statWeight": 325
     },
     "kingler": {
@@ -2249,6 +2254,7 @@
         4,
         6
       ],
+      "ability": "guillotine",
       "statWeight": 475
     },
     "voltorb": {
@@ -2309,6 +2315,7 @@
         2,
         6
       ],
+      "ability": "leechSeed",
       "statWeight": 325
     },
     "exeggutor": {
@@ -2328,6 +2335,7 @@
         8,
         6
       ],
+      "ability": "leechSeed",
       "statWeight": 530
     },
     "cubone": {
@@ -2483,6 +2491,7 @@
         4,
         3
       ],
+      "ability": "hornDrill",
       "statWeight": 345
     },
     "rhydon": {
@@ -2502,6 +2511,7 @@
         3,
         7
       ],
+      "ability": "hornDrill",
       "statWeight": 485
     },
     "chansey": {
@@ -3014,6 +3024,7 @@
         6,
         6
       ],
+      "ability": "ancientPower",
       "statWeight": 355
     },
     "omastar": {
@@ -3033,6 +3044,7 @@
         3,
         6
       ],
+      "ability": "ancientPower",
       "statWeight": 495
     },
     "kabuto": {
@@ -3052,6 +3064,7 @@
         1,
         9
       ],
+      "ability": "ancientPower",
       "statWeight": 355
     },
     "kabutops": {
@@ -3071,6 +3084,7 @@
         7,
         6
       ],
+      "ability": "ancientPower",
       "statWeight": 495
     },
     "aerodactyl": {
@@ -3381,6 +3395,11 @@
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Poison-type tiles"
     },
+    "ancientPower": {
+      "name": "Ancient Power",
+      "trigger": "onCapture",
+      "description": "On successful capture, gains 1 random stat"
+    },
     "bigPecks": {
       "name": "Big Pecks",
       "trigger": "onElementalTilePlace",
@@ -3471,6 +3490,11 @@
       "trigger": "onGridPlace",
       "description": "An intimidating snarl that weakens an adjacent foes facing stat when placed"
     },
+    "guillotine": {
+      "name": "Guillotine",
+      "trigger": "onGridPlace",
+      "description": "When placed, may reduce a stat of an adjacent enemy card to 1"
+    },
     "guts": {
       "name": "Guts",
       "trigger": "onGridPlace",
@@ -3480,6 +3504,11 @@
       "name": "Harden",
       "trigger": "onTurnStart",
       "description": "While this card waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1"
+    },
+    "hornDrill": {
+      "name": "Horn Drill",
+      "trigger": "onGridPlace",
+      "description": "When placed, may reduce a stat of an adjacent enemy card to 1"
     },
     "hypnosis": {
       "name": "Hypnosis",
@@ -3513,6 +3542,11 @@
     },
     "leechLife": {
       "name": "Leech Life",
+      "trigger": "onGridPlace",
+      "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random"
+    },
+    "leechSeed": {
+      "name": "Leech Seed",
       "trigger": "onGridPlace",
       "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random"
     },
@@ -3566,6 +3600,11 @@
       "trigger": "onTurnStart",
       "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts"
     },
+    "rockSlide": {
+      "name": "Rock Slide",
+      "trigger": "onMatchStart",
+      "description": "For each additional Rock-type in the current match, a random stat is increased by 1"
+    },
     "safePassage": {
       "name": "Safe Passage",
       "trigger": "onGridPlace",
@@ -3607,7 +3646,7 @@
       "description": "For each additional Electric-type in the current match, a random stat is increased by 1"
     },
     "sturdy": {
-      "name": "Rock Head",
+      "name": "Sturdy",
       "trigger": "onElementalTilePlace",
       "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
