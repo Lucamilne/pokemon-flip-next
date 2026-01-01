@@ -114,14 +114,14 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
                 setPokemonData(combinedData);
 
-                if (import.meta.env.PROD) {
-                    const pokemonCry = new Audio(combinedData.cries.legacy);
-                    pokemonCry.volume = 0.5;
-                    pokemonCry.addEventListener('error', (error) => {
-                        console.error(`Failed to play ${combinedData.name} cry: `, error)
-                    })
-                    pokemonCry.play();
-                }
+                // if (import.meta.env.PROD) {
+                //     const pokemonCry = new Audio(combinedData.cries.legacy);
+                //     pokemonCry.volume = 0.5;
+                //     pokemonCry.addEventListener('error', (error) => {
+                //         console.error(`Failed to play ${combinedData.name} cry: `, error)
+                //     })
+                //     pokemonCry.play();
+                // }
             } catch (error) {
                 console.error('Failed to fetch pokemon data:', error);
                 setError(error.message);

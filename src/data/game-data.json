@@ -735,6 +735,7 @@
         3,
         3
       ],
+      "ability": "leer",
       "statWeight": 288
     },
     "arbok": {
@@ -754,6 +755,7 @@
         6,
         6
       ],
+      "ability": "leer",
       "statWeight": 448
     },
     "pikachu": {
@@ -1195,6 +1197,7 @@
         4,
         1
       ],
+      "ability": "growth",
       "statWeight": 285
     },
     "parasect": {
@@ -1214,6 +1217,7 @@
         6,
         6
       ],
+      "ability": "growth",
       "statWeight": 405
     },
     "venonat": {
@@ -2034,7 +2038,7 @@
         6,
         1
       ],
-      "ability": "acidArmor",
+      "ability": "stench",
       "statWeight": 325
     },
     "muk": {
@@ -2044,17 +2048,17 @@
       ],
       "stats": [
         7,
-        9,
-        2,
+        8,
+        3,
         7
       ],
       "originalStats": [
         7,
-        9,
-        2,
+        8,
+        3,
         7
       ],
-      "ability": "acidArmor",
+      "ability": "stench",
       "statWeight": 500
     },
     "shellder": {
@@ -2453,6 +2457,7 @@
         4,
         3
       ],
+      "ability": "smog",
       "statWeight": 340
     },
     "weezing": {
@@ -2463,15 +2468,16 @@
       "stats": [
         6,
         6,
-        9,
-        4
+        8,
+        5
       ],
       "originalStats": [
         6,
         6,
-        9,
-        4
+        8,
+        5
       ],
+      "ability": "smog",
       "statWeight": 490
     },
     "rhyhorn": {
@@ -2571,6 +2577,7 @@
         7,
         5
       ],
+      "ability": "parentalBond",
       "statWeight": 490
     },
     "horsea": {
@@ -2763,7 +2770,7 @@
         8,
         4
       ],
-      "ability": "staticElectricity",
+      "ability": "thunderWave",
       "statWeight": 490
     },
     "magmar": {
@@ -2803,6 +2810,7 @@
         8,
         7
       ],
+      "ability": "guillotine",
       "statWeight": 500
     },
     "tauros": {
@@ -3491,6 +3499,11 @@
       "trigger": "onGridPlace",
       "description": "An intimidating snarl that weakens an adjacent foes facing stat when placed"
     },
+    "growth": {
+      "name": "Growth",
+      "trigger": "onTurnStart",
+      "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts"
+    },
     "guillotine": {
       "name": "Guillotine",
       "trigger": "onGridPlace",
@@ -3514,7 +3527,7 @@
     "hypnosis": {
       "name": "Hypnosis",
       "trigger": "onGridPlace",
-      "description": "When placed, all adjacent cards have their stats randomly shifted by +/-1 for better or worse"
+      "description": "Reduces the highest stat and increases the lowest stat of each adjacent enemy"
     },
     "intimidate": {
       "name": "Intimidate",
@@ -3551,6 +3564,11 @@
       "trigger": "onGridPlace",
       "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random"
     },
+    "leer": {
+      "name": "Leer",
+      "trigger": "onGridPlace",
+      "description": "A menacing glare that weakens an adjacent foes facing stat when placed"
+    },
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
@@ -3579,12 +3597,17 @@
     "oblivious": {
       "name": "Oblivious",
       "trigger": "onElementalTilePlace",
-      "description": "Oblivious to its surroundings. Gains 1 to all stats on any elemental tile"
+      "description": "Oblivious to its surroundings. Gains 1 to all stats on any elemental tile and is immune to stat-lowering effects"
     },
     "overgrow": {
       "name": "Overgrow",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Grass-type tiles"
+    },
+    "parentalBond": {
+      "name": "Parental Bond",
+      "trigger": "onMatchStart",
+      "description": "For each weak card in the current match, a random stat is increased by 1"
     },
     "payDay": {
       "name": "Pay Day",
@@ -3641,6 +3664,11 @@
       "trigger": "onGridPlace",
       "description": "Uh oh! Sings a soothing melody when placed, reducing all stats by 1 for every card in the arena"
     },
+    "smog": {
+      "name": "Smog",
+      "trigger": "onGridPlace",
+      "description": "When placed, any stat exceeding this card's highest stat is reduced by 1 across the entire arena"
+    },
     "softBoiled": {
       "name": "Soft Boiled",
       "trigger": "onGridPlace",
@@ -3651,6 +3679,11 @@
       "trigger": "onMatchStart",
       "description": "For each additional Electric-type in the current match, a random stat is increased by 1"
     },
+    "stench": {
+      "name": "Stench",
+      "trigger": "onGridPlace",
+      "description": "When placed, any stat exceeding this card's highest stat is reduced by 1 across the entire arena"
+    },
     "sturdy": {
       "name": "Sturdy",
       "trigger": "onElementalTilePlace",
@@ -3659,7 +3692,7 @@
     "supersonic": {
       "name": "Supersonic",
       "trigger": "onGridPlace",
-      "description": "When placed, all adjacent cards have their stats randomly shifted, ranging from −1 to +1"
+      "description": "Reduces the highest stat and increases the lowest stat of each adjacent enemy"
     },
     "swarm": {
       "name": "Swarm",
