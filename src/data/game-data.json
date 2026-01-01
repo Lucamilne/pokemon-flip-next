@@ -1394,7 +1394,7 @@
         4,
         4
       ],
-      "ability": "guts",
+      "ability": "rage",
       "statWeight": 305
     },
     "primeape": {
@@ -1414,7 +1414,7 @@
         6,
         6
       ],
-      "ability": "guts",
+      "ability": "rage",
       "statWeight": 455
     },
     "growlithe": {
@@ -1980,7 +1980,7 @@
     "seel": {
       "id": 86,
       "types": [
-        "water"
+        "ice"
       ],
       "stats": [
         3,
@@ -2000,7 +2000,7 @@
     "dewgong": {
       "id": 87,
       "types": [
-        "water"
+        "ice"
       ],
       "stats": [
         6,
@@ -2849,7 +2849,7 @@
     "gyarados": {
       "id": 130,
       "types": [
-        "water"
+        "flying"
       ],
       "stats": [
         7,
@@ -2863,6 +2863,7 @@
         7,
         7
       ],
+      "ability": "rage",
       "statWeight": 540
     },
     "lapras": {
@@ -3513,7 +3514,7 @@
     "hypnosis": {
       "name": "Hypnosis",
       "trigger": "onGridPlace",
-      "description": "When placed, all adjacent cards have their stats randomly shifted, ranging from −1 to +1"
+      "description": "When placed, all adjacent cards have their stats randomly shifted by +/-1 for better or worse"
     },
     "intimidate": {
       "name": "Intimidate",
@@ -3594,6 +3595,11 @@
       "name": "Pressure",
       "trigger": "onGridPlace",
       "description": "Exerts intense pressure on surrounding foes, gaining 1 stat for each adjacent card"
+    },
+    "rage": {
+      "name": "Rage",
+      "trigger": "onGridPlace",
+      "description": "When placed, gain 1 to all stats when trailing by 2 or more cards"
     },
     "rest": {
       "name": "Rest",

@@ -102,16 +102,6 @@ const clearBody = (card, cellId, gameState) => {
 
 const magicGuard = clearBody;
 
-const overgrow = (card, cellId, gameState) => {
-    const tileElement = gameState.cells[cellId].element;
-    if (!tileElement) return card;
-
-    return {
-        ...card,
-        stats: card.stats.map(stat => updateStatOnElementalTileByModifier(stat, card.types, tileElement, 2))
-    };
-}
-
 const evolve = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
     const validElements = ['fire', 'electric', 'water'];
@@ -146,22 +136,15 @@ const swordsDance = (card, cellId, gameState) => {
 
 const bonemerang = swordsDance;
 
-// "bug",
-// "dragon",
-// "electric",
-// "fairy",
-// "fighting",
-// "fire",
-// "flying",
-// "ghost",
-// "grass",
-// "ground",
-// "ice",
-// "normal",
-// "poison",
-// "psychic",
-// "rock",
-// "water"
+const overgrow = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    if (!tileElement) return card;
+
+    return {
+        ...card,
+        stats: card.stats.map(stat => updateStatOnElementalTileByModifier(stat, card.types, tileElement, 2))
+    };
+}
 
 const blaze = overgrow; // fire
 const hydroPump = overgrow; // water
@@ -406,8 +389,9 @@ const desperation = (card, cellId, gameState) => {
         .map(cell => cell.pokemonCard)
         .filter(c => c !== null);
 
-    const playerCards = gridCards.filter(c => c.isPlayerCard).length;
-    const cpuCards = gridCards.filter(c => !c.isPlayerCard).length;
+    const allCards = [...gridCards, ...gameState.playerHand, ...gameState.cpuHand];
+    const playerCards = allCards.filter(c => c.isPlayerCard).length;
+    const cpuCards = allCards.filter(c => !c.isPlayerCard).length;
 
     // Check if losing
     const isLosing = card.isPlayerCard
@@ -422,6 +406,31 @@ const desperation = (card, cellId, gameState) => {
             id: gyarados.id,
             types: [...gyarados.types],
             stats: [...gyarados.stats],
+        };
+    }
+
+    return card;
+};
+
+const rage = (card, cellId, gameState) => {
+    const gridCards = Object.values(gameState.cells)
+        .map(cell => cell.pokemonCard)
+        .filter(c => c !== null);
+
+    const allCards = [...gridCards, ...gameState.playerHand, ...gameState.cpuHand];
+
+    const playerCards = allCards.filter(c => c.isPlayerCard).length;
+    const cpuCards = allCards.filter(c => !c.isPlayerCard).length;
+
+    // Check if losing by 2 or more cards
+    const isLosing = card.isPlayerCard
+        ? cpuCards >= playerCards + 2
+        : playerCards >= cpuCards + 2;
+
+    if (isLosing) {
+        return {
+            ...card,
+            stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
         };
     }
 
@@ -899,6 +908,7 @@ export const selfAbilityHandlers = {
     overgrow,
     payDay,
     pressure,
+    rage,
     rest,
     sturdy,
     thickFat,
