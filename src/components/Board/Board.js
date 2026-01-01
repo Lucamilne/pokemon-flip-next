@@ -65,32 +65,7 @@ export default function Board() {
         const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
         const newPlayerHand = selectedPlayerHand;
 
-        // onMatchStart - trigger abilities for both hands
-        const processedCpuHand = newCpuHand.map(card => {
-            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
-                return applySelfAbilities(
-                    card,
-                    'onMatchStart',
-                    null,
-                    { playerHand: newPlayerHand, cpuHand: newCpuHand }
-                );
-            }
-            return card;
-        });
-
-        const processedPlayerHand = newPlayerHand.map(card => {
-            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
-                return applySelfAbilities(
-                    card,
-                    'onMatchStart',
-                    null,
-                    { playerHand: newPlayerHand, cpuHand: newCpuHand }
-                );
-            }
-            return card;
-        });
-
-        if (!newPlayerHand) {
+        if (!selectedPlayerHand) {
             // Extract game mode from pathname (e.g., /quickplay/select/play -> quickplay)
             const gameMode = pathname.split('/').filter(Boolean)[0];
             navigate(`/${gameMode}/select`);
@@ -98,8 +73,8 @@ export default function Board() {
         }
 
         // Gather types from both hands for elemental tiles
-        const playerTypes = processedPlayerHand.flatMap(card => card.types);
-        const cpuTypes = processedCpuHand.flatMap(card => card.types);
+        const playerTypes = selectedPlayerHand.flatMap(card => card.types);
+        const cpuTypes = newCpuHand.flatMap(card => card.types);
         const allHandTypes = [...playerTypes, ...cpuTypes];
         const arrayOfPokemonTypes = [...new Set(allHandTypes)].filter((type) => type !== "normal");
 
@@ -118,6 +93,31 @@ export default function Board() {
                 availableTypes.splice(randomIndex, 1); // Remove the used element from available pool
                 tilesPlaced++;
             }
+        });
+
+        // onMatchStart - trigger abilities for both hands
+        const processedCpuHand = newCpuHand.map(card => {
+            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
+                return applySelfAbilities(
+                    card,
+                    'onMatchStart',
+                    null,
+                    { cells: updatedCells, playerHand: newPlayerHand, cpuHand: newCpuHand }
+                );
+            }
+            return card;
+        });
+
+        const processedPlayerHand = newPlayerHand.map(card => {
+            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
+                return applySelfAbilities(
+                    card,
+                    'onMatchStart',
+                    null,
+                    { cells: updatedCells, playerHand: newPlayerHand, cpuHand: newCpuHand }
+                );
+            }
+            return card;
         });
 
         setCpuHand(processedCpuHand);
