@@ -261,7 +261,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                         tooltipPosition === 'left' ? 'right-full mr-2 top-1/2 -translate-y-1/2' :
                             'left-full ml-2 top-1/2 -translate-y-1/2'
                     }`}>
-                    <div className='border border-black tooltip p-1 w-[90px] md:w-[140px] shadow-md/30'>
+                    <div className='border border-black tooltip p-1 w-[76px] md:w-[140px] shadow-md/30'>
                         <div className="truncate text-[8px] py-0.5 md:text-sm uppercase tracking-wider text-center font-bold text-white" style={nameBgStyle}>
                             {abilities[pokemonCard.ability]?.name}
                         </div>

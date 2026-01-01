@@ -190,7 +190,7 @@ export default function Select() {
                 </div>
             </div>
             {showConfirm && (
-                <div className="absolute inset-0 bg-black/40" />
+                <div className="absolute inset-0 bg-black/60" />
             )}
             <div className={`${showConfirm ? '-translate-y-20' : 'translate-y-0'} transition-transform relative grid grid-cols-[repeat(5,72px)] md:grid-cols-[repeat(5,124px)] items-center gap-1 md:gap-4 hand-bottom-container pt-7 p-3 md:pt-8 md:p-4 w-full justify-center`}>
                 {playerHand.map((pokemonCard, index) => {

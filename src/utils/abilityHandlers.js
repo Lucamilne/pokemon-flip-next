@@ -535,23 +535,35 @@ const dig = (card, cellId, gameState) => {
 }
 
 
-const retiredAbilityMagicGuard = (card, cellId, gameState) => {
-    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
-
-    // Count adjacent cells with elemental tiles (not null)
-    const elementalTilesCount = adjacentCellIds.filter(adjacentCellId => {
-        const adjacentCell = gameState.cells[adjacentCellId];
-        return adjacentCell?.element !== null && adjacentCell?.element !== undefined;
-    }).length;
+const dragonDance = (card, cellId, gameState) => {
+    // Count cells with elemental tiles (not null)
+    const elementalTilesCount = Object.values(gameState.cells).filter(cell =>
+        cell.element !== null && cell.element !== undefined
+    ).length;
 
     // If no elemental tiles, return card unchanged
     if (elementalTilesCount === 0) return card;
 
-    // Boost all stats by +1 for each elemental tile, capped at 10
-    const newStats = card.stats.map(stat => {
-        const boostedStat = stat + elementalTilesCount;
-        return boostedStat > 10 ? 10 : boostedStat;
-    });
+    // Create a new stats array
+    const newStats = [...card.stats];
+
+    // Boost a random stat by +1 for each elemental tile, capped at 10
+    for (let i = 0; i < elementalTilesCount; i++) {
+        // Find all stat indices that are below 10
+        const availableStatIndices = newStats
+            .map((stat, index) => ({ stat, index }))
+            .filter(({ stat }) => stat < 10)
+            .map(({ index }) => index);
+
+        // If all stats are at 10, return the card
+        if (availableStatIndices.length === 0) break;
+
+        // Pick a random stat from available indices
+        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+        const statIndexToBoost = availableStatIndices[randomIndex];
+
+        newStats[statIndexToBoost] += 1;
+    }
 
     return {
         ...card,
@@ -802,6 +814,7 @@ export const selfAbilityHandlers = {
     desperation,
     dig,
     download,
+    dragonDance,
     evolve,
     familyBond,
     flashFire,

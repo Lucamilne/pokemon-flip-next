@@ -2257,17 +2257,17 @@
         "electric"
       ],
       "stats": [
+        8,
+        5,
         7,
-        7,
-        7,
-        7
+        5
       ],
       "starter": true,
       "originalStats": [
-        6,
-        3,
+        8,
         5,
-        3
+        7,
+        5
       ],
       "ability": "selfDestruct",
       "statWeight": 330
@@ -2279,15 +2279,15 @@
       ],
       "stats": [
         10,
-        10,
-        10,
+        5,
+        8,
         10
       ],
       "originalStats": [
+        10,
+        5,
         8,
-        2,
-        6,
-        9
+        10
       ],
       "ability": "selfDestruct",
       "statWeight": 490
@@ -3190,6 +3190,7 @@
         2,
         2
       ],
+      "ability": "dragonDance",
       "statWeight": 300
     },
     "dragonair": {
@@ -3209,6 +3210,7 @@
         5,
         3
       ],
+      "ability": "dragonDance",
       "statWeight": 420
     },
     "dragonite": {
@@ -3228,6 +3230,7 @@
         7,
         7
       ],
+      "ability": "dragonDance",
       "statWeight": 600
     },
     "mewtwo": {
@@ -3427,6 +3430,11 @@
       "name": "Dig",
       "trigger": "onGridPlace",
       "description": "Dig in! Placing this card in the corner of the arena boosts a random stat by 1"
+    },
+    "dragonDance": {
+      "name": "Dragon Dance",
+      "trigger": "onMatchStart",
+      "description": "Mystical power awakens! Gains a random stat for each elemental tile on the board"
     },
     "download": {
       "name": "Download",
