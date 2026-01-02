@@ -21,7 +21,7 @@ export default function Select() {
     const [searchString, setSearchString] = useState('');
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [playerCardLibrary, setPlayerCardLibrary] = useState([]);
+    const [showProfile, setShowProfile] = useState(true)
 
     const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
     const { userCollection, isLoadingCollection } = useAuth();
@@ -32,24 +32,29 @@ export default function Select() {
         if (!pokeballIsOpen) setPokeballIsOpen(true);
     }, [])
 
-    useEffect(() => {
+    const playerCardLibrary = useMemo(() => {
         const ownedPokemonNames = Object.keys(userCollection);
 
         if (ownedPokemonNames.length > 0) {
-            const ownedCards = ownedPokemonNames
+            return ownedPokemonNames
                 .map(name => createCard(name, true))
                 .sort((a, b) => a.id - b.id);
-            setPlayerCardLibrary(ownedCards);
         } else {
             // Fallback to starters if collection is empty
-            setPlayerCardLibrary(fetchStarterCards(true));
+            return fetchStarterCards(true);
         }
-    }, [userCollection])
+    }, [userCollection]);
 
     const closePokeball = () => {
         setIsPokeballDisabled(false);
         setPokeballIsOpen(false);
     }
+
+    useEffect(() => {
+        if (!isMobile) return;
+
+        setShowProfile(!searchString);
+    }, [searchString]);
 
     useEffect(() => {
         if (playerHand.every(card => card !== null)) {
@@ -79,19 +84,17 @@ export default function Select() {
         const trimmedSearch = searchString.trim().toLowerCase();
         if (!trimmedSearch) return playerCardLibrary;
 
-        return playerCardLibrary.filter(pokemonCard => {
-            if (pokemonCard === null) return false;
-            return pokemonCard.name.toLowerCase().includes(trimmedSearch);
-        });
+        return playerCardLibrary.filter(pokemonCard =>
+            pokemonCard?.name.toLowerCase().includes(trimmedSearch)
+        );
     }, [searchString, playerCardLibrary]);
 
     const togglePokemonCardSelection = useCallback((pokemonCard) => {
         if (!pokemonCard) return;
 
-        // setSearchString("");
+        // setSearchString(""); // is this useful? Undecided. Commented out for now.
 
         setPlayerHand(prev => {
-            // Check if card is already in hand
             const cardIndex = prev.findIndex(card => card?.id === pokemonCard.id);
 
             if (cardIndex !== -1) {
@@ -145,10 +148,9 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className="relative grow flex md:flex-row-reverse overflow-y-auto">
-                <Profile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} />
-                <div className={`relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(2,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
+            <div className="relative grow flex flex-col-reverse md:flex-row overflow-y-auto">
+                <div className={`h-full relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
+                    <div className="grid grid-cols-[repeat(4,72px)] place-content-center md:grid-cols-[repeat(3,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
@@ -188,6 +190,15 @@ export default function Select() {
                         )}
                     </div>
                 </div>
+                {showProfile && (
+                    <Profile
+                        playerHand={playerHand}
+                        lastSelectedHand={lastSelectedHand}
+                        setPlayerHand={setPlayerHand}
+                        lastPokemonCardSelected={lastPokemonCardSelected}
+                        onClose={isMobile ? () => setShowProfile(false) : undefined}
+                    />
+                )}
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/60" />

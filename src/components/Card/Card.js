@@ -26,7 +26,7 @@ const getBallSprite = (statWeight) => {
     return MasterBallSprite;
 };
 
-export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
+function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
     const { cells } = useGameContext();
 
@@ -262,7 +262,7 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
                             'left-full ml-2 top-1/2 -translate-y-1/2'
                     }`}>
                     <div className='border border-black tooltip p-1 w-[80px] md:w-[140px] shadow-md/30'>
-                        <div className="truncate text-[8px] p-0.5 md:text-sm uppercase md:tracking-wider text-center font-bold text-white" style={nameBgStyle}>
+                        <div className="truncate text-[8px] p-0.5 md:py-1 md:text-xs uppercase md:tracking-wider text-center font-bold text-white" style={nameBgStyle}>
                             {abilities[pokemonCard.ability]?.name}
                         </div>
                         <p className="text-[8px] md:text-[10px] py-1 md:py-2 px-[1px] text-center">
@@ -287,3 +287,5 @@ export default function Card({ pokemonCard, index = 0, cellKey, isDraggable = tr
         </div>
     );
 }
+
+export default React.memo(Card);

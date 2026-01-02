@@ -8,7 +8,7 @@
   --foreground: #171717;
 
   /* Responsive tile border size */
-  --tile-border-size: 4px; /* Mobile default */
+  --tile-border-size: 4px;
   --card-ring-size: -2px;
 
   /* Theme */
@@ -615,7 +615,8 @@ body {
   display: inline-block
 }
 
-.arrow::before, .arrow-relative::before {
+.arrow::before,
+.arrow-relative::before {
   position: absolute;
   top: -2px;
   left: -2px;
@@ -658,14 +659,14 @@ body {
   box-shadow:
     inset 0 -8px var(--pokedex-dark-red),
     inset 0 -16px var(--pokedex-inner-red);
-  border-bottom: 8px solid black;
+  border-bottom: 4px solid black;
 }
 
 .hand-bottom-container-red {
   box-shadow:
     inset 0 8px var(--pokedex-dark-red),
     inset 0 16px var(--pokedex-inner-red);
-  border-top: 8px solid black;
+  border-top: 4px solid black;
 }
 
 
@@ -673,21 +674,21 @@ body {
   box-shadow:
     inset 0 8px var(--pokedex-dark-blue),
     inset 0 16px var(--pokedex-inner-blue);
-  border-top: 8px solid black;
+  border-top: 4px solid black;
 }
 
 .hand-left-container {
   box-shadow:
     inset -8px 0 var(--pokedex-dark-blue),
     inset -16px 0 var(--pokedex-inner-blue);
-  border-right: 8px solid black;
+  border-right: 4px solid black;
 }
 
 .hand-right-container {
   box-shadow:
     inset 8px 0 var(--pokedex-dark-red),
     inset 16px 0 var(--pokedex-inner-red);
-  border-left: 8px solid black;
+  border-left: 4px solid black;
 }
 
 .ribbon-shadow {
@@ -1399,12 +1400,20 @@ body {
 }
 
 .pokeball-loader {
-  height: 5rem;
-  width: 5rem;
+  height: 3rem;
+  width: 3rem;
   border-radius: 50%;
-  border: 5px solid black;
+  border: 4px solid black;
   background-image:
     radial-gradient(white 20%, white 20%, black 20%, black 30%, transparent 30%, transparent), linear-gradient(red 46%, black 46%, black 54%, white 54%);
+}
+
+@media (min-width: 768px) {
+  .pokeball-loader {
+    height: 5rem;
+    width: 5rem;
+    border: 5px solid black;
+  }
 }
 
 .pokeball-bullet {
@@ -1647,11 +1656,14 @@ body {
 }
 
 @keyframes blink {
-  0%, 49% {
+
+  0%,
+  49% {
     opacity: 1;
   }
 
-  50%, 100% {
+  50%,
+  100% {
     opacity: 0;
   }
 }
@@ -1993,9 +2005,11 @@ body {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
