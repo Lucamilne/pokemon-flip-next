@@ -1,9 +1,8 @@
 import { fetchCardById } from "@/utils/cardHelpers.js";
-import Help from "@/components/Help/Help.js"
 import Card from '../../Card/Card.js';
 
 export default function C({ nextSlide }) {
-    const pokemonCards = [fetchCardById(1), fetchCardById(4), fetchCardById(7)];
+    const pokemonCards = [fetchCardById(39), fetchCardById(133), fetchCardById(143)];
 
     return (
         <div className="w-full grid gap-1 md:gap-2 place-content-center grid-cols-[repeat(3,72px)] md:grid-cols-[repeat(3,124px)] bg-linear-to-r from-theme-blue via-white to-theme-blue p-2 md:p-4 border-y-6 border-black">

@@ -76,7 +76,6 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
                             <p>Some Pokémon cards have special abilities that change how they play.</p>
-                            <p>Cards with abilities are marked with a <img className="inline md:size-[24px]" src={PokemonBallSprite} /> icon.</p>
                             <p>Hover over a card with an ability to see what it does!</p>
                         </div>
                         <SlideD nextSlide={nextSlide} />
@@ -120,9 +119,10 @@ export default function HowToPlay({ isOpen, onClose }) {
                                 the most cards wins!
                             </p>
                             <p>
-                                Win a round to add all cards you captured that round to your permanent collection. Lose the round, and you must forfeit one of the cards you lost during it.
+                                Win a round to add all your opponent's cards to your permanent collection. Lose the round, and you must forfeit one of your own cards.
                             </p>
-                            <p>Plan your moves carefully. Every card placed can trigger a rapid change of fortunes!</p>
+                            <p>Cards you own are marked with a <img className="inline md:size-[24px]" src={PokemonBallSprite} /> icon in the bottom right hand corner.</p>
+                            {/* <p>Plan your moves carefully. Every card placed can trigger a rapid change of fortunes!</p> */}
                         </div>
                     </div>
                 </div>
