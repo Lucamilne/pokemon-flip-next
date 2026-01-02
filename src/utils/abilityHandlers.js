@@ -259,7 +259,6 @@ const familyBond = (card, cellId, gameState) => {
     };
 }
 
-
 const rest = (card, cellId, gameState) => {
     const hasCardsOnGrid = Object.values(gameState.cells).some(cell => cell.pokemonCard);
 
@@ -329,6 +328,7 @@ const pressure = (card, cellId, gameState) => {
 
 const magnetPull = pressure;
 const cuteCharm = pressure;
+const lovelyKiss = pressure;
 
 const parentalBond = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
@@ -410,6 +410,8 @@ const quickAttack = (card, cellId, gameState) => {
         stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
     };
 }
+
+const agility = quickAttack;
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -517,7 +519,7 @@ const lick = (card, cellId, cells) => {
 };
 
 const technician = lick;
-const forewarn = lick;
+const jumpKick = lick;
 
 const guts = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -584,23 +586,21 @@ const dig = (card, cellId, gameState) => {
     // Only boost if placed on a corner cell
     if (!cornerCells.includes(cellId)) return card;
 
-    // Create a new stats array
     const newStats = [...card.stats];
 
-    // Find all stat indices that are below 10
-    const availableStatIndices = newStats
-        .map((stat, index) => ({ stat, index }))
-        .filter(({ stat }) => stat < 10)
-        .map(({ index }) => index);
+    // Boost 2 random stats
+    for (let i = 0; i < 2; i++) {
+        const availableStatIndices = newStats
+            .map((stat, index) => ({ stat, index }))
+            .filter(({ stat }) => stat < 10)
+            .map(({ index }) => index);
 
-    // If all stats are at 10, return unchanged
-    if (availableStatIndices.length === 0) return card;
+        if (availableStatIndices.length === 0) break;
 
-    // Pick a random stat from available indices
-    const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
-    const statIndexToBoost = availableStatIndices[randomIndex];
-
-    newStats[statIndexToBoost] += 1;
+        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
+        const statIndexToBoost = availableStatIndices[randomIndex];
+        newStats[statIndexToBoost] += 1;
+    }
 
     return {
         ...card,
@@ -608,6 +608,7 @@ const dig = (card, cellId, gameState) => {
     };
 }
 
+const smokeScreen = dig;
 
 const dragonDance = (card, cellId, gameState) => {
     // Count cells with elemental tiles (not null)
@@ -960,8 +961,38 @@ const payDay = (card, cellId, gameState) => {
     };
 };
 
+const illuminate = payDay;
+
+const prismaticPunch = (card, cellId, gameState) => {
+    const tileElement = gameState.cells[cellId].element;
+    const validElements = ['fire', 'electric', 'ice'];
+
+    if (!tileElement) return card;
+
+    // Handle fighting type - boost stats and change type
+    if (tileElement === 'fighting') {
+        return {
+            ...card,
+            stats: card.stats.map(stat => stat < 10 ? stat + 1 : stat)
+        };
+    }
+
+    if (validElements.includes(tileElement)) {
+        return {
+            ...card,
+            stats: card.stats.map(stat => stat < 10 ? stat + 2 : stat)
+        };
+    }
+
+    return {
+        ...card,
+        stats: card.stats.map(stat => stat > 1 ? stat - 1 : stat)
+    };
+}
+
 export const selfAbilityHandlers = {
     acidArmor,
+    agility,
     ancientPower,
     bigPecks,
     blaze,
@@ -980,11 +1011,13 @@ export const selfAbilityHandlers = {
     guts,
     harden,
     hydroPump,
+    illuminate,
     leafGuard,
     leechLife,
     leechSeed,
     lightningRod,
     lonely,
+    lovelyKiss,
     magnetPull,
     magicGuard,
     mimic,
@@ -995,6 +1028,7 @@ export const selfAbilityHandlers = {
     parentalBond,
     payDay,
     pressure,
+    prismaticPunch,
     rage,
     rest,
     sturdy,
@@ -1004,6 +1038,7 @@ export const selfAbilityHandlers = {
     selfDestruct,
     shellArmor,
     shieldDust,
+    smokeScreen,
     staticElectricity,
     swarm,
     swordsDance,
@@ -1020,9 +1055,9 @@ export const statusAbilityHandlers = {
     confuseRay,
     confusion,
     flameBody,
-    forewarn,
     growl,
     guillotine,
+    jumpKick,
     hornDrill,
     hypnosis,
     intimidate,
