@@ -75,7 +75,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
-                            <p>Some Pokémon cards have special abilities that change how they play.</p>
+                            <p>All Pokémon cards have special abilities that change how they play.</p>
                             <p>Hover over a card with an ability to see what it does!</p>
                         </div>
                         <SlideD nextSlide={nextSlide} />
