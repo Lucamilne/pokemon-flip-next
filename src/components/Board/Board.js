@@ -13,6 +13,7 @@ import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 import { fetchCpuCardsByPlayerStrength, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import gameData from '@/data/game-data.json';
@@ -42,6 +43,8 @@ export default function Board() {
         score,
     } = useGameContext();
 
+    const { userCollection } = useAuth();
+
     const navigate = useNavigate();
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -61,7 +64,7 @@ export default function Board() {
         }
 
         // Allocate hands
-        const cpuCardsToDeal = fetchCpuCardsByPlayerStrength(selectedPlayerHand);
+        const cpuCardsToDeal = fetchCpuCardsByPlayerStrength(selectedPlayerHand, userCollection);
         const newCpuHand = allocateCpuCardsFromPool(cpuCardsToDeal);
         const newPlayerHand = selectedPlayerHand;
 

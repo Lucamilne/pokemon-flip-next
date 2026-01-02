@@ -142,7 +142,7 @@ export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) =
 
     if (cardsToSelect.length < 5 || avgStatWeight >= 500) {
         const expandedMinStatWeight = Math.max(195, avgStatWeight - 100);
-        const expandedMaxStatWeight = Math.min(680, avgStatWeight + 200);
+        const expandedMaxStatWeight = Math.min(680, avgStatWeight + 100);
 
         cardsToSelect = allPokemonNames.filter(pokemonName => {
             const statWeight = pokemon.cards[pokemonName].statWeight;

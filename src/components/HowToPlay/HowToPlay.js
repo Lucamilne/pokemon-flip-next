@@ -119,7 +119,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                                 the most cards wins!
                             </p>
                             <p>
-                                Win a round to add all your opponent's cards to your permanent collection. Lose the round, and you must forfeit one of your own cards.
+                                Win a round to add all captured cards to your permanent collection. Lose the round, and you must forfeit one of your own cards.
                             </p>
                             <p>Cards you own are marked with a <img className="inline md:size-[24px]" src={PokemonBallSprite} /> icon in the bottom right hand corner.</p>
                             {/* <p>Plan your moves carefully. Every card placed can trigger a rapid change of fortunes!</p> */}

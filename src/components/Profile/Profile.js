@@ -12,7 +12,7 @@ import gameData from '@/data/game-data.json';
 const { cards, abilities } = gameData;
 
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, onClose }) {
-    const { user, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
+    const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
     const { isMobile } = useGameContext();
     const [debugMode, setDebugMode] = useState(false);
     const scrollContainerRef = useRef(null);
@@ -35,10 +35,14 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         if (!scrollContainerRef.current) return;
 
         const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-        const isAtTop = scrollTop === 0;
         const hasOverflow = scrollHeight > clientHeight;
 
-        setShowScrollIndicator(isAtTop && hasOverflow);
+        // Hide indicator as soon as user scrolls
+        if (scrollTop > 0) {
+            setShowScrollIndicator(false);
+        } else {
+            setShowScrollIndicator(hasOverflow);
+        }
     };
 
     // Check after layout changes (when content switches)
@@ -82,7 +86,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                 {types.slice(0, TYPES_PER_CARD).map(type => (
                     <span
                         key={type}
-                        className="text-white text-[10px] md:text-base py-1 px-3"
+                        className="text-white text-[9px] md:text-base py-1 px-3"
                         style={{ backgroundColor: `var(--color-${type}-500)` }}
                     >
                         {capitaliseFirstLetter(type)}
@@ -154,7 +158,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     const Divider = () => {
-        return <hr className="border-2 border-black my-3 md:my-4" />
+        return <hr className="border md:border-2 border-black my-3 md:my-4" />
     }
 
     const Header = ({ children }) => {
@@ -172,7 +176,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
         // No evolution
         if (!chain.evolves_to || chain.evolves_to.length === 0) {
-            return <div className="text-[10px] md:text-sm"><span className='capitalize'>{chain.species.name}</span> does not evolve.</div>;
+            return <div className="text-[9px] md:text-sm"><span className='capitalize'>{chain.species.name}</span> does not evolve.</div>;
         }
 
         // Render evolution rows
@@ -241,7 +245,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         <div>
                             <Header>{ability?.name}</Header>
                             <div>
-                                <p className="text-[10px] md:text-sm">
+                                <p className="text-[9px] md:text-sm">
                                     {ability?.description}.
                                 </p>
                             </div>
@@ -251,19 +255,19 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]} md:h-8`} value={statTier} max="10" />
                     </div>
                 </div>
-                <Divider />
-                <div className='grid grid-cols-1 gap-4'>
+                {/* <Divider /> */}
+                <div className='grid grid-cols-1 gap-4 mt-4'>
                     <div>
                         <Header>
                             {pokemonData.genera?.find(g => g.language.name === 'en')?.genus || 'Unknown Pokémon'}
                         </Header>
-                        <p className="text-[10px] md:text-sm">
+                        <p className="text-[9px] md:text-sm">
                             {pokemonData.flavor_text_entries?.find(entry => entry.language.name === 'en')?.flavor_text.replace(/\f/g, ' ') || 'No description available.'}
                         </p>
                     </div>
                     <div>
                         <Header>Pokédex Data</Header>
-                        <ul className="text-[10px] md:text-sm grid grid-cols-[1fr_auto] gap-x-2">
+                        <ul className="text-[9px] md:text-sm grid grid-cols-[1fr_auto] gap-x-2 max-w-36 md:max-w-full">
                             <span className="truncate">Height:</span>
                             <span className="shrink-0">{(pokemonData.height / 10).toFixed(1)}m</span>
 
@@ -292,8 +296,20 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         );
     };
 
+    const setLastSelectedHand = () => {
+        console.log(lastSelectedHand)
+        const filteredHand = lastSelectedHand.map(pokemonCard => {
+            if (!pokemonCard) return null;
+
+            const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
+            return isOwned ? pokemonCard : null;
+        });
+
+        setPlayerHand(filteredHand);
+    };
+
     const content = (
-        <div className='w-full flex-1 tooltip border-b-4 md:border-b-0 md:border-x-4 border-black font-press-start p-1 h-58 md:h-auto shadow-md'>
+        <div className='flex-1 tooltip border-4 md:border-4 border-black font-press-start p-1 h-52 md:h-auto shadow-md mx-2 mt-2 md:mx-0 md:my-4 md:mr-4'>
             {/* {onClose && (
                 <button
                     onClick={onClose}
@@ -303,41 +319,44 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     X
                 </button>
             )} */}
-            <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar p-3 px-4 md:p-8">
+            <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar py-2 px-4 md:p-8">
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
-                    <div className="min-w-full h-full flex flex-col gap-3 md:gap-8 justify-between">
-                        <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[10px] md:text-base'>
-                            <h2 className='font-bold text-xs md:text-2xl text-center w-full'>Your Collection</h2>
+                    <div className="min-w-full h-full flex items-center md:items-start">
+                        <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[9px] md:text-base'>
+                            <h2 className='font-bold text-xs md:text-xl text-center w-full'>Your Collection</h2>
                             <p>
                                 Create your own hand by selecting from your pokemon library <span className='inline md:hidden'>below!</span><span className='hidden md:inline'>on the left!</span>
                             </p>
-                            <p>
-                                Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
-                            </p>
-                            {!user && (
+                            {!user && false && (
                                 <p>
                                     <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
                                 </p>
                             )}
+                            <p>
+                                As the app is still in development, you have access to a select number of debug functions:
+                            </p>
 
-                            <div className='text-[10px] md:text-base text-left md:ml-5'>
+                            <div className='text-[9px] md:text-base text-left md:ml-5'>
                                 <>
                                     <div className="relative group">
                                         <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Debug: Add all cards</button>
+                                        <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
                                     </div>
                                     <div className="relative group">
                                         <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Debug: Reset cards</button>
+                                        <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Reset cards</button>
                                     </div>
                                 </>
                                 {lastSelectedHand && lastSelectedHand.length > 0 && (
                                     <div className="relative group">
                                         <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => setPlayerHand(lastSelectedHand)} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left w-full truncate">Select Last Played Hand</button>
+                                        <button onClick={setLastSelectedHand} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left w-full truncate">Select Last Played Hand</button>
                                     </div>
                                 )}
                             </div>
+                            <p>
+                                Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
+                            </p>
                         </div>
                     </div>
                 ) : (
@@ -350,7 +369,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     )
                 )}
             </div>
-            {showScrollIndicator && <div className="arrow absolute scale-75 md:scale-100 rotate-90 bottom-2 right-2 md:bottom-4 md:right-4 blink" />}
+            {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-1.5 right-1.5 md:bottom-4 md:right-4 blink" />}
         </div>
     );
 

@@ -430,7 +430,7 @@ const desperation = (card, cellId, gameState) => {
         .map(cell => cell.pokemonCard)
         .filter(c => c !== null);
 
-    const allCards = [...gridCards, ...gameState.playerHand, ...gameState.cpuHand];
+    const allCards = [...gridCards, ...gameState.playerHand, ...gameState.cpuHand].filter(c => c !== null);
     const playerCards = allCards.filter(c => c.isPlayerCard).length;
     const cpuCards = allCards.filter(c => !c.isPlayerCard).length;
 
@@ -458,7 +458,7 @@ const rage = (card, cellId, gameState) => {
         .map(cell => cell.pokemonCard)
         .filter(c => c !== null);
 
-    const allCards = [...gridCards, ...gameState.playerHand, ...gameState.cpuHand];
+    const allCards = [...gridCards, ...gameState.playerHand, ...gameState.cpuHand].filter(c => c !== null);
 
     const playerCards = allCards.filter(c => c.isPlayerCard).length;
     const cpuCards = allCards.filter(c => !c.isPlayerCard).length;
