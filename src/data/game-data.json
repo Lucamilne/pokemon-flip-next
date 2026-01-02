@@ -2598,6 +2598,7 @@
         7,
         6
       ],
+      "ability": "smokeScreen",
       "statWeight": 295
     },
     "seadra": {
@@ -2617,6 +2618,7 @@
         3,
         8
       ],
+      "ability": "smokeScreen",
       "statWeight": 440
     },
     "goldeen": {
