@@ -366,7 +366,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
     // Wrap in sticky container only on mobile
     return isMobile ? (
-        <div className='sticky top-0 prismatic-background shadow-md/30 border-b-2'>
+        <div className='sticky top-0 bg-neutral-400 shadow-md/30 border-b-2'>
             {content}
         </div>
     ) : content;

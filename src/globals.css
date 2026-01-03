@@ -2049,23 +2049,3 @@ body {
     background-position: 0% 50%;
   }
 }
-
-.prismatic-background {
-  background: linear-gradient(-45deg, var(--color-water-500), var(--color-fire-500), var(--color-grass-500), var(--color-electric-500), var(--color-psychic-500), var(--color-ice-500), var(--color-dragon-500), var(--color-fairy-500), var(--color-fighting-500), var(--color-flying-500), var(--color-ghost-500), var(--color-ground-500), var(--color-bug-500), var(--color-poison-500), var(--color-rock-500));
-  background-size: 300% 300%;
-  animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
