@@ -15,16 +15,17 @@ export default function Select() {
     const location = useLocation();
     const pathname = location.pathname;
     const rootPath = '/' + pathname.split('/').filter(Boolean)[0];
+
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [showProfile, setShowProfile] = useState(true)
 
     const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
     const { userCollection, isLoadingCollection } = useAuth();
+
     const cardBtnRef = useRef([]);
     const hasMountedRef = useRef(false);
     const initiallyVisibleRef = useRef(new Set());
@@ -104,10 +105,13 @@ export default function Select() {
     }
 
     useEffect(() => {
-        if (!isMobile) return;
-
-        setShowProfile(!searchString);
-    }, [searchString]);
+        // Disables animations to do with intersection observer when searching
+        cardBtnRef.current.forEach((button) => {
+            if (button) {
+                button.classList.remove('fade-in-bottom', 'opacity-0');
+            }
+        });
+    }, [searchString, isMobile]);
 
     useEffect(() => {
         if (playerHand.every(card => card !== null)) {
@@ -201,9 +205,15 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className="relative grow flex flex-col-reverse md:flex-row overflow-y-auto">
+            <div className="relative grow flex overflow-y-auto">
+                <Profile
+                    playerHand={playerHand}
+                    lastSelectedHand={lastSelectedHand}
+                    setPlayerHand={setPlayerHand}
+                    lastPokemonCardSelected={lastPokemonCardSelected}
+                />
                 <div className={`h-full relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4 mt-2 md:mt-0">
+                    <div className="grid grid-cols-[repeat(2,80px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
@@ -244,15 +254,6 @@ export default function Select() {
                         )}
                     </div>
                 </div>
-                {showProfile && (
-                    <Profile
-                        playerHand={playerHand}
-                        lastSelectedHand={lastSelectedHand}
-                        setPlayerHand={setPlayerHand}
-                        lastPokemonCardSelected={lastPokemonCardSelected}
-                        onClose={isMobile ? () => setShowProfile(false) : undefined}
-                    />
-                )}
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/60" />
