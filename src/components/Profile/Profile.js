@@ -309,7 +309,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     const content = (
-        <div className='flex-1 tooltip border-4 md:border-4 border-black font-press-start p-1 h-52 md:h-auto shadow-md mx-2 mt-2 md:mx-0 md:my-4 md:mr-4'>
+        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-52 md:h-auto shadow-md m-2 md:mx-0 md:my-4 md:mr-4'>
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar py-2 px-4 md:p-8">
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
                     <div className="min-w-full h-full flex items-center md:items-start">
@@ -366,7 +366,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
     // Wrap in sticky container only on mobile
     return isMobile ? (
-        <div className='sticky top-0 pb-2 bg-linear-to-r from-normal-100 via-normal to-normal-100 border-b-2'>
+        <div className='sticky top-0 prismatic-background shadow-md/30 border-b-2'>
             {content}
         </div>
     ) : content;
