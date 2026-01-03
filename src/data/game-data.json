@@ -817,7 +817,7 @@
         1,
         4
       ],
-      "ability": "sandVeil",
+      "ability": "defenceCurl",
       "statWeight": 300
     },
     "sandslash": {
@@ -831,7 +831,7 @@
         6,
         5
       ],
-      "ability": "sandVeil",
+      "ability": "defenceCurl",
       "originalStats": [
         6,
         6,
@@ -2578,7 +2578,7 @@
         7,
         5
       ],
-      "ability": "parentalBond",
+      "ability": "maternal",
       "statWeight": 490
     },
     "horsea": {
@@ -3461,6 +3461,11 @@
       "trigger": "onGridPlace",
       "description": "Infatuates those in contact when placed, gaining 1 stat for each adjacent card"
     },
+    "defenceCurl": {
+      "name": "Defence Curl",
+      "trigger": "onElementalTilePlace",
+      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+    },
     "desperation": {
       "name": "Desperation",
       "trigger": "onGridPlace",
@@ -3471,15 +3476,15 @@
       "trigger": "onGridPlace",
       "description": "Place this card in the corner of the arena to dig in, boosting 2 random stats by 1"
     },
+    "download": {
+      "name": "Download",
+      "trigger": "onGridPlace",
+      "description": "Copies the stats of a stronger adjacent card when placed"
+    },
     "dragonDance": {
       "name": "Dragon Dance",
       "trigger": "onMatchStart",
       "description": "Mystical power awakens! Gains a random stat for each elemental tile declared in the arena"
-    },
-    "download": {
-      "name": "Download",
-      "trigger": "onGridPlace",
-      "description": "Copies the stats of the strongest adjacent card when placed"
     },
     "evolve": {
       "name": "Evolve",
@@ -3536,6 +3541,11 @@
       "trigger": "onGridPlace",
       "description": "When placed, may reduce a stat of an adjacent enemy card to 1"
     },
+    "hydroPump": {
+      "name": "Hydro Pump",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Water-type tiles"
+    },
     "hypnosis": {
       "name": "Hypnosis",
       "trigger": "onGridPlace",
@@ -3555,21 +3565,6 @@
       "name": "Jump Kick",
       "trigger": "onGridPlace",
       "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
-    },
-    "mimic": {
-      "name": "Mimic",
-      "trigger": "onGridPlace",
-      "description": "Mimics the stats of the strongest adjacent card when placed"
-    },
-    "mist": {
-      "name": "Mist",
-      "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Ice-type tiles"
-    },
-    "mirrorMove": {
-      "name": "Mirror Move",
-      "trigger": "onMatchStart",
-      "description": "For each additional Flying-type in the current match, a random stat is increased by 1"
     },
     "leafGuard": {
       "name": "Leaf Guard",
@@ -3621,6 +3616,26 @@
       "trigger": "onGridPlace",
       "description": "Gains 1 random stat for each adjacent card"
     },
+    "maternal": {
+      "name": "Maternal",
+      "trigger": "onMatchStart",
+      "description": "For each 'weak' card in the current match, a random stat is increased by 1"
+    },
+    "mimic": {
+      "name": "Mimic",
+      "trigger": "onGridPlace",
+      "description": "Mimics the stats of a stronger adjacent card when placed"
+    },
+    "mirrorMove": {
+      "name": "Mirror Move",
+      "trigger": "onMatchStart",
+      "description": "For each additional Flying-type in the current match, a random stat is increased by 1"
+    },
+    "mist": {
+      "name": "Mist",
+      "trigger": "onElementalTilePlace",
+      "description": "Doubles stat bonuses when placed on Ice-type tiles"
+    },
     "oblivious": {
       "name": "Oblivious",
       "trigger": "onElementalTilePlace",
@@ -3630,11 +3645,6 @@
       "name": "Overgrow",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Grass-type tiles"
-    },
-    "parentalBond": {
-      "name": "Parental Bond",
-      "trigger": "onMatchStart",
-      "description": "For each weak card in the current match, a random stat is increased by 1"
     },
     "payDay": {
       "name": "Pay Day",
@@ -3650,6 +3660,11 @@
       "name": "Prismatic Punch",
       "trigger": "onElementalTilePlace",
       "description": "When placed on an Electric, Fire or Ice elemental tile, gain a 2 stat bonus to all stats "
+    },
+    "quickAttack": {
+      "name": "Quick Attack",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when placed as the first card in the arena"
     },
     "rage": {
       "name": "Rage",
@@ -3670,11 +3685,6 @@
       "name": "Safe Passage",
       "trigger": "onGridPlace",
       "description": "A protective presence that strengthens nearby allies. Increases all stats of adjacent friendly cards by 1"
-    },
-    "sandVeil": {
-      "name": "Sand Veil",
-      "trigger": "onElementalTilePlace",
-      "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
     "selfDestruct": {
       "name": "Self Destruct",
@@ -3746,26 +3756,6 @@
       "trigger": "onMatchStart",
       "description": "For each additional Psychic-type in the current match, a random stat is increased by 1"
     },
-    "hydroPump": {
-      "name": "Hydro Pump",
-      "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Water-type tiles"
-    },
-    "thunderWave": {
-      "name": "Thunder Wave",
-      "trigger": "onGridPlace",
-      "description": "Releases a paralyzing shock! Lowers the facing stat of each adjacent foe by 1"
-    },
-    "transform": {
-      "name": "Transform",
-      "trigger": "onGridPlace",
-      "description": "Transforms into the strongest adjacent card when placed"
-    },
-    "triAttack": {
-      "name": "Tri Attack",
-      "trigger": "onGridPlace",
-      "description": "Boosts all stats by 2 when placed adjacent to 3 or more cards"
-    },
     "technician": {
       "name": "Technician",
       "trigger": "onGridPlace",
@@ -3781,15 +3771,25 @@
       "trigger": "onElementalTilePlace",
       "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
     },
+    "thunderWave": {
+      "name": "Thunder Wave",
+      "trigger": "onGridPlace",
+      "description": "Releases a paralyzing shock! Lowers the facing stat of each adjacent foe by 1"
+    },
     "torrent": {
       "name": "Torrent",
       "trigger": "onMatchStart",
       "description": "For each additional Water-type in the current match, a random stat is increased by 1"
     },
-    "quickAttack": {
-      "name": "Quick Attack",
+    "transform": {
+      "name": "Transform",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 1 when placed as the first card in the arena"
+      "description": "Transforms into the strongest adjacent card when placed"
+    },
+    "triAttack": {
+      "name": "Tri Attack",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 2 when placed adjacent to 3 or more cards"
     }
   }
 }

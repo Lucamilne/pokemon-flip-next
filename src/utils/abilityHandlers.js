@@ -68,12 +68,12 @@ const shieldDust = (card, cellId, gameState) => {
 }
 
 const shellArmor = shieldDust;
-const sandVeil = shieldDust;
+const defenceCurl = shieldDust;
 const sturdy = shieldDust;
 const thickFat = shieldDust
 const leafGuard = shieldDust;
 
-const statLoweringImmunityAbilities = ["leafGuard", "oblivious", "shieldDust", "shellArmor", "sandVeil", "sturdy", "thickFat"]
+const statLoweringImmunityAbilities = ["leafGuard", "oblivious", "shieldDust", "shellArmor", "defenceCurl", "sturdy", "thickFat"]
 
 const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -330,7 +330,7 @@ const magnetPull = pressure;
 const cuteCharm = pressure;
 const lovelyKiss = pressure;
 
-const parentalBond = (card, cellId, gameState) => {
+const maternal = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
 
     // Count cards in both hands with statWeight of 355 or less
@@ -921,7 +921,12 @@ const download = (card, cellId, gameState) => {
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
 
     if (adjacentCard) {
-        card.stats = [...adjacentCard.stats];
+        const adjacentStatSum = adjacentCard.stats.reduce((sum, stat) => sum + stat, 0);
+        const cardStatSum = card.stats.reduce((sum, stat) => sum + stat, 0);
+
+        if (adjacentStatSum > cardStatSum) {
+            card.stats = [...adjacentCard.stats];
+        }
     }
 
     return card;
@@ -1000,6 +1005,7 @@ export const selfAbilityHandlers = {
     chlorophyll,
     clearBody,
     cuteCharm,
+    defenceCurl,
     desperation,
     dig,
     download,
@@ -1018,37 +1024,36 @@ export const selfAbilityHandlers = {
     lightningRod,
     lonely,
     lovelyKiss,
-    magnetPull,
     magicGuard,
+    magnetPull,
+    maternal,
     mimic,
     mirrorMove,
     mist,
     oblivious,
     overgrow,
-    parentalBond,
     payDay,
     pressure,
     prismaticPunch,
+    quickAttack,
     rage,
     rest,
-    sturdy,
-    thickFat,
     rockSlide,
-    sandVeil,
     selfDestruct,
     shellArmor,
     shieldDust,
     smokeScreen,
     staticElectricity,
+    sturdy,
     swarm,
     swordsDance,
     synchronise,
     teleport,
+    thickFat,
     torrent,
     toxic,
     transform,
-    triAttack,
-    quickAttack
+    triAttack
 };
 
 export const statusAbilityHandlers = {
