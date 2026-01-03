@@ -194,7 +194,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         if (isVisible && cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
-            const viewPortDivide = isMobile ? 2 : 4;
+            const viewPortDivide = 4;
             const cardCenter = rect.top + rect.height / 2;
 
 

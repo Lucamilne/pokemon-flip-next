@@ -13,7 +13,6 @@ const { cards, abilities } = gameData;
 
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, onClose }) {
     const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
-    const { isMobile } = useGameContext();
     const [debugMode, setDebugMode] = useState(false);
     const scrollContainerRef = useRef(null);
     const [showScrollIndicator, setShowScrollIndicator] = useState(false);
@@ -146,17 +145,6 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         return url.split('/').filter(Boolean).pop();
     };
 
-    const setRandomThemedPlayerHand = (themedFunction) => {
-        try {
-            const array = themedFunction(true);
-            const shuffled = [...array].sort(() => Math.random() - 0.5);
-            const hand = shuffled.slice(0, 5);
-            setPlayerHand(hand);
-        } catch (error) {
-            console.error('Error setting themed hand:', error);
-        }
-    };
-
     const Divider = () => {
         return <hr className="border md:border-2 border-black my-3 md:my-4" />
     }
@@ -232,10 +220,10 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
         return (
             <div className='h-full'>
-                <div className='flex justify-between items-center'>
+                <div className='flex flex-col gap-2 md:flex-row justify-between md:items-center'>
                     <h3 className="text-xs md:text-lg font-bold">
                         <span className="capitalize mr-1 md:mr-4">{pokemonData?.name}</span>
-                        <span>#{pokemonData?.id}</span>
+                        <span className='hidden md:inline'>#{pokemonData?.id}</span>
                     </h3>
                     <TypeList types={pokemonData?.types?.map(t => t.type.name)} />
                 </div>
@@ -251,11 +239,11 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             </div>
                         </div>
                     )}
-                    <div>
+                    <div className='mr-2'>
                         <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]} md:h-8`} value={statTier} max="10" />
                     </div>
                 </div>
-                {/* <Divider /> */}
+                <Divider />
                 <div className='grid grid-cols-1 gap-4 mt-4'>
                     <div>
                         <Header>
@@ -307,15 +295,15 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         setPlayerHand(filteredHand);
     };
 
-    const content = (
-        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-52 md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4'>
-            <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar py-2 px-4 md:p-8">
+    return (
+        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-auto shadow-md ml-2 my-2 md:my-4 md:mr-4'>
+            <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar p-3 md:p-8">
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
-                    <div className="min-w-full h-full flex items-center md:items-start">
+                    <div className="size-full">
                         <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[9px] md:text-base'>
                             <h2 className='font-bold text-xs md:text-xl text-center w-full'>Your Collection</h2>
                             <p>
-                                Create your own hand by selecting from your pokemon library <span className='inline md:hidden'>below!</span><span className='hidden md:inline'>on the left!</span>
+                                Create your own hand by selecting from your pokemon library on the <span className="md:hidden">right</span><span className="hidden md:inline">left</span>!
                             </p>
                             {!user && false && (
                                 <p>
@@ -326,7 +314,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                                 As the app is still in development, you have access to a select number of debug functions:
                             </p>
 
-                            <div className='text-[9px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 ml-3 md:ml-6'>
+                            <div className='text-[9px] md:text-base text-left ml-3 md:ml-6'>
                                 <div className="relative group">
                                     <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                     <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
@@ -353,9 +341,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     </div>
                 ) : (
                     isLoading ? (
-                        <div className="h-full relative">
-                            <Loader />
-                        </div>
+                        <Loader />
                     ) : (
                         <ProfileContent />
                     )
@@ -364,11 +350,4 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
             {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-1.5 right-1.5 md:bottom-4 md:right-4 blink" />}
         </div>
     );
-
-    // Wrap in sticky container only on mobile
-    return isMobile ? (
-        <div className='sticky top-0 shadow-md/30 border-b-2'>
-            {content}
-        </div>
-    ) : content;
 }
