@@ -247,7 +247,7 @@ export default function Results() {
                                                 return (
                                                     <div className="relative aspect-square drop-shadow-md/15" key={index}>
                                                         {pokemonCard && (
-                                                            <Card pokemonCard={pokemonCard} isPlayerCard={true} index={index} isDraggable={true} startsFlipped={false} />
+                                                            <Card pokemonCard={pokemonCard} isPlayerCard={true} index={index} isDraggable={true} startsFaceUp={false} />
                                                         )}
                                                     </div>
                                                 )
@@ -273,7 +273,7 @@ export default function Results() {
 
                                                 {penaltyCard && (
                                                     <div ref={penaltyCardRef} className="drop-shadow-md/15">
-                                                        <Card pokemonCard={penaltyCard} index={0} isDraggable={true} startsFlipped={true} />
+                                                        <Card pokemonCard={penaltyCard} index={0} isDraggable={true} startsFaceUp={true} />
                                                     </div>
                                                 )}
                                             </div>

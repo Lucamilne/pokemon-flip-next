@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchStarterCards, createCard } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
@@ -25,11 +25,64 @@ export default function Select() {
 
     const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
     const { userCollection, isLoadingCollection } = useAuth();
+    const cardBtnRef = useRef([]);
+    const hasMountedRef = useRef(false);
+    const initiallyVisibleRef = useRef(new Set());
 
     useEffect(() => {
-        // Reset game state when arriving at select screen (prepares for new game)
         resetGameState();
         if (!pokeballIsOpen) setPokeballIsOpen(true);
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const index = cardBtnRef.current.indexOf(entry.target);
+
+                    // If not yet mounted, track initially visible elements
+                    if (!hasMountedRef.current && entry.isIntersecting) {
+                        initiallyVisibleRef.current.add(index);
+                        return;
+                    }
+
+                    // Only apply animation if component has mounted and element wasn't initially visible
+                    if (entry.isIntersecting && hasMountedRef.current && !initiallyVisibleRef.current.has(index)) {
+                        const columnPosition = index % 4; // 0, 1, 2, or 3
+                        const delay = columnPosition * 50; // 0ms, 50ms, 100ms, 150ms
+
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-in-bottom');
+                        }, delay);
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.1,
+                rootMargin: '0px'
+            }
+        );
+
+        cardBtnRef.current.forEach((button) => {
+            if (button) observer.observe(button);
+        });
+
+        // Mark as mounted after initial render
+        const timer = setTimeout(() => {
+            hasMountedRef.current = true;
+
+            // Apply opacity-0 to all cards that weren't initially visible
+            cardBtnRef.current.forEach((button, index) => {
+                if (button && !initiallyVisibleRef.current.has(index)) {
+                    button.classList.add('opacity-0');
+                }
+            });
+        }, 100);
+
+        return () => {
+            clearTimeout(timer);
+            observer.disconnect();
+        };
     }, [])
 
     const playerCardLibrary = useMemo(() => {
@@ -175,6 +228,7 @@ export default function Select() {
 
                                         return (
                                             <button
+                                                ref={(el) => (cardBtnRef.current[index] = el)}
                                                 className={`cursor-pointer relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
                                                 key={pokemonCard.id}
                                                 onClick={() => togglePokemonCardSelection(pokemonCard)}

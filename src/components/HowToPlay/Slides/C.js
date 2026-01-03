@@ -81,7 +81,7 @@ export default function C({ nextSlide }) {
                 <div className={`relative aspect-square w-[72px] md:w-[124px] rounded-md`}>
                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
                     {!droppedCard && (
-                        <Card index={0} pokemonCard={pokemonCard} isPlayerCard={true} isDraggable={true} startsFlipped={true} />
+                        <Card index={0} pokemonCard={pokemonCard} isPlayerCard={true} isDraggable={true} startsFaceUp={true} />
                     )}
                 </div>
                 <div className="arrow-relative" />

@@ -27,13 +27,13 @@ const getBallSprite = (statWeight) => {
     return MasterBallSprite;
 };
 
-function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFlipped = true, isUnselected = false }) {
+function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false }) {
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
     const { isMobile } = useGameContext();
     const { hasCard } = useAuth();
 
     const [tooltipPosition, setTooltipPosition] = useState('top');
-    const [isFlipped, setIsFlipped] = useState(startsFlipped);
+    const [isFlipped, setIsFlipped] = useState(startsFaceUp);
 
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
@@ -181,7 +181,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     }, [pokemonCard.isPlayerCard])
 
     useEffect(() => {
-        if (!startsFlipped) {
+        if (!startsFaceUp) {
             const animationDelay = 150;
 
             setTimeout(() => {

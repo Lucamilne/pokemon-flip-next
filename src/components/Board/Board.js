@@ -771,7 +771,7 @@ export default function Board() {
                                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
 
                                     {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFlipped={false} />
+                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFaceUp={false} />
                                     )}
                                 </div>
                             )
@@ -843,7 +843,7 @@ export default function Board() {
                                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
 
                                     {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={false} startsFlipped={false} />
+                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={false} startsFaceUp={false} />
                                     )}
                                 </div>
                             )
