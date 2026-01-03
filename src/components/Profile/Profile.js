@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useRef, useLayoutEffect } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGameContext } from '@/contexts/GameContext';
-import { allPokemonNames, fetchSecretCards } from "@/utils/cardHelpers.js";
+import { allPokemonNames, fetchRandomCardsFromUserCollection, fetchSecretCards } from "@/utils/cardHelpers.js";
 import { TYPES_PER_CARD } from '@/constants/index.js';
 
 import Loader from "@/components/Loader/Loader.js";
@@ -12,7 +12,7 @@ import gameData from '@/data/game-data.json';
 const { cards, abilities } = gameData;
 
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, onClose }) {
-    const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount } = useAuth();
+    const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
     const { isMobile } = useGameContext();
     const [debugMode, setDebugMode] = useState(false);
     const scrollContainerRef = useRef(null);
@@ -297,7 +297,6 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     const setLastSelectedHand = () => {
-        console.log(lastSelectedHand)
         const filteredHand = lastSelectedHand.map(pokemonCard => {
             if (!pokemonCard) return null;
 
@@ -309,7 +308,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     const content = (
-        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-52 md:h-auto shadow-md m-2 md:mx-0 md:my-4 md:mr-4'>
+        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-52 md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4'>
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar py-2 px-4 md:p-8">
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
                     <div className="min-w-full h-full flex items-center md:items-start">
@@ -327,20 +326,22 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                                 As the app is still in development, you have access to a select number of debug functions:
                             </p>
 
-                            <div className='text-[9px] md:text-base text-left md:ml-5'>
-                                <>
-                                    <div className="relative group">
-                                        <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
-                                    </div>
-                                    <div className="relative group">
-                                        <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Reset cards</button>
-                                    </div>
-                                </>
+                            <div className='text-[9px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 ml-3 md:ml-6'>
+                                <div className="relative group">
+                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
+                                </div>
+                                <div className="relative group">
+                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Reset cards</button>
+                                </div>
+                                <div className="relative group">
+                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Random Hand</button>
+                                </div>
                                 {lastSelectedHand && lastSelectedHand.length > 0 && (
                                     <div className="relative group">
-                                        <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                        <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                         <button onClick={setLastSelectedHand} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left w-full truncate">Select Last Played Hand</button>
                                     </div>
                                 )}
@@ -366,7 +367,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
     // Wrap in sticky container only on mobile
     return isMobile ? (
-        <div className='sticky top-0 bg-neutral-400 shadow-md/30 border-b-2'>
+        <div className='sticky top-0 shadow-md/30 border-b-2'>
             {content}
         </div>
     ) : content;

@@ -225,7 +225,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                 transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
                 transition: 'transform 0.3s ease-out'
             }}>
-                <div className={`relative p-[6px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`}
+                <div className={`relative p-[5.5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`}
                     style={{
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',

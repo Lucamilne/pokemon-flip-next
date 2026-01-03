@@ -203,7 +203,7 @@ export default function Select() {
             </div>
             <div className="relative grow flex flex-col-reverse md:flex-row overflow-y-auto">
                 <div className={`h-full relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
+                    <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4 mt-2 md:mt-0">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (

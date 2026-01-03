@@ -107,6 +107,11 @@ const categoriseCardsByTier = () => {
     return { weakCards, midCards, strongCards };
 };
 
+export const fetchRandomCardsFromUserCollection = (userCollection = {}) => {
+    return getRandomItems( Object.keys(userCollection), 5)
+        .map((pokemonName) => createCard(pokemonName, true));
+}
+
 export const fetchBalancedTierCards = (isPlayerCard = true) => {
     const { weakCards, midCards, strongCards } = categoriseCardsByTier();
 
