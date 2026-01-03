@@ -194,17 +194,11 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         if (isVisible && cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
-            const viewportWidth = window.innerWidth;
+            const viewPortDivide = isMobile ? 2 : 4;
             const cardCenter = rect.top + rect.height / 2;
-            const cardCenterX = rect.left + rect.width / 2;
 
-            if (isMobile) {
-                // On mobile, position left or right based on screen position
-                setTooltipPosition(cardCenterX < viewportWidth / 2 ? 'right' : 'left');
-            } else {
-                // On desktop, position top or bottom based on vertical position
-                setTooltipPosition(cardCenter < viewportHeight / 4 ? 'bottom' : 'top');
-            }
+
+            setTooltipPosition(cardCenter < viewportHeight / viewPortDivide ? 'bottom' : 'top');
         }
     }, [isVisible, isMobile])
 
@@ -231,7 +225,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                 transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
                 transition: 'transform 0.3s ease-out'
             }}>
-                <div className={`relative p-[5px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`}
+                <div className={`relative p-[6px] sm:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`}
                     style={{
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
@@ -249,7 +243,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                             </div>
                         </div>
                     </div>
-                    {isOwned  && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} />}
+                    {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} />}
                     {showOverlay && (
                         <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
                             <span className='mt-4 '>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
