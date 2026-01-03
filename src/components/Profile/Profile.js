@@ -296,14 +296,14 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     return (
-        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-auto shadow-md ml-2 my-2 md:my-4 md:ml-4'>
+        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-auto shadow-md ml-2 my-2 md:my-4 md:mr-4'>
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar p-3 md:p-8">
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
                     <div className="size-full">
                         <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[9px] md:text-base'>
                             <h2 className='font-bold text-xs md:text-xl text-center w-full'>Your Collection</h2>
                             <p>
-                                Create your own hand by selecting from your pokemon library on the right!
+                                Create your own hand by selecting from your pokemon library on the <span className="md:hidden">right</span><span className="hidden md:inline">left</span>!
                             </p>
                             {!user && false && (
                                 <p>

@@ -31,9 +31,6 @@ export default function Select() {
     const initiallyVisibleRef = useRef(new Set());
 
     useEffect(() => {
-        resetGameState();
-        if (!pokeballIsOpen) setPokeballIsOpen(true);
-
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -84,7 +81,13 @@ export default function Select() {
             clearTimeout(timer);
             observer.disconnect();
         };
-    }, [])
+    }, [isMobile])
+
+    useEffect(() => {
+        resetGameState();
+        
+        if (!pokeballIsOpen) setPokeballIsOpen(true);
+    })
 
     const playerCardLibrary = useMemo(() => {
         const ownedPokemonNames = Object.keys(userCollection);
@@ -205,15 +208,15 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className="relative grow flex overflow-y-auto">
+            <div className="relative grow flex md:flex-row-reverse overflow-y-auto">
                 <Profile
                     playerHand={playerHand}
                     lastSelectedHand={lastSelectedHand}
                     setPlayerHand={setPlayerHand}
                     lastPokemonCardSelected={lastPokemonCardSelected}
                 />
-                <div className={`h-full relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(2,80px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
+                <div className={`h-full w-[164px] md:w-auto relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
+                    <div className="grid grid-cols-[repeat(2,72px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
