@@ -21,7 +21,8 @@ export default function Select() {
     const [searchString, setSearchString] = useState('');
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [showProfile, setShowProfile] = useState(true)
+    const [showProfile, setShowProfile] = useState(true);
+    const [showHelp, setShowHelp] = useState(false);
 
     const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
     const { userCollection, isLoadingCollection } = useAuth();
@@ -89,6 +90,12 @@ export default function Select() {
         resetGameState();
 
         if (!pokeballIsOpen) setPokeballIsOpen(true);
+
+        const helpTimer = setTimeout(() => {
+            setShowHelp(true);
+        }, 3000);
+
+        return () => clearTimeout(helpTimer);
     }, [])
 
     const playerCardLibrary = useMemo(() => {
@@ -285,8 +292,8 @@ export default function Select() {
                         </button>
                     )
                 })}
-                {playerHand.every(card => card === null) && (
-                    <Help customClass="!hidden md:!block !absolute !-top-16 !right-4" text="Add cards to your hand!" />
+                {playerHand.every(card => card === null) && showHelp && (
+                    <Help customClass="fade-in-b !hidden md:!block !absolute !-top-16 !left-1/2 !-translate-x-1/2" text="Add cards to your hand!" />
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>

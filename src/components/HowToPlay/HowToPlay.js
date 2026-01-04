@@ -13,6 +13,7 @@ import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 
 export default function HowToPlay({ isOpen, onClose }) {
     const [currentSlide, setCurrentSlide] = useState(0)
+    const [shuffleKey, setShuffleKey] = useState(0)
     const totalSlides = 7
 
     const nextSlide = () => {
@@ -21,6 +22,10 @@ export default function HowToPlay({ isOpen, onClose }) {
 
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
+    }
+
+    const shuffleCards = () => {
+        setShuffleKey((prev) => prev + 1)
     }
 
     if (!isOpen) return null
@@ -75,10 +80,13 @@ export default function HowToPlay({ isOpen, onClose }) {
                     <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
-                            <p>All Pokémon cards have special abilities that change how they play.</p>
-                            <p>Hover over a card with an ability to see what it does!</p>
+                            <p>All Pokémon cards have unique abilities that reward thoughtful, strategic play.</p>
+                            <p>Hover over a card below to see its ability and learn what it does!</p>
+                            <p>
+                                <button className="cursor-pointer text-blue-500" onClick={shuffleCards}>Click here</button> to shuffle some more cards.
+                            </p>
                         </div>
-                        <SlideD nextSlide={nextSlide} />
+                        <SlideD key={shuffleKey} nextSlide={nextSlide} />
                     </div>
 
                     {/* Slide E */}

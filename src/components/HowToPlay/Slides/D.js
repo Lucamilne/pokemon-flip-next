@@ -1,8 +1,18 @@
 import { fetchCardById } from "@/utils/cardHelpers.js";
 import Card from '../../Card/Card.js';
 
+function generateThreeUniqueRandomNumbers(min, max) {
+    const numbers = new Set();
+    while (numbers.size < 3) {
+        const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+        numbers.add(randomNum);
+    }
+    return Array.from(numbers);
+}
+
 export default function C({ nextSlide }) {
-    const pokemonCards = [fetchCardById(39), fetchCardById(133), fetchCardById(143)];
+    const randomIds = generateThreeUniqueRandomNumbers(1, 151);
+    const pokemonCards = randomIds.map(id => fetchCardById(id));
 
     return (
         <div className="w-full grid gap-1 md:gap-2 place-content-center grid-cols-[repeat(3,72px)] md:grid-cols-[repeat(3,124px)] bg-linear-to-r from-theme-blue via-white to-theme-blue p-2 md:p-4 border-y-6 border-black">

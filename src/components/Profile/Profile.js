@@ -312,7 +312,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                                 </p>
                             )}
                             <p>
-                                As the app is still in development, you have access to a select number of debug functions:
+                                As the app is still in development, you have access to a few debug functions:
                             </p>
 
                             <div className='text-[9px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 ml-3 md:ml-6'>
