@@ -193,12 +193,13 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     useEffect(() => {
         if (isVisible && cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            const viewPortDivide = isMobile ? 2 : 4;
-            const cardCenter = rect.top + rect.height / 2;
+            const cardCenterX = rect.left + rect.width / 2;
+            const cardCenterY = rect.top + rect.height / 2;
 
-
-            setTooltipPosition(cardCenter < viewportHeight / viewPortDivide ? 'bottom' : 'top');
+            setTooltipPosition(isMobile
+                ? (cardCenterX < window.innerWidth / 2 ? 'right' : 'left')
+                : (cardCenterY < window.innerHeight / 4 ? 'bottom' : 'top')
+            );
         }
     }, [isVisible, isMobile])
 
