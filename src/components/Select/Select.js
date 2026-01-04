@@ -83,6 +83,12 @@ export default function Select() {
             clearTimeout(timer);
             observer.disconnect();
         };
+    }, [isMobile])
+
+    useEffect(() => {
+        resetGameState();
+
+        if (!pokeballIsOpen) setPokeballIsOpen(true);
     }, [])
 
     const playerCardLibrary = useMemo(() => {
@@ -107,7 +113,13 @@ export default function Select() {
         if (!isMobile) return;
 
         setShowProfile(!searchString);
-    }, [searchString]);
+
+        cardBtnRef.current.forEach((button) => {
+            if (button) {
+                button.classList.remove('fade-in-bottom', 'opacity-0');
+            }
+        });
+    }, [searchString, isMobile]);
 
     useEffect(() => {
         if (playerHand.every(card => card !== null)) {

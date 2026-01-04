@@ -146,17 +146,6 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         return url.split('/').filter(Boolean).pop();
     };
 
-    const setRandomThemedPlayerHand = (themedFunction) => {
-        try {
-            const array = themedFunction(true);
-            const shuffled = [...array].sort(() => Math.random() - 0.5);
-            const hand = shuffled.slice(0, 5);
-            setPlayerHand(hand);
-        } catch (error) {
-            console.error('Error setting themed hand:', error);
-        }
-    };
-
     const Divider = () => {
         return <hr className="border md:border-2 border-black my-3 md:my-4" />
     }
@@ -255,7 +244,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]} md:h-8`} value={statTier} max="10" />
                     </div>
                 </div>
-                {/* <Divider /> */}
+                <Divider />
                 <div className='grid grid-cols-1 gap-4 mt-4'>
                     <div>
                         <Header>
