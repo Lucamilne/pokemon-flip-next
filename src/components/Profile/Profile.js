@@ -220,8 +220,8 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         }, [statTier]);
 
         return (
-            <div className='h-full'>
-                <div className='flex justify-between items-center'>
+            <div className='size-full py-4 md:py-8'>
+                <div className='grid grid-cols-1 gap-2'>
                     <h3 className="text-xs md:text-lg font-bold">
                         <span className="capitalize mr-1 md:mr-4">{pokemonData?.name}</span>
                         <span>#{pokemonData?.id}</span>
@@ -240,7 +240,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             </div>
                         </div>
                     )}
-                    <div>
+                    <div className='mr-3'>
                         <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]} md:h-8`} value={statTier} max="10" />
                     </div>
                 </div>
@@ -275,7 +275,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                 <Divider />
                 <div>
                     {evolutionChain && (
-                        <div className='pb-3 md:pb-4'>
+                        <div className='pb-4 md:pb-8'>
                             <Header>Evolutions</Header>
                             <EvolutionChain chain={evolutionChain} />
                         </div>
@@ -297,11 +297,11 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     const content = (
-        <div className='flex-1 tooltip border-2 md:border-4 border-black font-press-start p-1 h-52 md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4'>
-            <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar py-2 px-4 md:p-8">
+        <div className='flex-1 max-w-[432px] tooltip border-2 md:border-4 border-black font-press-start p-1 h-[210px] md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4 px-4 md:px-8 py-1'>
+            <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar">
                 {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
-                    <div className="min-w-full h-full flex items-center md:items-start">
-                        <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[9px] md:text-base'>
+                    <div className="size-full flex items-center md:items-start">
+                        <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[9px] md:text-base py-4 md:py-8'>
                             <h2 className='font-bold text-xs md:text-xl text-center w-full'>Your Collection</h2>
                             <p>
                                 Create your own hand by selecting from your pokemon library <span className='inline md:hidden'>below!</span><span className='hidden md:inline'>on the left!</span>
@@ -350,7 +350,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     )
                 )}
             </div>
-            {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-1.5 right-1.5 md:bottom-4 md:right-4 blink" />}
+            {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-2 right-2 md:bottom-4 md:right-4 blink" />}
         </div>
     );
 

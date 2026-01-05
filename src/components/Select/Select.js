@@ -31,60 +31,57 @@ export default function Select() {
     const initiallyVisibleRef = useRef(new Set());
 
     useEffect(() => {
-        resetGameState();
-        if (!pokeballIsOpen) setPokeballIsOpen(true);
+        // const observer = new IntersectionObserver(
+        //     (entries) => {
+        //         entries.forEach((entry) => {
+        //             const index = cardBtnRef.current.indexOf(entry.target);
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    const index = cardBtnRef.current.indexOf(entry.target);
+        //             // If not yet mounted, track initially visible elements
+        //             if (!hasMountedRef.current && entry.isIntersecting) {
+        //                 initiallyVisibleRef.current.add(index);
+        //                 return;
+        //             }
 
-                    // If not yet mounted, track initially visible elements
-                    if (!hasMountedRef.current && entry.isIntersecting) {
-                        initiallyVisibleRef.current.add(index);
-                        return;
-                    }
+        //             // Only apply animation if component has mounted and element wasn't initially visible
+        //             if (entry.isIntersecting && hasMountedRef.current && !initiallyVisibleRef.current.has(index)) {
+        //                 const columnPosition = index % 4; // 0, 1, 2, or 3
+        //                 const delay = columnPosition * 50; // 0ms, 50ms, 100ms, 150ms
 
-                    // Only apply animation if component has mounted and element wasn't initially visible
-                    if (entry.isIntersecting && hasMountedRef.current && !initiallyVisibleRef.current.has(index)) {
-                        const columnPosition = index % 4; // 0, 1, 2, or 3
-                        const delay = columnPosition * 50; // 0ms, 50ms, 100ms, 150ms
+        //                 setTimeout(() => {
+        //                     entry.target.classList.add('fade-in-bottom');
+        //                 }, delay);
 
-                        setTimeout(() => {
-                            entry.target.classList.add('fade-in-bottom');
-                        }, delay);
+        //                 observer.unobserve(entry.target);
+        //             }
+        //         });
+        //     },
+        //     {
+        //         threshold: 0.1,
+        //         rootMargin: '0px'
+        //     }
+        // );
 
-                        observer.unobserve(entry.target);
-                    }
-                });
-            },
-            {
-                threshold: 0.1,
-                rootMargin: '0px'
-            }
-        );
+        // cardBtnRef.current.forEach((button) => {
+        //     if (button) observer.observe(button);
+        // });
 
-        cardBtnRef.current.forEach((button) => {
-            if (button) observer.observe(button);
-        });
+        // // Mark as mounted after initial render
+        // const timer = setTimeout(() => {
+        //     hasMountedRef.current = true;
 
-        // Mark as mounted after initial render
-        const timer = setTimeout(() => {
-            hasMountedRef.current = true;
+        //     // Apply opacity-0 to all cards that weren't initially visible
+        //     cardBtnRef.current.forEach((button, index) => {
+        //         if (button && !initiallyVisibleRef.current.has(index)) {
+        //             button.classList.add('opacity-0');
+        //         }
+        //     });
+        // }, 100);
 
-            // Apply opacity-0 to all cards that weren't initially visible
-            cardBtnRef.current.forEach((button, index) => {
-                if (button && !initiallyVisibleRef.current.has(index)) {
-                    button.classList.add('opacity-0');
-                }
-            });
-        }, 100);
-
-        return () => {
-            clearTimeout(timer);
-            observer.disconnect();
-        };
-    }, [isMobile])
+        // return () => {
+        //     clearTimeout(timer);
+        //     observer.disconnect();
+        // };
+    }, [])
 
     useEffect(() => {
         resetGameState();
@@ -121,11 +118,10 @@ export default function Select() {
 
         setShowProfile(!searchString);
 
-        cardBtnRef.current.forEach((button) => {
-            if (button) {
-                button.classList.remove('fade-in-bottom', 'opacity-0');
-            }
-        });
+        // Reset the ref array and clear animation state when search changes
+        cardBtnRef.current = [];
+        hasMountedRef.current = false;
+        initiallyVisibleRef.current.clear();
     }, [searchString, isMobile]);
 
     useEffect(() => {
