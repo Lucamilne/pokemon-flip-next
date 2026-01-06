@@ -299,7 +299,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     const content = (
         <div className='flex-1 mx-auto max-w-[432px] tooltip border-2 md:border-4 border-black font-press-start p-1 h-[210px] md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4 px-4 md:px-8 py-1'>
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar">
-                {playerHand.every(card => card === null) || playerHand.every(card => card !== null) ? (
+                {playerHand.every(card => card === null) || !lastPokemonCardSelected ? (
                     <div className="size-full flex items-center md:items-start">
                         <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[9px] md:text-base py-4 md:py-8'>
                             <h2 className='font-bold text-xs md:text-xl text-center w-full'>Your Collection</h2>

@@ -37,6 +37,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
 
     const cardRef = useRef(null);
     const prevIsPlayerCard = useRef();
+    const prevStats = useRef();
 
     if (!pokemonCard) {
         return null;
@@ -70,10 +71,15 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     }, [pokemonCard.isPlayerCard, isUnselected]);
 
     const weakenCard = () => {
+        const animClass = 'shake-vertical';
+
         return new Promise((resolve) => {
-            if (cardRef.current) {
-                cardRef.current.classList.add('wobble-hor-bottom')
-                setTimeout(resolve, 500);
+            if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
+                cardRef.current.classList.add(animClass)
+                setTimeout(() => {
+                    cardRef.current?.classList.remove(animClass);
+                    resolve();
+                }, 600);
             } else {
                 resolve();
             }
@@ -81,10 +87,15 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     };
 
     const strengthenCard = () => {
+        const animClass = 'jello-horizontal';
+
         return new Promise((resolve) => {
-            if (cardRef.current) {
-                cardRef.current.classList.add('jello-horizontal')
-                setTimeout(resolve, 500);
+            if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
+                cardRef.current.classList.add(animClass)
+                setTimeout(() => {
+                    cardRef.current?.classList.remove(animClass);
+                    resolve();
+                }, 500);
             } else {
                 resolve();
             }
@@ -105,7 +116,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     const defeatCard = () => {
         return new Promise((resolve) => {
             if (cardRef.current) {
-                cardRef.current.classList.remove('wobble-hor-bottom', 'jello-horizontal', 'slide-in-blurred-top');
+                cardRef.current.classList.remove('slide-in-blurred-top');
 
                 // Force a reflow to ensure the browser has committed the current state. This is to fix a transition property issue with animations playing instantly
                 cardRef.current.offsetHeight;
@@ -146,13 +157,13 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         // if (!cellKey || !cells[cellKey]?.element) return;
     };
 
-    const runStatAnimations = async () => {
+    const runStatAnimations = async (prevStats) => {
+        const statsToCompare = sumUpNumbersInArray(prevStats || pokemonCard.originalStats);
         const totalStats = sumUpNumbersInArray(pokemonCard.stats);
-        const totalOriginalStats = sumUpNumbersInArray(pokemonCard.originalStats);
 
-        if (totalStats < totalOriginalStats) {
+        if (totalStats < statsToCompare) {
             await weakenCard();
-        } else if (totalStats > totalOriginalStats) {
+        } else if (totalStats > statsToCompare) {
             await strengthenCard();
         }
     }
@@ -165,8 +176,11 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
 
     useEffect(() => {
         if (cellKey) {
-            runStatAnimations();
+            runStatAnimations(prevStats.current);
         }
+
+        // Update previous stats for next comparison
+        prevStats.current = pokemonCard.stats;
     }, [pokemonCard.stats])
 
     useEffect(() => {

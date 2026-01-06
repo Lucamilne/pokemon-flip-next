@@ -491,7 +491,7 @@ export default function Board() {
         }
 
         const hasGameStarted = arrayOfPlayerOccupiedCells.length > 0 || arrayOfCpuOccupiedCells.length > 0;
-        await sleep(hasGameStarted ? (1250 + Math.random() * 250) : 500);
+        await sleep(hasGameStarted ? (1250 + Math.random() * 250) : 1000);
 
         const validPlacementsSet = new Set(arrayOfCellsToPlace);
 

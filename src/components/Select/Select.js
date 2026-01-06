@@ -125,13 +125,13 @@ export default function Select() {
     }, [searchString, isMobile]);
 
     useEffect(() => {
-        if (playerHand.every(card => card !== null)) {
-            setLastPokemonCardSelected(null);
-            setShowConfirm(true);
-            setSelectedPlayerHand(playerHand);
-        } else {
-            setShowConfirm(false);
-        }
+        const emptyHand = playerHand.every(card => card === null);
+        const fullHand = playerHand.every(card => card !== null);
+
+        if (emptyHand) setLastPokemonCardSelected(null);
+
+        setShowConfirm(fullHand);
+        if (fullHand) setSelectedPlayerHand(playerHand);
     }, [playerHand])
 
     const helperTextChars = useMemo(() => "Choose your hand!".split(''), []);
