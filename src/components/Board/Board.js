@@ -785,6 +785,9 @@ export default function Board() {
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
+                        {hasWonCoinToss !== null && (
+                            <Coin hasWonCoinToss={hasWonCoinToss} />
+                        )}
                     </div>
                     <div className="grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-bottom-container p-2 pt-6 pb-4">
                         {playerHand.map((pokemonCard, index) => {
@@ -799,9 +802,7 @@ export default function Board() {
                             )
                         })}
                     </div>
-                    {hasWonCoinToss !== null && (
-                        <Coin hasWonCoinToss={hasWonCoinToss} />
-                    )}
+
                     <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                     {isGameComplete && <ResultTransition />}
                 </div>
@@ -835,6 +836,9 @@ export default function Board() {
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
+                        {hasWonCoinToss !== null && (
+                            <Coin hasWonCoinToss={hasWonCoinToss} />
+                        )}
                     </div>
                     <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-8 pr-4 p-2 h-full">
                         {cpuHand.map((pokemonCard, index) => {
@@ -850,9 +854,7 @@ export default function Board() {
                         })}
                     </div>
                 </>
-                {hasWonCoinToss !== null && (
-                    <Coin hasWonCoinToss={hasWonCoinToss} />
-                )}
+
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                 {isGameComplete && <ResultTransition />}
             </div>
