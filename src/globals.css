@@ -1363,11 +1363,11 @@ body {
 }
 
 .border-front {
-  @apply bg-gradient-to-br from-yellow-400 to-yellow-600;
+  @apply bg-gradient-to-b from-yellow-400 to-yellow-500;
 }
 
 .border-back {
-  @apply bg-gradient-to-br from-blue-400 to-blue-600;
+  @apply bg-gradient-to-b from-blue-400 to-blue-600;
 }
 
 .red-animated-gradient,
