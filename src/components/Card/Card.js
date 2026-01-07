@@ -29,7 +29,7 @@ const getBallSprite = (statWeight) => {
 
 function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false }) {
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
-    const { isMobile } = useGameContext();
+    const { isMobile, cells } = useGameContext();
     const { hasCard } = useAuth();
 
     const [tooltipPosition, setTooltipPosition] = useState('top');
@@ -154,7 +154,9 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             setTimeout(() => setShowOverlay(false), 400);
         }
 
-        // if (!cellKey || !cells[cellKey]?.element) return;
+        if (!cellKey || !cells[cellKey]?.element) return;
+
+        runStatAnimations();
     };
 
     const runStatAnimations = async (prevStats) => {
@@ -175,24 +177,27 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     }, [isPlacedInGrid])
 
     useEffect(() => {
-        if (cellKey) {
-            runStatAnimations(prevStats.current);
-        }
+        const runAnimations = async () => {
+            // Check if card ownership changed (defeat animation)
+            const ownershipChanged = prevIsPlayerCard.current !== undefined &&
+                                    prevIsPlayerCard.current !== pokemonCard.isPlayerCard;
 
-        // Update previous stats for next comparison
-        prevStats.current = pokemonCard.stats;
-    }, [pokemonCard.stats])
-
-    useEffect(() => {
-        if (prevIsPlayerCard.current !== undefined && prevIsPlayerCard.current !== pokemonCard.isPlayerCard) {
-            if (isPlacedInGrid) {
-                defeatCard();
+            if (ownershipChanged && isPlacedInGrid) {
+                await defeatCard();
             }
-        }
 
-        // Update the previous value for next comparison
-        prevIsPlayerCard.current = pokemonCard.isPlayerCard;
-    }, [pokemonCard.isPlayerCard])
+            // Check if stats changed (stat animation)
+            if (cellKey && prevStats.current !== undefined) {
+                await runStatAnimations(prevStats.current);
+            }
+
+            // Update previous values for next comparison
+            prevIsPlayerCard.current = pokemonCard.isPlayerCard;
+            prevStats.current = pokemonCard.stats;
+        };
+
+        runAnimations();
+    }, [pokemonCard.isPlayerCard, pokemonCard.stats])
 
     useEffect(() => {
         if (!startsFaceUp) {
@@ -233,7 +238,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             style={style}
             {...listeners}
             {...attributes}
-            {...(hasAbility ? handlers : {})}
+            {...handlers}
         >
             <div ref={cardRef} className="relative" style={{
                 transformStyle: 'preserve-3d',
@@ -260,7 +265,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                     </div>
                     {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} />}
                     {showOverlay && (
-                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 w-full h-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
+                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 size-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
                             <span className='mt-4 '>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
                         </div>
                     )}
