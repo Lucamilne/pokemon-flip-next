@@ -789,9 +789,6 @@ export default function Board() {
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
-                        {hasWonCoinToss !== null && (
-                            <Coin hasWonCoinToss={hasWonCoinToss} />
-                        )}
                         <span className="absolute top-3 right-3">
                             <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`cursor-pointer rounded-full flex items-center justify-center overflow-hidden`}>
                                 <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
@@ -800,6 +797,9 @@ export default function Board() {
                                 <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
                             )}
                         </span>
+                        {hasWonCoinToss !== null && (
+                            <Coin hasWonCoinToss={hasWonCoinToss} />
+                        )}
                     </div>
                     <div className="grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-bottom-container p-2 pt-6 pb-4">
                         {playerHand.map((pokemonCard, index) => {
@@ -848,9 +848,6 @@ export default function Board() {
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
-                        {hasWonCoinToss !== null && (
-                            <Coin hasWonCoinToss={hasWonCoinToss} />
-                        )}
                         <span className="absolute top-3 right-3">
                             <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`hover:scale-110 transition-transform cursor-pointer rounded-full flex items-center justify-center overflow-hidden`}>
                                 <svg className="w-7 h-7 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
@@ -859,6 +856,9 @@ export default function Board() {
                                 <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
                             )}
                         </span>
+                        {hasWonCoinToss !== null && (
+                            <Coin hasWonCoinToss={hasWonCoinToss} />
+                        )}
                     </div>
                     <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-8 pr-4 p-2 h-full">
                         {cpuHand.map((pokemonCard, index) => {
