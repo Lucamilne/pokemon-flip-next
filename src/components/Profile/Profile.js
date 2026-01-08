@@ -301,7 +301,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar">
                 {playerHand.every(card => card === null) || !lastPokemonCardSelected ? (
                     <div className="size-full flex items-center md:items-start">
-                        <div className='font-press-start grid grid-cols-1 gap-3 md:gap-8 text-[9px] md:text-base py-4 md:py-8'>
+                        <div className='font-press-start flex flex-col justify-center md:justify-start gap-2 md:gap-8 text-[10px] md:text-base md:py-8'>
                             <h2 className='font-bold text-xs md:text-xl text-center w-full'>Your Collection</h2>
                             <p>
                                 Create your own hand by selecting from your pokemon library <span className='inline md:hidden'>below!</span><span className='hidden md:inline'>on the left!</span>

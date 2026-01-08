@@ -3609,7 +3609,7 @@
     "magicGuard": {
       "name": "Magic Guard",
       "trigger": "onElementalTilePlace",
-      "description": "Transforms to match he type and stat bonus of any elemental tile it's placed on"
+      "description": "Transforms to match the type and stat bonus of any elemental tile it's placed on"
     },
     "magnetPull": {
       "name": "Magnet Pull",
