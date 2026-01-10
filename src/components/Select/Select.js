@@ -186,7 +186,7 @@ export default function Select() {
 
     return (
         <div className="relative h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
-            <div className="px-7 pt-4 pb-6 flex justify-between gap-4 items-center hand-top-container">
+            <div className="px-7 py-4 md:pb-6 flex justify-between gap-4 items-center hand-top-container">
                 <div className="relative font-press-start">
                     <input
                         type="text"
@@ -216,9 +216,9 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className="relative grow flex flex-col-reverse md:flex-row overflow-y-auto">
+            <div className="relative grow flex flex-col md:flex-row overflow-y-auto">
                 <div className={`h-full relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
-                    <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4 mt-2 md:mt-0">
+                    <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
                                 {Array.from({ length: 24 }).map((_, index) => (
