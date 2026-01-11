@@ -6,7 +6,6 @@ import Balance from "../Balance/Balance.js"
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
 import Coin from "../Coin/Coin.js";
-import GoogleSignInButton from '@/components/Auth/GoogleSignInButton';
 import HowToPlay from "@/components/HowToPlay/HowToPlay";
 
 import { applySelfAbilities, applyStatusAbilities } from '@/utils/abilityHandlers.js';

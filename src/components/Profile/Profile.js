@@ -11,7 +11,7 @@ import gameData from '@/data/game-data.json';
 
 const { cards, abilities } = gameData;
 
-export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, onClose }) {
+export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, isOpen, onClose }) {
     const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
     const { isMobile } = useGameContext();
     const [debugMode, setDebugMode] = useState(false);
@@ -220,7 +220,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         }, [statTier]);
 
         return (
-            <div className='size-full py-4 md:py-8'>
+            <div className='size-full md:py-8'>
                 <div className='grid grid-cols-1 gap-2'>
                     <h3 className="text-xs md:text-lg font-bold">
                         <span className="capitalize mr-1 md:mr-4">{pokemonData?.name}</span>
@@ -297,48 +297,46 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     const content = (
-        <div className='flex-1 mx-auto max-w-[432px] tooltip border-4 border-b-0 sm:border-t-4 md:border-4 border-black font-press-start p-1 h-[210px] md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4 px-4 md:px-8 py-1'>
+        <div className='flex-1 mx-auto max-w-4xl tooltip border-x-4 md:border-y-4 border-black font-press-start p-4 md:p-1 h-full md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4 md:px-8'>
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar">
                 {playerHand.every(card => card === null) || !lastPokemonCardSelected ? (
-                    <div className="size-full flex items-center md:items-start">
-                        <div className='font-press-start flex flex-col justify-center md:justify-start gap-2 md:gap-8 text-[10px] md:text-base md:py-8'>
-                            <h2 className='font-bold text-xs md:text-xl text-center w-full'>Your Collection</h2>
+                    <div className='font-press-start flex flex-col justify-center md:justify-start gap-4 md:gap-8 text-xs md:text-base md:py-8'>
+                        <h2 className='font-bold text-base md:text-xl text-center w-full'>Your Collection</h2>
+                        <p>
+                            Create your own hand by selecting from your pokemon library!
+                        </p>
+                        {!user && false && (
                             <p>
-                                Create your own hand by selecting from your pokemon library <span className='inline md:hidden'>below!</span><span className='hidden md:inline'>on the left!</span>
+                                <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
                             </p>
-                            {!user && false && (
-                                <p>
-                                    <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
-                                </p>
-                            )}
-                            <p>
-                                As the app is still in development, you have access to a few debug functions:
-                            </p>
+                        )}
+                        <p>
+                            As the app is still in development, you have access to a few debug functions:
+                        </p>
 
-                            <div className='text-[9px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 ml-3 md:ml-6'>
-                                <div className="relative group">
-                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Reset cards</button>
-                                </div>
-                                <div className="relative group">
-                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Random Hand</button>
-                                </div>
-                                {lastSelectedHand && lastSelectedHand.length > 0 && (
-                                    <div className="relative group">
-                                        <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                        <button onClick={setLastSelectedHand} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left w-full truncate">Select Last Played Hand</button>
-                                    </div>
-                                )}
+                        <div className='text-[10px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 ml-3 md:ml-6'>
+                            <div className="relative group">
+                                <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
                             </div>
-                            <p>
-                                Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
-                            </p>
+                            <div className="relative group">
+                                <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Reset cards</button>
+                            </div>
+                            <div className="relative group">
+                                <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Random Hand</button>
+                            </div>
+                            {lastSelectedHand && lastSelectedHand.length > 0 && (
+                                <div className="relative group">
+                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
+                                    <button onClick={setLastSelectedHand} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left w-full truncate">Select Last Played Hand</button>
+                                </div>
+                            )}
                         </div>
+                        <p>
+                            Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
+                        </p>
                     </div>
                 ) : (
                     isLoading ? (
@@ -350,14 +348,25 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     )
                 )}
             </div>
-            {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-2 right-2 md:bottom-4 md:right-4 blink" />}
+            {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-3 right-3 md:bottom-4 md:right-4 blink" />}
         </div>
     );
 
-    // Wrap in sticky container only on mobile
-    return isMobile ? (
-        <div className='sticky top-0'>
-            {content}
-        </div>
-    ) : content;
+    if (!isMobile) return content;
+
+    // Wrap in modal only on mobile
+    return (
+        <>
+            {isOpen && (
+                <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
+                    <div className="relative size-full max-w-4xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                        {content}
+                    </div>
+                    <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-2 right-2 font-press-start leading-none'>
+                        <span>X</span>
+                    </button>
+                </div>
+            )}
+        </>
+    );
 }

@@ -15,73 +15,18 @@ export default function Select() {
     const location = useLocation();
     const pathname = location.pathname;
     const rootPath = '/' + pathname.split('/').filter(Boolean)[0];
+
+    const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
+    const { userCollection, isLoadingCollection } = useAuth();
+
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
     const [searchString, setSearchString] = useState('');
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [showProfile, setShowProfile] = useState(true);
+    const [showProfile, setShowProfile] = useState(!isMobile);
     const [showHelp, setShowHelp] = useState(false);
-
-    const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
-    const { userCollection, isLoadingCollection } = useAuth();
-    const cardBtnRef = useRef([]);
-    const hasMountedRef = useRef(false);
-    const initiallyVisibleRef = useRef(new Set());
-
-    useEffect(() => {
-        // const observer = new IntersectionObserver(
-        //     (entries) => {
-        //         entries.forEach((entry) => {
-        //             const index = cardBtnRef.current.indexOf(entry.target);
-
-        //             // If not yet mounted, track initially visible elements
-        //             if (!hasMountedRef.current && entry.isIntersecting) {
-        //                 initiallyVisibleRef.current.add(index);
-        //                 return;
-        //             }
-
-        //             // Only apply animation if component has mounted and element wasn't initially visible
-        //             if (entry.isIntersecting && hasMountedRef.current && !initiallyVisibleRef.current.has(index)) {
-        //                 const columnPosition = index % 4; // 0, 1, 2, or 3
-        //                 const delay = columnPosition * 50; // 0ms, 50ms, 100ms, 150ms
-
-        //                 setTimeout(() => {
-        //                     entry.target.classList.add('fade-in-bottom');
-        //                 }, delay);
-
-        //                 observer.unobserve(entry.target);
-        //             }
-        //         });
-        //     },
-        //     {
-        //         threshold: 0.1,
-        //         rootMargin: '0px'
-        //     }
-        // );
-
-        // cardBtnRef.current.forEach((button) => {
-        //     if (button) observer.observe(button);
-        // });
-
-        // // Mark as mounted after initial render
-        // const timer = setTimeout(() => {
-        //     hasMountedRef.current = true;
-
-        //     // Apply opacity-0 to all cards that weren't initially visible
-        //     cardBtnRef.current.forEach((button, index) => {
-        //         if (button && !initiallyVisibleRef.current.has(index)) {
-        //             button.classList.add('opacity-0');
-        //         }
-        //     });
-        // }, 100);
-
-        // return () => {
-        //     clearTimeout(timer);
-        //     observer.disconnect();
-        // };
-    }, [])
 
     useEffect(() => {
         resetGameState();
@@ -114,15 +59,10 @@ export default function Select() {
     }
 
     useEffect(() => {
-        if (!isMobile) return;
-
-        setShowProfile(!searchString);
-
-        // Reset the ref array and clear animation state when search changes
-        cardBtnRef.current = [];
-        hasMountedRef.current = false;
-        initiallyVisibleRef.current.clear();
-    }, [searchString, isMobile]);
+        if (!isMobile && !showProfile) {
+            setShowProfile(true);
+        }
+    }, [isMobile]);
 
     useEffect(() => {
         const emptyHand = playerHand.every(card => card === null);
@@ -162,6 +102,8 @@ export default function Select() {
 
         // setSearchString(""); // is this useful? Undecided. Commented out for now.
 
+        const isCardInHand = playerHand.some(card => card?.id === pokemonCard.id);
+
         setPlayerHand(prev => {
             const cardIndex = prev.findIndex(card => card?.id === pokemonCard.id);
 
@@ -181,8 +123,13 @@ export default function Select() {
             return newHand;
         });
 
+        // Only show profile on mobile when adding a card (not removing)
+        if (isMobile && !isCardInHand) {
+            setShowProfile(true);
+        }
+
         setLastPokemonCardSelected(pokemonCard);
-    }, [])
+    }, [playerHand, isMobile])
 
     return (
         <div className="relative h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
@@ -216,7 +163,7 @@ export default function Select() {
 
                 </h1>
             </div>
-            <div className="relative grow flex flex-col md:flex-row overflow-y-auto">
+            <div className="relative grow md:flex overflow-y-auto">
                 <div className={`h-full relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
                     <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
@@ -243,7 +190,6 @@ export default function Select() {
 
                                         return (
                                             <button
-                                                ref={(el) => (cardBtnRef.current[index] = el)}
                                                 className={`cursor-pointer relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
                                                 key={pokemonCard.id}
                                                 onClick={() => togglePokemonCardSelection(pokemonCard)}
@@ -259,15 +205,14 @@ export default function Select() {
                         )}
                     </div>
                 </div>
-                {showProfile && (
-                    <Profile
-                        playerHand={playerHand}
-                        lastSelectedHand={lastSelectedHand}
-                        setPlayerHand={setPlayerHand}
-                        lastPokemonCardSelected={lastPokemonCardSelected}
-                        onClose={isMobile ? () => setShowProfile(false) : undefined}
-                    />
-                )}
+                <Profile
+                    playerHand={playerHand}
+                    lastSelectedHand={lastSelectedHand}
+                    setPlayerHand={setPlayerHand}
+                    lastPokemonCardSelected={lastPokemonCardSelected}
+                    isOpen={showProfile}
+                    onClose={isMobile ? () => setShowProfile(false) : undefined}
+                />
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/60" />
