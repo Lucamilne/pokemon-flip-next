@@ -6,6 +6,7 @@ import Balance from "../Balance/Balance.js"
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import ResultTransition from '../ResultTransition/ResultTransition.js';
 import Coin from "../Coin/Coin.js";
+import Matchups from "@/components/Matchups/Matchups";
 import HowToPlay from "@/components/HowToPlay/HowToPlay";
 
 import { applySelfAbilities, applyStatusAbilities } from '@/utils/abilityHandlers.js';
@@ -27,6 +28,7 @@ export default function Board() {
     const [isGameComplete, setIsGameComplete] = useState(false);
     const [hasWonCoinToss, setHasWonCoinToss] = useState(null);
     const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
+    const [isMatchupsOpen, setIsMatchupsOpen] = useState(false);
 
     const location = useLocation();
     const pathname = location.pathname;
@@ -789,12 +791,12 @@ export default function Board() {
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
                         <span className="absolute top-3 right-3">
-                            <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`cursor-pointer rounded-full flex items-center justify-center overflow-hidden`}>
+                            <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
+                                <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 2h20v20H2V2zm2 2v4h4v4H4v4h4v4h4v-4h4v4h4v-4h-4v-4h4V8h-4V4h-4v4H8V4H4zm8 8H8v4h4v-4zm0-4v4h4V8h-4z" fill="#ffffff"></path> </g></svg>
+                            </button>
+                            <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
                                 <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
                             </button>
-                            {isHowToPlayOpen && (
-                                <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
-                            )}
                         </span>
                         {hasWonCoinToss !== null && (
                             <Coin hasWonCoinToss={hasWonCoinToss} />
@@ -813,7 +815,12 @@ export default function Board() {
                             )
                         })}
                     </div>
-
+                    {isHowToPlayOpen && (
+                        <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
+                    )}
+                    {isMatchupsOpen && (
+                        <Matchups isOpen={isMatchupsOpen} onClose={() => setIsMatchupsOpen(false)} />
+                    )}
                     <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                     {isGameComplete && <ResultTransition />}
                 </div>
@@ -848,12 +855,12 @@ export default function Board() {
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
                         <span className="absolute top-3 right-3">
+                            <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
+                                <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 2h20v20H2V2zm2 2v4h4v4H4v4h4v4h4v-4h4v4h4v-4h-4v-4h4V8h-4V4h-4v4H8V4H4zm8 8H8v4h4v-4zm0-4v4h4V8h-4z" fill="#ffffff"></path> </g></svg>
+                            </button>
                             <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`hover:scale-110 transition-transform cursor-pointer rounded-full flex items-center justify-center overflow-hidden`}>
                                 <svg className="w-7 h-7 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
                             </button>
-                            {isHowToPlayOpen && (
-                                <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
-                            )}
                         </span>
                         {hasWonCoinToss !== null && (
                             <Coin hasWonCoinToss={hasWonCoinToss} />
@@ -873,7 +880,12 @@ export default function Board() {
                         })}
                     </div>
                 </>
-
+                {isHowToPlayOpen && (
+                    <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
+                )}
+                {isMatchupsOpen && (
+                    <Matchups isOpen={isMatchupsOpen} onClose={() => setIsMatchupsOpen(false)} />
+                )}
                 <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
                 {isGameComplete && <ResultTransition />}
             </div>

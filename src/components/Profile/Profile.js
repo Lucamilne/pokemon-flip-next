@@ -275,7 +275,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                 <Divider />
                 <div>
                     {evolutionChain && (
-                        <div className='pb-4 md:pb-8'>
+                        <div className='md:pb-8'>
                             <Header>Evolutions</Header>
                             <EvolutionChain chain={evolutionChain} />
                         </div>
@@ -359,10 +359,10 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         <>
             {isOpen && (
                 <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
-                    <div className="relative p-4 size-full max-w-4xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                    <div className="relative p-2 size-full max-w-4xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                         {content}
                     </div>
-                    <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-6 right-6 font-press-start leading-none'>
+                    <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-4 right-4 font-press-start leading-none'>
                         <span>X</span>
                     </button>
                 </div>
