@@ -154,9 +154,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             setTimeout(() => setShowOverlay(false), 400);
         }
 
-        if (!cellKey || !cells[cellKey]?.element) return;
-
-        runStatAnimations();
+        runStatAnimations(pokemonCard.originalStats);
     };
 
     const runStatAnimations = async (prevStats) => {
