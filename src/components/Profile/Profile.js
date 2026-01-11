@@ -297,7 +297,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     };
 
     const content = (
-        <div className='flex-1 mx-auto max-w-4xl tooltip border-x-4 md:border-y-4 border-black font-press-start p-4 md:p-1 h-full md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4 md:px-8'>
+        <div className='flex-1 mx-auto max-w-4xl tooltip border-4 border-black font-press-start p-4 md:p-1 h-full md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4 md:px-8'>
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar">
                 {playerHand.every(card => card === null) || !lastPokemonCardSelected ? (
                     <div className='font-press-start flex flex-col justify-center md:justify-start gap-4 md:gap-8 text-xs md:text-base md:py-8'>
@@ -314,7 +314,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             As the app is still in development, you have access to a few debug functions:
                         </p>
 
-                        <div className='text-[10px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 ml-3 md:ml-6'>
+                        <div className='text-[10px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 gap-2 ml-3 md:ml-6'>
                             <div className="relative group">
                                 <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
                                 <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
@@ -359,10 +359,10 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         <>
             {isOpen && (
                 <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
-                    <div className="relative size-full max-w-4xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                    <div className="relative p-4 size-full max-w-4xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                         {content}
                     </div>
-                    <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-2 right-2 font-press-start leading-none'>
+                    <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-6 right-6 font-press-start leading-none'>
                         <span>X</span>
                     </button>
                 </div>

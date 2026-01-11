@@ -71,7 +71,11 @@ export default function Select() {
         if (emptyHand) setLastPokemonCardSelected(null);
 
         setShowConfirm(fullHand);
-        if (fullHand) setSelectedPlayerHand(playerHand);
+
+        if (fullHand) {
+            setShowProfile(false);
+            setSelectedPlayerHand(playerHand);
+        };
     }, [playerHand])
 
     const helperTextChars = useMemo(() => "Choose your hand!".split(''), []);
@@ -91,6 +95,10 @@ export default function Select() {
     const filteredCards = useMemo(() => {
         const trimmedSearch = searchString.trim().toLowerCase();
         if (!trimmedSearch) return playerCardLibrary;
+
+        if (isMobile) {
+            setShowProfile(false);
+        }
 
         return playerCardLibrary.filter(pokemonCard =>
             pokemonCard?.name.toLowerCase().includes(trimmedSearch)
@@ -210,7 +218,7 @@ export default function Select() {
                     lastSelectedHand={lastSelectedHand}
                     setPlayerHand={setPlayerHand}
                     lastPokemonCardSelected={lastPokemonCardSelected}
-                    isOpen={showProfile}
+                    isOpen={showProfile && !showConfirm}
                     onClose={isMobile ? () => setShowProfile(false) : undefined}
                 />
             </div>
