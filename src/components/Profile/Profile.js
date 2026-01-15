@@ -1,8 +1,8 @@
-import { useEffect, useState, useMemo, useRef, useLayoutEffect } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGameContext } from '@/contexts/GameContext';
-import { allPokemonNames, fetchRandomCardsFromUserCollection, fetchSecretCards } from "@/utils/cardHelpers.js";
+import { allPokemonNames, fetchRandomCardsFromUserCollection } from "@/utils/cardHelpers.js";
 import { TYPES_PER_CARD } from '@/constants/index.js';
 
 import Loader from "@/components/Loader/Loader.js";
@@ -21,15 +21,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-
-    useEffect(() => {
-        // Enable debug mode in development or when ?debug=true is in URL
-        if (typeof window !== 'undefined') {
-            const params = new URLSearchParams(window.location.search);
-            const hasDebugParam = params.get('debug') === 'true';
-            setDebugMode(hasDebugParam || import.meta.env.DEV);
-        }
-    }, []);
+    const [autoCloseCancelled, setAutoCloseCancelled] = useState(false);
 
     const checkScrollIndicator = () => {
         if (!scrollContainerRef.current) return;
@@ -61,6 +53,24 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
             container.removeEventListener('scroll', checkScrollIndicator);
         };
     }, []);
+
+    // Reset auto-close cancelled state when modal opens
+    useEffect(() => {
+        if (isOpen) {
+            setAutoCloseCancelled(false);
+        }
+    }, [isOpen]);
+
+    // Auto-close timer for mobile
+    useEffect(() => {
+        if (!isMobile || !isOpen || autoCloseCancelled) return;
+
+        const timer = setTimeout(() => {
+            onClose?.();
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [isMobile, isOpen, onClose, autoCloseCancelled]);
 
     const capitaliseFirstLetter = (val) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -116,21 +126,16 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
                 // Fetch evolution chain if available
                 if (speciesData.evolution_chain?.url) {
-                    const evolutionResponse = await fetch(speciesData.evolution_chain.url);
-                    const evolutionData = await evolutionResponse.json();
-                    setEvolutionChain(evolutionData.chain);
+                    try {
+                        const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+                        const evolutionData = await evolutionResponse.json();
+                        setEvolutionChain(evolutionData.chain);
+                    } catch (evolutionError) {
+                        console.error('Failed to fetch evolution chain:', evolutionError);
+                    }
                 }
 
                 setPokemonData(combinedData);
-
-                // if (import.meta.env.PROD) {
-                //     const pokemonCry = new Audio(combinedData.cries.legacy);
-                //     pokemonCry.volume = 0.5;
-                //     pokemonCry.addEventListener('error', (error) => {
-                //         console.error(`Failed to play ${combinedData.name} cry: `, error)
-                //     })
-                //     pokemonCry.play();
-                // }
             } catch (error) {
                 console.error('Failed to fetch pokemon data:', error);
                 setError(error.message);
@@ -213,11 +218,12 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         const statTier = getStatWeightTierByPokemon(pokemonData);
         const ability = abilities[cards[pokemonData.name]?.ability];
 
-        const powerLevelColour = useMemo(() => {
-            if (statTier < 3) return 'is-error';
-            if (statTier < 7) return 'is-warning';
+        const getPowerLevelColour = (tier) => {
+            if (tier < 3) return 'is-error';
+            if (tier < 7) return 'is-warning';
             return 'is-success';
-        }, [statTier]);
+        };
+        const powerLevelColour = getPowerLevelColour(statTier);
 
         return (
             <div className='size-full md:py-8'>
@@ -256,7 +262,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     </div>
                     <div>
                         <Header>Pokédex Data</Header>
-                        <ul className="text-[9px] md:text-sm grid grid-cols-[1fr_auto] gap-x-2 max-w-36 md:max-w-full">
+                        <div className="text-[9px] md:text-sm grid grid-cols-[1fr_auto] gap-x-2 max-w-36 md:max-w-full">
                             <span className="truncate">Height:</span>
                             <span className="shrink-0">{(pokemonData.height / 10).toFixed(1)}m</span>
 
@@ -268,7 +274,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
 
                             <span className="truncate">Morph:</span>
                             <span className="capitalize shrink-0">{pokemonData.shape?.name || 'Unknown'}</span>
-                        </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -285,7 +291,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         );
     };
 
-    const setLastSelectedHand = () => {
+    const restoreLastSelectedHand = () => {
         const filteredHand = lastSelectedHand.map(pokemonCard => {
             if (!pokemonCard) return null;
 
@@ -305,7 +311,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         <p>
                             Create your own hand by selecting from your pokemon library!
                         </p>
-                        {!user && false && (
+                        {!user && (
                             <p>
                                 <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
                             </p>
@@ -313,25 +319,12 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         <p>
                             As the app is still in development, you have access to a few debug functions:
                         </p>
-
-                        <div className='text-[10px] md:text-base text-left grid grid-cols-2 md:grid-cols-1 gap-2 ml-3 md:ml-6'>
-                            <div className="relative group">
-                                <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                <button onClick={() => addAllCards()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Add all cards</button>
-                            </div>
-                            <div className="relative group">
-                                <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                <button onClick={() => resetToStarters()} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Reset cards</button>
-                            </div>
-                            <div className="relative group">
-                                <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className="disabled:opacity-30 cursor-pointer text-left w-full truncate">Random Hand</button>
-                            </div>
+                        <div className='grid grid-cols-1 gap-2'>
+                            <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Add all cards</button>
+                            <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Reset cards</button>
+                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Random Hand</button>
                             {lastSelectedHand && lastSelectedHand.length > 0 && (
-                                <div className="relative group">
-                                    <div className="arrow absolute scale-50 md:scale-100 -left-4 md:-left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-has-[:disabled]:!opacity-0 transition-opacity" />
-                                    <button onClick={setLastSelectedHand} className="disabled:opacity-30 cursor-pointer whitespace-nowrap text-left w-full truncate">Select Last Played Hand</button>
-                                </div>
+                                <button onClick={restoreLastSelectedHand} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Last Hand</button>
                             )}
                         </div>
                         <p>
@@ -359,8 +352,17 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         <>
             {isOpen && (
                 <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
-                    <div className="relative p-2 size-full max-w-4xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                    <div className="relative p-2 size-full max-w-4xl overflow-hidden" onClick={(e) => { e.stopPropagation(); setAutoCloseCancelled(true); }}>
                         {content}
+                        {/* Auto-close progress bar */}
+                        {!autoCloseCancelled && (
+                            <div className="absolute bottom-3 left-3 right-3 h-1 overflow-hidden shadow-md/30">
+                                <div
+                                    className="h-full bg-lime-400"
+                                    style={{ animation: 'progress-bar 3000ms linear forwards' }}
+                                />
+                            </div>
+                        )}
                     </div>
                     <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-4 right-4 font-press-start leading-none'>
                         <span>X</span>

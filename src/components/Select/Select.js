@@ -25,8 +25,10 @@ export default function Select() {
     const [searchString, setSearchString] = useState('');
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [showProfile, setShowProfile] = useState(!isMobile);
+    const [showProfile, setShowProfile] = useState(true);
     const [showHelp, setShowHelp] = useState(false);
+
+    const handleCloseProfile = useCallback(() => setShowProfile(false), []);
 
     useEffect(() => {
         resetGameState();
@@ -141,7 +143,7 @@ export default function Select() {
 
     return (
         <div className="relative h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
-            <div className="px-7 py-4 md:pb-6 flex justify-between gap-4 items-center hand-top-container">
+            <div className="px-7 py-4 md:pb-6 flex justify-between gap-4 items-center hand-top-container pb-7 md:pb-8">
                 <div className="relative font-press-start">
                     <input
                         type="text"
@@ -219,7 +221,7 @@ export default function Select() {
                     setPlayerHand={setPlayerHand}
                     lastPokemonCardSelected={lastPokemonCardSelected}
                     isOpen={showProfile && !showConfirm}
-                    onClose={isMobile ? () => setShowProfile(false) : undefined}
+                    onClose={isMobile ? handleCloseProfile : undefined}
                 />
             </div>
             {showConfirm && (
