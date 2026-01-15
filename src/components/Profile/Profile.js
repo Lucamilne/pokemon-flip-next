@@ -262,7 +262,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     </div>
                     <div>
                         <Header>Pokédex Data</Header>
-                        <div className="text-[9px] md:text-sm grid grid-cols-[1fr_auto] gap-x-2 max-w-36 md:max-w-full">
+                        <div className="text-[9px] md:text-sm grid grid-cols-[1fr_auto] gap-x-2">
                             <span className="truncate">Height:</span>
                             <span className="shrink-0">{(pokemonData.height / 10).toFixed(1)}m</span>
 
