@@ -83,9 +83,10 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 
 ### Tech Stack
 - **Vite** - Build tool and dev server
-- **React** - UI library
-- **Tailwind CSS** - Styling
+- **React 19** - UI library
+- **React Router** - Client-side routing
+- **Tailwind CSS v4** - Styling
 - **dnd-kit** - Drag and drop functionality
 - **PokeAPI** - Pokemon data and sprites
 - **Firebase** - Authentication and cloud storage
-- **Nes.css** & **Snes.css** - Retro pixel-art styling
+- **Custom retro CSS** - NES.css-inspired pixel-art styling

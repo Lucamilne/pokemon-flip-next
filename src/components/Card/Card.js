@@ -19,7 +19,6 @@ const sumUpNumbersInArray = (array) => {
     return array.reduce((acc, val) => acc + val, 0);
 };
 
-// Unused currently, may make a return
 const getBallSprite = (statWeight) => {
     if (statWeight < 395) return PokemonBallSprite;
     if (statWeight < 500) return GreatBallSprite;
@@ -154,12 +153,12 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             setTimeout(() => setShowOverlay(false), 400);
         }
 
-        runStatAnimations(pokemonCard.originalStats);
+        runStatAnimations(pokemonCard.stats, pokemonCard.originalStats);
     };
 
-    const runStatAnimations = async (prevStats) => {
-        const statsToCompare = sumUpNumbersInArray(prevStats || pokemonCard.originalStats);
-        const totalStats = sumUpNumbersInArray(pokemonCard.stats);
+    const runStatAnimations = async (currentStats, originalStats) => {
+        const statsToCompare = sumUpNumbersInArray(originalStats);
+        const totalStats = sumUpNumbersInArray(currentStats);
 
         if (totalStats < statsToCompare) {
             await weakenCard();
@@ -186,7 +185,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
 
             // Check if stats changed (stat animation)
             if (cellKey && prevStats.current !== undefined) {
-                await runStatAnimations(prevStats.current);
+                await runStatAnimations(prevStats.current, pokemonCard.stats, pokemonCard.originalStats);
             }
 
             // Update previous values for next comparison

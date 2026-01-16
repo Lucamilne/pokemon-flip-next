@@ -5,7 +5,7 @@ import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
 import Card from "../Card/Card.js";
 import Help from "../Help/Help.js";
 import Profile from "../Profile/Profile.js"
-import styles from './retro.module.css';
+import styles from '@/retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -27,6 +27,14 @@ export default function Select() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [showProfile, setShowProfile] = useState(true);
     const [showHelp, setShowHelp] = useState(false);
+    const [showProfilesOnMobile, setShowProfilesOnMobile] = useState(() => {
+        const stored = sessionStorage.getItem('showProfilesOnMobile');
+        return stored !== null ? stored === 'true' : true;
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem('showProfilesOnMobile', showProfilesOnMobile);
+    }, [showProfilesOnMobile]);
 
     const handleCloseProfile = useCallback(() => setShowProfile(false), []);
 
@@ -110,7 +118,7 @@ export default function Select() {
     const togglePokemonCardSelection = useCallback((pokemonCard) => {
         if (!pokemonCard) return;
 
-        // setSearchString(""); // is this useful? Undecided. Commented out for now.
+        setSearchString(""); // is this useful? Undecided.
 
         const isCardInHand = playerHand.some(card => card?.id === pokemonCard.id);
 
@@ -215,14 +223,36 @@ export default function Select() {
                         )}
                     </div>
                 </div>
-                <Profile
-                    playerHand={playerHand}
-                    lastSelectedHand={lastSelectedHand}
-                    setPlayerHand={setPlayerHand}
-                    lastPokemonCardSelected={lastPokemonCardSelected}
-                    isOpen={showProfile && !showConfirm}
-                    onClose={isMobile ? handleCloseProfile : undefined}
-                />
+                {isMobile && (
+                    <div className='absolute bottom-0 bg-black/75 border-t-4 border-black w-full'>
+                        <div className='font-press-start text-white text-sm py-2.5 px-3 gap-2 flex justify-between'>
+                            <span>Show Profiles?</span>
+                            <div className='flex gap-2'>
+                                <label>
+                                    <input type="radio" className={`${styles['nes-radio']} ${styles['is-dark']}`} name="answer" checked={showProfilesOnMobile} onChange={() => setShowProfilesOnMobile(true)} />
+                                    <span>Yes</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" className={`${styles['nes-radio']} ${styles['is-dark']}`} name="answer" checked={!showProfilesOnMobile} onChange={() => setShowProfilesOnMobile(false)} />
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {(!isMobile || showProfilesOnMobile) && (
+                    <Profile
+                        playerHand={playerHand}
+                        lastSelectedHand={lastSelectedHand}
+                        setPlayerHand={setPlayerHand}
+                        lastPokemonCardSelected={lastPokemonCardSelected}
+                        isOpen={showProfile && !showConfirm}
+                        onClose={isMobile ? handleCloseProfile : undefined}
+                    />
+                )}
+
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/60 pointer-events-none md:pointer-events-auto" />
@@ -244,7 +274,7 @@ export default function Select() {
                     )
                 })}
                 {playerHand.every(card => card === null) && showHelp && (
-                    <Help customClass="fade-in-b !hidden md:!block !absolute !-top-16 !left-1/2 !-translate-x-1/2" text="Add cards to your hand!" />
+                    <Help customClass="fade-in-b !hidden md:!block !absolute !-top-16 !left-80" text="Add cards to your hand!" />
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>

@@ -10,7 +10,7 @@ import DefeatImage from "@/assets/images/defeat.webp";
 import TieImage from "@/assets/images/tie.webp";
 import Card from "@/components/Card/Card.js"
 import PokeballSplash from '../PokeballSplash/PokeballSplash';
-import styles from './retro.module.css';
+import styles from '@/retro.module.css';
 import pokemon from '@/data/game-data.json';
 
 export default function Results() {

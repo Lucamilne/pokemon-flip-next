@@ -1,5 +1,3 @@
-'use client';
-
 import { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { GAME_MODES } from '@/constants';
 import { saveGameStateToLocalStorage, clearLocalStorage } from '@/utils/gameStorage';

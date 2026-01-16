@@ -6,7 +6,7 @@ import { allPokemonNames, fetchRandomCardsFromUserCollection } from "@/utils/car
 import { TYPES_PER_CARD } from '@/constants/index.js';
 
 import Loader from "@/components/Loader/Loader.js";
-import styles from "./retro.module.css";
+import styles from "@/retro.module.css";
 import gameData from '@/data/game-data.json';
 
 const { cards, abilities } = gameData;
@@ -14,14 +14,13 @@ const { cards, abilities } = gameData;
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, isOpen, onClose }) {
     const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
     const { isMobile } = useGameContext();
-    const [debugMode, setDebugMode] = useState(false);
+
     const scrollContainerRef = useRef(null);
     const [showScrollIndicator, setShowScrollIndicator] = useState(false);
     const [pokemonData, setPokemonData] = useState(null);
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [autoCloseCancelled, setAutoCloseCancelled] = useState(false);
 
     const checkScrollIndicator = () => {
         if (!scrollContainerRef.current) return;
@@ -42,35 +41,18 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         checkScrollIndicator();
     }, [playerHand, isLoading]);
 
-    // Set up scroll listener once
+    // Set up scroll listener - re-attach when isOpen changes
     useEffect(() => {
         const container = scrollContainerRef.current;
         if (!container) return;
 
         container.addEventListener('scroll', checkScrollIndicator);
+        checkScrollIndicator(); // Check immediately when container becomes available
 
         return () => {
             container.removeEventListener('scroll', checkScrollIndicator);
         };
-    }, []);
-
-    // Reset auto-close cancelled state when modal opens
-    useEffect(() => {
-        if (isOpen) {
-            setAutoCloseCancelled(false);
-        }
     }, [isOpen]);
-
-    // Auto-close timer for mobile
-    useEffect(() => {
-        if (!isMobile || !isOpen || autoCloseCancelled) return;
-
-        const timer = setTimeout(() => {
-            onClose?.();
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, [isMobile, isOpen, onClose, autoCloseCancelled]);
 
     const capitaliseFirstLetter = (val) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -306,8 +288,8 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         <div className='flex-1 mx-auto max-w-4xl tooltip border-4 border-black font-press-start p-4 md:p-1 h-full md:h-auto shadow-md md:mx-0 md:my-4 md:mr-4 md:px-8'>
             <div ref={scrollContainerRef} className="relative h-full overflow-y-auto hide-scrollbar">
                 {playerHand.every(card => card === null) || !lastPokemonCardSelected ? (
-                    <div className='font-press-start flex flex-col justify-center md:justify-start gap-4 md:gap-8 text-xs md:text-base md:py-8'>
-                        <h2 className='font-bold text-base md:text-xl text-center w-full'>Your Collection</h2>
+                    <div className='text-center md:text-left font-press-start flex flex-col justify-center md:justify-start gap-4 md:gap-8 text-xs md:text-base md:py-8'>
+                        <h2 className='font-bold text-base md:text-xl w-full'>Your Collection</h2>
                         <p>
                             Create your own hand by selecting from your pokemon library!
                         </p>
@@ -319,12 +301,12 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         <p>
                             As the app is still in development, you have access to a few debug functions:
                         </p>
-                        <div className='grid grid-cols-1 gap-2'>
+                        <div className='grid grid-cols-1 gap-2 mx-4'>
                             <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Add all cards</button>
-                            <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Reset cards</button>
-                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Random Hand</button>
+                            <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Reset cards</button>
+                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Random Hand</button>
                             {lastSelectedHand && lastSelectedHand.length > 0 && (
-                                <button onClick={restoreLastSelectedHand} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Last Hand</button>
+                                <button onClick={restoreLastSelectedHand} className={`${styles['nes-btn']} cursor-pointer`}>Last Played Hand</button>
                             )}
                         </div>
                         <p>
@@ -352,17 +334,8 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         <>
             {isOpen && (
                 <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
-                    <div className="relative p-2 size-full max-w-4xl overflow-hidden" onClick={(e) => { e.stopPropagation(); setAutoCloseCancelled(true); }}>
+                    <div className="relative p-2 size-full max-w-4xl overflow-hidden" onClick={(e) => { e.stopPropagation() }}>
                         {content}
-                        {/* Auto-close progress bar */}
-                        {!autoCloseCancelled && (
-                            <div className="absolute bottom-3 left-3 right-3 h-1 overflow-hidden shadow-md/30">
-                                <div
-                                    className="h-full bg-lime-400"
-                                    style={{ animation: 'progress-bar 3000ms linear forwards' }}
-                                />
-                            </div>
-                        )}
                     </div>
                     <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-4 right-4 font-press-start leading-none'>
                         <span>X</span>

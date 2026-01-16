@@ -31,8 +31,8 @@ export default function HowToPlay({ isOpen, onClose }) {
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={onClose}>
-            <div className="relative w-full max-w-4xl h-full lg:max-h-[660px] default-tile border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-0" onClick={onClose}>
+            <div className="relative w-full max-w-4xl h-full lg:max-h-[660px] default-tile border-4 md:border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
                     className="flex h-full transition-transform duration-300 ease-in-out text-base"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
