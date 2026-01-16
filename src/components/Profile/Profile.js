@@ -52,7 +52,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
         return () => {
             container.removeEventListener('scroll', checkScrollIndicator);
         };
-    }, [isOpen]);
+    }, [isOpen, checkScrollIndicator]);
 
     const capitaliseFirstLetter = (val) => {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);

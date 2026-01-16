@@ -182,7 +182,7 @@ export default function Select() {
                 </h1>
             </div>
             <div className="relative grow md:flex overflow-y-auto">
-                <div className={`h-full relative hide-scrollbar p-2 md:p-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
+                <div className={`h-full relative hide-scrollbar p-2 pb-[52px] md:p-4 md:pb-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
                     <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
@@ -224,7 +224,7 @@ export default function Select() {
                     </div>
                 </div>
                 {isMobile && (
-                    <div className='absolute bottom-0 bg-black/75 border-t-4 border-black w-full'>
+                    <div className='absolute bottom-0 bg-black/50 border-t-4 border-black w-full'>
                         <div className='font-press-start text-white text-sm py-2.5 px-3 gap-2 flex justify-between'>
                             <span>Show Profiles?</span>
                             <div className='flex gap-2'>
