@@ -150,7 +150,7 @@ export default function Select() {
     }, [playerHand, isMobile])
 
     return (
-        <div className="relative h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
+        <div className="relative overflow-y-hidden h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
             <div className="px-7 py-4 md:pb-6 flex justify-between gap-4 items-center hand-top-container pb-7 md:pb-8">
                 <div className="relative font-press-start">
                     <input
