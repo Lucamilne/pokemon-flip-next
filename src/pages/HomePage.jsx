@@ -8,7 +8,7 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="overflow-hidden relative h-full flex flex-col gap-4 bg-neutral-400 md:rounded-xl" >
+      <section className="overflow-hidden relative h-dvh md:h-full flex flex-col gap-4 bg-neutral-400 md:rounded-xl" >
         <div className="absolute w-full z-10 bottom-8 left-1/2 -translate-x-1/2 font-press-start grid grid-cols-1 gap-2 text-xl">
           <div className="relative group text-center mx-auto">
             <div className="arrow absolute -left-6 top-1/2 -translate-y-1/2 transition-opacity opacity-100" />
