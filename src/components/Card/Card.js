@@ -153,12 +153,12 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             setTimeout(() => setShowOverlay(false), 400);
         }
 
-        runStatAnimations(pokemonCard.stats, pokemonCard.originalStats);
+        runStatAnimations(pokemonCard.originalStats);
     };
 
-    const runStatAnimations = async (currentStats, originalStats) => {
-        const statsToCompare = sumUpNumbersInArray(originalStats);
-        const totalStats = sumUpNumbersInArray(currentStats);
+    const runStatAnimations = async (prevStats) => {
+        const statsToCompare = sumUpNumbersInArray(prevStats || pokemonCard.originalStats);
+        const totalStats = sumUpNumbersInArray(pokemonCard.stats);
 
         if (totalStats < statsToCompare) {
             await weakenCard();
@@ -177,7 +177,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         const runAnimations = async () => {
             // Check if card ownership changed (defeat animation)
             const ownershipChanged = prevIsPlayerCard.current !== undefined &&
-                                    prevIsPlayerCard.current !== pokemonCard.isPlayerCard;
+                prevIsPlayerCard.current !== pokemonCard.isPlayerCard;
 
             if (ownershipChanged && isPlacedInGrid) {
                 await defeatCard();
@@ -185,7 +185,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
 
             // Check if stats changed (stat animation)
             if (cellKey && prevStats.current !== undefined) {
-                await runStatAnimations(prevStats.current, pokemonCard.stats, pokemonCard.originalStats);
+                await runStatAnimations(prevStats.current);
             }
 
             // Update previous values for next comparison
