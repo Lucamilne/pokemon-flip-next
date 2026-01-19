@@ -28,7 +28,7 @@ const getBallSprite = (statWeight) => {
 
 function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false }) {
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
-    const { isMobile, cells } = useGameContext();
+    const { isMobile } = useGameContext();
     const { hasCard } = useAuth();
 
     const [tooltipPosition, setTooltipPosition] = useState('top');
@@ -74,7 +74,9 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
 
         return new Promise((resolve) => {
             if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
-                cardRef.current.classList.add(animClass)
+                // Remove slide-in animation that may conflict
+                cardRef.current.classList.remove('slide-in-blurred-top');
+                cardRef.current.classList.add(animClass);
                 setTimeout(() => {
                     cardRef.current?.classList.remove(animClass);
                     resolve();
@@ -90,7 +92,9 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
 
         return new Promise((resolve) => {
             if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
-                cardRef.current.classList.add(animClass)
+                // Remove slide-in animation that may conflict
+                cardRef.current.classList.remove('slide-in-blurred-top');
+                cardRef.current.classList.add(animClass);
                 setTimeout(() => {
                     cardRef.current?.classList.remove(animClass);
                     resolve();
@@ -156,8 +160,8 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         runStatAnimations(pokemonCard.originalStats);
     };
 
-    const runStatAnimations = async (prevStats) => {
-        const statsToCompare = sumUpNumbersInArray(prevStats || pokemonCard.originalStats);
+    const runStatAnimations = async (prevStatsArray) => {
+        const statsToCompare = sumUpNumbersInArray(prevStatsArray || pokemonCard.originalStats);
         const totalStats = sumUpNumbersInArray(pokemonCard.stats);
 
         if (totalStats < statsToCompare) {
@@ -174,23 +178,30 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     }, [isPlacedInGrid])
 
     useEffect(() => {
+        // Capture previous values synchronously before any async operations
+        const prevStatsSnapshot = prevStats.current ? [...prevStats.current] : undefined;
+        const prevOwnerSnapshot = prevIsPlayerCard.current;
+
+        // Update refs immediately to prevent race conditions
+        prevIsPlayerCard.current = pokemonCard.isPlayerCard;
+        prevStats.current = [...pokemonCard.stats];
+
         const runAnimations = async () => {
             // Check if card ownership changed (defeat animation)
-            const ownershipChanged = prevIsPlayerCard.current !== undefined &&
-                prevIsPlayerCard.current !== pokemonCard.isPlayerCard;
+            const ownershipChanged = prevOwnerSnapshot !== undefined &&
+                prevOwnerSnapshot !== pokemonCard.isPlayerCard;
 
             if (ownershipChanged && isPlacedInGrid) {
                 await defeatCard();
             }
 
-            // Check if stats changed (stat animation)
-            if (cellKey && prevStats.current !== undefined) {
-                await runStatAnimations(prevStats.current);
+            // Check if stats changed (stat animation) - only for cards on the grid
+            if (isPlacedInGrid && prevStatsSnapshot !== undefined) {
+                const statsChanged = prevStatsSnapshot.some((stat, i) => stat !== pokemonCard.stats[i]);
+                if (statsChanged) {
+                    await runStatAnimations(prevStatsSnapshot);
+                }
             }
-
-            // Update previous values for next comparison
-            prevIsPlayerCard.current = pokemonCard.isPlayerCard;
-            prevStats.current = pokemonCard.stats;
         };
 
         runAnimations();
@@ -307,4 +318,4 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     );
 }
 
-export default React.memo(Card);
+export default Card;

@@ -147,14 +147,16 @@ export default function Board() {
         return () => clearTimeout(timer);
     }, [hasWonCoinToss])
 
-    const applyTileStatModifiers = (attackingCard, cellTargetObject) => {
+    const applyTileStatModifiers = (attackingCard, cellTarget, cellsToUse) => {
+        const cellTargetObject = cellsToUse[cellTarget];
+
         // Check if card has an onElementalTilePlace ability first
         if (attackingCard.ability && abilities[attackingCard.ability]?.trigger === 'onElementalTilePlace') {
             return applySelfAbilities(
                 attackingCard,
                 'onElementalTilePlace',
-                cellTargetObject,
-                { cells, playerHand, cpuHand }
+                cellTarget,
+                { cells: cellsToUse, playerHand, cpuHand }
             );
         }
 
@@ -184,7 +186,7 @@ export default function Board() {
         const cellTargetObject = cellsToUse[cellTarget];
 
         if (cellTargetObject.element) {
-            attackingCard = applyTileStatModifiers(attackingCard, cellTargetObject); // add or remove stats on placement of attacking card on tile
+            attackingCard = applyTileStatModifiers(attackingCard, cellTarget, cellsToUse); // add or remove stats on placement of attacking card on tile
         }
 
         // Track if this card captured any cards due to type effectiveness
