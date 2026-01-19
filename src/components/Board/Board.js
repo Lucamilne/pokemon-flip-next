@@ -153,7 +153,7 @@ export default function Board() {
             return applySelfAbilities(
                 attackingCard,
                 'onElementalTilePlace',
-                cellTarget,
+                cellTargetObject,
                 { cells, playerHand, cpuHand }
             );
         }
