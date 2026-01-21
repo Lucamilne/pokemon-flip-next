@@ -293,25 +293,20 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         <p>
                             Create your own hand by selecting from your pokemon library!
                         </p>
+                        <p>
+                            Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
+                        </p>
+                        <div className='grid grid-cols-1 gap-2 mx-2'>
+                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Random Hand</button>
+                            {lastSelectedHand && lastSelectedHand.length > 0 && (
+                                <button onClick={restoreLastSelectedHand} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Last Played Hand</button>
+                            )}
+                        </div>
                         {!user && (
                             <p>
                                 <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
                             </p>
                         )}
-                        <p>
-                            As the app is still in development, you have access to a few debug functions:
-                        </p>
-                        <div className='grid grid-cols-1 gap-2 mx-4'>
-                            <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Add all cards</button>
-                            <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Reset cards</button>
-                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Random Hand</button>
-                            {lastSelectedHand && lastSelectedHand.length > 0 && (
-                                <button onClick={restoreLastSelectedHand} className={`${styles['nes-btn']} cursor-pointer`}>Last Played Hand</button>
-                            )}
-                        </div>
-                        <p>
-                            Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
-                        </p>
                     </div>
                 ) : (
                     isLoading ? (

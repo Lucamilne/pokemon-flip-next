@@ -105,6 +105,24 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         });
     };
 
+    const presentCard = () => {
+        const animClass = 'pulsate-fwd';
+
+        return new Promise((resolve) => {
+            if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
+                // Remove slide-in animation that may conflict
+                cardRef.current.classList.remove('slide-in-blurred-top');
+                cardRef.current.classList.add(animClass);
+                setTimeout(() => {
+                    cardRef.current?.classList.remove(animClass);
+                    resolve();
+                }, 500);
+            } else {
+                resolve();
+            }
+        });
+    };
+
     const dropCard = () => {
         return new Promise((resolve) => {
             if (cardRef.current) {
@@ -168,6 +186,8 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             await weakenCard();
         } else if (totalStats > statsToCompare) {
             await strengthenCard();
+        } else if (totalStats === statsToCompare) {
+            await presentCard();
         }
     }
 

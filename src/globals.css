@@ -1517,6 +1517,24 @@ body {
   animation: fade-in-top 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
+.pulsate-fwd {
+  animation: pulsate-fwd 0.25s ease-in both;
+}
+
+@keyframes pulsate-fwd {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 @keyframes shake-vertical {
 
   0%,
