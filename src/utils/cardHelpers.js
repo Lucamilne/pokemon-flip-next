@@ -133,8 +133,8 @@ export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) =
     const avgStatWeight = totalStatWeight / playerHand.length;
 
     // Define search range with bounds [195, 680]
-    const minStatWeight = Math.max(195, avgStatWeight - 100);
-    const maxStatWeight = Math.min(680, avgStatWeight + 100);
+    const minStatWeight = Math.max(195, avgStatWeight - 150);
+    const maxStatWeight = Math.min(680, avgStatWeight + 50);
 
     // Get all pokemon within the bounded range
     const eligibleCards = allPokemonNames.filter(pokemonName => {
@@ -142,12 +142,12 @@ export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) =
         return statWeight >= minStatWeight && statWeight <= maxStatWeight;
     });
 
-    // If not enough cards OR high-level player, expand to -100/+200
+    // If not enough cards OR high-level player, expand to -150/+200
     let cardsToSelect = eligibleCards;
 
     if (cardsToSelect.length < 5 || avgStatWeight >= 500) {
-        const expandedMinStatWeight = Math.max(195, avgStatWeight - 100);
-        const expandedMaxStatWeight = Math.min(680, avgStatWeight + 100);
+        const expandedMinStatWeight = Math.max(195, avgStatWeight - 150);
+        const expandedMaxStatWeight = Math.min(680, avgStatWeight + 200);
 
         cardsToSelect = allPokemonNames.filter(pokemonName => {
             const statWeight = pokemon.cards[pokemonName].statWeight;
