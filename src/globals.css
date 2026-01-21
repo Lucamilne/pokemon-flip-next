@@ -2111,3 +2111,36 @@ body {
     width: 100%;
   }
 }
+
+/* Sheen effect for defensive ability cards */
+.sheen-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.sheen-effect::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 60%
+  );
+  animation: sheen 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 15;
+}
+
+@keyframes sheen {
+  0% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  50%, 100% {
+    transform: translateX(100%) translateY(100%);
+  }
+}

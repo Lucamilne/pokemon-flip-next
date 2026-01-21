@@ -11,6 +11,8 @@ import gameData from '@/data/game-data.json';
 
 const { cards, abilities } = gameData;
 
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, isOpen, onClose }) {
     const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
     const { isMobile } = useGameContext();
@@ -21,6 +23,9 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
     const [evolutionChain, setEvolutionChain] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Show debug buttons in development mode or when debug=true is in URL
+    const showDebugButtons = isDevelopment || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('debug') === 'true');
 
     const checkScrollIndicator = () => {
         if (!scrollContainerRef.current) return;
@@ -301,6 +306,13 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             {lastSelectedHand && lastSelectedHand.length > 0 && (
                                 <button onClick={restoreLastSelectedHand} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Last Played Hand</button>
                             )}
+                            {showDebugButtons && (
+                                <>
+                                    <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Add all cards</button>
+                                    <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Reset cards</button>
+                                </>
+                            )}
+
                         </div>
                         {!user && (
                             <p>

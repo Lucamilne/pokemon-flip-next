@@ -14,6 +14,9 @@ import gameData from '@/data/game-data.json';
 
 const { abilities } = gameData;
 
+// Abilities that get the sheen effect (defensive/armor abilities)
+const SHEEN_ABILITIES = ['shellArmor', 'defenceCurl', 'sturdy', 'thickFat', 'leafGuard', 'shieldDust'];
+
 // Utility functions
 const sumUpNumbersInArray = (array) => {
     return array.reduce((acc, val) => acc + val, 0);
@@ -43,6 +46,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     }
 
     const hasAbility = pokemonCard.ability;
+    const hasSheenAbility = SHEEN_ABILITIES.includes(pokemonCard.ability);
     const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
 
     const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
@@ -279,7 +283,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                         WebkitBackfaceVisibility: 'hidden',
                     }}
                 >
-                    <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden`}>
+                    <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden ${hasSheenAbility && isPlacedInGrid ? 'sheen-effect' : ''}`}>
                         <div className="relative h-full flex flex-col items-center justify-center">
                             <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
                             <ElementalTypes types={pokemonCard.types} />
