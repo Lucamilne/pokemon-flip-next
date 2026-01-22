@@ -1,5 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
 
+// Module-level tracking to prevent multiple tooltips during scroll
+let activeTouchId = null;
+
 /**
  * Custom hook for tooltip with hover (desktop) and long-press (mobile)
  * @param {number} longPressDuration - Duration in ms for long press (default: 500)
@@ -11,6 +14,7 @@ export const useTooltip = (longPressDuration = 500, hoverDelay = 300) => {
     const longPressTimer = useRef(null);
     const hoverTimer = useRef(null);
     const touchStartPos = useRef({ x: 0, y: 0 });
+    const ownsActiveTouch = useRef(false);
 
     // Desktop: Mouse enter
     const handleMouseEnter = useCallback(() => {
@@ -31,6 +35,14 @@ export const useTooltip = (longPressDuration = 500, hoverDelay = 300) => {
     // Mobile: Touch start (begin long press)
     const handleTouchStart = useCallback((e) => {
         const touch = e.touches[0];
+
+        // If there's already an active touch (e.g., scrolling), ignore new touchstarts
+        if (activeTouchId !== null && activeTouchId !== touch.identifier) {
+            return;
+        }
+
+        activeTouchId = touch.identifier;
+        ownsActiveTouch.current = true;
         touchStartPos.current = { x: touch.clientX, y: touch.clientY };
 
         longPressTimer.current = setTimeout(() => {
@@ -40,6 +52,9 @@ export const useTooltip = (longPressDuration = 500, hoverDelay = 300) => {
 
     // Mobile: Touch move (cancel if finger moves too much)
     const handleTouchMove = useCallback((e) => {
+        // Only process if this instance owns the active touch
+        if (!ownsActiveTouch.current) return;
+
         const touch = e.touches[0];
         const moveThreshold = 10; // pixels
 
@@ -47,16 +62,22 @@ export const useTooltip = (longPressDuration = 500, hoverDelay = 300) => {
         const deltaY = Math.abs(touch.clientY - touchStartPos.current.y);
 
         if (deltaX > moveThreshold || deltaY > moveThreshold) {
-            // Finger moved too much, cancel long press
+            // Finger moved too much, cancel long press and hide tooltip
             if (longPressTimer.current) {
                 clearTimeout(longPressTimer.current);
                 longPressTimer.current = null;
             }
+            setIsVisible(false);
         }
     }, []);
 
     // Mobile: Touch end (cancel or hide)
     const handleTouchEnd = useCallback(() => {
+        if (ownsActiveTouch.current) {
+            activeTouchId = null;
+            ownsActiveTouch.current = false;
+        }
+
         if (longPressTimer.current) {
             clearTimeout(longPressTimer.current);
             longPressTimer.current = null;
