@@ -7,7 +7,6 @@ import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
 
 import { useDraggable } from '@dnd-kit/core';
-import { useGameContext } from '@/contexts/GameContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTooltip } from '@/hooks/useTooltip';
 import gameData from '@/data/game-data.json';
@@ -31,7 +30,6 @@ const getBallSprite = (statWeight) => {
 
 function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false }) {
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
-    const { isMobile } = useGameContext();
     const { hasCard } = useAuth();
 
     const [tooltipPosition, setTooltipPosition] = useState('top');
@@ -244,15 +242,11 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     useEffect(() => {
         if (isVisible && cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect();
-            const cardCenterX = rect.left + rect.width / 2;
             const cardCenterY = rect.top + rect.height / 2;
 
-            setTooltipPosition(isMobile
-                ? (cardCenterX < window.innerWidth / 2 ? 'right' : 'left')
-                : (cardCenterY < window.innerHeight / 4 ? 'bottom' : 'top')
-            );
+            setTooltipPosition(cardCenterY < window.innerHeight / 3 ? 'bottom' : 'top');
         }
-    }, [isVisible, isMobile])
+    }, [isVisible])
 
     const nameBgStyle = useMemo(() => {
         if (pokemonCard.types.length === 1) {
