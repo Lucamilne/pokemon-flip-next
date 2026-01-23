@@ -770,14 +770,16 @@ export default function Board() {
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
-                        <span className="absolute top-3 right-3">
-                            {/* <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
-                                <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 2h20v20H2V2zm2 2v4h4v4H4v4h4v4h4v-4h4v4h4v-4h-4v-4h4V8h-4V4h-4v4H8V4H4zm8 8H8v4h4v-4zm0-4v4h4V8h-4z" fill="#ffffff"></path> </g></svg>
-                            </button> */}
-                            <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
-                                <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
-                            </button>
-                        </span>
+                        <div className="absolute top-3 right-3">
+                            <div className="flex flex-col items-center">
+                                <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
+                                    <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
+                                </button>
+                                <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
+                                    <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 2H3v20h18V2H5zm14 18H5V4h14v16zM17 6H7v4h10V6zM7 12h2v2H7v-2zm6 0h-2v2h2v-2zm2 0h2v2h-2v-2zm-6 4H7v2h2v-2zm2 0h2v2h-2v-2zm6 0h-2v2h2v-2z" fill="#fff"></path> </g></svg>
+                                </button>
+                            </div>
+                        </div>
                         {hasWonCoinToss !== null && (
                             <Coin hasWonCoinToss={hasWonCoinToss} />
                         )}
@@ -834,14 +836,16 @@ export default function Board() {
                         </div>
                         <Balance score={score} />
                         <Grid cells={cells} isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
-                        <span className="absolute top-3 right-3">
-                            {/* <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
-                                <svg className="w-6 h-6 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 2h20v20H2V2zm2 2v4h4v4H4v4h4v4h4v-4h4v4h4v-4h-4v-4h4V8h-4V4h-4v4H8V4H4zm8 8H8v4h4v-4zm0-4v4h4V8h-4z" fill="#ffffff"></path> </g></svg>
-                            </button> */}
-                            <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`hover:scale-110 transition-transform cursor-pointer rounded-full flex items-center justify-center overflow-hidden`}>
-                                <svg className="w-7 h-7 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
-                            </button>
-                        </span>
+                        <div className="absolute top-3 right-3">
+                            <div className="flex flex-col items-center">
+                                <button title="How to play" onClick={() => setIsHowToPlayOpen(true)} className={`hover:scale-110 transition-transform cursor-pointer flex items-center justify-center overflow-hidden`}>
+                                    <svg className="w-7 h-7 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M2 5h20v14H2V5zm18 12V7H4v10h16zM8 9h2v2h2v2h-2v2H8v-2H6v-2h2V9zm6 0h2v2h-2V9zm4 4h-2v2h2v-2z" fill="#ffffff"></path> </g></svg>
+                                </button>
+                                <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`hover:scale-110 transition-transform cursor-pointer flex items-center justify-center overflow-hidden`}>
+                                    <svg className="w-7 h-7 drop-shadow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 2H3v20h18V2H5zm14 18H5V4h14v16zM17 6H7v4h10V6zM7 12h2v2H7v-2zm6 0h-2v2h2v-2zm2 0h2v2h-2v-2zm-6 4H7v2h2v-2zm2 0h2v2h-2v-2zm6 0h-2v2h2v-2z" fill="#fff"></path> </g></svg>
+                                </button>
+                            </div>
+                        </div>
                         {hasWonCoinToss !== null && (
                             <Coin hasWonCoinToss={hasWonCoinToss} />
                         )}
