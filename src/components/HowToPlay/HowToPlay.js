@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import SlideA from "@/components/HowToPlay/Slides/A";
 import SlideB from "@/components/HowToPlay/Slides/B";
 import SlideC from "@/components/HowToPlay/Slides/C";
@@ -14,6 +14,8 @@ import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 export default function HowToPlay({ isOpen, onClose }) {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [shuffleKey, setShuffleKey] = useState(0)
+    const touchStart = useRef(0)
+    const touchEnd = useRef(0)
     const totalSlides = 7
 
     const nextSlide = () => {
@@ -28,17 +30,47 @@ export default function HowToPlay({ isOpen, onClose }) {
         setShuffleKey((prev) => prev + 1)
     }
 
+    const handleTouchStart = (e) => {
+        touchStart.current = e.touches[0].clientX
+    }
+
+    const handleTouchMove = (e) => {
+        touchEnd.current = e.touches[0].clientX
+    }
+
+    const handleTouchEnd = () => {
+        if (!touchStart.current || !touchEnd.current) return
+
+        const distance = touchStart.current - touchEnd.current
+        const isLeftSwipe = distance > 50
+        const isRightSwipe = distance < -50
+
+        if (isLeftSwipe && currentSlide < totalSlides - 1) {
+            nextSlide()
+        }
+
+        if (isRightSwipe && currentSlide > 0) {
+            prevSlide()
+        }
+
+        touchStart.current = 0
+        touchEnd.current = 0
+    }
+
     if (!isOpen) return null
 
     return (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-0" onClick={onClose}>
-            <div className="relative w-full max-w-4xl h-full lg:max-h-[660px] default-tile border-4 md:border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="p-2 flex flex-col items-between relative w-full max-w-4xl h-auto md:h-full lg:max-h-[660px] default-tile border-4 md:border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
-                    className="flex h-full transition-transform duration-300 ease-in-out text-base"
+                    className="flex flex-1 transition-transform duration-300 ease-in-out text-base"
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
                 >
                     {/* Slide A */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Game Objective</h2>
                             <p>Control more cards than your opponent by placing yours strategically to capture Pokémon and dominate the arena.
@@ -51,7 +83,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide B */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Core Combat</h2>
                             <p>Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
@@ -61,7 +93,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide C */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Elemental Tiles</h2>
                             <p>Some grid spaces have elemental symbols. Placing a card on a
@@ -77,7 +109,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide D */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
                             <p>All Pokémon cards have unique abilities that reward thoughtful, strategic play.</p>
@@ -90,7 +122,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
 
                     {/* Slide E */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Type Advantages</h2>
                             <p className='font-press-start'>Pokemon types matter! Super-effective attacks (like
@@ -107,7 +139,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <SlideE nextSlide={nextSlide} />
                     </div>
                     {/* Slide F */}
-                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between p-8 md:px-24 md:p-14">
+                    <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Type Immunities</h2>
                             <p>Some types have no effect (like
@@ -120,7 +152,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <SlideF nextSlide={nextSlide} />
                     </div>
                     {/* Slide G */}
-                    <div className="min-w-full h-full p-8 md:px-24 md:p-14 flex flex-col justify-center md:justify-between">
+                    <div className="min-w-full h-full pt-8 px-8 md:px-24 flex flex-col justify-center md:justify-between">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Winning the Game</h2>
                             <p>The game ends when all 9 spaces are filled. The player controlling
@@ -129,7 +161,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                             <p>
                                 Win a round to add all captured cards to your permanent collection. Lose the round, and you must forfeit one of your own cards.
                             </p>
-                            <p>Cards you own are marked with a <img className="inline md:size-[24px]" src={PokemonBallSprite} /> icon in the bottom right hand corner.</p>
+                            <p>Cards you own are marked with a <img className="inline md:size-[24px] -my-2" src={PokemonBallSprite} />, <img className="inline md:size-[24px] -my-2" src={GreatBallSprite} />, <img className="inline md:size-[24px] -my-2" src={UltraBallSprite} /> or <img className="inline md:size-[24px] -my-2" src={MasterBallSprite} /> icon in the bottom right hand corner, depending on card rarity.</p>
                             {/* <p>Plan your moves carefully. Every card placed can trigger a rapid change of fortunes!</p> */}
                         </div>
                     </div>
@@ -157,7 +189,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                 </button>
 
                 {/* Slide Indicators */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-4 items-center">
+                <div className="m-2 flex justify-center gap-4 items-center">
                     {Array.from({ length: totalSlides }, (_, i) => (
                         i === currentSlide ? (
                             <div key={i} className="pokeball-bullet shadow-sm/30" />

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { fetchCardById } from "@/utils/cardHelpers.js";
 import Card from '../../Card/Card.js';
 
@@ -10,9 +11,9 @@ function generateThreeUniqueRandomNumbers(min, max) {
     return Array.from(numbers);
 }
 
-export default function C({ nextSlide }) {
-    const randomIds = generateThreeUniqueRandomNumbers(1, 151);
-    const pokemonCards = randomIds.map(id => fetchCardById(id));
+export default function C() {
+    const [randomIds] = useState(() => generateThreeUniqueRandomNumbers(1, 151));
+    const [pokemonCards] = useState(() => randomIds.map(id => fetchCardById(id)));
 
     return (
         <div className="w-full grid gap-1 md:gap-2 place-content-center grid-cols-[repeat(3,72px)] md:grid-cols-[repeat(3,124px)] bg-linear-to-r from-theme-blue via-white to-theme-blue p-2 md:p-4 border-y-6 border-black">
