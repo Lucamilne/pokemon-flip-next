@@ -14,7 +14,7 @@ const { cards, abilities } = gameData;
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, isOpen, onClose }) {
-    const { user, hasCard, signInWithGoogle, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
+    const { user, hasCard, signInWithGoogle, signOut, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
     const { isMobile } = useGameContext();
 
     const scrollContainerRef = useRef(null);
@@ -296,29 +296,48 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                     <div className='text-center md:text-left font-press-start flex flex-col justify-center md:justify-start gap-4 md:gap-8 text-xs md:text-base md:py-8'>
                         <h2 className='font-bold text-base md:text-xl w-full'>Your Collection</h2>
                         <p>
-                            Create your own hand by selecting from your pokemon library!
+                            Create your own hand by selecting up to 5 Pokémon from your library!
                         </p>
-                        <p>
-                            Your Pokédex has {collectionCount}/{allPokemonNames.length} entries.
-                        </p>
-                        <div className='grid grid-cols-1 gap-2 mx-2'>
+                        <div className='border-4 border-black p-3 md:p-4 bg-white'>
+                            <div className='flex justify-between items-center mb-2'>
+                                <span className='font-bold'>POKÉDEX</span>
+                                <span className='font-bold'>{collectionCount}/{allPokemonNames.length}</span>
+                            </div>
+                            <progress
+                                className={`${styles['nes-progress']} ${collectionCount / allPokemonNames.length >= 0.75 ? styles['is-success'] :
+                                    collectionCount / allPokemonNames.length >= 0.5 ? styles['is-primary'] :
+                                        collectionCount / allPokemonNames.length >= 0.25 ? styles['is-warning'] :
+                                            styles['is-error']
+                                    }`}
+                                value={collectionCount}
+                                max={allPokemonNames.length}
+                            />
+                            <div className='text-[8px] md:text-xs mt-1 opacity-75'>
+                                {Math.round((collectionCount / allPokemonNames.length) * 100)}% Complete
+                            </div>
+                        </div>
+                        <div className='grid grid-cols-1 gap-2'>
                             <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Random Hand</button>
-                            {lastSelectedHand && lastSelectedHand.length > 0 && (
-                                <button onClick={restoreLastSelectedHand} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Last Played Hand</button>
+                            {user ? (
+                                <button className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`} onClick={signOut}>Go Offline</button>
+                            ) : (
+                                <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={signInWithGoogle}>Save Progress</button>
                             )}
+                            <button
+                                onClick={restoreLastSelectedHand}
+                                disabled={!lastSelectedHand || lastSelectedHand.length === 0}
+                                className={`${styles['nes-btn']} ${!lastSelectedHand || lastSelectedHand.length === 0 ? styles['is-disabled'] : 'cursor-pointer'}`}
+                            >
+                                Last Played Hand
+                            </button>
                             {showDebugButtons && (
                                 <>
-                                    <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Add all cards</button>
+                                    <h3 className="my-4 md:my-8">Debug functions:</h3>
+                                    <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-warning']} cursor-pointer`}>Add all cards</button>
                                     <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Reset cards</button>
                                 </>
                             )}
-
                         </div>
-                        {!user && (
-                            <p>
-                                <button className="cursor-pointer text-blue-500" onClick={signInWithGoogle}>Sign in</button> to backup and sync your collection across all your devices!
-                            </p>
-                        )}
                     </div>
                 ) : (
                     isLoading ? (
@@ -331,7 +350,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                 )}
             </div>
             {showScrollIndicator && <div className="arrow absolute rotate-90 bottom-3 right-3 md:bottom-4 md:right-4 blink" />}
-        </div>
+        </div >
     );
 
     if (!isMobile) return content;
