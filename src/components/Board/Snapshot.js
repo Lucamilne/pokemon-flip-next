@@ -55,7 +55,7 @@ export default function Snapshot({ isOpen, onClose }) {
     return (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-0" onClick={onClose}>
             <div className="p-2 default-tile flex flex-col items-between relative w-full max-w-2xl h-full md:h-auto aspect-square border-4 md:border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
-                <h2 className='absolute top-6 font-press-start w-full font-bold text-lg md:text-2xl text-center'>{isPlayerVictory? 'Player' : 'CPU'} Victory</h2>
+                <h2 className='absolute top-6 font-press-start w-full font-bold text-lg md:text-2xl text-center'>{isPlayerVictory === null ? 'Stalemate' : isPlayerVictory ? 'Player Victory!' : 'Player Defeat...'}</h2>
                 {isMobile ? mobileLayout : desktopLayout}
                 <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-3 right-3 font-press-start leading-none'>
                     <span>X</span>
