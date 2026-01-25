@@ -27,6 +27,7 @@ export default function Select() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [showProfile, setShowProfile] = useState(true);
     const [showHelp, setShowHelp] = useState(false);
+    const [sortByStrength, setSortByStrength] = useState(false);
     const [showProfilesOnMobile, setShowProfilesOnMobile] = useState(() => {
         const stored = sessionStorage.getItem('showProfilesOnMobile');
         return stored !== null ? stored === 'true' : true;
@@ -104,16 +105,22 @@ export default function Select() {
 
     const filteredCards = useMemo(() => {
         const trimmedSearch = searchString.trim().toLowerCase();
-        if (!trimmedSearch) return playerCardLibrary;
+        let cards = trimmedSearch
+            ? playerCardLibrary.filter(pokemonCard =>
+                pokemonCard?.name.toLowerCase().includes(trimmedSearch)
+              )
+            : playerCardLibrary;
 
-        if (isMobile) {
+        if (isMobile && trimmedSearch) {
             setShowProfile(false);
         }
 
-        return playerCardLibrary.filter(pokemonCard =>
-            pokemonCard?.name.toLowerCase().includes(trimmedSearch)
-        );
-    }, [searchString, playerCardLibrary]);
+        if (sortByStrength) {
+            return [...cards].sort((a, b) => b.statWeight - a.statWeight);
+        }
+
+        return cards;
+    }, [searchString, playerCardLibrary, sortByStrength]);
 
     const togglePokemonCardSelection = useCallback((pokemonCard) => {
         if (!pokemonCard) return;
@@ -149,10 +156,21 @@ export default function Select() {
         setLastPokemonCardSelected(pokemonCard);
     }, [playerHand, isMobile])
 
+    const restoreLastSelectedHand = () => {
+        const filteredHand = lastSelectedHand.map(pokemonCard => {
+            if (!pokemonCard) return null;
+
+            const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
+            return isOwned ? pokemonCard : null;
+        });
+
+        setPlayerHand(filteredHand);
+    };
+
     return (
         <div className="relative overflow-y-hidden h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
             <div className="px-7 py-4 md:pb-6 flex justify-between gap-4 items-center hand-top-container pb-7 md:pb-8">
-                <div className="relative font-press-start">
+                <div className="relative flex gap-2 font-press-start">
                     <input
                         type="text"
                         id="search"
@@ -162,15 +180,23 @@ export default function Select() {
                         placeholder='Search Cards'
                         value={searchString}
                         onChange={(e) => setSearchString(e.target.value)}
-                        maxLength={18}
+                        maxLength={12}
                     />
-                    {searchString !== "" && (
+                    {searchString !== "" ? (
                         <button
                             onClick={() => setSearchString('')}
                             className="px-1 cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-900 text-lg leading-none"
                             aria-label="Clear search"
                         >
-                            X
+                            <svg className="w-7 h-7 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g> <path d="M5 5h2v2H5V5zm4 4H7V7h2v2zm2 2H9V9h2v2zm2 0h-2v2H9v2H7v2H5v2h2v-2h2v-2h2v-2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm2-2v2h-2V9h2zm2-2v2h-2V7h2zm0 0V5h2v2h-2z"></path> </g></svg>
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => setSortByStrength(!sortByStrength)}
+                            aria-label="Toggle sort"
+                            className="px-1 cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-900 text-lg leading-none"
+                        >
+                            <svg className={`w-7 h-7 transition-colors stroke-neutral-900 fill-neutral-900 ${sortByStrength ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M8 20H6V8H4V6h2V4h2v2h2v2H8v12zm2-12v2h2V8h-2zM4 8v2H2V8h2zm14-4h-2v12h-2v-2h-2v2h2v2h2v2h2v-2h2v-2h2v-2h-2v2h-2V4z"></path> </g></svg>
                         </button>
                     )}
                 </div>
