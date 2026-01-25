@@ -916,7 +916,7 @@ const safePassage = (card, cellId, cells) => {
 
 const softBoiled = safePassage;
 
-const download = (card, cellId, gameState) => {
+const mimic = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
 
@@ -932,7 +932,39 @@ const download = (card, cellId, gameState) => {
     return card;
 };
 
-const mimic = download;
+const conversion = (card, cellId, gameState) => {
+    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+    const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
+
+    if (!adjacentCard) return card;
+
+    const { typeMatchups } = gameData;
+
+    // Find all types that are super effective against the adjacent card's types
+    const counterTypes = [];
+
+    Object.entries(typeMatchups).forEach(([attackingType, matchup]) => {
+        // Check if this attacking type is super effective against any of the adjacent card's types
+        const isSuperEffective = adjacentCard.types.some(defenderType =>
+            matchup.superEffective.includes(defenderType)
+        );
+
+        if (isSuperEffective) {
+            counterTypes.push(attackingType);
+        }
+    });
+
+    // If no counter types found, keep original type
+    if (counterTypes.length === 0) return card;
+
+    // Pick a random counter type
+    const randomCounterType = counterTypes[Math.floor(Math.random() * counterTypes.length)];
+
+    return {
+        ...card,
+        types: [randomCounterType]
+    };
+};
 
 const payDay = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -1004,11 +1036,11 @@ export const selfAbilityHandlers = {
     bonemerang,
     chlorophyll,
     clearBody,
+    conversion,
     cuteCharm,
     defenceCurl,
     desperation,
     dig,
-    download,
     dragonDance,
     evolve,
     familyBond,

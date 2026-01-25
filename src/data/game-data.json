@@ -3020,7 +3020,7 @@
         5,
         5
       ],
-      "ability": "download",
+      "ability": "conversion",
       "statWeight": 395
     },
     "omanyte": {
@@ -3450,6 +3450,11 @@
       "name": "Confuse Ray",
       "trigger": "onGridPlace",
       "description": "Disorients adjacent enemies, shuffling their stats for better or worse"
+    },
+    "conversion": {
+      "name": "Conversion",
+      "trigger": "onGridPlace",
+      "description": "Adapts to counter the strongest adjacent card, changing type to one that opponent is weak to"
     },
     "confusion": {
       "name": "Confusion",
