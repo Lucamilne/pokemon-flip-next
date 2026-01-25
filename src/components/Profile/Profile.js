@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { getPokemonData, getPokemonSpeciesData } from '@/utils/pokeApi';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGameContext } from '@/contexts/GameContext';
-import { allPokemonNames, fetchRandomCardsFromUserCollection } from "@/utils/cardHelpers.js";
+import { allPokemonNames, fetchRandomCardsFromUserCollection, fetchSecretCards } from "@/utils/cardHelpers.js";
 import { TYPES_PER_CARD } from '@/constants/index.js';
 
 import Loader from "@/components/Loader/Loader.js";
@@ -335,6 +335,8 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                                     <h3 className="my-4 md:my-8">Debug functions:</h3>
                                     <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-warning']} cursor-pointer`}>Add all cards</button>
                                     <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Reset cards</button>
+                                    <button onClick={() => setPlayerHand(fetchSecretCards())} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Secret Cards</button>
+
                                 </>
                             )}
                         </div>

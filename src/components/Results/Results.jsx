@@ -10,6 +10,7 @@ import DefeatImage from "@/assets/images/defeat.webp";
 import TieImage from "@/assets/images/tie.webp";
 import Card from "@/components/Card/Card.js"
 import PokeballSplash from '../PokeballSplash/PokeballSplash';
+import Snapshot from '../Board/Snapshot.js';
 import styles from '@/retro.module.css';
 import pokemon from '@/data/game-data.json';
 
@@ -25,6 +26,7 @@ export default function Results() {
     const [penaltyCard, setPenaltyCard] = useState(null);
     const [mounted, setMounted] = useState(false);
     const [isPokeballOpen, setIsPokeballOpen] = useState(true);
+    const [isSnapshotOpen, setIsSnapshotOpen] = useState(false);
 
     const penaltyCardRef = useRef(null);
 
@@ -231,6 +233,9 @@ export default function Results() {
             {mounted && (
                 <div className="relative flex flex-col gap-4 m-8 justify-center fade-in">
                     <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="md:w-1/2 mx-auto drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
+                    <div className="relative group text-center font-press-start text-lg">
+                        <button className={`${styles['nes-btn']} cursor-pointer font-press-start`} onClick={() => setIsSnapshotOpen(true)}>Show Board</button>
+                    </div>
                     <div className='bg-white border-4 border-block shadow-lg/30'>
                         <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
                             {isPlayerVictory === false ? 'Penalty' : 'Rewards'}
@@ -330,6 +335,9 @@ export default function Results() {
                 </div >
             )
             }
+            {isSnapshotOpen && (
+                <Snapshot isOpen={isSnapshotOpen} onClose={() => setIsSnapshotOpen(false)} />
+            )}
             <PokeballSplash pokeballIsOpen={isPokeballOpen} />
         </div >
     )
