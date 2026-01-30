@@ -496,13 +496,12 @@ const lick = (card, cellId, cells) => {
             const stats = adjacentCell.pokemonCard.stats;
             const highestStat = Math.max(...stats);
 
-            // Only reduce if the highest stat is 7 or over
-            if (highestStat < 7) return;
+            // Only reduce if the highest stat is 8 or over
+            if (highestStat < 8) return;
 
-            const highestStatIndex = stats.indexOf(highestStat);
-            const reducedValue = Math.max(1, highestStat - 2);
-            const newStats = stats.map((stat, index) =>
-                index === highestStatIndex ? reducedValue : stat
+            // Reduce all stats that are 8 or over by 2 (minimum 1)
+            const newStats = stats.map(stat =>
+                stat >= 8 ? Math.max(1, stat - 2) : stat
             );
 
             modifiedCells[adjacentCellId] = {

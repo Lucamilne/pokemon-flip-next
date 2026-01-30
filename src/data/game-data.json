@@ -3514,7 +3514,7 @@
     "forewarn": {
       "name": "Forewarn",
       "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
+      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
     },
     "growl": {
       "name": "Growl",
@@ -3569,7 +3569,7 @@
     "jumpKick": {
       "name": "Jump Kick",
       "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
+      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
     },
     "leafGuard": {
       "name": "Leaf Guard",
@@ -3594,7 +3594,7 @@
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
+      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
     },
     "lightningRod": {
       "name": "Lightning Rod",
@@ -3764,7 +3764,7 @@
     "technician": {
       "name": "Technician",
       "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 7 or higher, reduce that stat by 2"
+      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
     },
     "teleport": {
       "name": "Teleport",
