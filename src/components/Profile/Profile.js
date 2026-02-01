@@ -317,12 +317,12 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             </div>
                         </div>
                         <div className='grid grid-cols-1 gap-2'>
-                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Random Hand</button>
                             {user ? (
                                 <button className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`} onClick={signOut}>Go Offline</button>
                             ) : (
                                 <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={signInWithGoogle}>Save Progress</button>
                             )}
+                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Random Hand</button>
                             <button
                                 onClick={restoreLastSelectedHand}
                                 disabled={!lastSelectedHand || lastSelectedHand.length === 0}
