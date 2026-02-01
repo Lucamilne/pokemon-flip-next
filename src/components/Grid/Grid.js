@@ -2,7 +2,7 @@ import { typeTiles } from '@/utils/typeIcons'
 import { useDroppable } from '@dnd-kit/core';
 import Card from '../Card/Card.js';
 
-function DroppableCell({ cellKey, cellData }) {
+function DroppableCell({ cellKey, cellData, snapshot }) {
     const { isOver, setNodeRef } = useDroppable({
         id: cellKey,
         disabled: !!cellData.pokemonCard, // Disable dropping on occupied cells
@@ -44,6 +44,7 @@ function DroppableCell({ cellKey, cellData }) {
                         isPlacedInGrid={true}
                         roundCorners={false}
                         element={cellData.element}
+                        snapshot={snapshot}
                     />
                 </div>
             )}
@@ -51,12 +52,12 @@ function DroppableCell({ cellKey, cellData }) {
     );
 }
 
-export default function Grid({ cells, isPlayerTurn, hasWonCoinToss }) {
+export default function Grid({ cells, isPlayerTurn, hasWonCoinToss, snapshot }) {
     return (
         <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-2 rounded-md ${hasWonCoinToss !== null ? "bg-neutral-400" : isPlayerTurn ? "bg-theme-blue" : "bg-theme-red"}`}>
             <div className="grid grid-cols-3 w-full w-auto grid-cols-[repeat(3,80px)] md:grid-cols-[repeat(3,140px)] bg-black gap-0.5 md:gap-1 border-4 border-black mx-auto aspect-square" id="grid">
                 {Object.entries(cells).map(([key, value]) => (
-                    <DroppableCell key={key} cellKey={key} cellData={value} />
+                    <DroppableCell key={key} cellKey={key} cellData={value} snapshot={snapshot} />
                 ))}
             </div>
         </div>

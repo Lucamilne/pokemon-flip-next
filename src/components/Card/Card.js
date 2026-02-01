@@ -28,7 +28,7 @@ const getBallSprite = (statWeight) => {
     return MasterBallSprite;
 };
 
-function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false }) {
+function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false, snapshot = false }) {
     const { isVisible, handlers } = useTooltip(500); // 500ms long press
     const { hasCard } = useAuth();
 
@@ -194,7 +194,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     }
 
     useEffect(() => {
-        if (isPlacedInGrid) {
+        if (isPlacedInGrid && !snapshot) {
             runPlacementAnimations();
         }
     }, [isPlacedInGrid])
@@ -208,25 +208,27 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         prevIsPlayerCard.current = pokemonCard.isPlayerCard;
         prevStats.current = [...pokemonCard.stats];
 
-        const runAnimations = async () => {
-            // Check if card ownership changed (defeat animation)
-            const ownershipChanged = prevOwnerSnapshot !== undefined &&
-                prevOwnerSnapshot !== pokemonCard.isPlayerCard;
+        if (!snapshot) {
+            const runAnimations = async () => {
+                // Check if card ownership changed (defeat animation)
+                const ownershipChanged = prevOwnerSnapshot !== undefined &&
+                    prevOwnerSnapshot !== pokemonCard.isPlayerCard;
 
-            if (ownershipChanged && isPlacedInGrid) {
-                await defeatCard();
-            }
-
-            // Check if stats changed (stat animation) - only for cards on the grid
-            if (isPlacedInGrid && prevStatsSnapshot !== undefined) {
-                const statsChanged = prevStatsSnapshot.some((stat, i) => stat !== pokemonCard.stats[i]);
-                if (statsChanged) {
-                    await runStatAnimations(prevStatsSnapshot);
+                if (ownershipChanged && isPlacedInGrid) {
+                    await defeatCard();
                 }
-            }
-        };
 
-        runAnimations();
+                // Check if stats changed (stat animation) - only for cards on the grid
+                if (isPlacedInGrid && prevStatsSnapshot !== undefined) {
+                    const statsChanged = prevStatsSnapshot.some((stat, i) => stat !== pokemonCard.stats[i]);
+                    if (statsChanged) {
+                        await runStatAnimations(prevStatsSnapshot);
+                    }
+                }
+            };
+
+            runAnimations();
+        }
     }, [pokemonCard.isPlayerCard, pokemonCard.stats])
 
     useEffect(() => {

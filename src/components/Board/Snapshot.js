@@ -33,7 +33,7 @@ export default function Snapshot({ isOpen, onClose }) {
             {/* Arena */}
             <div className={`grow flex items-center justify-center overflow-hidden`}>
                 <Balance score={score} />
-                <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} />
+                <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} snapshot />
             </div>
         </div>
     )
@@ -44,7 +44,7 @@ export default function Snapshot({ isOpen, onClose }) {
                 {/* Arena */}
                 <div className={`grow flex items-center justify-center overflow-hidden`}>
                     <Balance score={score} />
-                    <Grid cells={cells} isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} />
+                    <Grid cells={cells} isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} snapshot />
                 </div>
             </>
         </div>
