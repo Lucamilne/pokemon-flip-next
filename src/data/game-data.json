@@ -3689,7 +3689,7 @@
     "safePassage": {
       "name": "Safe Passage",
       "trigger": "onGridPlace",
-      "description": "A protective presence that strengthens nearby allies. Increases all stats of adjacent friendly cards by 1"
+      "description": "A protective presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards (max 10)"
     },
     "selfDestruct": {
       "name": "Self Destruct",
@@ -3724,7 +3724,7 @@
     "softBoiled": {
       "name": "Soft Boiled",
       "trigger": "onGridPlace",
-      "description": "A healing presence that strengthens nearby allies. increases all stats of adjacent friendly cards by 1"
+      "description": "A healing presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards (max 10)"
     },
     "staticElectricity": {
       "name": "Static",

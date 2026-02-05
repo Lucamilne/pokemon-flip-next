@@ -897,7 +897,7 @@ const safePassage = (card, cellId, cells) => {
         const adjacentCell = modifiedCells[adjacentCellId];
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard === card.isPlayerCard) {
-            const newStats = [...adjacentCell.pokemonCard.stats].map(stat => stat < 10 ? stat + 1 : 10);
+            const newStats = [...adjacentCell.pokemonCard.stats].map(stat => Math.min(stat * 2, 10));
 
 
             modifiedCells[adjacentCellId] = {
