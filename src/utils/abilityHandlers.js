@@ -496,12 +496,12 @@ const lick = (card, cellId, cells) => {
             const stats = adjacentCell.pokemonCard.stats;
             const highestStat = Math.max(...stats);
 
-            // Only reduce if the highest stat is 8 or over
-            if (highestStat < 8) return;
+            // Only reduce if the highest stat is 7 or over
+            if (highestStat < 7) return;
 
-            // Reduce all stats that are 8 or over by 2 (minimum 1)
+            // Reduce all stats that are 7 or over by 1
             const newStats = stats.map(stat =>
-                stat >= 8 ? Math.max(1, stat - 2) : stat
+                stat >= 7 ? stat - 1 : stat
             );
 
             modifiedCells[adjacentCellId] = {
@@ -551,17 +551,16 @@ const triAttack = (card, cellId, gameState) => {
     // Only boost if 3 or more cards are adjacent
     if (adjacentCardCount < 3) return card;
 
-    // Boost all stats by +2, capped at 10
+    // Double all stats, capped at 10
     return {
         ...card,
-        stats: card.stats.map(stat => stat < 10 ? stat + 2 : 10)
+        stats: card.stats.map(stat => Math.min(stat * 2, 10))
     };
 };
 
 const lonely = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
-    // Check if any adjacent cells have pokemon cards
     const hasAdjacentCards = adjacentCellIds.some(adjacentCellId => {
         const adjacentCell = gameState.cells[adjacentCellId];
         return adjacentCell?.pokemonCard;
@@ -570,10 +569,10 @@ const lonely = (card, cellId, gameState) => {
     // Only boost if no adjacent cards exist
     if (hasAdjacentCards) return card;
 
-    // Boost all stats by +1, capped at 10
+    // Double all stats, capped at 10
     return {
         ...card,
-        stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
+        stats: card.stats.map(stat => Math.min(stat * 2, 10))
     };
 };
 
@@ -916,16 +915,21 @@ const safePassage = (card, cellId, cells) => {
 const softBoiled = safePassage;
 
 const mimic = (card, cellId, gameState) => {
-    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
-    const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
+    // Determine which hand the card is in
+    const currentHand = card.isPlayerCard ? gameState.playerHand : gameState.cpuHand;
 
-    if (adjacentCard) {
-        const adjacentStatSum = adjacentCard.stats.reduce((sum, stat) => sum + stat, 0);
-        const cardStatSum = card.stats.reduce((sum, stat) => sum + stat, 0);
+    // Find the card's index in the hand
+    const cardIndex = currentHand.findIndex(c => c.name === card.name);
 
-        if (adjacentStatSum > cardStatSum) {
-            card.stats = [...adjacentCard.stats];
-        }
+    // Check if there's a card at the next index
+    const nextCard = currentHand[cardIndex + 1];
+
+    // If there's a next card, copy its stats
+    if (nextCard) {
+        return {
+            ...card,
+            stats: [...nextCard.stats]
+        };
     }
 
     return card;
@@ -965,7 +969,7 @@ const conversion = (card, cellId, gameState) => {
     };
 };
 
-const payDay = (card, cellId, gameState) => {
+const illuminate = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
     // Count empty adjacent cells
@@ -997,7 +1001,30 @@ const payDay = (card, cellId, gameState) => {
     };
 };
 
-const illuminate = payDay;
+const payDay = (card, cellId, gameState) => {
+    const currentHand = card.isPlayerCard ? gameState.playerHand : gameState.cpuHand;
+    const cardIndex = currentHand.findIndex(c => c.name === card.name);
+    const nextCard = currentHand[cardIndex + 1];
+
+    if (!nextCard) {
+        return card;
+    }
+    const nextCardTotalStats = nextCard.stats.reduce((sum, stat) => sum + stat, 0);
+
+    // Calculate bonus: +1 to all stats for every 10 stat points
+    const bonus = Math.floor(nextCardTotalStats / 10);
+
+    // If no bonus, return unchanged
+    if (bonus === 0) {
+        return card;
+    }
+
+    // Apply bonus to all stats, capped at 10
+    return {
+        ...card,
+        stats: card.stats.map(stat => Math.min(stat + bonus, 10))
+    };
+};
 
 const prismaticPunch = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
@@ -1025,6 +1052,33 @@ const prismaticPunch = (card, cellId, gameState) => {
         stats: card.stats.map(stat => stat > 1 ? stat - 1 : stat)
     };
 }
+
+const metronome = (card, cellId, gameState) => {
+    const currentHand = card.isPlayerCard ? gameState.playerHand : gameState.cpuHand;
+    const cardIndex = currentHand.findIndex(c => c.name === card.name);
+    const nextCard = currentHand[cardIndex + 1];
+
+    // If Mew is the last card in hand, or no next card exists, return unchanged
+    if (!nextCard) {
+        return card;
+    }
+
+    // Copy ability and type from the next card
+    const modifiedCard = {
+        ...card,
+        ability: nextCard.ability,
+        wasMetronome: true  // Flag for tooltip display
+    };
+
+    // If the copied ability has trigger "onMatchStart" and is a self ability, apply it immediately
+    if (nextCard.ability &&
+        abilities[nextCard.ability]?.trigger === 'onMatchStart' &&
+        selfAbilityHandlers[nextCard.ability]) {
+        return selfAbilityHandlers[nextCard.ability](modifiedCard, cellId, gameState);
+    }
+
+    return modifiedCard;
+};
 
 export const selfAbilityHandlers = {
     acidArmor,
@@ -1058,6 +1112,7 @@ export const selfAbilityHandlers = {
     magicGuard,
     magnetPull,
     maternal,
+    metronome,
     mimic,
     mirrorMove,
     mist,

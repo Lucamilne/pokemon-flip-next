@@ -1308,14 +1308,14 @@
       ],
       "stats": [
         6,
-        1,
-        5,
+        3,
+        3,
         3
       ],
       "originalStats": [
         6,
-        1,
-        5,
+        3,
+        3,
         3
       ],
       "ability": "payDay",
@@ -1527,14 +1527,14 @@
         "psychic"
       ],
       "stats": [
-        7,
-        2,
+        5,
+        4,
         4,
         3
       ],
       "originalStats": [
-        7,
-        2,
+        5,
+        4,
         4,
         3
       ],
@@ -1967,16 +1967,16 @@
         "flying"
       ],
       "stats": [
-        8,
-        8,
-        5,
-        3
+        6,
+        6,
+        6,
+        6
       ],
       "originalStats": [
-        8,
-        8,
-        5,
-        3
+        6,
+        6,
+        6,
+        6
       ],
       "ability": "triAttack",
       "statWeight": 470
@@ -2427,15 +2427,15 @@
         "normal"
       ],
       "stats": [
-        3,
-        10,
-        3,
+        4,
+        8,
+        4,
         3
       ],
       "originalStats": [
-        3,
-        10,
-        3,
+        4,
+        8,
+        4,
         3
       ],
       "ability": "lick",
@@ -3300,7 +3300,7 @@
         9,
         6
       ],
-      "ability": "synchronise",
+      "ability": "metronome",
       "statWeight": 600
     }
   },
@@ -3569,7 +3569,7 @@
     "jumpKick": {
       "name": "Jump Kick",
       "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
+      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
     },
     "leafGuard": {
       "name": "Leaf Guard",
@@ -3594,7 +3594,7 @@
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
+      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
     },
     "lightningRod": {
       "name": "Lightning Rod",
@@ -3604,7 +3604,7 @@
     "lonely": {
       "name": "Lonely",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 1 when placed with no cards adjacent"
+      "description": "Doubles all stats when placed with no cards adjacent"
     },
     "lovelyKiss": {
       "name": "Lovely Kiss",
@@ -3628,8 +3628,8 @@
     },
     "mimic": {
       "name": "Mimic",
-      "trigger": "onGridPlace",
-      "description": "Mimics the stats of a stronger adjacent card when placed"
+      "trigger": "onMatchStart",
+      "description": "Mimics the stats of the next Pokémon in your hand at the start of the match"
     },
     "mirrorMove": {
       "name": "Mirror Move",
@@ -3640,6 +3640,11 @@
       "name": "Mist",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stat bonuses when placed on Ice-type tiles"
+    },
+    "metronome": {
+      "name": "Metronome",
+      "trigger": "onMatchStart",
+      "description": "Copies the ability of the next Pokémon in your hand at the start of the match"
     },
     "oblivious": {
       "name": "Oblivious",
@@ -3653,8 +3658,8 @@
     },
     "payDay": {
       "name": "Pay Day",
-      "trigger": "onGridPlace",
-      "description": "Scavenges empty spaces, gaining 1 stat for each vacant adjacent cell"
+      "trigger": "onMatchStart",
+      "description": "On match start, all stats are increased by 1 for every 10 total stat points the next Pokémon in your hand has"
     },
     "pressure": {
       "name": "Pressure",
@@ -3689,7 +3694,7 @@
     "safePassage": {
       "name": "Safe Passage",
       "trigger": "onGridPlace",
-      "description": "A protective presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards (max 10)"
+      "description": "A protective presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards"
     },
     "selfDestruct": {
       "name": "Self Destruct",
@@ -3724,7 +3729,7 @@
     "softBoiled": {
       "name": "Soft Boiled",
       "trigger": "onGridPlace",
-      "description": "A healing presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards (max 10)"
+      "description": "A healing presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards"
     },
     "staticElectricity": {
       "name": "Static",
@@ -3764,12 +3769,12 @@
     "technician": {
       "name": "Technician",
       "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
+      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
     },
     "teleport": {
       "name": "Teleport",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 1 when placed with no cards adjacent"
+      "description": "Doubles all stats when placed with no cards adjacent"
     },
     "thickFat": {
       "name": "Thick Fat",
@@ -3794,7 +3799,7 @@
     "triAttack": {
       "name": "Tri Attack",
       "trigger": "onGridPlace",
-      "description": "Boosts all stats by 2 when placed adjacent to 3 or more cards"
+      "description": "Doubles all stats when placed adjacent to 3 or more cards"
     }
   }
 }
