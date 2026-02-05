@@ -322,7 +322,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             ) : (
                                 <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={signInWithGoogle}>Save Progress</button>
                             )}
-                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} ${styles['is-primary']} cursor-pointer`}>Random Hand</button>
+                            <button onClick={() => setPlayerHand(fetchRandomCardsFromUserCollection(userCollection))} className={`${styles['nes-btn']} cursor-pointer`}>Random Hand</button>
                             <button
                                 onClick={restoreLastSelectedHand}
                                 disabled={!lastSelectedHand || lastSelectedHand.length === 0}

@@ -27,11 +27,16 @@ export default function Select() {
     const [showConfirm, setShowConfirm] = useState(false);
     const [showProfile, setShowProfile] = useState(true);
     const [showHelp, setShowHelp] = useState(false);
-    const [sortByStrength, setSortByStrength] = useState(false);
-    const [showProfilesOnMobile, setShowProfilesOnMobile] = useState(() => {
-        const stored = sessionStorage.getItem('showProfilesOnMobile');
-        return stored !== null ? stored === 'true' : true;
+    const [sortByStrength, setSortByStrength] = useState(() => {
+        return sessionStorage.getItem('sortByStrength') === 'true';
     });
+    const [showProfilesOnMobile, setShowProfilesOnMobile] = useState(() => {
+        return sessionStorage.getItem('showProfilesOnMobile') !== 'false';
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem('sortByStrength', sortByStrength);
+    }, [sortByStrength]);
 
     useEffect(() => {
         sessionStorage.setItem('showProfilesOnMobile', showProfilesOnMobile);
