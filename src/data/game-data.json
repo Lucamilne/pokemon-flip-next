@@ -2558,7 +2558,7 @@
         4,
         7
       ],
-      "ability": "leafGuard",
+      "ability": "leechSeed",
       "statWeight": 435
     },
     "kangaskhan": {
@@ -3304,6 +3304,84 @@
       "statWeight": 600
     }
   },
+  "eeveelutions": {
+    "espeon": {
+      "id": 196,
+      "types": [
+        "psychic"
+      ],
+      "stats": [
+        6,
+        8,
+        7,
+        5
+      ],
+      "originalStats": [
+        6,
+        8,
+        7,
+        5
+      ],
+      "statWeight": 525
+    },
+    "leafeon": {
+      "id": 470,
+      "types": [
+        "grass"
+      ],
+      "stats": [
+        7,
+        5,
+        6,
+        8
+      ],
+      "originalStats": [
+        7,
+        5,
+        6,
+        8
+      ],
+      "statWeight": 525
+    },
+    "glaceon": {
+      "id": 471,
+      "types": [
+        "ice"
+      ],
+      "stats": [
+        5,
+        8,
+        8,
+        5
+      ],
+      "originalStats": [
+        5,
+        8,
+        8,
+        5
+      ],
+      "statWeight": 525
+    },
+    "sylveon": {
+      "id": 700,
+      "types": [
+        "fairy"
+      ],
+      "stats": [
+        8,
+        5,
+        5,
+        8
+      ],
+      "originalStats": [
+        8,
+        5,
+        5,
+        8
+      ],
+      "statWeight": 525
+    }
+  },
   "legends": {
     "celebi": {
       "id": 251,
@@ -3464,7 +3542,7 @@
     "cuteCharm": {
       "name": "Cute Charm",
       "trigger": "onGridPlace",
-      "description": "Infatuates those in contact when placed, gaining 1 stat for each adjacent card"
+      "description": "Charms those in contact, boosting the facing stat by 1 for each adjacent card"
     },
     "defenceCurl": {
       "name": "Defence Curl",
@@ -3494,7 +3572,7 @@
     "evolve": {
       "name": "Evolve",
       "trigger": "onElementalTilePlace",
-      "description": "Evolves into Flareon, Vaporeon, or Jolteon based on the elemental tile it's placed on"
+      "description": "Evolves into a different evolutionary form based on the elemental tile it's placed on"
     },
     "familyBond": {
       "name": "Family Bond",
@@ -3511,11 +3589,6 @@
       "trigger": "onMatchStart",
       "description": "For each additional Fire-type in the current match, a random stat is increased by 1"
     },
-    "forewarn": {
-      "name": "Forewarn",
-      "trigger": "onGridPlace",
-      "description": "When placed, if any adjacent enemy has a stat of 8 or higher, reduce all stats of 8 or higher by 2"
-    },
     "growl": {
       "name": "Growl",
       "trigger": "onGridPlace",
@@ -3529,7 +3602,7 @@
     "guillotine": {
       "name": "Guillotine",
       "trigger": "onGridPlace",
-      "description": "When placed, may reduce a stat of an adjacent enemy card to 1"
+      "description": "When placed, may reduce all stats of an adjacent enemy card to 1"
     },
     "guts": {
       "name": "Guts",
@@ -3544,7 +3617,7 @@
     "hornDrill": {
       "name": "Horn Drill",
       "trigger": "onGridPlace",
-      "description": "When placed, may reduce a stat of an adjacent enemy card to 1"
+      "description": "When placed, may reduce all stats of an adjacent enemy card to 1"
     },
     "hydroPump": {
       "name": "Hydro Pump",
@@ -3554,7 +3627,7 @@
     "hypnosis": {
       "name": "Hypnosis",
       "trigger": "onGridPlace",
-      "description": "Reduces the highest stat and increases the lowest stat of each adjacent enemy"
+      "description": "May swap the highest and lowest stats of each adjacent enemy card"
     },
     "illuminate": {
       "name": "Illuminate",
@@ -3579,12 +3652,12 @@
     "leechLife": {
       "name": "Leech Life",
       "trigger": "onGridPlace",
-      "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random"
+      "description": "When placed, drains a random stat from adjacent enemy cards"
     },
     "leechSeed": {
       "name": "Leech Seed",
       "trigger": "onGridPlace",
-      "description": "Drain the highest stat from adjacent cards to replace one of its own weaker stats at random"
+      "description": "When placed, drains a random stat from adjacent enemy cards"
     },
     "leer": {
       "name": "Leer",
@@ -3609,7 +3682,7 @@
     "lovelyKiss": {
       "name": "Lovely Kiss",
       "trigger": "onGridPlace",
-      "description": "Infatuates those in contact when placed, gaining 1 stat for each adjacent card"
+      "description": "Infatuates those in contact, boosting the facing stat for each adjacent card"
     },
     "magicGuard": {
       "name": "Magic Guard",
@@ -3619,17 +3692,17 @@
     "magnetPull": {
       "name": "Magnet Pull",
       "trigger": "onGridPlace",
-      "description": "Gains 1 random stat for each adjacent card"
+      "description": "Magnetic attraction boosts the facing stat for each adjacent card"
     },
     "maternal": {
       "name": "Maternal",
       "trigger": "onMatchStart",
-      "description": "For each 'weak' card in the current match, a random stat is increased by 1"
+      "description": "Shields the weak, boosting all stats of each 'weak' card in your hand"
     },
     "mimic": {
       "name": "Mimic",
       "trigger": "onMatchStart",
-      "description": "Mimics the stats of the next Pokémon in your hand at the start of the match"
+      "description": "At the start of the match, mimic the stats of the next Pokémon in your hand"
     },
     "mirrorMove": {
       "name": "Mirror Move",
@@ -3664,7 +3737,7 @@
     "pressure": {
       "name": "Pressure",
       "trigger": "onGridPlace",
-      "description": "Exerts intense pressure on surrounding foes, gaining 1 stat for each adjacent card"
+      "description": "Exerts intense pressure, boosting the facing stat for each adjacent card"
     },
     "prismaticPunch": {
       "name": "Prismatic Punch",
@@ -3693,8 +3766,8 @@
     },
     "safePassage": {
       "name": "Safe Passage",
-      "trigger": "onGridPlace",
-      "description": "A protective presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards"
+      "trigger": "onMatchStart",
+      "description": "A protective presence that boosts all stats of adjacent cards in hand by 1"
     },
     "selfDestruct": {
       "name": "Self Destruct",
@@ -3728,8 +3801,8 @@
     },
     "softBoiled": {
       "name": "Soft Boiled",
-      "trigger": "onGridPlace",
-      "description": "A healing presence that strengthens nearby allies. Doubles the stats of adjacent friendly cards"
+      "trigger": "onMatchStart",
+      "description": "A healing presence that boosts all stats of adjacent cards in hand by 1"
     },
     "staticElectricity": {
       "name": "Static",
@@ -3749,7 +3822,7 @@
     "supersonic": {
       "name": "Supersonic",
       "trigger": "onGridPlace",
-      "description": "Reduces the highest stat and increases the lowest stat of each adjacent enemy"
+      "description": "May swap around the highest and lowest stats of each adjacent enemy card"
     },
     "swarm": {
       "name": "Swarm",

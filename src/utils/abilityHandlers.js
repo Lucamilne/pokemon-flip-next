@@ -28,6 +28,15 @@ const findStrongestAdjacentCard = (adjacentCellIds, cells) => {
     return strongestCard;
 };
 
+const replaceCardInHands = (originalCard, modifiedCard, gameState) => {
+    const handKey = originalCard.isPlayerCard ? 'playerHand' : 'cpuHand';
+    const otherHandKey = originalCard.isPlayerCard ? 'cpuHand' : 'playerHand';
+    return {
+        [handKey]: gameState[handKey].map(c => c.name === originalCard.name ? modifiedCard : c),
+        [otherHandKey]: [...gameState[otherHandKey]]
+    };
+};
+
 const updateStatOnElementalTileByModifier = (stat, types, tileElement, modifier = 1) => {
     if (types.includes(tileElement) && stat < 10) {
         // stat cannot be increased above 10
@@ -104,15 +113,19 @@ const magicGuard = clearBody;
 
 const evolve = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
-    const validElements = ['fire', 'electric', 'water'];
+    const validElements = ['electric', 'fairy', 'fire', 'grass', 'ice', 'psychic', 'water'];
 
     if (!tileElement || !validElements.includes(tileElement)) return card;
 
     // Map tile elements to evolution cards
     const evolutionMap = {
+        electric: gameData.cards.jolteon,
+        fairy: gameData.eeveelutions.sylveon,
         fire: gameData.cards.flareon,
+        grass: gameData.eeveelutions.leafeon,
+        ice: gameData.eeveelutions.glaceon,
+        psychic: gameData.eeveelutions.espeon,
         water: gameData.cards.vaporeon,
-        electric: gameData.cards.jolteon
     };
 
     const evolution = evolutionMap[tileElement];
@@ -121,7 +134,7 @@ const evolve = (card, cellId, gameState) => {
         ...card,
         id: evolution.id,
         types: [...evolution.types],
-        stats: [...evolution.stats],
+        stats: evolution.stats.map(stat => Math.min(stat + 1, 10)),
     };
 }
 
@@ -161,7 +174,7 @@ const chlorophyll = (card, cellId, gameState) => {
         c.types.includes(card.types[0])
     ).length - 1;
 
-    if (cardTypeCount < 1) return card;
+    if (cardTypeCount < 1) return replaceCardInHands(card, card, gameState);
 
     // Create a new stats array
     const newStats = [...card.stats];
@@ -184,10 +197,7 @@ const chlorophyll = (card, cellId, gameState) => {
         newStats[statIndexToBoost] += 1;
     }
 
-    return {
-        ...card,
-        stats: newStats
-    };
+    return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
 }
 
 const flashFire = chlorophyll; // fire
@@ -228,7 +238,7 @@ const familyBond = (card, cellId, gameState) => {
         c.name.toLowerCase().startsWith('nido')
     ).length - 1;
 
-    if (nidoFamilyCount < 1) return card;
+    if (nidoFamilyCount < 1) return replaceCardInHands(card, card, gameState);
 
     // Create a new stats array
     const newStats = [...card.stats];
@@ -253,10 +263,7 @@ const familyBond = (card, cellId, gameState) => {
         newStats[statIndexToBoost] = Math.min(10, newStats[statIndexToBoost] + boostAmount);
     }
 
-    return {
-        ...card,
-        stats: newStats
-    };
+    return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
 }
 
 const rest = (card, cellId, gameState) => {
@@ -295,30 +302,19 @@ const harden = rest;
 const growth = rest;
 
 const pressure = (card, cellId, gameState) => {
-    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
-
-    // Count adjacent cells with any pokemon (friend or foe)
-    const occupiedAdjacentCells = adjacentCellIds.filter(adjacentCellId => {
-        const adjacentCell = gameState.cells[adjacentCellId];
-        return adjacentCell?.pokemonCard;
-    }).length;
-
-    // If no adjacent cards, return card unchanged
-    if (occupiedAdjacentCells === 0) return card;
-
-    // Create a new stats array
+    const adjacentCellIds = gameState.cells[cellId].adjacentCells;
     const newStats = [...card.stats];
 
-    // Boost random stats based on occupied cell count
-    for (let i = 0; i < occupiedAdjacentCells; i++) {
-        // Pick a random stat index (0-3)
-        const randomStatIndex = Math.floor(Math.random() * newStats.length);
+    // adjacentCells is ordered: [left, top, right, bottom]
+    adjacentCellIds.forEach((adjacentCellId, directionIndex) => {
+        if (adjacentCellId === null) return;
 
-        // Increase by +1, but cap at 10
-        if (newStats[randomStatIndex] < 10) {
-            newStats[randomStatIndex] += 1;
+        const adjacentCell = gameState.cells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard) {
+            newStats[directionIndex] = Math.min(newStats[directionIndex] + 1, 10);
         }
-    }
+    });
 
     return {
         ...card,
@@ -331,40 +327,23 @@ const cuteCharm = pressure;
 const lovelyKiss = pressure;
 
 const maternal = (card, cellId, gameState) => {
-    const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
+    const handKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
+    const otherHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
+    const currentHand = gameState[handKey];
 
-    // Count cards in both hands with statWeight of 355 or less
-    const weakCardCount = collectiveHand.filter(c =>
-        c.statWeight <= 355
-    ).length;
-
-    // If no weak cards in hands, return unchanged
-    if (weakCardCount === 0) return card;
-
-    // Create a new stats array
-    const newStats = [...card.stats];
-
-    // Boost random stats based on weak card count
-    for (let i = 0; i < weakCardCount; i++) {
-        // Find all stat indices that are below 10
-        const availableStatIndices = newStats
-            .map((stat, index) => ({ stat, index }))
-            .filter(({ stat }) => stat < 10)
-            .map(({ index }) => index);
-
-        // If all stats are at 10, return the card
-        if (availableStatIndices.length === 0) return card;
-
-        // Pick a random stat from available indices
-        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
-        const statIndexToBoost = availableStatIndices[randomIndex];
-
-        newStats[statIndexToBoost] += 1;
-    }
+    const newHand = currentHand.map(handCard => {
+        if (handCard.statWeight <= 355) {
+            return {
+                ...handCard,
+                stats: handCard.stats.map(stat => Math.min(stat + 1, 10))
+            };
+        }
+        return handCard;
+    });
 
     return {
-        ...card,
-        stats: newStats
+        [handKey]: newHand,
+        [otherHandKey]: [...gameState[otherHandKey]]
     };
 };
 
@@ -615,7 +594,7 @@ const dragonDance = (card, cellId, gameState) => {
     ).length;
 
     // If no elemental tiles, return card unchanged
-    if (elementalTilesCount === 0) return card;
+    if (elementalTilesCount === 0) return replaceCardInHands(card, card, gameState);
 
     // Create a new stats array
     const newStats = [...card.stats];
@@ -638,44 +617,34 @@ const dragonDance = (card, cellId, gameState) => {
         newStats[statIndexToBoost] += 1;
     }
 
-    return {
-        ...card,
-        stats: newStats
-    };
+    return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
 };
 
 const leechLife = (card, cellId, gameState) => {
-    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
+    const adjacentCellIds = gameState.cells[cellId].adjacentCells;
 
-    // Find highest stat from all adjacent cards
-    let highestStat = 0;
+    let leechCount = 0;
     adjacentCellIds.forEach(adjacentCellId => {
+        if (adjacentCellId === null) return;
         const adjacentCell = gameState.cells[adjacentCellId];
-        if (adjacentCell?.pokemonCard) {
-            const maxStatInCard = Math.max(...adjacentCell.pokemonCard.stats);
-            if (maxStatInCard > highestStat) {
-                highestStat = maxStatInCard;
-            }
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard
+            && !statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
+            leechCount++;
         }
     });
 
-    // If no adjacent cards, return unchanged
-    if (highestStat === 0) return card;
+    if (leechCount === 0) return card;
 
-    // Find all stat indices that are lower than the highest stat
     const newStats = [...card.stats];
-    const lowerStatIndices = newStats
-        .map((stat, index) => ({ stat, index }))
-        .filter(({ stat }) => stat < highestStat)
-        .map(({ index }) => index);
-
-    // If no stats are lower than the highest stat, return unchanged
-    if (lowerStatIndices.length === 0) return card;
-
-    // Pick a random stat from the lower stat indices
-    const randomIndex = Math.floor(Math.random() * lowerStatIndices.length);
-    const statIndexToReplace = lowerStatIndices[randomIndex];
-    newStats[statIndexToReplace] = highestStat;
+    for (let i = 0; i < leechCount; i++) {
+        const availableIndices = newStats
+            .map((stat, index) => ({ stat, index }))
+            .filter(({ stat }) => stat < 10)
+            .map(({ index }) => index);
+        if (availableIndices.length === 0) break;
+        const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        newStats[randomIndex] += 1;
+    }
 
     return {
         ...card,
@@ -684,6 +653,40 @@ const leechLife = (card, cellId, gameState) => {
 };
 
 const leechSeed = leechLife;
+
+const leechLifeStatus = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+
+    adjacentCellIds.forEach(adjacentCellId => {
+        if (adjacentCellId === null) return;
+
+        const adjacentCell = modifiedCells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
+                return;
+            }
+
+            const stats = [...adjacentCell.pokemonCard.stats];
+            const randomStatIndex = Math.floor(Math.random() * stats.length);
+
+            if (stats[randomStatIndex] > 1) {
+                stats[randomStatIndex] -= 1;
+            }
+
+            modifiedCells[adjacentCellId] = {
+                ...adjacentCell,
+                pokemonCard: {
+                    ...adjacentCell.pokemonCard,
+                    stats
+                }
+            };
+        }
+    });
+
+    return modifiedCells;
+};
 
 const confuseRay = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
@@ -728,33 +731,26 @@ const hypnosis = (card, cellId, cells) => {
         const adjacentCell = modifiedCells[adjacentCellId];
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            // Check if the pokemon has stat-lowering immunity
             if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
                 return;
             }
 
-            const stats = [...adjacentCell.pokemonCard.stats];
+            if (Math.random() < 0.5) {
+                const newStats = [...adjacentCell.pokemonCard.stats];
 
-            // Find the highest stat value and its index
-            const highestStat = Math.max(...stats);
-            const highestIndex = stats.indexOf(highestStat);
+                const highestIndex = newStats.indexOf(Math.max(...newStats));
+                const lowestIndex = newStats.indexOf(Math.min(...newStats));
 
-            // Find the lowest stat value and its index
-            const lowestStat = Math.min(...stats);
-            const lowestIndex = stats.indexOf(lowestStat);
+                [newStats[highestIndex], newStats[lowestIndex]] = [newStats[lowestIndex], newStats[highestIndex]];
 
-            // Reduce highest by 1 (minimum 1), increase lowest by 1 (maximum 10)
-            const newStats = [...stats];
-            newStats[highestIndex] = Math.max(1, highestStat - 1);
-            newStats[lowestIndex] = Math.min(10, lowestStat + 1);
-
-            modifiedCells[adjacentCellId] = {
-                ...adjacentCell,
-                pokemonCard: {
-                    ...adjacentCell.pokemonCard,
-                    stats: newStats
-                }
-            };
+                modifiedCells[adjacentCellId] = {
+                    ...adjacentCell,
+                    pokemonCard: {
+                        ...adjacentCell.pokemonCard,
+                        stats: newStats
+                    }
+                };
+            }
         }
     });
 
@@ -862,19 +858,12 @@ const hornDrill = (card, cellId, cells) => {
 
             const roll = Math.random();
 
-            if (roll < 0.3) {
-                const stats = [...adjacentCell.pokemonCard.stats];
-
-                const randomStatIndex = Math.floor(Math.random() * stats.length);
-                const newStats = stats.map((stat, index) =>
-                    index === randomStatIndex ? 1 : stat
-                );
-
+            if (roll < 0.25) {
                 modifiedCells[adjacentCellId] = {
                     ...adjacentCell,
                     pokemonCard: {
                         ...adjacentCell.pokemonCard,
-                        stats: newStats
+                        stats: adjacentCell.pokemonCard.stats.map(() => 1)
                     }
                 };
             }
@@ -886,30 +875,26 @@ const hornDrill = (card, cellId, cells) => {
 
 const guillotine = hornDrill;
 
-const safePassage = (card, cellId, cells) => {
-    const modifiedCells = { ...cells };
-    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+const safePassage = (card, cellId, gameState) => {
+    const handKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
+    const otherHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
+    const currentHand = gameState[handKey];
+    const cardIndex = currentHand.findIndex(c => c.name === card.name);
 
-    adjacentCellIds.forEach((adjacentCellId, directionIndex) => {
-        if (adjacentCellId === null) return;
-
-        const adjacentCell = modifiedCells[adjacentCellId];
-
-        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard === card.isPlayerCard) {
-            const newStats = [...adjacentCell.pokemonCard.stats].map(stat => Math.min(stat * 2, 10));
-
-
-            modifiedCells[adjacentCellId] = {
-                ...adjacentCell,
-                pokemonCard: {
-                    ...adjacentCell.pokemonCard,
-                    stats: newStats
-                }
+    const newHand = currentHand.map((handCard, index) => {
+        if ((index === cardIndex - 1 || index === cardIndex + 1) && handCard) {
+            return {
+                ...handCard,
+                stats: handCard.stats.map(stat => Math.min(stat + 1, 10))
             };
         }
+        return handCard;
     });
 
-    return modifiedCells;
+    return {
+        [handKey]: newHand,
+        [otherHandKey]: [...gameState[otherHandKey]]
+    };
 }
 
 const softBoiled = safePassage;
@@ -926,13 +911,10 @@ const mimic = (card, cellId, gameState) => {
 
     // If there's a next card, copy its stats
     if (nextCard) {
-        return {
-            ...card,
-            stats: [...nextCard.stats]
-        };
+        return replaceCardInHands(card, { ...card, stats: [...nextCard.stats] }, gameState);
     }
 
-    return card;
+    return replaceCardInHands(card, card, gameState);
 };
 
 const conversion = (card, cellId, gameState) => {
@@ -1007,7 +989,7 @@ const payDay = (card, cellId, gameState) => {
     const nextCard = currentHand[cardIndex + 1];
 
     if (!nextCard) {
-        return card;
+        return replaceCardInHands(card, card, gameState);
     }
     const nextCardTotalStats = nextCard.stats.reduce((sum, stat) => sum + stat, 0);
 
@@ -1016,14 +998,14 @@ const payDay = (card, cellId, gameState) => {
 
     // If no bonus, return unchanged
     if (bonus === 0) {
-        return card;
+        return replaceCardInHands(card, card, gameState);
     }
 
     // Apply bonus to all stats, capped at 10
-    return {
+    return replaceCardInHands(card, {
         ...card,
         stats: card.stats.map(stat => Math.min(stat + bonus, 10))
-    };
+    }, gameState);
 };
 
 const prismaticPunch = (card, cellId, gameState) => {
@@ -1060,7 +1042,7 @@ const metronome = (card, cellId, gameState) => {
 
     // If Mew is the last card in hand, or no next card exists, return unchanged
     if (!nextCard) {
-        return card;
+        return replaceCardInHands(card, card, gameState);
     }
 
     // Copy ability and type from the next card
@@ -1077,7 +1059,7 @@ const metronome = (card, cellId, gameState) => {
         return selfAbilityHandlers[nextCard.ability](modifiedCard, cellId, gameState);
     }
 
-    return modifiedCard;
+    return replaceCardInHands(card, modifiedCard, gameState);
 };
 
 export const selfAbilityHandlers = {
@@ -1125,10 +1107,12 @@ export const selfAbilityHandlers = {
     rage,
     rest,
     rockSlide,
+    safePassage,
     selfDestruct,
     shellArmor,
     shieldDust,
     smokeScreen,
+    softBoiled,
     staticElectricity,
     sturdy,
     swarm,
@@ -1153,11 +1137,11 @@ export const statusAbilityHandlers = {
     hypnosis,
     intimidate,
     lick,
+    leechLife: leechLifeStatus,
+    leechSeed: leechLifeStatus,
     leer,
-    safePassage,
     sing,
     smog,
-    softBoiled,
     stench,
     supersonic,
     technician,
@@ -1190,4 +1174,21 @@ export const applyStatusAbilities = (card, trigger, cellId, cells) => {
 
     return modifiedCells;
 }
+
+export const applyMatchStartAbilities = (gameState) => {
+    let playerHand = [...gameState.playerHand];
+    let cpuHand = [...gameState.cpuHand];
+
+    const allCards = [...playerHand, ...cpuHand];
+    allCards.forEach(card => {
+        if (card?.ability && abilities[card.ability]?.trigger === 'onMatchStart' && selfAbilityHandlers[card.ability]) {
+            const currentCard = [...playerHand, ...cpuHand].find(c => c.name === card.name) || card;
+            const result = selfAbilityHandlers[card.ability](currentCard, null, { ...gameState, playerHand, cpuHand });
+            if (result?.playerHand) playerHand = result.playerHand;
+            if (result?.cpuHand) cpuHand = result.cpuHand;
+        }
+    });
+
+    return { playerHand, cpuHand };
+};
 

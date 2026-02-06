@@ -7,7 +7,7 @@ import Coin from "../Coin/Coin.js";
 import Matchups from "@/components/Matchups/Matchups";
 import HowToPlay from "@/components/HowToPlay/HowToPlay";
 
-import { applySelfAbilities, applyStatusAbilities } from '@/utils/abilityHandlers.js';
+import { applySelfAbilities, applyStatusAbilities, applyMatchStartAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -102,28 +102,10 @@ export default function Board() {
         });
 
         // onMatchStart - trigger abilities for both hands
-        const processedCpuHand = newCpuHand.map(card => {
-            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
-                return applySelfAbilities(
-                    card,
-                    'onMatchStart',
-                    null,
-                    { cells: updatedCells, playerHand: newPlayerHand, cpuHand: newCpuHand }
-                );
-            }
-            return card;
-        });
-
-        const processedPlayerHand = newPlayerHand.map(card => {
-            if (card.ability && abilities[card.ability]?.trigger === 'onMatchStart') {
-                return applySelfAbilities(
-                    card,
-                    'onMatchStart',
-                    null,
-                    { cells: updatedCells, playerHand: newPlayerHand, cpuHand: newCpuHand }
-                );
-            }
-            return card;
+        const { playerHand: processedPlayerHand, cpuHand: processedCpuHand } = applyMatchStartAbilities({
+            cells: updatedCells,
+            playerHand: newPlayerHand,
+            cpuHand: newCpuHand
         });
 
         setCpuHand(processedCpuHand);
@@ -322,13 +304,6 @@ export default function Board() {
                     }
                 };
             });
-
-            // newCells = applyStatusAbilities(
-            //     attackingCard,
-            //     'afterGridPlace',
-            //     cellTarget,
-            //     newCells
-            // );
 
             // Place the attacking card
             newCells[cellTarget] = {
