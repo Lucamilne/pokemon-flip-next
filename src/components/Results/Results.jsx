@@ -40,6 +40,16 @@ export default function Results() {
         "An even match! No spoils for either side."
     ];
 
+    const victoryText = [
+        "Your spoils of victory! These cards now belong to you.",
+        "Congratulations! You've earned these new cards.",
+        "Victory is yours! Claim your prize cards.",
+        "Well fought! These cards are now part of your collection.",
+        "A well-deserved win! Add these cards to your deck.",
+        "You've proven your skill! These cards are yours.",
+        "The spoils of battle! New cards for your collection."
+    ];
+
     const handlePlayAgain = () => {
         setIsPokeballOpen(false);
         setTimeout(() => {
@@ -245,7 +255,7 @@ export default function Results() {
                                 {rewardCards.length > 0 ? (
                                     <>
                                         <div className='font-press-start text-center text-sm md:text-base'>
-                                            <p>Your spoils of victory! These cards now belong to you.</p>
+                                            <p>{victoryText[Math.floor(Math.random() * victoryText.length)]}</p>
                                         </div>
                                         <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-1 md:gap-4 mt-8">
                                             {rewardCards.map((pokemonCard, index) => {
