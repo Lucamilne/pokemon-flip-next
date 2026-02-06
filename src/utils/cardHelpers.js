@@ -258,7 +258,7 @@ export const specialAwardDefinitions = [
     { name: 'mr-mime', award: 'Most Unsettling...' },
     { name: 'jynx', award: 'Most Likely To Dance Off' },
     { name: 'electabuzz', award: 'Best Taser Replacement' },
-    { name: 'magmar', award: 'Best Resting 56Fire Face' },
+    { name: 'magmar', award: 'Best Resting Pitch Face' },
     { name: 'kabutops', award: 'Edward Scissorhands' },
     { name: 'omastar', award: 'Biggest Luddite' },
     { name: 'wigglytuff', award: 'Fluff With Authority' },
