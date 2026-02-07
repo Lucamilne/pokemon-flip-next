@@ -5,6 +5,7 @@ import SlideC from "@/components/HowToPlay/Slides/C";
 import SlideD from "@/components/HowToPlay/Slides/D";
 import SlideE from "@/components/HowToPlay/Slides/E";
 import SlideF from "@/components/HowToPlay/Slides/F";
+import PixelX from '@/assets/svg/PixelX';
 
 import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
 import GreatBallSprite from '@/assets/icons/tiers/Bag_Great_Ball_Sprite.png'
@@ -167,8 +168,8 @@ export default function HowToPlay({ isOpen, onClose }) {
                     </div>
                 </div>
 
-                <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-5 right-4 font-press-start leading-none'>
-                    <span>X</span>
+                <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none flex justify-center items-center absolute top-4 right-4 md:top-7 md:right-7 font-press-start leading-none'>
+                    <PixelX className="size-6 md:size-7 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" />
                 </button>
 
                 {/* Navigation Buttons */}

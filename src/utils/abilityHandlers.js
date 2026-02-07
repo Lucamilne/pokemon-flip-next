@@ -37,16 +37,6 @@ const replaceCardInHands = (originalCard, modifiedCard, gameState) => {
     };
 };
 
-const updateStatOnElementalTileByModifier = (stat, types, tileElement, modifier = 1) => {
-    if (types.includes(tileElement) && stat < 10) {
-        // stat cannot be increased above 10
-        return stat + modifier;
-    } else if (!types.includes(tileElement) && stat > 1) {
-        // stat cannot be decreased below 1
-        return stat - 1;
-    }
-    return stat; // No change
-};
 
 const oblivious = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
@@ -153,9 +143,13 @@ const overgrow = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
     if (!tileElement) return card;
 
+    const isMatchingType = card.types.includes(tileElement);
+
     return {
         ...card,
-        stats: card.stats.map(stat => updateStatOnElementalTileByModifier(stat, card.types, tileElement, 2))
+        stats: card.stats.map(stat =>
+            isMatchingType ? Math.min(stat * 2, 10) : Math.max(stat - 1, 1)
+        )
     };
 }
 
@@ -210,23 +204,11 @@ const toxic = chlorophyll; // poison
 const synchronise = chlorophyll; // psychic
 
 const ancientPower = (card, cellId, gameState) => {
-    const newStats = [...card.stats];
-
-    const availableStatIndices = newStats
-        .map((stat, index) => ({ stat, index }))
-        .filter(({ stat }) => stat < 10)
-        .map(({ index }) => index);
-
-    if (availableStatIndices.length === 0) return card;
-
-    const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
-    const statIndexToBoost = availableStatIndices[randomIndex];
-
-    newStats[statIndexToBoost] += 1;
+    if (Math.random() >= 0.25) return card;
 
     return {
         ...card,
-        stats: newStats
+        stats: card.stats.map(stat => Math.min(stat + 1, 10))
     };
 }
 
@@ -391,6 +373,7 @@ const quickAttack = (card, cellId, gameState) => {
 }
 
 const agility = quickAttack;
+const teleport = quickAttack;
 
 const selfDestruct = (card, cellId, gameState) => {
     return {
@@ -555,33 +538,15 @@ const lonely = (card, cellId, gameState) => {
     };
 };
 
-const teleport = lonely;
-
 const dig = (card, cellId, gameState) => {
     const cornerCells = ["A1", "A3", "C1", "C3"];
 
-    // Only boost if placed on a corner cell
-    if (!cornerCells.includes(cellId)) return card;
-
-    const newStats = [...card.stats];
-
-    // Boost 2 random stats
-    for (let i = 0; i < 2; i++) {
-        const availableStatIndices = newStats
-            .map((stat, index) => ({ stat, index }))
-            .filter(({ stat }) => stat < 10)
-            .map(({ index }) => index);
-
-        if (availableStatIndices.length === 0) break;
-
-        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
-        const statIndexToBoost = availableStatIndices[randomIndex];
-        newStats[statIndexToBoost] += 1;
-    }
+    // Only boost if placed on a corner cell, 50% chance
+    if (!cornerCells.includes(cellId) || Math.random() >= 0.5) return card;
 
     return {
         ...card,
-        stats: newStats
+        stats: card.stats.map(stat => Math.min(stat + 1, 10))
     };
 }
 

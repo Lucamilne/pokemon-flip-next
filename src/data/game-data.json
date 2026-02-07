@@ -596,7 +596,7 @@
         1,
         7
       ],
-      "ability": "mirrorMove",
+      "ability": "quickAttack",
       "statWeight": 251
     },
     "pidgeotto": {
@@ -771,6 +771,7 @@
         6,
         4
       ],
+      "starter": true,
       "originalStats": [
         4,
         2,
@@ -1128,17 +1129,18 @@
       ],
       "stats": [
         3,
-        7,
+        6,
         2,
-        4
+        5
       ],
+      "starter": true,
       "originalStats": [
         3,
-        7,
+        6,
         2,
-        4
+        5
       ],
-      "ability": "chlorophyll",
+      "ability": "stench",
       "statWeight": 320
     },
     "gloom": {
@@ -1158,7 +1160,7 @@
         8,
         2
       ],
-      "ability": "chlorophyll",
+      "ability": "stench",
       "statWeight": 395
     },
     "vileplume": {
@@ -1178,7 +1180,7 @@
         5,
         5
       ],
-      "ability": "chlorophyll",
+      "ability": "stench",
       "statWeight": 490
     },
     "paras": {
@@ -1528,15 +1530,15 @@
       ],
       "stats": [
         5,
-        4,
-        4,
-        3
+        3,
+        3,
+        5
       ],
       "originalStats": [
         5,
-        4,
-        4,
-        3
+        3,
+        3,
+        5
       ],
       "ability": "teleport",
       "statWeight": 310
@@ -2852,7 +2854,6 @@
         2,
         2
       ],
-      "starter": true,
       "originalStats": [
         2,
         2,
@@ -2913,7 +2914,6 @@
         4,
         4
       ],
-      "starter": true,
       "originalStats": [
         4,
         4,
@@ -3487,7 +3487,7 @@
     "acidArmor": {
       "name": "Acid Armor",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Poison-type tiles"
+      "description": "Doubles stats when placed on Poison-type tiles"
     },
     "agility": {
       "name": "Agility",
@@ -3497,17 +3497,17 @@
     "ancientPower": {
       "name": "Ancient Power",
       "trigger": "onCapture",
-      "description": "On successful capture, gains 1 random stat"
+      "description": "On successful capture, chance to boost all stats by 1"
     },
     "bigPecks": {
       "name": "Big Pecks",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Flying-type tiles"
+      "description": "Doubles stats when placed on Flying-type tiles"
     },
     "blaze": {
       "name": "Blaze",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Fire-type tiles"
+      "description": "Doubles stats when placed on Fire-type tiles"
     },
     "bonemerang": {
       "name": "Bonemerang",
@@ -3557,7 +3557,7 @@
     "dig": {
       "name": "Dig",
       "trigger": "onGridPlace",
-      "description": "Place this card in the corner of the arena to dig in, boosting 2 random stats by 1"
+      "description": "Dig into a corner of the arena. 50% chance to boost all stats by 1"
     },
     "download": {
       "name": "Download",
@@ -3622,7 +3622,7 @@
     "hydroPump": {
       "name": "Hydro Pump",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Water-type tiles"
+      "description": "Doubles stats when placed on Water-type tiles"
     },
     "hypnosis": {
       "name": "Hypnosis",
@@ -3672,7 +3672,7 @@
     "lightningRod": {
       "name": "Lightning Rod",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Electric-type tiles"
+      "description": "Doubles stats when placed on Electric-type tiles"
     },
     "lonely": {
       "name": "Lonely",
@@ -3712,7 +3712,7 @@
     "mist": {
       "name": "Mist",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Ice-type tiles"
+      "description": "Doubles stats when placed on Ice-type tiles"
     },
     "metronome": {
       "name": "Metronome",
@@ -3727,7 +3727,7 @@
     "overgrow": {
       "name": "Overgrow",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stat bonuses when placed on Grass-type tiles"
+      "description": "Doubles stats when placed on Grass-type tiles"
     },
     "payDay": {
       "name": "Pay Day",
@@ -3742,7 +3742,7 @@
     "prismaticPunch": {
       "name": "Prismatic Punch",
       "trigger": "onElementalTilePlace",
-      "description": "When placed on an Electric, Fire or Ice elemental tile, gain a 2 stat bonus to all stats "
+      "description": "When placed on an Electric, Fire or Ice elemental tile, increase all stats by 2"
     },
     "quickAttack": {
       "name": "Quick Attack",
@@ -3797,7 +3797,7 @@
     "smokeScreen": {
       "name": "Smoke Screen",
       "trigger": "onGridPlace",
-      "description": "Placing this card in the corner of the arena conceals your position, boosting 2 random stats by 1"
+      "description": "Deploy a smoke screen from a corner tile. 50% chance to boost all stats by 1"
     },
     "softBoiled": {
       "name": "Soft Boiled",
@@ -3847,7 +3847,7 @@
     "teleport": {
       "name": "Teleport",
       "trigger": "onGridPlace",
-      "description": "Doubles all stats when placed with no cards adjacent"
+      "description": "Boosts all stats by 1 when placed as the first card in the arena"
     },
     "thickFat": {
       "name": "Thick Fat",

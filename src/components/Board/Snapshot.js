@@ -1,5 +1,6 @@
 import Grid from "../Grid/Grid.js";
 import Balance from "../Balance/Balance.js"
+import PixelX from '@/assets/svg/PixelX';
 
 import { useEffect } from 'react'
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -57,8 +58,8 @@ export default function Snapshot({ isOpen, onClose }) {
             <div className="p-2 default-tile flex flex-col items-between relative w-full max-w-2xl h-full md:h-auto aspect-square border-4 md:border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <h2 className='absolute top-6 font-press-start w-full font-bold text-lg md:text-2xl text-center'>{isPlayerVictory === null ? 'Stalemate' : isPlayerVictory ? 'Player Victory!' : 'Player Defeat...'}</h2>
                 {isMobile ? mobileLayout : desktopLayout}
-                <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-3 right-3 font-press-start leading-none'>
-                    <span>X</span>
+                <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none flex justify-center items-center absolute top-3 right-3 md:top-5 md:right-5 font-press-start leading-none'>
+                    <PixelX className="size-6 md:size-7 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" />
                 </button>
             </div>
         </div>

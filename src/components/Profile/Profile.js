@@ -8,6 +8,7 @@ import { TYPES_PER_CARD } from '@/constants/index.js';
 import Loader from "@/components/Loader/Loader.js";
 import styles from "@/retro.module.css";
 import gameData from '@/data/game-data.json';
+import PixelX from '@/assets/svg/PixelX';
 
 const { cards, abilities } = gameData;
 
@@ -366,7 +367,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                         {content}
                     </div>
                     <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-4 right-4 font-press-start leading-none'>
-                        <span>X</span>
+                        <PixelX className="w-5 h-5 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" />
                     </button>
                 </div>
             )}

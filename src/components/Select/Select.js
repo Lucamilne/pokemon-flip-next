@@ -8,6 +8,8 @@ import Profile from "../Profile/Profile.js"
 import styles from '@/retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
 import { useAuth } from '@/contexts/AuthContext';
+import PixelX from '@/assets/svg/PixelX';
+import PixelSort from '@/assets/svg/PixelSort';
 
 const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
 
@@ -193,15 +195,16 @@ export default function Select() {
                             className="px-1 cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-900 text-lg leading-none"
                             aria-label="Clear search"
                         >
-                            <svg className="w-7 h-7 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M5 5h2v2H5V5zm4 4H7V7h2v2zm2 2H9V9h2v2zm2 0h-2v2H9v2H7v2H5v2h2v-2h2v-2h2v-2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm2-2v2h-2V9h2zm2-2v2h-2V7h2zm0 0V5h2v2h-2z"></path> </g></svg>
+                            <PixelX className="w-7 h-7 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" />
                         </button>
                     ) : (
                         <button
                             onClick={() => setSortByStrength(!sortByStrength)}
                             aria-label="Toggle sort"
+                            title="Toggle Sort by Strength"
                             className="px-1 cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-900 text-lg leading-none"
                         >
-                            <svg className={`w-7 h-7 transition-colors stroke-neutral-900 fill-neutral-900 ${sortByStrength ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g strokeWidth="0"></g><g strokeLinecap="round" strokeLinejoin="round"></g><g> <path d="M8 20H6V8H4V6h2V4h2v2h2v2H8v12zm2-12v2h2V8h-2zM4 8v2H2V8h2zm14-4h-2v12h-2v-2h-2v2h2v2h2v2h2v-2h2v-2h2v-2h-2v2h-2V4z"></path> </g></svg>
+                            <PixelSort className={`w-7 h-7 transition-colors stroke-neutral-900 fill-neutral-900 ${sortByStrength ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`} />
                         </button>
                     )}
                 </div>
@@ -305,7 +308,7 @@ export default function Select() {
                     )
                 })}
                 {playerHand.every(card => card === null) && showHelp && (
-                    <Help customClass="fade-in-b !hidden md:!block !absolute !-top-16 !left-80" text="Add cards to your hand!" />
+                    <Help customClass="fade-in-b !hidden md:!block !absolute !-top-16 !left-1/2" text="Add cards to your hand!" />
                 )}
                 <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
                     <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>

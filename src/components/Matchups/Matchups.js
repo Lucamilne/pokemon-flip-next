@@ -1,6 +1,8 @@
 import React from 'react';
 import gameData from '@/data/game-data.json';
-import styles from "./matchups.module.css"
+import PixelX from '@/assets/svg/PixelX';
+import styles from "./matchups.module.css";
+
 import { typeTiles } from '@/utils/typeIcons'
 
 export default function Matchups({ isOpen, onClose }) {
@@ -156,8 +158,8 @@ export default function Matchups({ isOpen, onClose }) {
                     </div>
                 </div>
 
-                <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none w-8 h-8 flex justify-center items-center absolute top-3 right-3 font-press-start leading-none'>
-                    <span className="leading-none">X</span>
+                <button onClick={onClose} className='cursor-pointer text-neutral-600 hover:text-neutral-900 leading-none flex justify-center items-center absolute top-3 right-3 md:top-5 md:right-5 font-press-start leading-none'>
+                    <PixelX className="size-6 md:size-7 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" />
                 </button>
             </div>
         </div >
