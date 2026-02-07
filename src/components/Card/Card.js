@@ -29,7 +29,7 @@ const getBallSprite = (statWeight) => {
 };
 
 function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false, snapshot = false }) {
-    const { isVisible, handlers } = useTooltip(500); // 500ms long press
+    const { isVisible, handlers } = useTooltip();
     const { hasCard } = useAuth();
 
     const [tooltipPosition, setTooltipPosition] = useState('top');

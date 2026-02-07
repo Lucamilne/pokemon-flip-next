@@ -1,20 +1,51 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
-// Module-level tracking to prevent multiple tooltips during scroll
-let activeTouchId = null;
+// Module-level ref to dismiss the currently active tooltip
+let activeTooltipDismiss = null;
 
 /**
- * Custom hook for tooltip with hover (desktop) and long-press (mobile)
- * @param {number} longPressDuration - Duration in ms for long press (default: 500)
- * @param {number} hoverDelay - Duration in ms for hover delay on desktop (default: 150)
+ * Custom hook for tooltip with hover (desktop) and tap-to-toggle (mobile)
+ * @param {number} hoverDelay - Duration in ms for hover delay on desktop (default: 300)
  * @returns {Object} { isVisible, handlers }
  */
-export const useTooltip = (longPressDuration = 500, hoverDelay = 300) => {
+export const useTooltip = (hoverDelay = 300) => {
     const [isVisible, setIsVisible] = useState(false);
-    const longPressTimer = useRef(null);
     const hoverTimer = useRef(null);
     const touchStartPos = useRef({ x: 0, y: 0 });
-    const ownsActiveTouch = useRef(false);
+    const isTap = useRef(false);
+
+    const dismiss = useCallback(() => {
+        setIsVisible(false);
+    }, []);
+
+    // When this tooltip becomes visible, dismiss any other active tooltip
+    useEffect(() => {
+        if (isVisible) {
+            if (activeTooltipDismiss && activeTooltipDismiss !== dismiss) {
+                activeTooltipDismiss();
+            }
+            activeTooltipDismiss = dismiss;
+
+            // Dismiss on any outside touch
+            const handleOutsideTouch = () => {
+                setIsVisible(false);
+                activeTooltipDismiss = null;
+            };
+
+            document.addEventListener('touchstart', handleOutsideTouch);
+            return () => document.removeEventListener('touchstart', handleOutsideTouch);
+        } else if (activeTooltipDismiss === dismiss) {
+            activeTooltipDismiss = null;
+        }
+    }, [isVisible, dismiss]);
+
+    // Cleanup timers on unmount
+    useEffect(() => {
+        return () => {
+            if (hoverTimer.current) clearTimeout(hoverTimer.current);
+            if (activeTooltipDismiss === dismiss) activeTooltipDismiss = null;
+        };
+    }, [dismiss]);
 
     // Desktop: Mouse enter
     const handleMouseEnter = useCallback(() => {
@@ -32,68 +63,32 @@ export const useTooltip = (longPressDuration = 500, hoverDelay = 300) => {
         setIsVisible(false);
     }, []);
 
-    // Mobile: Touch start (begin long press)
+    // Mobile: Track touch start position to distinguish taps from drags
     const handleTouchStart = useCallback((e) => {
         const touch = e.touches[0];
-
-        // If there's already an active touch (e.g., scrolling), ignore new touchstarts
-        if (activeTouchId !== null && activeTouchId !== touch.identifier) {
-            return;
-        }
-
-        activeTouchId = touch.identifier;
-        ownsActiveTouch.current = true;
         touchStartPos.current = { x: touch.clientX, y: touch.clientY };
+        isTap.current = true;
+    }, []);
 
-        longPressTimer.current = setTimeout(() => {
-            setIsVisible(true);
-        }, longPressDuration);
-    }, [longPressDuration]);
-
-    // Mobile: Touch move (cancel if finger moves too much)
+    // Mobile: If finger moves, it's not a tap
     const handleTouchMove = useCallback((e) => {
-        // Only process if this instance owns the active touch
-        if (!ownsActiveTouch.current) return;
-
         const touch = e.touches[0];
-        const moveThreshold = 10; // pixels
-
         const deltaX = Math.abs(touch.clientX - touchStartPos.current.x);
         const deltaY = Math.abs(touch.clientY - touchStartPos.current.y);
 
-        if (deltaX > moveThreshold || deltaY > moveThreshold) {
-            // Finger moved too much, cancel long press and hide tooltip
-            if (longPressTimer.current) {
-                clearTimeout(longPressTimer.current);
-                longPressTimer.current = null;
-            }
-            setIsVisible(false);
+        if (deltaX > 10 || deltaY > 10) {
+            isTap.current = false;
         }
     }, []);
 
-    // Mobile: Touch end (cancel or hide)
-    const handleTouchEnd = useCallback(() => {
-        if (ownsActiveTouch.current) {
-            activeTouchId = null;
-            ownsActiveTouch.current = false;
-        }
+    // Mobile: Toggle tooltip on tap (not drag)
+    const handleTouchEnd = useCallback((e) => {
+        if (!isTap.current) return;
 
-        if (longPressTimer.current) {
-            clearTimeout(longPressTimer.current);
-            longPressTimer.current = null;
-        }
-        // Hide tooltip after a delay
-        setTimeout(() => setIsVisible(false), 2000);
-    }, []);
+        // Stop the document-level touchstart listener from immediately dismissing
+        e.stopPropagation();
 
-    // Cleanup on unmount
-    const cleanup = useCallback(() => {
-        if (longPressTimer.current) {
-            clearTimeout(longPressTimer.current);
-        }
-        if (hoverTimer.current) {
-            clearTimeout(hoverTimer.current);
-        }
+        setIsVisible(prev => !prev);
     }, []);
 
     return {
@@ -105,6 +100,5 @@ export const useTooltip = (longPressDuration = 500, hoverDelay = 300) => {
             onTouchMove: handleTouchMove,
             onTouchEnd: handleTouchEnd,
         },
-        cleanup,
     };
 };
