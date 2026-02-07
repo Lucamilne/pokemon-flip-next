@@ -146,12 +146,12 @@ export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) =
     let cardsToSelect = eligibleCards;
 
     if (cardsToSelect.length < 5 || avgStatWeight >= 500) {
-        const expandedMinStatWeight = Math.max(195, avgStatWeight - 150);
+        // Expanded range: reuse minStatWeight, only recalculate max
         const expandedMaxStatWeight = Math.min(680, avgStatWeight + 200);
 
         cardsToSelect = allPokemonNames.filter(pokemonName => {
             const statWeight = pokemon.cards[pokemonName].statWeight;
-            return statWeight >= expandedMinStatWeight && statWeight <= expandedMaxStatWeight;
+            return statWeight >= minStatWeight && statWeight <= expandedMaxStatWeight;
         });
     }
 
@@ -160,15 +160,60 @@ export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) =
         cardsToSelect = allPokemonNames;
     }
 
-    // Prefer cards the user doesn't own
-    const unownedCards = cardsToSelect.filter(pokemonName => !userCollection[pokemonName]);
+    // Check if player has completed collection (owns all 151)
+    const ownedCount = Object.keys(userCollection).length;
+    if (ownedCount >= 151) {
+        // Player owns everything, no guarantee possible
+        return getRandomItems(cardsToSelect, 5)
+            .map((pokemonName) => createCard(pokemonName, false));
+    }
 
-    // Use unowned cards if we have at least 5, otherwise use all eligible cards
-    const finalCardsToSelect = unownedCards.length >= 5 ? unownedCards : cardsToSelect;
+    // Separate cards by ownership status in a single pass
+    const unownedInRange = [];
+    const ownedInRange = [];
+    for (const pokemonName of cardsToSelect) {
+        if (userCollection[pokemonName]) {
+            ownedInRange.push(pokemonName);
+        } else {
+            unownedInRange.push(pokemonName);
+        }
+    }
 
-    // Select 5 random cards from final pool
-    return getRandomItems(finalCardsToSelect, 5)
-        .map((pokemonName) => createCard(pokemonName, false));
+    // Guarantee at least 1 unowned card
+    let guaranteedUnownedCard;
+    if (unownedInRange.length > 0) {
+        // Best case: unowned cards exist in the difficulty-appropriate range
+        guaranteedUnownedCard = getRandomItems(unownedInRange, 1)[0];
+    } else {
+        // Edge case: no unowned in range, pick from ALL unowned cards
+        const allUnowned = allPokemonNames.filter(pokemonName => !userCollection[pokemonName]);
+        guaranteedUnownedCard = getRandomItems(allUnowned, 1)[0];
+    }
+
+    // Fill remaining 4 slots
+    // Remove guaranteed card from available pools to prevent duplicates
+    const remainingUnownedInRange = unownedInRange.filter(
+        name => name !== guaranteedUnownedCard
+    );
+
+    // Build pool for remaining cards
+    let poolForRemaining;
+    if (remainingUnownedInRange.length >= 4) {
+        // Ideal: enough unowned to fill all 4 remaining slots
+        poolForRemaining = remainingUnownedInRange;
+    } else if (unownedInRange.length > 0) {
+        // Mix scenario: use remaining unowned + owned cards from range
+        poolForRemaining = [...remainingUnownedInRange, ...ownedInRange];
+    } else {
+        // Guaranteed card came from outside range; use all eligible cards
+        poolForRemaining = cardsToSelect;
+    }
+
+    const remaining4Cards = getRandomItems(poolForRemaining, 4);
+
+    // Combine and create cards
+    const finalSelection = [guaranteedUnownedCard, ...remaining4Cards];
+    return finalSelection.map((pokemonName) => createCard(pokemonName, false));
 }
 
 export const fetchGlassCannonCards = (isPlayerCard = true) => {
