@@ -10,6 +10,7 @@ import { useGameContext } from '@/contexts/GameContext';
 import { useAuth } from '@/contexts/AuthContext';
 import PixelX from '@/assets/svg/PixelX';
 import PixelSort from '@/assets/svg/PixelSort';
+import PixelDocument from '@/assets/svg/PixelDocument';
 
 const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
 
@@ -115,7 +116,7 @@ export default function Select() {
         let cards = trimmedSearch
             ? playerCardLibrary.filter(pokemonCard =>
                 pokemonCard?.name.toLowerCase().includes(trimmedSearch)
-              )
+            )
             : playerCardLibrary;
 
         if (isMobile && trimmedSearch) {
@@ -259,8 +260,13 @@ export default function Select() {
                 </div>
                 {isMobile && (
                     <div className='absolute bottom-0 bg-black/50 border-t-4 border-black w-full'>
-                        <div className='font-press-start text-white text-sm py-2.5 px-3 gap-2 flex justify-between'>
-                            <span>Show Profiles?</span>
+                        <div className='font-press-start text-white text-sm py-2.5 px-3 gap-2 flex justify-between items-center'>
+                            <div className='flex items-center gap-2'>
+                                <button title="Menu" aria-label="Menu" disabled={!showProfilesOnMobile} onClick={() => { setLastPokemonCardSelected(null); setShowProfile(true); }} className={`flex items-center justify-center overflow-hidden ${showProfilesOnMobile ? 'cursor-pointer opacity-100' : 'opacity-50'}`}>
+                                    <PixelDocument className="w-5 h-5 mb-1" />
+                                </button>
+                                <span>Show Profiles?</span>
+                            </div>
                             <div className='flex gap-2'>
                                 <label>
                                     <input type="radio" className={`${styles['nes-radio']} ${styles['is-dark']}`} name="answer" checked={showProfilesOnMobile} onChange={() => setShowProfilesOnMobile(true)} />
@@ -268,7 +274,7 @@ export default function Select() {
                                 </label>
 
                                 <label>
-                                    <input type="radio" className={`${styles['nes-radio']} ${styles['is-dark']}`} name="answer" checked={!showProfilesOnMobile} onChange={() => setShowProfilesOnMobile(false)} />
+                                    <input type="radio" className={`${styles['nes-radio']} ${styles['is-dark']}`} name="answer" checked={!showProfilesOnMobile} onChange={() => { setShowProfilesOnMobile(false); handleCloseProfile(); }} />
                                     <span>No</span>
                                 </label>
                             </div>
