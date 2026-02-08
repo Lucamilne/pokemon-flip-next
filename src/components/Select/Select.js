@@ -43,6 +43,10 @@ export default function Select() {
 
     useEffect(() => {
         sessionStorage.setItem('showProfilesOnMobile', showProfilesOnMobile);
+        
+        if (!showProfilesOnMobile) {
+            setShowProfile(false);
+        };
     }, [showProfilesOnMobile]);
 
     const handleCloseProfile = useCallback(() => setShowProfile(false), []);

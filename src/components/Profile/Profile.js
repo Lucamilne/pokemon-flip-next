@@ -234,8 +234,11 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             </div>
                         </div>
                     )}
-                    <div className='mr-3'>
-                        <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]} md:h-8`} value={statTier} max="10" />
+                    <div>
+                        <Header>Card strength</Header>
+                        <div className='mr-3'>
+                            <progress className={`${styles['nes-progress']} ${styles[powerLevelColour]} md:h-8`} value={statTier} max="10" />
+                        </div>
                     </div>
                 </div>
                 <Divider />
