@@ -32,8 +32,8 @@ export const useTooltip = (hoverDelay = 300) => {
                 activeTooltipDismiss = null;
             };
 
-            document.addEventListener('touchstart', handleOutsideTouch);
-            return () => document.removeEventListener('touchstart', handleOutsideTouch);
+            document.addEventListener('touchend', handleOutsideTouch);
+            return () => document.removeEventListener('touchend', handleOutsideTouch);
         } else if (activeTooltipDismiss === dismiss) {
             activeTooltipDismiss = null;
         }

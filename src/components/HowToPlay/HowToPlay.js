@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useGameContext } from '@/contexts/GameContext';
 import SlideA from "@/components/HowToPlay/Slides/A";
 import SlideB from "@/components/HowToPlay/Slides/B";
 import SlideC from "@/components/HowToPlay/Slides/C";
@@ -13,6 +14,7 @@ import UltraBallSprite from '@/assets/icons/tiers/Bag_Ultra_Ball_Sprite.png'
 import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 
 export default function HowToPlay({ isOpen, onClose }) {
+    const { isMobile } = useGameContext();
     const [currentSlide, setCurrentSlide] = useState(0)
     const [shuffleKey, setShuffleKey] = useState(0)
     const touchStart = useRef(0)
@@ -114,7 +116,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
                             <p>All Pokémon cards have unique abilities that reward thoughtful, strategic play.</p>
-                            <p>Hover over a card below to see its ability and learn what it does!</p>
+                            <p>{ isMobile ? 'Tap' : 'Hover over'} a card below to see its ability and learn what it does!</p>
                             <p>
                                 <button className="cursor-pointer text-blue-500" onClick={shuffleCards}>Click here</button> to shuffle some more cards.
                             </p>
