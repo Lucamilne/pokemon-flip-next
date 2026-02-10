@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage.jsx';
 import SelectPage from './pages/SelectPage.jsx';
 import PlayPage from './pages/PlayPage.jsx';
 import ResultPage from './pages/ResultPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/quickplay/select" element={<SelectPage />} />
           <Route path="/quickplay/play" element={<PlayPage />} />
           <Route path="/quickplay/play/result" element={<ResultPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppShell>
     </ClientProviders>
