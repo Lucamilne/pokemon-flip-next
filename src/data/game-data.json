@@ -636,7 +636,7 @@
         4,
         8
       ],
-      "ability": "mirrorMove",
+      "ability": "skyAttack",
       "statWeight": 479
     },
     "rattata": {
@@ -717,7 +717,7 @@
         4,
         8
       ],
-      "ability": "mirrorMove",
+      "ability": "skyAttack",
       "statWeight": 442
     },
     "ekans": {
@@ -2900,7 +2900,7 @@
         5,
         5
       ],
-      "ability": "safePassage",
+      "ability": "safeguard",
       "statWeight": 535
     },
     "ditto": {
@@ -3160,7 +3160,7 @@
         9,
         9
       ],
-      "ability": "mist",
+      "ability": "blizzard",
       "statWeight": 580
     },
     "zapdos": {
@@ -3309,19 +3309,18 @@
         "fairy"
       ],
       "stats": [
-        3,
-        3,
-        3,
-        3
+        4,
+        1,
+        2,
+        5
       ],
-
       "originalStats": [
-        3,
-        3,
-        3,
-        3
+        4,
+        1,
+        2,
+        5
       ],
-      "ability": "wish",
+      "ability": "safeguard",
       "statWeight": 245
     }
   },
@@ -3520,8 +3519,8 @@
       "trigger": "onCapture",
       "description": "On successful capture, chance to boost all stats by 1"
     },
-    "bigPecks": {
-      "name": "Big Pecks",
+    "skyAttack": {
+      "name": "Sky Attack",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stats when placed on Flying-type tiles"
     },
@@ -3529,6 +3528,11 @@
       "name": "Blaze",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stats when placed on Fire-type tiles"
+    },
+    "blizzard": {
+      "name": "Blizzard",
+      "trigger": "onMatchStart",
+      "description": "Surround all other cards in a howling blizzard preventing their abilities from being used"
     },
     "bonemerang": {
       "name": "Bonemerang",
@@ -3785,10 +3789,10 @@
       "trigger": "onMatchStart",
       "description": "For each additional Rock-type in the current match, a random stat is increased by 1"
     },
-    "safePassage": {
-      "name": "Safe Passage",
+    "safeguard": {
+      "name": "Safeguard",
       "trigger": "onMatchStart",
-      "description": "A protective presence that boosts all stats of adjacent cards in hand by 1"
+      "description": "A protective power that boosts all stats of adjacent cards in hand by 1"
     },
     "selfDestruct": {
       "name": "Self Destruct",
@@ -3807,8 +3811,8 @@
     },
     "sing": {
       "name": "Sing",
-      "trigger": "onGridPlace",
-      "description": "Uh oh! Sings a soothing melody when placed, reducing all stats by 1 for every card in the arena"
+      "trigger": "onMatchStart",
+      "description": "Sing a soothing lullaby that puts all other cards to sleep, nullifying their abilities"
     },
     "smog": {
       "name": "Smog",
@@ -3817,8 +3821,8 @@
     },
     "smokeScreen": {
       "name": "Smoke Screen",
-      "trigger": "onGridPlace",
-      "description": "Deploy a smoke screen from a corner tile. 50% chance to boost all stats by 1"
+      "trigger": "onMatchStart",
+      "description": "Engulf the arena in a thick smoke, blinding all other cards and nullifying their abilities"
     },
     "softBoiled": {
       "name": "Soft Boiled",
@@ -3899,6 +3903,21 @@
       "name": "Wish",
       "trigger": "onGridPlace",
       "description": "When placed, make a wish and a miracle might happen..."
+    },
+    "asleep": {
+      "name": "Asleep",
+      "trigger": "statusEffect",
+      "description": "Hypnotized by a soft melody, this card's ability cannot be used!"
+    },
+    "frozen": {
+      "name": "Frozen",
+      "trigger": "statusEffect",
+      "description": "Slowed by the cold, this card is unable to use its ability!"
+    },
+    "blinded": {
+      "name": "Blinded",
+      "trigger": "statusEffect",
+      "description": "Disoriented by smoke, this card is unable to use its ability!"
     }
   }
 }

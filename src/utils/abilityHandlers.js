@@ -73,6 +73,7 @@ const thickFat = shieldDust
 const leafGuard = shieldDust;
 
 const statLoweringImmunityAbilities = ["leafGuard", "oblivious", "shieldDust", "shellArmor", "defenceCurl", "sturdy", "thickFat"]
+const abilityNullificationAbilities = [{ name: "sing", statusEffect: "asleep" }, { name: "blizzard", statusEffect: "frozen" }, { name: "smokeScreen", statusEffect: "blinded" }];
 
 const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -158,7 +159,7 @@ const hydroPump = overgrow; // water
 const lightningRod = overgrow; // electric
 const mist = overgrow; // ice
 const acidArmor = overgrow; // poison
-const bigPecks = overgrow; // flying
+const skyAttack = overgrow; // flying
 
 const chlorophyll = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
@@ -329,37 +330,37 @@ const maternal = (card, cellId, gameState) => {
     };
 };
 
-const sing = (card, cellId, cells) => {
-    const modifiedCells = { ...cells };
+// const sing = (card, cellId, cells) => {
+//     const modifiedCells = { ...cells };
 
-    // Reduce all stats for every pokemon on the grid (friendly and enemy)
-    Object.keys(modifiedCells).forEach(currentCellId => {
-        const currentCell = modifiedCells[currentCellId];
+//     // Reduce all stats for every pokemon on the grid (friendly and enemy)
+//     Object.keys(modifiedCells).forEach(currentCellId => {
+//         const currentCell = modifiedCells[currentCellId];
 
-        if (currentCell?.pokemonCard) {
-            // Check if the pokemon has stat-lowering immunity
-            if (statLoweringImmunityAbilities.includes(currentCell.pokemonCard.ability)) {
-                return;
-            }
+//         if (currentCell?.pokemonCard) {
+//             // Check if the pokemon has stat-lowering immunity
+//             if (statLoweringImmunityAbilities.includes(currentCell.pokemonCard.ability)) {
+//                 return;
+//             }
 
-            // Reduce all stats by 1, minimum 1
-            const newStats = currentCell.pokemonCard.stats.map(stat =>
-                stat > 1 ? stat - 1 : 1
-            );
+//             // Reduce all stats by 1, minimum 1
+//             const newStats = currentCell.pokemonCard.stats.map(stat =>
+//                 stat > 1 ? stat - 1 : 1
+//             );
 
 
-            modifiedCells[currentCellId] = {
-                ...currentCell,
-                pokemonCard: {
-                    ...currentCell.pokemonCard,
-                    stats: newStats
-                }
-            };
-        }
-    });
+//             modifiedCells[currentCellId] = {
+//                 ...currentCell,
+//                 pokemonCard: {
+//                     ...currentCell.pokemonCard,
+//                     stats: newStats
+//                 }
+//             };
+//         }
+//     });
 
-    return modifiedCells;
-};
+//     return modifiedCells;
+// };
 
 const quickAttack = (card, cellId, gameState) => {
     const otherCardsOnGrid = Object.values(gameState.cells).filter(cell => cell.pokemonCard).length;
@@ -558,7 +559,6 @@ const dig = (card, cellId, gameState) => {
         stats: card.stats.map(stat => Math.min(stat + 1, 10))
     };
 }
-const smokeScreen = dig;
 
 const dragonDance = (card, cellId, gameState) => {
     // Count cells with elemental tiles (not null)
@@ -848,7 +848,7 @@ const hornDrill = (card, cellId, cells) => {
 
 const guillotine = hornDrill;
 
-const safePassage = (card, cellId, gameState) => {
+const safeguard = (card, cellId, gameState) => {
     const handKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
     const otherHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
     const currentHand = gameState[handKey];
@@ -870,7 +870,7 @@ const safePassage = (card, cellId, gameState) => {
     };
 }
 
-const softBoiled = safePassage;
+const softBoiled = safeguard;
 
 const mimic = (card, cellId, gameState) => {
     // Determine which hand the card is in
@@ -1048,7 +1048,7 @@ export const selfAbilityHandlers = {
     acidArmor,
     agility,
     ancientPower,
-    bigPecks,
+    skyAttack,
     blaze,
     bonemerang,
     chlorophyll,
@@ -1089,11 +1089,10 @@ export const selfAbilityHandlers = {
     rage,
     rest,
     rockSlide,
-    safePassage,
+    safeguard,
     selfDestruct,
     shellArmor,
     shieldDust,
-    smokeScreen,
     softBoiled,
     staticElectricity,
     sturdy,
@@ -1123,7 +1122,6 @@ export const statusAbilityHandlers = {
     leechLife: leechLifeStatus,
     leechSeed: leechLifeStatus,
     leer,
-    sing,
     smog,
     stench,
     supersonic,
@@ -1161,18 +1159,40 @@ export const applyStatusAbilities = (card, trigger, cellId, cells) => {
 export const applyMatchStartAbilities = (gameState) => {
     let playerHand = [...gameState.playerHand];
     let cpuHand = [...gameState.cpuHand];
-
     const allCards = [...playerHand, ...cpuHand];
-    
-    allCards.forEach(card => {
-        if (card?.ability && abilities[card.ability]?.trigger === 'onMatchStart' && selfAbilityHandlers[card.ability]) {
-            const currentCard = [...playerHand, ...cpuHand].find(c => c.name === card.name) || card;
-            const result = selfAbilityHandlers[card.ability](currentCard, null, { ...gameState, playerHand, cpuHand });
+    let nullifierAbility = null;
 
-            if (result?.playerHand) playerHand = result.playerHand;
-            if (result?.cpuHand) cpuHand = result.cpuHand;
+    for (const card of allCards) {
+        const match = abilityNullificationAbilities.find(n => n.name === card?.ability);
+        
+        if (match) {
+            nullifierAbility = match;
+            break;
         }
-    });
+    }
+
+    if (nullifierAbility) {
+        const statusEffect = nullifierAbility.statusEffect;
+
+        playerHand = playerHand.map(card =>
+            card?.ability && card.ability !== nullifierAbility.name ? { ...card, ability: statusEffect } : card
+        );
+        cpuHand = cpuHand.map(card =>
+            card?.ability && card.ability !== nullifierAbility.name ? { ...card, ability: statusEffect } : card
+        );
+    } else {
+        allCards.forEach(card => {
+            if (card?.ability && abilities[card.ability]?.trigger === 'onMatchStart' && selfAbilityHandlers[card.ability]) {
+                const currentCard = [...playerHand, ...cpuHand].find(c => c.name === card.name) || card;
+                const result = selfAbilityHandlers[card.ability](currentCard, null, { ...gameState, playerHand, cpuHand });
+
+                if (result?.playerHand) playerHand = result.playerHand;
+                if (result?.cpuHand) cpuHand = result.cpuHand;
+            }
+        });
+    }
+
+
 
     return { playerHand, cpuHand };
 };
