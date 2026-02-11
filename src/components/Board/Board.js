@@ -10,7 +10,7 @@ import PixelGamepad from '@/assets/svg/PixelGamepad';
 import PixelCalculator from '@/assets/svg/PixelCalculator';
 
 import { applySelfAbilities, applyStatusAbilities, applyMatchStartAbilities } from '@/utils/abilityHandlers.js';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 import { fetchCpuCardsByPlayerStrength, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
@@ -25,6 +25,7 @@ const { abilities } = gameData;
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default function Board() {
+    const mountedRef = useRef(true);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isGameComplete, setIsGameComplete] = useState(false);
     const [hasWonCoinToss, setHasWonCoinToss] = useState(null);
@@ -52,6 +53,12 @@ export default function Board() {
     const { userCollection } = useAuth();
 
     const navigate = useNavigate();
+
+    // Cleanup on unmount
+    useEffect(() => {
+        mountedRef.current = true;
+        return () => { mountedRef.current = false; };
+    }, []);
 
     //on mount
     useEffect(() => {
@@ -423,11 +430,10 @@ export default function Board() {
             setIsPlayerVictory(false);
         }
 
-        setTimeout(() => setIsGameComplete(true), 800);
+        setTimeout(() => { if (mountedRef.current) setIsGameComplete(true); }, 800);
     };
 
     const makeCpuMove = async () => {
-        //known bug: if pokemon super effective against one tile adjacent it's effective to ALL tiles adjacent. Same with No effect
         let arrayOfCellsToPlace = [];
         let arrayOfPlayerOccupiedCells = [];
         let arrayOfCpuOccupiedCells = [];
@@ -453,6 +459,7 @@ export default function Board() {
 
         const hasGameStarted = arrayOfPlayerOccupiedCells.length > 0 || arrayOfCpuOccupiedCells.length > 0;
         await sleep(hasGameStarted ? (1250 + Math.random() * 250) : 1000);
+        if (!mountedRef.current) return;
 
         const validPlacementsSet = new Set(arrayOfCellsToPlace);
 
