@@ -64,7 +64,7 @@ export default function ResultTransition({ reverse = false }) {
             const totalAnimationTime = halfwayDelay + ((tilesRight.length - 1) * 50) + 300;
 
             setTimeout(() => {
-                navigate(`${pathname}/result`);
+                navigate(`${pathname}/result`, { replace: true });
             }, totalAnimationTime);
         }
     }, []);

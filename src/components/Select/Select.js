@@ -168,19 +168,8 @@ export default function Select() {
         setLastPokemonCardSelected(pokemonCard);
     }, [playerHand, isMobile])
 
-    const restoreLastSelectedHand = () => {
-        const filteredHand = lastSelectedHand.map(pokemonCard => {
-            if (!pokemonCard) return null;
-
-            const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
-            return isOwned ? pokemonCard : null;
-        });
-
-        setPlayerHand(filteredHand);
-    };
-
     return (
-        <div className="relative overflow-y-hidden h-full flex flex-col md:rounded-xl bg-pokedex-lighter-blue" >
+        <div className="relative overflow-y-hidden h-full flex flex-col bg-pokedex-lighter-blue" >
             <div className="px-7 py-4 md:pb-6 flex justify-between gap-4 items-center hand-top-container pb-7 md:pb-8">
                 <div className="relative flex gap-2 font-press-start">
                     <input

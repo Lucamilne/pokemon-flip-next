@@ -725,7 +725,7 @@ export default function Board() {
     if (isMobile) {
         return (
             <DndContext onDragEnd={handleDragEnd}>
-                <div className="overflow-hidden relative h-full flex flex-col justify-between md:rounded-xl" >
+                <div className="overflow-hidden relative h-full flex flex-col justify-between" >
                     <div className="relative grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-top-container p-2 pb-6 pt-4">
                         {cpuHand.map((pokemonCard, index) => {
                             return (
@@ -789,7 +789,7 @@ export default function Board() {
 
     return (
         <DndContext onDragEnd={handleDragEnd}>
-            <div className="overflow-hidden relative h-full flex justify-between md:rounded-xl" >
+            <div className={`${isGameComplete ? 'overflow-hidden' : ''} relative h-full flex justify-between`} >
                 <>
                     <div className="relative grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-left-container pl-4 pr-8 p-2 h-full">
                         {playerHand.map((pokemonCard, index) => {
