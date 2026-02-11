@@ -3832,7 +3832,7 @@
     "swordsDance": {
       "name": "Swords Dance",
       "trigger": "onGridPlace",
-      "description": "Placing this unit at the center of the arena boosts all stats by 1"
+      "description": "Placing this unit at the center of the arena boosts stats by 1, with a chance for a 2-point boost"
     },
     "synchronise": {
       "name": "Synchronise",

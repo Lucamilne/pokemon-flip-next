@@ -87,13 +87,12 @@ export default function Board() {
         const arrayOfPokemonTypes = [...new Set(allHandTypes)].filter((type) => type !== "normal");
 
         // Set random elemental tiles
-        const gridCells = Object.keys(cells);
         let tilesPlaced = 0;
         const maxTiles = 3;
         const updatedCells = { ...cells };
         const availableTypes = [...arrayOfPokemonTypes]; // Create a copy to track unused types
 
-        gridCells.forEach((cell) => {
+        Object.keys(updatedCells).forEach((cell) => {
             if (tilesPlaced < maxTiles && Math.random() < 0.2 && availableTypes.length > 0) {
                 const randomIndex = Math.floor(Math.random() * availableTypes.length);
                 const randomElement = availableTypes[randomIndex];

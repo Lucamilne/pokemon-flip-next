@@ -133,7 +133,7 @@ const swordsDance = (card, cellId, gameState) => {
 
     return {
         ...card,
-        stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
+        stats: card.stats.map(stat => Math.min(10, stat + (Math.random() < 0.5 ? 2 : 1)))
     };
 }
 
@@ -549,7 +549,6 @@ const dig = (card, cellId, gameState) => {
         stats: card.stats.map(stat => Math.min(stat + 1, 10))
     };
 }
-
 const smokeScreen = dig;
 
 const dragonDance = (card, cellId, gameState) => {
@@ -917,36 +916,45 @@ const conversion = (card, cellId, gameState) => {
 };
 
 const illuminate = (card, cellId, gameState) => {
-    const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
-
-    // Count empty adjacent cells
-    const emptyAdjacentCells = adjacentCellIds.filter(adjacentCellId => {
-        const adjacentCell = gameState.cells[adjacentCellId];
-        return !adjacentCell?.pokemonCard;
-    }).length;
-
-    // If no empty cells, return card unchanged
-    if (emptyAdjacentCells === 0) return card;
-
-    // Create a new stats array
+    // adjacentCells ordered: [left, top, right, bottom] matching stats [0, 1, 2, 3]
+    const adjacentCellIds = gameState.cells[cellId].adjacentCells;
     const newStats = [...card.stats];
+    let boosted = false;
 
-    // Boost random stats based on empty cell count
-    for (let i = 0; i < emptyAdjacentCells; i++) {
-        // Pick a random stat index (0-3)
-        const randomStatIndex = Math.floor(Math.random() * newStats.length);
-
-        // Increase by +1, but cap at 10
-        if (newStats[randomStatIndex] < 10) {
-            newStats[randomStatIndex] += 1;
+    adjacentCellIds.forEach((adjacentCellId, directionIndex) => {
+        if (adjacentCellId === null) return;
+        const adjacentCell = gameState.cells[adjacentCellId];
+        if (!adjacentCell?.pokemonCard && !adjacentCell?.element && newStats[directionIndex] < 10) {
+            newStats[directionIndex] += 1;
+            boosted = true;
         }
-    }
+    });
+
+    if (!boosted) return card;
 
     return {
         ...card,
         stats: newStats
     };
 };
+
+// const thunder = (card, cellId, gameState) => {
+//     const modifiedCells = {};
+//     for (const key in gameState.cells) {
+//         modifiedCells[key] = { ...gameState.cells[key], element: card.types[0] };
+//     }
+//     return {
+//         ...replaceCardInHands(card, card, gameState),
+//         cells: modifiedCells
+//     };
+// };
+
+// const flamethrower = thunder;
+// const petalDance = thunder;
+// const skyAttack = thunder;
+// const waterfall = thunder;
+// const fissure = thunder;
+
 
 const payDay = (card, cellId, gameState) => {
     const currentHand = card.isPlayerCard ? gameState.playerHand : gameState.cpuHand;
@@ -1145,10 +1153,12 @@ export const applyMatchStartAbilities = (gameState) => {
     let cpuHand = [...gameState.cpuHand];
 
     const allCards = [...playerHand, ...cpuHand];
+    
     allCards.forEach(card => {
         if (card?.ability && abilities[card.ability]?.trigger === 'onMatchStart' && selfAbilityHandlers[card.ability]) {
             const currentCard = [...playerHand, ...cpuHand].find(c => c.name === card.name) || card;
             const result = selfAbilityHandlers[card.ability](currentCard, null, { ...gameState, playerHand, cpuHand });
+
             if (result?.playerHand) playerHand = result.playerHand;
             if (result?.cpuHand) cpuHand = result.cpuHand;
         }
@@ -1156,4 +1166,3 @@ export const applyMatchStartAbilities = (gameState) => {
 
     return { playerHand, cpuHand };
 };
-
