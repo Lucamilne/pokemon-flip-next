@@ -160,9 +160,11 @@ export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) =
         cardsToSelect = allPokemonNames;
     }
 
-    // Check if player has completed collection (owns all 151)
+    // Check if player has completed collection
     const ownedCount = Object.keys(userCollection).length;
-    if (ownedCount >= 151) {
+    const numOfPokemon = Object.keys(pokemon.cards).length;
+
+    if (ownedCount >= numOfPokemon) {
         // Player owns everything, no guarantee possible
         return getRandomItems(cardsToSelect, 5)
             .map((pokemonName) => createCard(pokemonName, false));

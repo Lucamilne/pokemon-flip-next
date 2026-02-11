@@ -3302,6 +3302,27 @@
       ],
       "ability": "metronome",
       "statWeight": 600
+    },
+    "togepi": {
+      "id": 175,
+      "types": [
+        "fairy"
+      ],
+      "stats": [
+        3,
+        3,
+        3,
+        3
+      ],
+
+      "originalStats": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "ability": "wish",
+      "statWeight": 245
     }
   },
   "eeveelutions": {
@@ -3873,6 +3894,11 @@
       "name": "Tri Attack",
       "trigger": "onGridPlace",
       "description": "Doubles all stats when placed adjacent to 3 or more cards"
+    },
+    "wish": {
+      "name": "Wish",
+      "trigger": "onGridPlace",
+      "description": "When placed, make a wish and a miracle might happen..."
     }
   }
 }

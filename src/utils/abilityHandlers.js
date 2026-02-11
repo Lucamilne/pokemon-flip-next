@@ -520,6 +520,15 @@ const triAttack = (card, cellId, gameState) => {
     };
 };
 
+const wish = (card) => {
+    if (Math.random() >= 0.15) return card;
+
+    return {
+        ...card,
+        stats: card.stats.map(() => 10)
+    };
+};
+
 const lonely = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
 
@@ -1096,7 +1105,8 @@ export const selfAbilityHandlers = {
     torrent,
     toxic,
     transform,
-    triAttack
+    triAttack,
+    wish
 };
 
 export const statusAbilityHandlers = {
