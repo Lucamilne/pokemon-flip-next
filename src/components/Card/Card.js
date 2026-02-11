@@ -28,7 +28,7 @@ const getBallSprite = (statWeight) => {
     return MasterBallSprite;
 };
 
-function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false, snapshot = false }) {
+function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false, snapshot = false, showTooltip = true }) {
     const { isVisible, handlers } = useTooltip();
     const { hasCard } = useAuth();
 
@@ -305,7 +305,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             </div>
 
             {/* Ability Tooltip */}
-            {hasAbility && isVisible && !isDragging && (
+            {hasAbility && showTooltip && isVisible && !isDragging && (
                 <div className={`fade-in-b absolute z-10 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'left-1/2 -translate-x-1/2 bottom-full mb-2' :
                     tooltipPosition === 'bottom' ? 'left-1/2 -translate-x-1/2 top-full mt-2' :
                         tooltipPosition === 'left' ? 'right-full mr-2 top-1/2 -translate-y-1/2' :

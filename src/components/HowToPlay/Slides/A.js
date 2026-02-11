@@ -31,6 +31,7 @@ function TutorialDropZone({ droppedCard }) {
                         isDraggable={false}
                         isPlacedInGrid={true}
                         roundCorners={false}
+                        showTooltip={false}
                     />
                 </div>
             )}
@@ -63,7 +64,7 @@ export default function A({ nextSlide }) {
                 <div className={`relative aspect-square w-[72px] md:w-[124px] rounded-md`}>
                     <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-black/15" />
                     {!droppedCard && (
-                        <Card index={0} pokemonCard={pokemonCard} isPlayerCard={true} isDraggable={true} startsFaceUp={true} />
+                        <Card index={0} pokemonCard={pokemonCard} isPlayerCard={true} isDraggable={true} startsFaceUp={true} showTooltip={false}  />
                     )}
                 </div>
                 <div className="arrow-relative" />

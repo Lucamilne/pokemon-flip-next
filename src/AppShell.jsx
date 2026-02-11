@@ -19,7 +19,8 @@ export default function AppShell({ children }) {
     if (pathname.endsWith('/play')) {
       return 'bg-pokedex-red';
     }
-    return 'bg-neutral-100';
+    if (pathname === '/') return 'bg-neutral-100';
+    return 'bg-(--color-psychic-300)';
   };
 
   return (
