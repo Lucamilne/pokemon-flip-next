@@ -330,37 +330,79 @@ const maternal = (card, cellId, gameState) => {
     };
 };
 
-// const sing = (card, cellId, cells) => {
-//     const modifiedCells = { ...cells };
+const stunSpore = (card, cellId, gameState) => {
+    const opponentHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
+    const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
+    const opponentHand = [...gameState[opponentHandKey]];
 
-//     // Reduce all stats for every pokemon on the grid (friendly and enemy)
-//     Object.keys(modifiedCells).forEach(currentCellId => {
-//         const currentCell = modifiedCells[currentCellId];
+    if (Math.random() < 1 && opponentHand.length > 0) {
+        const randomIndex = Math.floor(Math.random() * opponentHand.length);
+        opponentHand[randomIndex] = {
+            ...opponentHand[randomIndex],
+            stats: opponentHand[randomIndex].stats.map(stat => Math.max(1, stat - 1))
+        };
+    }
 
-//         if (currentCell?.pokemonCard) {
-//             // Check if the pokemon has stat-lowering immunity
-//             if (statLoweringImmunityAbilities.includes(currentCell.pokemonCard.ability)) {
-//                 return;
-//             }
+    return {
+        [opponentHandKey]: opponentHand,
+        [ownHandKey]: [...gameState[ownHandKey]]
+    };
+};
 
-//             // Reduce all stats by 1, minimum 1
-//             const newStats = currentCell.pokemonCard.stats.map(stat =>
-//                 stat > 1 ? stat - 1 : 1
-//             );
+const flamethrower = (card, cellId, gameState) => {
+    const opponentHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
+    const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
+
+    const opponentHand = gameState[opponentHandKey].map(opponentCard => {
+        const eligibleIndices = opponentCard.stats
+            .map((stat, i) => stat > 1 ? i : -1)
+            .filter(i => i !== -1);
+        if (eligibleIndices.length === 0) return opponentCard;
+        const randomIndex = eligibleIndices[Math.floor(Math.random() * eligibleIndices.length)];
+        const newStats = [...opponentCard.stats];
+        newStats[randomIndex] -= 1;
+        return { ...opponentCard, stats: newStats };
+    });
+
+    return {
+        [opponentHandKey]: opponentHand,
+        [ownHandKey]: [...gameState[ownHandKey]]
+    };
+};
+
+const sacredFire = flamethrower;
+
+const earthquake = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+
+    // Reduce all stats for every pokemon on the grid (friendly and enemy)
+    Object.keys(modifiedCells).forEach(currentCellId => {
+        const currentCell = modifiedCells[currentCellId];
+
+        if (currentCell?.pokemonCard) {
+            // Check if the pokemon has stat-lowering immunity
+            if (statLoweringImmunityAbilities.includes(currentCell.pokemonCard.ability)) {
+                return;
+            }
+
+            // Reduce all stats by 1, minimum 1
+            const newStats = currentCell.pokemonCard.stats.map(stat =>
+                stat > 1 ? stat - 1 : 1
+            );
 
 
-//             modifiedCells[currentCellId] = {
-//                 ...currentCell,
-//                 pokemonCard: {
-//                     ...currentCell.pokemonCard,
-//                     stats: newStats
-//                 }
-//             };
-//         }
-//     });
+            modifiedCells[currentCellId] = {
+                ...currentCell,
+                pokemonCard: {
+                    ...currentCell.pokemonCard,
+                    stats: newStats
+                }
+            };
+        }
+    });
 
-//     return modifiedCells;
-// };
+    return modifiedCells;
+};
 
 const quickAttack = (card, cellId, gameState) => {
     const otherCardsOnGrid = Object.values(gameState.cells).filter(cell => cell.pokemonCard).length;
@@ -501,6 +543,8 @@ const guts = (card, cellId, gameState) => {
         stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
     };
 };
+
+const twinNeedle = guts;
 
 const triAttack = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -777,6 +821,7 @@ const intimidate = growl;
 const flameBody = growl;
 const thunderWave = growl;
 const leer = growl;
+const tailWhip = growl;
 
 const smog = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
@@ -958,7 +1003,6 @@ const illuminate = (card, cellId, gameState) => {
 //     };
 // };
 
-// const flamethrower = thunder;
 // const petalDance = thunder;
 // const skyAttack = thunder;
 // const waterfall = thunder;
@@ -1061,6 +1105,7 @@ export const selfAbilityHandlers = {
     dragonDance,
     evolve,
     familyBond,
+    flamethrower,
     flashFire,
     growth,
     guts,
@@ -1089,12 +1134,14 @@ export const selfAbilityHandlers = {
     rage,
     rest,
     rockSlide,
+    sacredFire,
     safeguard,
     selfDestruct,
     shellArmor,
     shieldDust,
     softBoiled,
     staticElectricity,
+    stunSpore,
     sturdy,
     swarm,
     swordsDance,
@@ -1105,12 +1152,14 @@ export const selfAbilityHandlers = {
     toxic,
     transform,
     triAttack,
+    twinNeedle,
     wish
 };
 
 export const statusAbilityHandlers = {
     confuseRay,
     confusion,
+    earthquake,
     flameBody,
     growl,
     guillotine,
@@ -1125,6 +1174,7 @@ export const statusAbilityHandlers = {
     smog,
     stench,
     supersonic,
+    tailWhip,
     technician,
     thunderWave
 }
@@ -1164,7 +1214,7 @@ export const applyMatchStartAbilities = (gameState) => {
 
     for (const card of allCards) {
         const match = abilityNullificationAbilities.find(n => n.name === card?.ability);
-        
+
         if (match) {
             nullifierAbility = match;
             break;

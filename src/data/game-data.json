@@ -291,7 +291,7 @@
         4,
         1
       ],
-      "ability": "overgrow",
+      "ability": "stunSpore",
       "statWeight": 318
     },
     "ivysaur": {
@@ -352,7 +352,7 @@
         2,
         6
       ],
-      "ability": "blaze",
+      "ability": "rage",
       "statWeight": 309
     },
     "charmeleon": {
@@ -372,7 +372,7 @@
         7,
         5
       ],
-      "ability": "blaze",
+      "ability": "flamethrower",
       "statWeight": 405
     },
     "charizard": {
@@ -413,7 +413,7 @@
         6,
         2
       ],
-      "ability": "hydroPump",
+      "ability": "shellArmor",
       "statWeight": 314
     },
     "wartortle": {
@@ -514,7 +514,7 @@
         6,
         2
       ],
-      "ability": "swarm",
+      "ability": "stunSpore",
       "statWeight": 395
     },
     "weedle": {
@@ -575,7 +575,7 @@
         3,
         7
       ],
-      "ability": "swarm",
+      "ability": "twinNeedle",
       "statWeight": 395
     },
     "pidgey": {
@@ -1018,7 +1018,7 @@
         3,
         3
       ],
-      "ability": "flashFire",
+      "ability": "tailWhip",
       "statWeight": 299
     },
     "ninetales": {
@@ -1038,7 +1038,7 @@
         4,
         5
       ],
-      "ability": "flashFire",
+      "ability": "tailWhip",
       "statWeight": 505
     },
     "jigglypuff": {
@@ -1133,7 +1133,6 @@
         2,
         5
       ],
-      "starter": true,
       "originalStats": [
         3,
         6,
@@ -1700,7 +1699,7 @@
         6,
         5
       ],
-      "ability": "chlorophyll",
+      "ability": "stunSpore",
       "statWeight": 490
     },
     "tentacool": {
@@ -1800,7 +1799,7 @@
         6,
         7
       ],
-      "ability": "rockSlide",
+      "ability": "earthquake",
       "statWeight": 495
     },
     "ponyta": {
@@ -2289,14 +2288,14 @@
         "electric"
       ],
       "stats": [
-        10,
-        5,
+        8,
+        7,
         8,
         10
       ],
       "originalStats": [
-        10,
-        5,
+        8,
+        7,
         8,
         10
       ],
@@ -3314,6 +3313,7 @@
         2,
         5
       ],
+      "starter": true,
       "originalStats": [
         4,
         1,
@@ -3322,6 +3322,26 @@
       ],
       "ability": "safeguard",
       "statWeight": 245
+    },
+    "ho-oh": {
+      "id": 250,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        10,
+        10,
+        9,
+        5
+      ],
+      "originalStats": [
+        10,
+        10,
+        9,
+        5
+      ],
+      "ability": "sacredFire",
+      "statWeight": 680
     }
   },
   "eeveelutions": {
@@ -3406,7 +3426,6 @@
     "celebi": {
       "id": 251,
       "types": [
-        "psychic",
         "grass"
       ],
       "stats": [
@@ -3423,31 +3442,29 @@
       ],
       "statWeight": 999
     },
-    "rayquaza": {
-      "id": 384,
+    "ho-oh": {
+      "id": 250,
       "types": [
-        "dragon",
-        "flying"
+        "fire"
       ],
       "stats": [
         10,
         10,
-        10,
-        10
+        9,
+        5
       ],
       "originalStats": [
         10,
         10,
-        10,
-        10
+        9,
+        5
       ],
-      "statWeight": 999
+      "statWeight": 680
     },
     "lugia": {
       "id": 249,
       "types": [
-        "psychic",
-        "flying"
+        "psychic"
       ],
       "stats": [
         10,
@@ -3485,8 +3502,7 @@
     "groudon": {
       "id": 383,
       "types": [
-        "ground",
-        "fire"
+        "ground"
       ],
       "stats": [
         10,
@@ -3537,7 +3553,7 @@
     "bonemerang": {
       "name": "Bonemerang",
       "trigger": "onGridPlace",
-      "description": "Placing this unit at the center of the arena boosts all stats by 1"
+      "description": "Placing this unit at the center of the arena boosts all stats by 1, with a chance for a 2-point boost"
     },
     "chlorophyll": {
       "name": "Chlorophyll",
@@ -3594,6 +3610,11 @@
       "trigger": "onMatchStart",
       "description": "Mystical power awakens! Gains a random stat for each elemental tile declared in the arena"
     },
+    "earthquake": {
+      "name": "Earthquake",
+      "trigger": "onGridPlace",
+      "description": "Shakes the arena, reducing the stats of all cards in play by 1"
+    },
     "evolve": {
       "name": "Evolve",
       "trigger": "onElementalTilePlace",
@@ -3603,6 +3624,11 @@
       "name": "Family Bond",
       "trigger": "onMatchStart",
       "description": "Each Nido family card in play boosts a random stat by 1, with a small chance for a 2-point boost"
+    },
+    "flamethrower": {
+      "name": "Flamethrower",
+      "trigger": "onMatchStart",
+      "description": "Scorch the opposition! On match start, reduce a random stat on every card in the opponent's hand"
     },
     "flameBody": {
       "name": "Flame Body",
@@ -3789,6 +3815,11 @@
       "trigger": "onMatchStart",
       "description": "For each additional Rock-type in the current match, a random stat is increased by 1"
     },
+    "sacredFire": {
+      "name": "Sacred Fire",
+      "trigger": "onMatchStart",
+      "description": "At the start of the match, a mystical fire reduces a random stat on each card in the opponent's hand"
+    },
     "safeguard": {
       "name": "Safeguard",
       "trigger": "onMatchStart",
@@ -3834,6 +3865,11 @@
       "trigger": "onMatchStart",
       "description": "For each additional Electric-type in the current match, a random stat is increased by 1"
     },
+    "stunSpore": {
+      "name": "Stun Spore",
+      "trigger": "onMatchStart",
+      "description": "At the start of a match, may weaken a random opponent card by reducing all its stats by 1"
+    },
     "stench": {
       "name": "Stench",
       "trigger": "onGridPlace",
@@ -3863,6 +3899,11 @@
       "name": "Synchronise",
       "trigger": "onMatchStart",
       "description": "For each additional Psychic-type in the current match, a random stat is increased by 1"
+    },
+    "tailWhip": {
+      "name": "Tail Whip",
+      "trigger": "onGridPlace",
+      "description": "When placed, the user cutely wags its tail, lowering the facing stat of adjacent foes"
     },
     "technician": {
       "name": "Technician",
@@ -3898,6 +3939,11 @@
       "name": "Tri Attack",
       "trigger": "onGridPlace",
       "description": "Doubles all stats when placed adjacent to 3 or more cards"
+    },
+    "twinNeedle": {
+      "name": "Twin Needle",
+      "trigger": "onGridPlace",
+      "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards"
     },
     "wish": {
       "name": "Wish",
