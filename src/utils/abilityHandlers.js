@@ -75,6 +75,16 @@ const leafGuard = shieldDust;
 const statLoweringImmunityAbilities = ["leafGuard", "oblivious", "shieldDust", "shellArmor", "defenceCurl", "sturdy", "thickFat"]
 const abilityNullificationAbilities = [{ name: "sing", statusEffect: "asleep" }, { name: "blizzard", statusEffect: "frozen" }, { name: "smokeScreen", statusEffect: "blinded" }, { name: "disable", statusEffect: "disabled" }];
 
+const isImmuneToStatLowering = (card) =>
+    statLoweringImmunityAbilities.includes(card?.ability);
+
+const withStatImmunity = (card, reducer) => {
+    if (isImmuneToStatLowering(card)) return card;
+    const newStats = reducer(card.stats);
+    if (newStats === card.stats) return card;
+    return { ...card, stats: newStats };
+};
+
 const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
@@ -337,12 +347,9 @@ const stunSpore = (card, cellId, gameState) => {
 
     if (Math.random() < 0.6 && opponentHand.length > 0) {
         const randomIndex = Math.floor(Math.random() * opponentHand.length);
-        if (!statLoweringImmunityAbilities.includes(opponentHand[randomIndex]?.ability)) {
-            opponentHand[randomIndex] = {
-                ...opponentHand[randomIndex],
-                stats: opponentHand[randomIndex].stats.map(stat => Math.max(1, stat - 1))
-            };
-        }
+        opponentHand[randomIndex] = withStatImmunity(opponentHand[randomIndex],
+            stats => stats.map(stat => Math.max(1, stat - 1))
+        );
     }
 
     return {
@@ -356,19 +363,15 @@ const flamethrower = (card, cellId, gameState) => {
     const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
 
     const opponentHand = gameState[opponentHandKey].map(opponentCard => {
-        if (statLoweringImmunityAbilities.includes(opponentCard?.ability)) return opponentCard;
-
-        const eligibleIndices = opponentCard.stats
-            .map((stat, i) => stat > 1 ? i : -1)
-            .filter(i => i !== -1);
-
-        if (eligibleIndices.length === 0) return opponentCard;
-
-        const randomIndex = eligibleIndices[Math.floor(Math.random() * eligibleIndices.length)];
-        const newStats = [...opponentCard.stats];
-        newStats[randomIndex] -= 1;
-
-        return { ...opponentCard, stats: newStats };
+        return withStatImmunity(opponentCard, stats => {
+            const eligibleIndices = stats
+                .map((stat, i) => stat > 1 ? i : -1)
+                .filter(i => i !== -1);
+            if (eligibleIndices.length === 0) return stats;
+            const newStats = [...stats];
+            newStats[eligibleIndices[Math.floor(Math.random() * eligibleIndices.length)]] -= 1;
+            return newStats;
+        });
     });
 
     return {
@@ -387,24 +390,12 @@ const earthquake = (card, cellId, cells) => {
         const currentCell = modifiedCells[currentCellId];
 
         if (currentCell?.pokemonCard) {
-            // Check if the pokemon has stat-lowering immunity
-            if (statLoweringImmunityAbilities.includes(currentCell.pokemonCard.ability)) {
-                return;
-            }
-
-            // Reduce all stats by 1, minimum 1
-            const newStats = currentCell.pokemonCard.stats.map(stat =>
-                stat > 1 ? stat - 1 : 1
+            const modifiedCard = withStatImmunity(currentCell.pokemonCard,
+                stats => stats.map(stat => stat > 1 ? stat - 1 : 1)
             );
-
-
-            modifiedCells[currentCellId] = {
-                ...currentCell,
-                pokemonCard: {
-                    ...currentCell.pokemonCard,
-                    stats: newStats
-                }
-            };
+            if (modifiedCard !== currentCell.pokemonCard) {
+                modifiedCells[currentCellId] = { ...currentCell, pokemonCard: modifiedCard };
+            }
         }
     });
 
@@ -500,10 +491,7 @@ const lick = (card, cellId, cells) => {
         const adjacentCell = modifiedCells[adjacentCellId];
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            // Check if the pokemon has stat-lowering immunity
-            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
-                return;
-            }
+            if (isImmuneToStatLowering(adjacentCell.pokemonCard)) return;
 
             const stats = adjacentCell.pokemonCard.stats;
             const highestStat = Math.max(...stats);
@@ -652,7 +640,7 @@ const leechLife = (card, cellId, gameState) => {
         if (adjacentCellId === null) return;
         const adjacentCell = gameState.cells[adjacentCellId];
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard
-            && !statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
+            && !isImmuneToStatLowering(adjacentCell.pokemonCard)) {
             leechCount++;
         }
     });
@@ -688,24 +676,15 @@ const leechLifeStatus = (card, cellId, cells) => {
         const adjacentCell = modifiedCells[adjacentCellId];
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
-                return;
+            const modifiedCard = withStatImmunity(adjacentCell.pokemonCard, stats => {
+                const newStats = [...stats];
+                const randomStatIndex = Math.floor(Math.random() * newStats.length);
+                if (newStats[randomStatIndex] > 1) newStats[randomStatIndex] -= 1;
+                return newStats;
+            });
+            if (modifiedCard !== adjacentCell.pokemonCard) {
+                modifiedCells[adjacentCellId] = { ...adjacentCell, pokemonCard: modifiedCard };
             }
-
-            const stats = [...adjacentCell.pokemonCard.stats];
-            const randomStatIndex = Math.floor(Math.random() * stats.length);
-
-            if (stats[randomStatIndex] > 1) {
-                stats[randomStatIndex] -= 1;
-            }
-
-            modifiedCells[adjacentCellId] = {
-                ...adjacentCell,
-                pokemonCard: {
-                    ...adjacentCell.pokemonCard,
-                    stats
-                }
-            };
         }
     });
 
@@ -755,9 +734,7 @@ const hypnosis = (card, cellId, cells) => {
         const adjacentCell = modifiedCells[adjacentCellId];
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
-                return;
-            }
+            if (isImmuneToStatLowering(adjacentCell.pokemonCard)) return;
 
             if (Math.random() < 0.5) {
                 const newStats = [...adjacentCell.pokemonCard.stats];
@@ -797,10 +774,7 @@ const growl = (card, cellId, cells) => {
         const adjacentCell = modifiedCells[adjacentCellId];
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            // Check if adjacent card has stat-lowering immunity
-            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
-                return;
-            }
+            if (isImmuneToStatLowering(adjacentCell.pokemonCard)) return;
 
             const statIndexToLower = oppositeDirections[directionIndex];
             const newStats = [...adjacentCell.pokemonCard.stats];
@@ -838,27 +812,12 @@ const smog = (card, cellId, cells) => {
         const currentCell = modifiedCells[currentCellId];
 
         if (currentCell?.pokemonCard && currentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            if (statLoweringImmunityAbilities.includes(currentCell.pokemonCard.ability)) {
-                return;
+            const modifiedCard = withStatImmunity(currentCell.pokemonCard,
+                stats => stats.map(stat => (stat > cardHighestStat && stat > 1) ? stat - 1 : stat)
+            );
+            if (modifiedCard !== currentCell.pokemonCard) {
+                modifiedCells[currentCellId] = { ...currentCell, pokemonCard: modifiedCard };
             }
-
-            const stats = [...currentCell.pokemonCard.stats];
-
-            // Lower any stats that are greater than the card's highest stat
-            const newStats = stats.map(stat => {
-                if (stat > cardHighestStat && stat > 1) {
-                    return stat - 1;
-                }
-                return stat;
-            });
-
-            modifiedCells[currentCellId] = {
-                ...currentCell,
-                pokemonCard: {
-                    ...currentCell.pokemonCard,
-                    stats: newStats
-                }
-            };
         }
     });
 
@@ -877,9 +836,7 @@ const hornDrill = (card, cellId, cells) => {
         const adjacentCell = modifiedCells[adjacentCellId];
 
         if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
-            if (statLoweringImmunityAbilities.includes(adjacentCell.pokemonCard.ability)) {
-                return;
-            }
+            if (isImmuneToStatLowering(adjacentCell.pokemonCard)) return;
 
             const roll = Math.random();
 
