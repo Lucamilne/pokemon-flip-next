@@ -433,7 +433,7 @@
         5,
         4
       ],
-      "ability": "hydroPump",
+      "ability": "tailWhip",
       "statWeight": 405
     },
     "blastoise": {
@@ -798,7 +798,7 @@
         4,
         6
       ],
-      "ability": "thunderWave",
+      "ability": "lightningRod",
       "statWeight": 485
     },
     "sandshrew": {
@@ -1459,7 +1459,7 @@
         10,
         5
       ],
-      "ability": "growl",
+      "ability": "roar",
       "statWeight": 555
     },
     "poliwag": {
@@ -1519,7 +1519,7 @@
         8,
         8
       ],
-      "ability": "hydroPump",
+      "ability": "waterfall",
       "statWeight": 510
     },
     "abra": {
@@ -1679,7 +1679,7 @@
         3,
         8
       ],
-      "ability": "chlorophyll",
+      "ability": "stunSpore",
       "statWeight": 390
     },
     "victreebel": {
@@ -1699,7 +1699,7 @@
         6,
         5
       ],
-      "ability": "stunSpore",
+      "ability": "poisonPowder",
       "statWeight": 490
     },
     "tentacool": {
@@ -1809,14 +1809,14 @@
       ],
       "stats": [
         2,
+        6,
         7,
-        5,
         7
       ],
       "originalStats": [
         2,
+        6,
         7,
-        5,
         7
       ],
       "ability": "flashFire",
@@ -1828,18 +1828,18 @@
         "fire"
       ],
       "stats": [
+        2,
         5,
-        7,
-        6,
-        7
+        9,
+        9
       ],
       "originalStats": [
+        2,
         5,
-        7,
-        6,
-        7
+        9,
+        9
       ],
-      "ability": "flashFire",
+      "ability": "agility",
       "statWeight": 500
     },
     "slowpoke": {
@@ -2599,7 +2599,7 @@
         7,
         6
       ],
-      "ability": "agility",
+      "ability": "tailWhip",
       "statWeight": 295
     },
     "seadra": {
@@ -2799,7 +2799,7 @@
         4,
         6
       ],
-      "ability": "flameBody",
+      "ability": "flamethrower",
       "statWeight": 495
     },
     "pinsir": {
@@ -3179,7 +3179,7 @@
         6,
         9
       ],
-      "ability": "lightningRod",
+      "ability": "lightScreen",
       "statWeight": 580
     },
     "moltres": {
@@ -3320,7 +3320,7 @@
         2,
         5
       ],
-      "ability": "safeguard",
+      "ability": "cuteCharm",
       "statWeight": 245
     },
     "ho-oh": {
@@ -3730,6 +3730,11 @@
       "trigger": "onElementalTilePlace",
       "description": "Doubles stats when placed on Electric-type tiles"
     },
+    "lightScreen": {
+      "name": "Light Screen",
+      "trigger": "onMatchStart",
+      "description": "Create a wall of light that boosts a random stat by 1 on every card in your hand"
+    },
     "lonely": {
       "name": "Lonely",
       "trigger": "onGridPlace",
@@ -3795,6 +3800,11 @@
       "trigger": "onMatchStart",
       "description": "On match start, all stats are increased by 1 for every 10 total stat points the next Pokémon in your hand has"
     },
+    "poisonPowder": {
+      "name": "Poison Powder",
+      "trigger": "onMatchStart",
+      "description": "On match start, reduce a random stat on every card in the opponent's hand"
+    },
     "pressure": {
       "name": "Pressure",
       "trigger": "onGridPlace",
@@ -3819,6 +3829,11 @@
       "name": "Rest",
       "trigger": "onTurnStart",
       "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts"
+    },
+    "roar": {
+      "name": "Roar",
+      "trigger": "onMatchStart",
+      "description": "A mighty roar that boosts a random stat by 1 on every card in your hand"
     },
     "rockSlide": {
       "name": "Rock Slide",
@@ -3954,6 +3969,11 @@
       "name": "Twin Needle",
       "trigger": "onGridPlace",
       "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards"
+    },
+    "waterfall": {
+      "name": "Water Veil",
+      "trigger": "onMatchStart",
+      "description": "A protective veil of water boosts a random stat by 1 on every card in your hand"
     },
     "wish": {
       "name": "Wish",

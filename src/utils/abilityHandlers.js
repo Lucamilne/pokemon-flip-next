@@ -381,6 +381,32 @@ const flamethrower = (card, cellId, gameState) => {
 };
 
 const sacredFire = flamethrower;
+const poisonPowder = flamethrower;
+
+const waterfall = (card, cellId, gameState) => {
+    const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
+    const otherHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
+
+    const ownHand = gameState[ownHandKey].map(handCard => {
+        const eligibleIndices = handCard.stats
+            .map((stat, i) => stat < 10 ? i : -1)
+            .filter(i => i !== -1);
+        if (eligibleIndices.length === 0) return handCard;
+        const newStats = [...handCard.stats];
+        newStats[eligibleIndices[Math.floor(Math.random() * eligibleIndices.length)]] += 1;
+        return { ...handCard, stats: newStats };
+    });
+
+    return {
+        [ownHandKey]: ownHand,
+        [otherHandKey]: [...gameState[otherHandKey]]
+    };
+};
+
+const roar = waterfall;
+const lightScreen = waterfall;
+
+
 
 const earthquake = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
@@ -1105,6 +1131,7 @@ export const selfAbilityHandlers = {
     leechLife,
     leechSeed,
     lightningRod,
+    lightScreen,
     lonely,
     lovelyKiss,
     magicGuard,
@@ -1118,11 +1145,13 @@ export const selfAbilityHandlers = {
     oblivious,
     overgrow,
     payDay,
+    poisonPowder,
     pressure,
     prismaticPunch,
     quickAttack,
     rage,
     rest,
+    roar,
     rockSlide,
     sacredFire,
     safeguard,
@@ -1143,6 +1172,7 @@ export const selfAbilityHandlers = {
     transform,
     triAttack,
     twinNeedle,
+    waterfall,
     wish
 };
 
