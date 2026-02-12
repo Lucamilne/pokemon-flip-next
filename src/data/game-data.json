@@ -311,7 +311,7 @@
         1,
         7
       ],
-      "ability": "overgrow",
+      "ability": "leechSeed",
       "statWeight": 405
     },
     "venusaur": {
@@ -392,7 +392,7 @@
         9,
         7
       ],
-      "ability": "blaze",
+      "ability": "fireSpin",
       "statWeight": 534
     },
     "squirtle": {
@@ -697,7 +697,7 @@
         5,
         1
       ],
-      "ability": "mirrorMove",
+      "ability": "featherDance",
       "statWeight": 262
     },
     "fearow": {
@@ -717,7 +717,7 @@
         4,
         8
       ],
-      "ability": "skyAttack",
+      "ability": "mirrorMove",
       "statWeight": 442
     },
     "ekans": {
@@ -3199,7 +3199,7 @@
         6,
         8
       ],
-      "ability": "blaze",
+      "ability": "fireSpin",
       "statWeight": 580
     },
     "dratini": {
@@ -3540,8 +3540,8 @@
       "trigger": "onElementalTilePlace",
       "description": "Doubles stats when placed on Flying-type tiles"
     },
-    "blaze": {
-      "name": "Blaze",
+    "fireSpin": {
+      "name": "Fire Spin",
       "trigger": "onElementalTilePlace",
       "description": "Doubles stats when placed on Fire-type tiles"
     },
@@ -3762,6 +3762,11 @@
     },
     "mirrorMove": {
       "name": "Mirror Move",
+      "trigger": "onMatchStart",
+      "description": "Copies a random ability from the opponent's hand at the start of the match"
+    },
+    "featherDance": {
+      "name": "Feather Dance",
       "trigger": "onMatchStart",
       "description": "For each additional Flying-type in the current match, a random stat is increased by 1"
     },

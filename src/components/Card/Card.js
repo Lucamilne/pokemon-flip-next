@@ -320,6 +320,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                         <p className="text-[8px] md:text-[10px] py-1 md:py-2 px-[1px] text-center">
                             {abilities[pokemonCard.ability]?.description}
                             {pokemonCard.wasMetronome && ' (via Metronome)'}
+                            {pokemonCard.wasMirrorMove && ' (via Mirror Move)'}
                         </p>
                         {/* Arrow */}
                         {tooltipPosition === 'top' && (

@@ -164,7 +164,7 @@ const overgrow = (card, cellId, gameState) => {
     };
 }
 
-const blaze = overgrow; // fire
+const fireSpin = overgrow; // fire
 const hydroPump = overgrow; // water
 const lightningRod = overgrow; // electric
 const mist = overgrow; // ice
@@ -206,7 +206,7 @@ const chlorophyll = (card, cellId, gameState) => {
 }
 
 const flashFire = chlorophyll; // fire
-const mirrorMove = chlorophyll; // flying
+const featherDance = chlorophyll; // flying
 const rockSlide = chlorophyll; // rock
 const torrent = chlorophyll; // water
 const staticElectricity = chlorophyll; // electric
@@ -1052,12 +1052,37 @@ const metronome = (card, cellId, gameState) => {
     return replaceCardInHands(card, modifiedCard, gameState);
 };
 
+const mirrorMove = (card, cellId, gameState) => {
+    const opponentHand = card.isPlayerCard ? gameState.cpuHand : gameState.playerHand;
+    const cardsWithAbilities = opponentHand.filter(c => c?.ability);
+
+    if (cardsWithAbilities.length === 0) {
+        return replaceCardInHands(card, card, gameState);
+    }
+
+    const randomCard = cardsWithAbilities[Math.floor(Math.random() * cardsWithAbilities.length)];
+
+    const modifiedCard = {
+        ...card,
+        ability: randomCard.ability,
+        wasMirrorMove: true
+    };
+
+    if (randomCard.ability &&
+        abilities[randomCard.ability]?.trigger === 'onMatchStart' &&
+        selfAbilityHandlers[randomCard.ability]) {
+        return selfAbilityHandlers[randomCard.ability](modifiedCard, cellId, gameState);
+    }
+
+    return replaceCardInHands(card, modifiedCard, gameState);
+};
+
 export const selfAbilityHandlers = {
     acidArmor,
     agility,
     ancientPower,
     skyAttack,
-    blaze,
+    fireSpin,
     bonemerang,
     chlorophyll,
     clearBody,
@@ -1088,6 +1113,7 @@ export const selfAbilityHandlers = {
     metronome,
     mimic,
     mirrorMove,
+    featherDance,
     mist,
     oblivious,
     overgrow,

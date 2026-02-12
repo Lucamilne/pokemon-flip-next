@@ -58,7 +58,7 @@ const allocateStatsByPokemon = (pokemonName) => {
 
 // {
 //     "overgrow":3, tile Stat increases are increased to 2
-//     "blaze":3, tile Stat increases are increased to 2
+//     "fireSpin":3, tile Stat increases are increased to 2
 //     "torrent":3, tile Stat increases are increased to 2
 //     "chlorophyll":9, raise the stats of ALL grass type pokemon on the board by 1
 //     "rock-head":9, defending card can be flipped on equal stats regardless of effectiveness
