@@ -73,7 +73,7 @@ const thickFat = shieldDust
 const leafGuard = shieldDust;
 
 const statLoweringImmunityAbilities = ["leafGuard", "oblivious", "shieldDust", "shellArmor", "defenceCurl", "sturdy", "thickFat"]
-const abilityNullificationAbilities = [{ name: "sing", statusEffect: "asleep" }, { name: "blizzard", statusEffect: "frozen" }, { name: "smokeScreen", statusEffect: "blinded" }];
+const abilityNullificationAbilities = [{ name: "sing", statusEffect: "asleep" }, { name: "blizzard", statusEffect: "frozen" }, { name: "smokeScreen", statusEffect: "blinded" }, { name: "Disable", statusEffect: "disabled" }];
 
 const transform = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -335,12 +335,14 @@ const stunSpore = (card, cellId, gameState) => {
     const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
     const opponentHand = [...gameState[opponentHandKey]];
 
-    if (Math.random() < 1 && opponentHand.length > 0) {
+    if (Math.random() < 0.6 && opponentHand.length > 0) {
         const randomIndex = Math.floor(Math.random() * opponentHand.length);
-        opponentHand[randomIndex] = {
-            ...opponentHand[randomIndex],
-            stats: opponentHand[randomIndex].stats.map(stat => Math.max(1, stat - 1))
-        };
+        if (!statLoweringImmunityAbilities.includes(opponentHand[randomIndex]?.ability)) {
+            opponentHand[randomIndex] = {
+                ...opponentHand[randomIndex],
+                stats: opponentHand[randomIndex].stats.map(stat => Math.max(1, stat - 1))
+            };
+        }
     }
 
     return {
@@ -354,13 +356,18 @@ const flamethrower = (card, cellId, gameState) => {
     const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
 
     const opponentHand = gameState[opponentHandKey].map(opponentCard => {
+        if (statLoweringImmunityAbilities.includes(opponentCard?.ability)) return opponentCard;
+
         const eligibleIndices = opponentCard.stats
             .map((stat, i) => stat > 1 ? i : -1)
             .filter(i => i !== -1);
+
         if (eligibleIndices.length === 0) return opponentCard;
+
         const randomIndex = eligibleIndices[Math.floor(Math.random() * eligibleIndices.length)];
         const newStats = [...opponentCard.stats];
         newStats[randomIndex] -= 1;
+
         return { ...opponentCard, stats: newStats };
     });
 

@@ -1519,7 +1519,7 @@
         8,
         8
       ],
-      "ability": "torrent",
+      "ability": "hydroPump",
       "statWeight": 510
     },
     "abra": {
@@ -1579,7 +1579,7 @@
         8,
         7
       ],
-      "ability": "synchronise",
+      "ability": "disable",
       "statWeight": 500
     },
     "machop": {
@@ -2599,7 +2599,7 @@
         7,
         6
       ],
-      "ability": "smokeScreen",
+      "ability": "agility",
       "statWeight": 295
     },
     "seadra": {
@@ -3600,6 +3600,11 @@
       "trigger": "onGridPlace",
       "description": "Dig into a corner of the arena. 50% chance to boost all stats by 1"
     },
+    "disable": {
+      "name": "Disable",
+      "trigger": "onMatchStart",
+      "description": "Psychic interference prevents all other cards from using their abilities"
+    },
     "download": {
       "name": "Download",
       "trigger": "onGridPlace",
@@ -3964,6 +3969,11 @@
       "name": "Blinded",
       "trigger": "statusEffect",
       "description": "Disoriented by smoke, this card is unable to use its ability!"
+    },
+    "disabled": {
+      "name": "Disabled",
+      "trigger": "statusEffect",
+      "description": "This card's ability has been disabled and cannot be used!"
     }
   }
 }
