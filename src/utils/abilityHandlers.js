@@ -324,15 +324,10 @@ const maternal = (card, cellId, gameState) => {
     const otherHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
     const currentHand = gameState[handKey];
 
-    const newHand = currentHand.map(handCard => {
-        if (handCard.statWeight <= 355) {
-            return {
-                ...handCard,
-                stats: handCard.stats.map(stat => Math.min(stat + 1, 10))
-            };
-        }
-        return handCard;
-    });
+    const newHand = currentHand.map(handCard => ({
+        ...handCard,
+        stats: handCard.stats.map(stat => stat === 1 ? 5 : stat)
+    }));
 
     return {
         [handKey]: newHand,

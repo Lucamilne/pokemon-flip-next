@@ -3758,7 +3758,7 @@
     "maternal": {
       "name": "Maternal",
       "trigger": "onMatchStart",
-      "description": "Shields the weak, boosting all stats of each 'weak' card in your hand"
+      "description": "A nurturing presence that raises any weak stats across your hand to 5"
     },
     "mimic": {
       "name": "Mimic",
