@@ -110,7 +110,7 @@ export default function Board() {
         });
 
         // onMatchStart - trigger abilities for both hands
-        const { playerHand: processedPlayerHand, cpuHand: processedCpuHand } = applyMatchStartAbilities({
+        const { playerHand: processedPlayerHand, cpuHand: processedCpuHand, cells: processedCells } = applyMatchStartAbilities({
             cells: updatedCells,
             playerHand: newPlayerHand,
             cpuHand: newCpuHand
@@ -118,7 +118,7 @@ export default function Board() {
 
         setCpuHand(processedCpuHand);
         setPlayerHand(processedPlayerHand);
-        setCells(updatedCells);
+        setCells(processedCells);
         setPokeballIsOpen(true);
 
         // Set coin toss result

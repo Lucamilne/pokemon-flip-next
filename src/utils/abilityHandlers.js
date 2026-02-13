@@ -155,19 +155,17 @@ const overgrow = (card, cellId, gameState) => {
     if (!tileElement) return card;
 
     const isMatchingType = card.types.includes(tileElement);
+    if (!isMatchingType) return card;
 
     return {
         ...card,
-        stats: card.stats.map(stat =>
-            isMatchingType ? Math.min(stat * 2, 10) : Math.max(stat - 1, 1)
-        )
+        stats: card.stats.map(stat => Math.min(stat + 3, 10))
     };
 }
 
 const fireSpin = overgrow; // fire
 const hydroPump = overgrow; // water
 const lightningRod = overgrow; // electric
-const mist = overgrow; // ice
 const acidArmor = overgrow; // poison
 const skyAttack = overgrow; // flying
 
@@ -326,7 +324,7 @@ const maternal = (card, cellId, gameState) => {
 
     const newHand = currentHand.map(handCard => ({
         ...handCard,
-        stats: handCard.stats.map(stat => stat === 1 ? 5 : stat)
+        stats: handCard.stats.map(stat => stat < 5 ? 5 : stat)
     }));
 
     return {
@@ -335,23 +333,6 @@ const maternal = (card, cellId, gameState) => {
     };
 };
 
-const stunSpore = (card, cellId, gameState) => {
-    const opponentHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
-    const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
-    const opponentHand = [...gameState[opponentHandKey]];
-
-    if (Math.random() < 0.6 && opponentHand.length > 0) {
-        const randomIndex = Math.floor(Math.random() * opponentHand.length);
-        opponentHand[randomIndex] = withStatImmunity(opponentHand[randomIndex],
-            stats => stats.map(stat => Math.max(1, stat - 1))
-        );
-    }
-
-    return {
-        [opponentHandKey]: opponentHand,
-        [ownHandKey]: [...gameState[ownHandKey]]
-    };
-};
 
 const flamethrower = (card, cellId, gameState) => {
     const opponentHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
@@ -495,7 +476,7 @@ const rage = (card, cellId, gameState) => {
     if (isLosing) {
         return {
             ...card,
-            stats: card.stats.map(stat => stat < 10 ? stat + 1 : 10)
+            stats: card.stats.map(stat => Math.min(stat + 2, 10))
         };
     }
 
@@ -607,18 +588,6 @@ const lonely = (card, cellId, gameState) => {
         stats: card.stats.map(stat => Math.min(stat * 2, 10))
     };
 };
-
-const dig = (card, cellId, gameState) => {
-    const cornerCells = ["A1", "A3", "C1", "C3"];
-
-    // Only boost if placed on a corner cell, 50% chance
-    if (!cornerCells.includes(cellId) || Math.random() >= 0.5) return card;
-
-    return {
-        ...card,
-        stats: card.stats.map(stat => Math.min(stat + 1, 10))
-    };
-}
 
 const dragonDance = (card, cellId, gameState) => {
     // Count cells with elemental tiles (not null)
@@ -825,6 +794,31 @@ const thunderWave = growl;
 const leer = growl;
 const tailWhip = growl;
 
+const stunSpore = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+
+    adjacentCellIds.forEach((adjacentCellId) => {
+        if (adjacentCellId === null) return;
+        if (Math.random() >= 0.4) return;
+
+        const adjacentCell = modifiedCells[adjacentCellId];
+
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            const modifiedCard = withStatImmunity(adjacentCell.pokemonCard,
+                stats => stats.map(stat => Math.max(stat - 1, 1))
+            );
+
+            modifiedCells[adjacentCellId] = {
+                ...adjacentCell,
+                pokemonCard: modifiedCard
+            };
+        }
+    });
+
+    return modifiedCells;
+};
+
 const smog = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
     const cardHighestStat = Math.max(...card.stats);
@@ -977,22 +971,35 @@ const illuminate = (card, cellId, gameState) => {
     };
 };
 
-// const thunder = (card, cellId, gameState) => {
-//     const modifiedCells = {};
-//     for (const key in gameState.cells) {
-//         modifiedCells[key] = { ...gameState.cells[key], element: card.types[0] };
-//     }
-//     return {
-//         ...replaceCardInHands(card, card, gameState),
-//         cells: modifiedCells
-//     };
-// };
+const bubble = (card, cellId, gameState) => {
+    const modifiedCells = {};
 
-// const petalDance = thunder;
-// const skyAttack = thunder;
-// const waterfall = thunder;
-// const fissure = thunder;
+    for (const key in gameState.cells) {
+        modifiedCells[key] = { ...gameState.cells[key] };
+    }
 
+    const emptyCells = Object.keys(modifiedCells).filter(
+        key => !modifiedCells[key].element && !modifiedCells[key].pokemonCard
+    );
+
+    if (emptyCells.length > 0) {
+        const randomKey = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        modifiedCells[randomKey].element = card.types[0];
+    }
+
+    return {
+        ...replaceCardInHands(card, card, gameState),
+        cells: modifiedCells
+    };
+};
+
+const ember = bubble;
+const spark = bubble;
+const dig = bubble;
+const sludge = bubble;
+const petalDance = bubble;
+const psywave = bubble;
+const rockThrow = bubble;
 
 const payDay = (card, cellId, gameState) => {
     const currentHand = card.isPlayerCard ? gameState.playerHand : gameState.cpuHand;
@@ -1105,6 +1112,7 @@ export const selfAbilityHandlers = {
     skyAttack,
     fireSpin,
     bonemerang,
+    bubble,
     chlorophyll,
     clearBody,
     conversion,
@@ -1113,6 +1121,7 @@ export const selfAbilityHandlers = {
     desperation,
     dig,
     dragonDance,
+    ember,
     evolve,
     familyBond,
     flamethrower,
@@ -1136,26 +1145,29 @@ export const selfAbilityHandlers = {
     mimic,
     mirrorMove,
     featherDance,
-    mist,
     oblivious,
     overgrow,
     payDay,
+    petalDance,
     poisonPowder,
     pressure,
     prismaticPunch,
+    psywave,
     quickAttack,
     rage,
     rest,
     roar,
     rockSlide,
+    rockThrow,
     sacredFire,
     safeguard,
     selfDestruct,
     shellArmor,
     shieldDust,
+    sludge,
     softBoiled,
+    spark,
     staticElectricity,
-    stunSpore,
     sturdy,
     swarm,
     swordsDance,
@@ -1188,6 +1200,7 @@ export const statusAbilityHandlers = {
     leer,
     smog,
     stench,
+    stunSpore,
     supersonic,
     tailWhip,
     technician,
@@ -1224,6 +1237,7 @@ export const applyStatusAbilities = (card, trigger, cellId, cells) => {
 export const applyMatchStartAbilities = (gameState) => {
     let playerHand = [...gameState.playerHand];
     let cpuHand = [...gameState.cpuHand];
+    let cells = { ...gameState.cells };
     const allCards = [...playerHand, ...cpuHand];
     let nullifierAbility = null;
 
@@ -1249,15 +1263,14 @@ export const applyMatchStartAbilities = (gameState) => {
         allCards.forEach(card => {
             if (card?.ability && abilities[card.ability]?.trigger === 'onMatchStart' && selfAbilityHandlers[card.ability]) {
                 const currentCard = [...playerHand, ...cpuHand].find(c => c.name === card.name) || card;
-                const result = selfAbilityHandlers[card.ability](currentCard, null, { ...gameState, playerHand, cpuHand });
+                const result = selfAbilityHandlers[card.ability](currentCard, null, { ...gameState, playerHand, cpuHand, cells });
 
                 if (result?.playerHand) playerHand = result.playerHand;
                 if (result?.cpuHand) cpuHand = result.cpuHand;
+                if (result?.cells) cells = result.cells;
             }
         });
     }
 
-
-
-    return { playerHand, cpuHand };
+    return { playerHand, cpuHand, cells };
 };
