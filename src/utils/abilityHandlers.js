@@ -144,13 +144,13 @@ const swordsDance = (card, cellId, gameState) => {
 
     return {
         ...card,
-        stats: card.stats.map(stat => Math.min(10, stat + (Math.random() < 0.5 ? 2 : 1)))
+        stats: card.stats.map(stat => Math.min(10, stat + 2))
     };
 }
 
-const bonemerang = swordsDance;
+const boneClub = swordsDance;
 
-const overgrow = (card, cellId, gameState) => {
+const solarBeam = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
     if (!tileElement) return card;
 
@@ -163,44 +163,26 @@ const overgrow = (card, cellId, gameState) => {
     };
 }
 
-const fireSpin = overgrow; // fire
-const hydroPump = overgrow; // water
-const lightningRod = overgrow; // electric
-const acidArmor = overgrow; // poison
-const skyAttack = overgrow; // flying
+const fireSpin = solarBeam; // fire
+const hydroPump = solarBeam; // water
+const lightningRod = solarBeam; // electric
+const acidArmor = solarBeam; // poison
+const skyAttack = solarBeam; // flying
 
 const chlorophyll = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
 
-    // Count type cards in both hands
-    const cardTypeCount = collectiveHand.filter(c =>
+    // Count matching type cards in both hands (including self)
+    const matchingTypeCount = collectiveHand.filter(c =>
         c.types.includes(card.types[0])
-    ).length - 1;
+    ).length;
 
-    if (cardTypeCount < 1) return replaceCardInHands(card, card, gameState);
+    if (matchingTypeCount < 3) return replaceCardInHands(card, card, gameState);
 
-    // Create a new stats array
-    const newStats = [...card.stats];
-
-    // Boost random stats based on type card count
-    for (let i = 0; i < cardTypeCount; i++) {
-        // Find all stat indices that are below 10
-        const availableStatIndices = newStats
-            .map((stat, index) => ({ stat, index }))
-            .filter(({ stat }) => stat < 10)
-            .map(({ index }) => index);
-
-        // If all stats are at 10, stop boosting
-        if (availableStatIndices.length === 0) break;
-
-        // Pick a random stat from available indices
-        const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
-        const statIndexToBoost = availableStatIndices[randomIndex];
-
-        newStats[statIndexToBoost] += 1;
-    }
-
-    return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
+    return replaceCardInHands(card, {
+        ...card,
+        stats: card.stats.map(stat => Math.min(stat + 1, 10))
+    }, gameState);
 }
 
 const flashFire = chlorophyll; // fire
@@ -249,9 +231,7 @@ const familyBond = (card, cellId, gameState) => {
         const randomIndex = Math.floor(Math.random() * availableStatIndices.length);
         const statIndexToBoost = availableStatIndices[randomIndex];
 
-        // 10% chance to boost by 2, otherwise boost by 1 (never exceed 10)
-        const boostAmount = Math.random() < 0.1 ? 2 : 1;
-        newStats[statIndexToBoost] = Math.min(10, newStats[statIndexToBoost] + boostAmount);
+        newStats[statIndexToBoost] = Math.min(10, newStats[statIndexToBoost] + 2);
     }
 
     return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
@@ -333,6 +313,8 @@ const maternal = (card, cellId, gameState) => {
     };
 };
 
+const endure = maternal;
+
 
 const flamethrower = (card, cellId, gameState) => {
     const opponentHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
@@ -381,8 +363,6 @@ const waterfall = (card, cellId, gameState) => {
 
 const roar = waterfall;
 const lightScreen = waterfall;
-
-
 
 const earthquake = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
@@ -655,6 +635,7 @@ const leechLife = (card, cellId, gameState) => {
 };
 
 const leechSeed = leechLife;
+const absorb = leechLife;
 
 const leechLifeStatus = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
@@ -819,6 +800,8 @@ const stunSpore = (card, cellId, cells) => {
     return modifiedCells;
 };
 
+const hyperFang = stunSpore;
+
 const smog = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
     const cardHighestStat = Math.max(...card.stats);
@@ -971,6 +954,8 @@ const illuminate = (card, cellId, gameState) => {
     };
 };
 
+const barrier = illuminate;
+
 const bubble = (card, cellId, gameState) => {
     const modifiedCells = {};
 
@@ -978,13 +963,17 @@ const bubble = (card, cellId, gameState) => {
         modifiedCells[key] = { ...gameState.cells[key] };
     }
 
-    const emptyCells = Object.keys(modifiedCells).filter(
+    let emptyCells = Object.keys(modifiedCells).filter(
         key => !modifiedCells[key].element && !modifiedCells[key].pokemonCard
     );
 
-    if (emptyCells.length > 0) {
-        const randomKey = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        modifiedCells[randomKey].element = card.types[0];
+    // 1 guaranteed tile + 50% chance for a 2nd
+    const tilesToPlace = 1 + (Math.random() < 0.5 ? 1 : 0);
+
+    for (let i = 0; i < tilesToPlace && emptyCells.length > 0; i++) {
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        modifiedCells[emptyCells[randomIndex]].element = card.types[0];
+        emptyCells.splice(randomIndex, 1);
     }
 
     return {
@@ -997,7 +986,7 @@ const ember = bubble;
 const spark = bubble;
 const dig = bubble;
 const sludge = bubble;
-const petalDance = bubble;
+const overgrow = bubble;
 const psywave = bubble;
 const rockThrow = bubble;
 
@@ -1080,38 +1069,17 @@ const metronome = (card, cellId, gameState) => {
     return replaceCardInHands(card, modifiedCard, gameState);
 };
 
-const mirrorMove = (card, cellId, gameState) => {
-    const opponentHand = card.isPlayerCard ? gameState.cpuHand : gameState.playerHand;
-    const cardsWithAbilities = opponentHand.filter(c => c?.ability);
-
-    if (cardsWithAbilities.length === 0) {
-        return replaceCardInHands(card, card, gameState);
-    }
-
-    const randomCard = cardsWithAbilities[Math.floor(Math.random() * cardsWithAbilities.length)];
-
-    const modifiedCard = {
-        ...card,
-        ability: randomCard.ability,
-        wasMirrorMove: true
-    };
-
-    if (randomCard.ability &&
-        abilities[randomCard.ability]?.trigger === 'onMatchStart' &&
-        selfAbilityHandlers[randomCard.ability]) {
-        return selfAbilityHandlers[randomCard.ability](modifiedCard, cellId, gameState);
-    }
-
-    return replaceCardInHands(card, modifiedCard, gameState);
-};
+const mirrorMove = metronome;
 
 export const selfAbilityHandlers = {
+    absorb,
     acidArmor,
     agility,
     ancientPower,
+    barrier,
     skyAttack,
     fireSpin,
-    bonemerang,
+    boneClub,
     bubble,
     chlorophyll,
     clearBody,
@@ -1122,6 +1090,7 @@ export const selfAbilityHandlers = {
     dig,
     dragonDance,
     ember,
+    endure,
     evolve,
     familyBond,
     flamethrower,
@@ -1146,9 +1115,9 @@ export const selfAbilityHandlers = {
     mirrorMove,
     featherDance,
     oblivious,
-    overgrow,
+    solarBeam,
     payDay,
-    petalDance,
+    overgrow,
     poisonPowder,
     pressure,
     prismaticPunch,
@@ -1184,6 +1153,7 @@ export const selfAbilityHandlers = {
 };
 
 export const statusAbilityHandlers = {
+    absorb: leechLifeStatus,
     confuseRay,
     confusion,
     earthquake,
@@ -1192,6 +1162,7 @@ export const statusAbilityHandlers = {
     guillotine,
     jumpKick,
     hornDrill,
+    hyperFang,
     hypnosis,
     intimidate,
     lick,

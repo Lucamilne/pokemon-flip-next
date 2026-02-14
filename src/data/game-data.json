@@ -291,7 +291,7 @@
         4,
         1
       ],
-      "ability": "petalDance",
+      "ability": "overgrow",
       "statWeight": 318
     },
     "ivysaur": {
@@ -311,7 +311,7 @@
         1,
         7
       ],
-      "ability": "stunSpore",
+      "ability": "absorb",
       "statWeight": 405
     },
     "venusaur": {
@@ -331,7 +331,7 @@
         6,
         8
       ],
-      "ability": "overgrow",
+      "ability": "solarBeam",
       "statWeight": 525
     },
     "charmander": {
@@ -657,7 +657,7 @@
         5,
         4
       ],
-      "ability": "guts",
+      "ability": "hyperFang",
       "statWeight": 253
     },
     "raticate": {
@@ -677,7 +677,7 @@
         7,
         3
       ],
-      "ability": "guts",
+      "ability": "hyperFang",
       "statWeight": 413
     },
     "spearow": {
@@ -717,7 +717,7 @@
         4,
         8
       ],
-      "ability": "mirrorMove",
+      "ability": "skyAttack",
       "statWeight": 442
     },
     "ekans": {
@@ -798,7 +798,7 @@
         4,
         6
       ],
-      "ability": "thunderWave",
+      "ability": "lightningRod",
       "statWeight": 485
     },
     "sandshrew": {
@@ -1499,7 +1499,7 @@
         5,
         5
       ],
-      "ability": "torrent",
+      "ability": "hypnosis",
       "statWeight": 385
     },
     "poliwrath": {
@@ -1559,7 +1559,7 @@
         5,
         1
       ],
-      "ability": "psywave",
+      "ability": "barrier",
       "statWeight": 400
     },
     "alakazam": {
@@ -1779,7 +1779,7 @@
         7,
         2
       ],
-      "ability": "rockSlide",
+      "ability": "sturdy",
       "statWeight": 390
     },
     "golem": {
@@ -1819,7 +1819,7 @@
         7,
         7
       ],
-      "ability": "flashFire",
+      "ability": "agility",
       "statWeight": 410
     },
     "rapidash": {
@@ -1839,7 +1839,7 @@
         9,
         9
       ],
-      "ability": "flashFire",
+      "ability": "agility",
       "statWeight": 500
     },
     "slowpoke": {
@@ -1959,7 +1959,7 @@
         1,
         2
       ],
-      "ability": "quickAttack",
+      "ability": "featherDance",
       "statWeight": 310
     },
     "dodrio": {
@@ -2379,7 +2379,7 @@
         5,
         6
       ],
-      "ability": "bonemerang",
+      "ability": "boneClub",
       "statWeight": 425
     },
     "hitmonlee": {
@@ -2559,7 +2559,7 @@
         4,
         7
       ],
-      "ability": "leechSeed",
+      "ability": "absorb",
       "statWeight": 435
     },
     "kangaskhan": {
@@ -2779,7 +2779,7 @@
         8,
         4
       ],
-      "ability": "thunderWave",
+      "ability": "staticElectricity",
       "statWeight": 490
     },
     "magmar": {
@@ -2799,7 +2799,7 @@
         4,
         6
       ],
-      "ability": "flameBody",
+      "ability": "flashFire",
       "statWeight": 495
     },
     "pinsir": {
@@ -3199,7 +3199,7 @@
         6,
         8
       ],
-      "ability": "flameBody",
+      "ability": "endure",
       "statWeight": 580
     },
     "dratini": {
@@ -3520,10 +3520,15 @@
     }
   },
   "abilities": {
+    "absorb": {
+      "name": "Absorb",
+      "trigger": "onGridPlace",
+      "description": "When placed, drains a random stat from adjacent enemy cards"
+    },
     "acidArmor": {
       "name": "Acid Armor",
       "trigger": "onElementalTilePlace",
-      "description": "Doubles stats when placed on Poison-type tiles"
+      "description": "Boosts all stats by 3 when placed on Poison-type tiles"
     },
     "agility": {
       "name": "Agility",
@@ -3534,6 +3539,11 @@
       "name": "Ancient Power",
       "trigger": "onCapture",
       "description": "On successful capture, chance to boost all stats by 1"
+    },
+    "barrier": {
+      "name": "Barrier",
+      "trigger": "onGridPlace",
+      "description": "Throw up a sturdy wall, gaining 1 stat for each adjacent empty cell"
     },
     "skyAttack": {
       "name": "Sky Attack",
@@ -3550,20 +3560,20 @@
       "trigger": "onMatchStart",
       "description": "Surround all other cards in a howling blizzard preventing their abilities from being used"
     },
-    "bonemerang": {
-      "name": "Bonemerang",
+    "boneClub": {
+      "name": "Bone Club",
       "trigger": "onGridPlace",
-      "description": "Placing this unit at the center of the arena boosts all stats by 1, with a chance for a 2-point boost"
+      "description": "Placing this unit at the center of the arena boosts all stats by 2"
     },
     "bubble": {
       "name": "Bubble",
       "trigger": "onMatchStart",
-      "description": "On match start, places an additional Water-type tile on a random empty cell"
+      "description": "On match start, places a Water-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "chlorophyll": {
       "name": "Chlorophyll",
       "trigger": "onMatchStart",
-      "description": "For each additional Grass-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Grass-type cards are in the current match, all stats are increased by 1"
     },
     "clearBody": {
       "name": "Clear Body",
@@ -3603,7 +3613,7 @@
     "dig": {
       "name": "Dig",
       "trigger": "onGridPlace",
-      "description": "On match start, places an additional Ground-type tile on a random empty cell"
+      "description": "On match start, places a Ground-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "disable": {
       "name": "Disable",
@@ -3625,10 +3635,15 @@
       "trigger": "onGridPlace",
       "description": "Shakes the arena, reducing the stats of all cards in play by 1"
     },
+    "endure": {
+      "name": "Endure",
+      "trigger": "onMatchStart",
+      "description": "An unyielding presence that raises any weaker stats across your hand to 5"
+    },
     "ember": {
       "name": "Ember",
       "trigger": "onMatchStart",
-      "description": "On match start, places an additional Fire-type tile on a random empty cell"
+      "description": "On match start, places a Fire-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "evolve": {
       "name": "Evolve",
@@ -3638,12 +3653,7 @@
     "familyBond": {
       "name": "Family Bond",
       "trigger": "onMatchStart",
-      "description": "Each Nido family card in play boosts a random stat by 1, with a small chance for a 2-point boost"
-    },
-    "flamethrower": {
-      "name": "Flamethrower",
-      "trigger": "onMatchStart",
-      "description": "Scorch the opposition! On match start, reduce a random stat on every card in the opponent's hand"
+      "description": "Each Nido family card in play boosts a random stat by 2"
     },
     "flameBody": {
       "name": "Flame Body",
@@ -3653,7 +3663,7 @@
     "flashFire": {
       "name": "Flash Fire",
       "trigger": "onMatchStart",
-      "description": "For each additional Fire-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Fire-type cards are in the current match, all stats are increased by 1"
     },
     "growl": {
       "name": "Growl",
@@ -3689,6 +3699,11 @@
       "name": "Hydro Pump",
       "trigger": "onElementalTilePlace",
       "description": "Boosts all stats by 3 when placed on a Water-type tile"
+    },
+    "hyperFang": {
+      "name": "Hyper Fang",
+      "trigger": "onGridPlace",
+      "description": "When placed, gain a chance to lower all stats by 1 on adjacent enemy cards"
     },
     "hypnosis": {
       "name": "Hypnosis",
@@ -3768,7 +3783,7 @@
     "maternal": {
       "name": "Maternal",
       "trigger": "onMatchStart",
-      "description": "A nurturing presence that raises any weak stats across your hand to 5"
+      "description": "A nurturing presence that raises any weaker stats across your hand to 5"
     },
     "mimic": {
       "name": "Mimic",
@@ -3783,7 +3798,7 @@
     "featherDance": {
       "name": "Feather Dance",
       "trigger": "onMatchStart",
-      "description": "For each additional Flying-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Flying-type cards are in the current match, all stats are increased by 1"
     },
     "metronome": {
       "name": "Metronome",
@@ -3795,8 +3810,8 @@
       "trigger": "onElementalTilePlace",
       "description": "Oblivious to its surroundings. Gains 1 to all stats on any elemental tile and is immune to stat-lowering effects"
     },
-    "overgrow": {
-      "name": "Overgrow",
+    "solarBeam": {
+      "name": "Solar Beam",
       "trigger": "onElementalTilePlace",
       "description": "Boosts all stats by 3 when placed on a Grass-type tile"
     },
@@ -3805,8 +3820,8 @@
       "trigger": "onMatchStart",
       "description": "On match start, all stats are increased by 1 for every 10 total stat points the next Pokémon in your hand has"
     },
-    "petalDance": {
-      "name": "Petal Dance",
+    "overgrow": {
+      "name": "Overgrow",
       "trigger": "onMatchStart",
       "description": "On match start, places an additional Grass-type tile on a random empty cell"
     },
@@ -3823,7 +3838,7 @@
     "psywave": {
       "name": "Psywave",
       "trigger": "onMatchStart",
-      "description": "On match start, places an additional Psychic-type tile on a random empty cell"
+      "description": "On match start, places a Psychic-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "prismaticPunch": {
       "name": "Prismatic Punch",
@@ -3853,12 +3868,12 @@
     "rockSlide": {
       "name": "Rock Slide",
       "trigger": "onMatchStart",
-      "description": "For each additional Rock-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Rock-type cards are in the current match, all stats are increased by 1"
     },
     "rockThrow": {
       "name": "Rock Throw",
       "trigger": "onMatchStart",
-      "description": "On match start, places an additional Rock-type tile on a random empty cell"
+      "description": "On match start, places a Rock-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "sacredFire": {
       "name": "Sacred Fire",
@@ -3888,7 +3903,7 @@
     "sludge": {
       "name": "Sludge",
       "trigger": "onMatchStart",
-      "description": "On match start, places an additional Poison-type tile on a random empty cell"
+      "description": "On match start, places a Poison-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "sing": {
       "name": "Sing",
@@ -3908,7 +3923,7 @@
     "spark": {
       "name": "Spark",
       "trigger": "onMatchStart",
-      "description": "On match start, places an additional Electric-type tile on a random empty cell"
+      "description": "On match start, places an Electric-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "softBoiled": {
       "name": "Soft Boiled",
@@ -3918,7 +3933,7 @@
     "staticElectricity": {
       "name": "Static",
       "trigger": "onMatchStart",
-      "description": "For each additional Electric-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Electric-type cards are in the current match, all stats are increased by 1"
     },
     "stunSpore": {
       "name": "Stun Spore",
@@ -3943,17 +3958,17 @@
     "swarm": {
       "name": "Swarm",
       "trigger": "onMatchStart",
-      "description": "For each additional Bug-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Bug-type cards are in the current match, all stats are increased by 1"
     },
     "swordsDance": {
       "name": "Swords Dance",
       "trigger": "onGridPlace",
-      "description": "Placing this unit at the center of the arena boosts stats by 1, with a chance for a 2-point boost"
+      "description": "Placing this unit at the center of the arena boosts stats by 2"
     },
     "synchronise": {
       "name": "Synchronise",
       "trigger": "onMatchStart",
-      "description": "For each additional Psychic-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Psychic-type cards are in the current match, all stats are increased by 1"
     },
     "tailWhip": {
       "name": "Tail Whip",
@@ -3983,7 +3998,7 @@
     "torrent": {
       "name": "Torrent",
       "trigger": "onMatchStart",
-      "description": "For each additional Water-type in the current match, a random stat is increased by 1"
+      "description": "If 3 or more Water-type cards are in the current match, all stats are increased by 1"
     },
     "transform": {
       "name": "Transform",
