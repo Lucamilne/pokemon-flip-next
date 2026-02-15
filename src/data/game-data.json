@@ -3302,6 +3302,282 @@
       "ability": "metronome",
       "statWeight": 600
     },
+    "chikorita": {
+      "id": 152,
+      "types": [
+        "grass"
+      ],
+      "stats": [
+        5,
+        5,
+        1,
+        5
+      ],
+      "starter": true,
+      "originalStats": [
+        5,
+        5,
+        1,
+        5
+      ],
+      "ability": "chlorophyll",
+      "generation": 2,
+      "statWeight": 318
+    },
+    "bayleef": {
+      "id": 153,
+      "types": [
+        "grass"
+      ],
+      "stats": [
+        7,
+        5,
+        5,
+        3
+      ],
+      "originalStats": [
+        7,
+        5,
+        5,
+        3
+      ],
+      "ability": "leafGuard",
+      "generation": 2,
+      "statWeight": 405
+    },
+    "meganium": {
+      "id": 154,
+      "types": [
+        "grass"
+      ],
+      "stats": [
+        7,
+        6,
+        6,
+        7
+      ],
+      "originalStats": [
+        7,
+        6,
+        6,
+        7
+      ],
+      "ability": "solarBeam",
+      "generation": 2,
+      "statWeight": 525
+    },
+    "cyndaquil": {
+      "id": 155,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        3,
+        4,
+        7,
+        1
+      ],
+      "starter": true,
+      "originalStats": [
+        3,
+        4,
+        7,
+        1
+      ],
+      "ability": "flashFire",
+      "generation": 2,
+      "statWeight": 309
+    },
+    "quilava": {
+      "id": 156,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        6,
+        5,
+        2,
+        7
+      ],
+      "originalStats": [
+        6,
+        5,
+        2,
+        7
+      ],
+      "ability": "smokeScreen",
+      "generation": 2,
+      "statWeight": 405
+    },
+    "typhlosion": {
+      "id": 157,
+      "types": [
+        "fire"
+      ],
+      "stats": [
+        6,
+        8,
+        6,
+        7
+      ],
+      "originalStats": [
+        6,
+        8,
+        6,
+        7
+      ],
+      "ability": "fireSpin",
+      "generation": 2,
+      "statWeight": 534
+    },
+    "totodile": {
+      "id": 158,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        3,
+        3,
+        5,
+        5
+      ],
+      "starter": true,
+      "originalStats": [
+        3,
+        3,
+        5,
+        5
+      ],
+      "ability": "torrent",
+      "generation": 2,
+      "statWeight": 314
+    },
+    "croconaw": {
+      "id": 159,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        1,
+        5,
+        8,
+        6
+      ],
+      "originalStats": [
+        1,
+        5,
+        8,
+        6
+      ],
+      "ability": "lick",
+      "generation": 2,
+      "statWeight": 405
+    },
+    "feraligatr": {
+      "id": 160,
+      "types": [
+        "water"
+      ],
+      "stats": [
+        10,
+        5,
+        5,
+        7
+      ],
+      "originalStats": [
+        10,
+        5,
+        5,
+        7
+      ],
+      "ability": "hydroPump",
+      "generation": 2,
+      "statWeight": 530
+    },
+    "sentret": {
+      "id": 161,
+      "types": [
+        "normal"
+      ],
+      "stats": [
+        4,
+        1,
+        1,
+        5
+      ],
+      "originalStats": [
+        4,
+        1,
+        1,
+        5
+      ],
+      "ability": "quickAttack",
+      "generation": 2,
+      "statWeight": 215
+    },
+    "furret": {
+      "id": 162,
+      "types": [
+        "normal"
+      ],
+      "stats": [
+        8,
+        5,
+        4,
+        4
+      ],
+      "originalStats": [
+        8,
+        5,
+        4,
+        4
+      ],
+      "ability": "rest",
+      "generation": 2,
+      "statWeight": 415
+    },
+    "hoothoot": {
+      "id": 163,
+      "types": [
+        "flying"
+      ],
+      "stats": [
+        5,
+        6,
+        1,
+        1
+      ],
+      "originalStats": [
+        5,
+        6,
+        1,
+        1
+      ],
+      "ability": "foresight",
+      "generation": 2,
+      "statWeight": 262
+    },
+    "noctowl": {
+      "id": 164,
+      "types": [
+        "flying"
+      ],
+      "stats": [
+        8,
+        5,
+        3,
+        7
+      ],
+      "originalStats": [
+        8,
+        5,
+        3,
+        7
+      ],
+      "ability": "foresight",
+      "generation": 2,
+      "statWeight": 452
+    },
     "togepi": {
       "id": 175,
       "types": [
@@ -3321,6 +3597,7 @@
         5
       ],
       "ability": "cuteCharm",
+      "generation": 2,
       "statWeight": 245
     },
     "ho-oh": {
@@ -3341,6 +3618,7 @@
         5
       ],
       "ability": "sacredFire",
+      "generation": 2,
       "statWeight": 680
     }
   },
@@ -3630,6 +3908,11 @@
       "trigger": "onMatchStart",
       "description": "Mystical power awakens! Gains a random stat for each elemental tile declared in the arena"
     },
+    "dreamEater": {
+      "name": "Dream Eater",
+      "trigger": "onGridPlace",
+      "description": "Feeds on weakened foes! If an adjacent enemy has lost stats, drains all their stats by 1 and powers up"
+    },
     "earthquake": {
       "name": "Earthquake",
       "trigger": "onGridPlace",
@@ -3664,6 +3947,11 @@
       "name": "Flash Fire",
       "trigger": "onMatchStart",
       "description": "If 3 or more Fire-type cards are in the current match, all stats are increased by 1"
+    },
+    "foresight": {
+      "name": "Foresight",
+      "trigger": "onGridPlace",
+      "description": "Heightens awareness of surroundings, gaining 1 stat for each adjacent empty cell"
     },
     "growl": {
       "name": "Growl",

@@ -637,6 +637,51 @@ const leechLife = (card, cellId, gameState) => {
 const leechSeed = leechLife;
 const absorb = leechLife;
 
+const dreamEater = (card, cellId, gameState) => {
+    const adjacentCellIds = gameState.cells[cellId].adjacentCells;
+
+    let weakenedCount = 0;
+    adjacentCellIds.forEach(adjacentCellId => {
+        if (adjacentCellId === null) return;
+        const adjacentCell = gameState.cells[adjacentCellId];
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard
+            && !isImmuneToStatLowering(adjacentCell.pokemonCard)) {
+            const currentSum = adjacentCell.pokemonCard.stats.reduce((a, b) => a + b, 0);
+            const originalSum = adjacentCell.pokemonCard.originalStats.reduce((a, b) => a + b, 0);
+            if (currentSum < originalSum) weakenedCount++;
+        }
+    });
+
+    if (weakenedCount === 0) return card;
+
+    const newStats = card.stats.map(stat => Math.min(stat + 1, 10));
+    return { ...card, stats: newStats };
+};
+
+const dreamEaterStatus = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+    const adjacentCellIds = modifiedCells[cellId].adjacentCells;
+
+    adjacentCellIds.forEach(adjacentCellId => {
+        if (adjacentCellId === null) return;
+        const adjacentCell = modifiedCells[adjacentCellId];
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            const currentSum = adjacentCell.pokemonCard.stats.reduce((a, b) => a + b, 0);
+            const originalSum = adjacentCell.pokemonCard.originalStats.reduce((a, b) => a + b, 0);
+            if (currentSum < originalSum) {
+                const modifiedCard = withStatImmunity(adjacentCell.pokemonCard,
+                    stats => stats.map(stat => Math.max(stat - 1, 1))
+                );
+                if (modifiedCard !== adjacentCell.pokemonCard) {
+                    modifiedCells[adjacentCellId] = { ...adjacentCell, pokemonCard: modifiedCard };
+                }
+            }
+        }
+    });
+
+    return modifiedCells;
+};
+
 const leechLifeStatus = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
     const adjacentCellIds = modifiedCells[cellId].adjacentCells;
@@ -955,6 +1000,7 @@ const illuminate = (card, cellId, gameState) => {
 };
 
 const barrier = illuminate;
+const foresight = illuminate;
 
 const bubble = (card, cellId, gameState) => {
     const modifiedCells = {};
@@ -1088,6 +1134,7 @@ export const selfAbilityHandlers = {
     defenceCurl,
     desperation,
     dig,
+    dreamEater,
     dragonDance,
     ember,
     endure,
@@ -1156,6 +1203,7 @@ export const statusAbilityHandlers = {
     absorb: leechLifeStatus,
     confuseRay,
     confusion,
+    dreamEater: dreamEaterStatus,
     earthquake,
     flameBody,
     growl,

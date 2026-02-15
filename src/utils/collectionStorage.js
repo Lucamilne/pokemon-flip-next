@@ -1,20 +1,11 @@
 import pokemon from '@/data/game-data.json';
+import { getStarterPokemonNames } from '@/utils/cardHelpers.js';
 
 // localStorage key for the collection
 const COLLECTION_KEY = 'pokemonCollection';
 
 // Version for schema migrations
 const CURRENT_VERSION = 1;
-
-/**
- * Get starter Pokemon names from game data
- * @returns {string[]} Array of starter Pokemon names
- */
-function getStarterPokemonNames() {
-  return Object.keys(pokemon.cards).filter(
-    (pokemonName) => pokemon.cards[pokemonName].starter
-  );
-}
 
 /**
  * Get default starter collection
@@ -253,5 +244,26 @@ export function clearAllCollectionData() {
     localStorage.removeItem(COLLECTION_KEY);
   } catch (error) {
     console.error('Error clearing collection data:', error);
+  }
+}
+
+// User preferences (separate from collection data)
+const PREFERENCES_KEY = 'pokemonPreferences';
+
+export function getLocalPreferences() {
+  try {
+    const stored = localStorage.getItem(PREFERENCES_KEY);
+    if (!stored) return { gen2Unlocked: false };
+    return { gen2Unlocked: false, ...JSON.parse(stored) };
+  } catch {
+    return { gen2Unlocked: false };
+  }
+}
+
+export function saveLocalPreferences(preferences) {
+  try {
+    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(preferences));
+  } catch (error) {
+    console.error('Error saving preferences:', error);
   }
 }

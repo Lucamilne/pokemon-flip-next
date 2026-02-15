@@ -18,7 +18,33 @@ export const createCard = (pokemonName, isPlayerCard = false, debugMode = false)
     };
 };
 
-export const allPokemonNames = Object.keys(pokemon.cards)
+const allPokemonNamesComplete = Object.keys(pokemon.cards);
+
+let allPokemonNames = allPokemonNamesComplete.filter(
+    name => !pokemon.cards[name].generation || pokemon.cards[name].generation === 1
+);
+
+export { allPokemonNames };
+
+let _gen2Unlocked = false;
+
+export function setEnabledGenerations({ gen2Unlocked }) {
+    _gen2Unlocked = gen2Unlocked;
+    allPokemonNames = gen2Unlocked
+        ? allPokemonNamesComplete
+        : allPokemonNamesComplete.filter(
+            name => !pokemon.cards[name].generation || pokemon.cards[name].generation === 1
+        );
+}
+
+export function getStarterPokemonNames() {
+    return allPokemonNamesComplete.filter(name => {
+        const card = pokemon.cards[name];
+        if (!card.starter) return false;
+        if (_gen2Unlocked) return card.generation === 2;
+        return !card.generation || card.generation === 1;
+    });
+}
 
 export const fetchCardById = (id, isPlayerCard = true) => {
     const pokemonName = allPokemonNames.find(
@@ -45,7 +71,7 @@ export const allocateCpuCardsFromPool = (cardPool) => {
 }
 
 export const fetchStarterCards = (isPlayerCard = true) => {
-    return allPokemonNames.filter((pokemonName) => pokemon.cards[pokemonName].starter).map((pokemonName) => createCard(pokemonName, isPlayerCard));
+    return getStarterPokemonNames().map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
 export const fetchAllCards = (isPlayerCard = true) => {
@@ -162,7 +188,7 @@ export const fetchCpuCardsByPlayerStrength = (playerHand, userCollection = {}) =
 
     // Check if player has completed collection
     const ownedCount = Object.keys(userCollection).length;
-    const numOfPokemon = Object.keys(pokemon.cards).length;
+    const numOfPokemon = allPokemonNames.length;
 
     if (ownedCount >= numOfPokemon) {
         // Player owns everything, no guarantee possible

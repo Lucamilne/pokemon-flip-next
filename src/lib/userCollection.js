@@ -1,13 +1,6 @@
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
-import { allPokemonNames } from "@/utils/cardHelpers.js";
-
-import pokemon from '@/data/game-data.json';
-
-// Starter Pokemon that every player begins with (loaded from game data)
-const starterPokemon = allPokemonNames.filter(
-  (pokemonName) => pokemon.cards[pokemonName].starter
-);
+import { getStarterPokemonNames } from "@/utils/cardHelpers.js";
 
 /**
  * Initialise a new user's collection with starter Pokemon
@@ -19,7 +12,7 @@ export async function initialiseUserCollection(userId) {
 
   try {
     const starterCollection = {};
-    starterPokemon.forEach(name => {
+    getStarterPokemonNames().forEach(name => {
       starterCollection[name] = true;
     });
 
@@ -54,7 +47,7 @@ export async function getUserCollection(userId) {
       let needsUpdate = false;
       const updatedCollection = { ...collection };
 
-      starterPokemon.forEach(starter => {
+      getStarterPokemonNames().forEach(starter => {
         if (!updatedCollection[starter]) {
           updatedCollection[starter] = true;
           needsUpdate = true;
@@ -186,4 +179,29 @@ export async function removeMultipleCards(userId, pokemonNames) {
 export async function getCollectionCount(userId) {
   const collection = await getUserCollection(userId);
   return Object.keys(collection).length;
+}
+
+export async function getUserPreferences(userId) {
+  if (!userId) return {};
+  try {
+    const docRef = doc(db, 'users', userId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data().preferences || {};
+    }
+    return {};
+  } catch (error) {
+    console.error('Error fetching user preferences:', error);
+    return {};
+  }
+}
+
+export async function saveUserPreferences(userId, preferences) {
+  if (!userId) return;
+  try {
+    const docRef = doc(db, 'users', userId);
+    await setDoc(docRef, { preferences }, { merge: true });
+  } catch (error) {
+    console.error('Error saving user preferences:', error);
+  }
 }
