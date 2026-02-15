@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import gameData from '@/data/game-data.json';
 import PixelX from '@/assets/svg/PixelX';
 import styles from "./matchups.module.css";
@@ -6,8 +6,8 @@ import styles from "./matchups.module.css";
 import { typeTiles } from '@/utils/typeIcons'
 
 export default function Matchups({ isOpen, onClose }) {
-    const [hoveredRow, setHoveredRow] = React.useState(null);
-    const [hoveredCol, setHoveredCol] = React.useState(null);
+    const [hoveredRow, setHoveredRow] = useState(null);
+    const [hoveredCol, setHoveredCol] = useState(null);
 
     const getEffectiveness = (attackingType, defendingType) => {
         const matchup = gameData.typeMatchups[attackingType];
@@ -35,6 +35,18 @@ export default function Matchups({ isOpen, onClose }) {
                 var(--color-${attackingType}-400) 100%)`
         };
     };
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen]);
+
 
     if (!isOpen) return null
 
