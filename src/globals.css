@@ -1363,7 +1363,7 @@ body {
 }
 
 .border-front {
-  @apply bg-gradient-to-b from-yellow-400 to-yellow-500;
+  @apply bg-gradient-to-br from-yellow-400 to-yellow-500;
 }
 
 .border-back {
