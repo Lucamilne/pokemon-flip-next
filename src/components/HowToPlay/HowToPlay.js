@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useGameContext } from '@/contexts/GameContext';
 import SlideA from "@/components/HowToPlay/Slides/A";
 import SlideB from "@/components/HowToPlay/Slides/B";
@@ -60,10 +60,22 @@ export default function HowToPlay({ isOpen, onClose }) {
         touchEnd.current = 0
     }
 
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) nextSlide();
+            if (e.key === 'ArrowLeft' && currentSlide > 0) prevSlide();
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, currentSlide]);
+
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-0" onClick={onClose}>
+        <div className="fade-in-b fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-0" onClick={onClose}>
             <div className="p-2 flex flex-col items-between relative w-full max-w-4xl h-auto md:h-full lg:max-h-[660px] default-tile border-4 md:border-8 border-black shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
                 <div
                     className="flex flex-1 transition-transform duration-300 ease-in-out text-base"
