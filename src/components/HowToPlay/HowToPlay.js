@@ -64,6 +64,7 @@ export default function HowToPlay({ isOpen, onClose }) {
         if (!isOpen) return;
 
         const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
             if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) nextSlide();
             if (e.key === 'ArrowLeft' && currentSlide > 0) prevSlide();
         };
