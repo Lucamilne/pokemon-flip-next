@@ -210,7 +210,7 @@ export default function Select() {
                 </h1>
             </div>
             <div className="relative grow md:flex overflow-y-auto">
-                <div className={`h-full relative hide-scrollbar p-2 pb-[52px] md:p-4 md:pb-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
+                <div tabIndex={0} className={`h-full relative hide-scrollbar p-2 pb-[52px] md:p-4 md:pb-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'} focus:outline-none`}>
                     <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
