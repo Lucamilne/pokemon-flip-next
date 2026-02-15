@@ -39,7 +39,7 @@ export default function Matchups({ isOpen, onClose }) {
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-0" onClick={onClose}>
+        <div className="fade-in-b fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 md:p-0" onClick={onClose}>
             <div className="font-press-start default-tile p-1 md:p-2 relative w-full max-w-4xl max-h-[90vh] border-4 md:border-8 border-black shadow-2xl py-4 md:py-10 overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
                 <div className='flex flex-col overflow-auto min-h-0 hide-scrollbar'>
                     <h2 className="pb-4 md:pb-8 font-bold text-lg md:text-2xl text-center">Type Matchups</h2>

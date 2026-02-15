@@ -22,6 +22,7 @@ export default function Select() {
     const { setSelectedPlayerHand, resetGameState, lastSelectedHand, setLastSelectedHand, isMobile } = useGameContext();
     const { userCollection, isLoadingCollection } = useAuth();
 
+    const cardGridRef = useRef(null);
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
@@ -62,6 +63,12 @@ export default function Select() {
 
         return () => clearTimeout(helpTimer);
     }, [])
+
+    useEffect(() => {
+        if (!isLoadingCollection && cardGridRef.current) {
+            cardGridRef.current.focus();
+        }
+    }, [isLoadingCollection]);
 
     const playerCardLibrary = useMemo(() => {
         const ownedPokemonNames = Object.keys(userCollection);
@@ -210,7 +217,7 @@ export default function Select() {
                 </h1>
             </div>
             <div className="relative grow md:flex overflow-y-auto">
-                <div tabIndex={0} className={`h-full relative hide-scrollbar p-2 pb-[52px] md:p-4 md:pb-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'} focus:outline-none`}>
+                <div ref={cardGridRef} tabIndex={0} className={`h-full relative hide-scrollbar p-2 pb-[52px] md:p-4 md:pb-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'} focus:outline-none`}>
                     <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
                         {isLoadingCollection ? (
                             <>
