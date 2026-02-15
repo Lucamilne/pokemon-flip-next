@@ -3721,9 +3721,9 @@
       "description": "A menacing presence that unnerves nearby foes. Lowers the facing stat of each adjacent enemy by 1"
     },
     "jumpKick": {
-      "name": "Jump Kick",
+      "name": "Hi Jump Kick",
       "trigger": "onGridPlace",
-      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
+      "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
     },
     "leafGuard": {
       "name": "Leaf Guard",
@@ -3748,7 +3748,7 @@
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
-      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
+      "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
     },
     "lightningRod": {
       "name": "Lightning Rod",
@@ -3978,7 +3978,7 @@
     "technician": {
       "name": "Technician",
       "trigger": "onGridPlace",
-      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
+      "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
     },
     "teleport": {
       "name": "Teleport",
