@@ -384,6 +384,8 @@ const earthquake = (card, cellId, cells) => {
     return modifiedCells;
 };
 
+const screech = earthquake;
+
 const quickAttack = (card, cellId, gameState) => {
     const otherCardsOnGrid = Object.values(gameState.cells).filter(cell => cell.pokemonCard).length;
 
@@ -600,6 +602,33 @@ const dragonDance = (card, cellId, gameState) => {
     }
 
     return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
+};
+
+const moonlight = dragonDance;
+
+const feintAttack = (card, cellId, gameState) => {
+    const adjacentCellIds = gameState.cells[cellId].adjacentCells;
+    const newStats = [...card.stats];
+
+    // Find which directions face an enemy card
+    const facingIndices = new Set();
+    adjacentCellIds.forEach((adjacentCellId, directionIndex) => {
+        if (adjacentCellId === null) return;
+        const adjacentCell = gameState.cells[adjacentCellId];
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            facingIndices.add(directionIndex);
+        }
+    });
+
+    for (let i = 0; i < newStats.length; i++) {
+        if (facingIndices.has(i)) {
+            newStats[i] = Math.min(newStats[i] + 2, 10);
+        } else {
+            newStats[i] = Math.max(newStats[i] - 1, 1);
+        }
+    }
+
+    return { ...card, stats: newStats };
 };
 
 const leechLife = (card, cellId, gameState) => {
@@ -1138,6 +1167,7 @@ export const selfAbilityHandlers = {
     dragonDance,
     ember,
     endure,
+    feintAttack,
     evolve,
     familyBond,
     flamethrower,
@@ -1160,6 +1190,7 @@ export const selfAbilityHandlers = {
     metronome,
     mimic,
     mirrorMove,
+    moonlight,
     featherDance,
     oblivious,
     solarBeam,
@@ -1217,6 +1248,7 @@ export const statusAbilityHandlers = {
     leechLife: leechLifeStatus,
     leechSeed: leechLifeStatus,
     leer,
+    screech,
     smog,
     stench,
     stunSpore,
