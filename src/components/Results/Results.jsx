@@ -93,6 +93,15 @@ export default function Results() {
             return;
         }
 
+        // Revert cards to their original stats and types from game data
+        matchCards.forEach(card => {
+            const originalData = pokemon.cards[card.name];
+            if (originalData) {
+                card.stats = [...originalData.originalStats];
+                card.types = [...originalData.types];
+            }
+        });
+
         const awards = {
             playOfTheGame: null,
             mostEvasive: null,
@@ -101,71 +110,58 @@ export default function Results() {
             specialAwards: []
         };
 
-        // Play of the Game: Card with most captures (must be > 1)
         let bestCaptures = 0;
+        let bestSuperEffective = 0;
+        let bestComeback = 0;
+        const evasiveCandidates = [];
+
         matchCards.forEach(card => {
+            // Play of the Game: Card with most captures (must be > 1)
             if (card.matchStats?.capturesMade > bestCaptures && card.matchStats.capturesMade > 1) {
                 bestCaptures = card.matchStats.capturesMade;
                 awards.playOfTheGame = card;
             }
+
+            // Most Evasive: collect candidates
+            if (card.matchStats?.immuneDefenses > 0 && card.matchStats?.timesFlipped === 0) {
+                evasiveCandidates.push(card);
+            }
+
+            // Type Master: Card with most superEffectiveCaptures (must be > 0)
+            if (card.matchStats?.superEffectiveCaptures > bestSuperEffective) {
+                bestSuperEffective = card.matchStats.superEffectiveCaptures;
+                awards.typeMaster = card;
+            }
+
+            // Comeback Kid: Card with timesFlipped > 1 AND most captures
+            if (card.matchStats?.timesFlipped > 1 && card.matchStats?.capturesMade > bestComeback) {
+                bestComeback = card.matchStats.capturesMade;
+                awards.comebackKid = card;
+            }
+
+            // Special Awards
+            const specialAward = specialAwardDefinitions.find(def => def.name === card.name.toLowerCase());
+            if (specialAward) {
+                awards.specialAwards.push({ card, award: specialAward.award });
+            }
         });
 
-        // Most Evasive: Card with most immuneDefenses (todo: bugged; must have timesFlipped === 0)
-        const evasiveCandidates = matchCards.filter(card =>
-            card.matchStats?.immuneDefenses > 0 &&
-            card.matchStats?.timesFlipped === 0
-        );
+        // Resolve most evasive from candidates
         if (evasiveCandidates.length > 0) {
-
             let bestImmune = 0;
             evasiveCandidates.forEach(card => {
                 if (card.matchStats.immuneDefenses > bestImmune) {
                     bestImmune = card.matchStats.immuneDefenses;
                 }
             });
-
             const topEvasive = evasiveCandidates.filter(card =>
                 card.matchStats.immuneDefenses === bestImmune
             );
-
             awards.mostEvasive = topEvasive[Math.floor(Math.random() * topEvasive.length)];
         }
 
-        // Type Master: Card with most superEffectiveCaptures (must be > 0)
-        let bestSuperEffective = 0;
-        matchCards.forEach(card => {
-            if (card.matchStats?.superEffectiveCaptures > bestSuperEffective) {
-                bestSuperEffective = card.matchStats.superEffectiveCaptures;
-                awards.typeMaster = card;
-            }
-        });
-
-        if (bestSuperEffective === 0) {
-            awards.typeMaster = null;
-        }
-
-        // Comeback Kid: Card with timesFlipped > 0 AND capturesMade > 0
-        let bestComeback = 0;
-        matchCards.forEach(card => {
-            if (card.matchStats?.timesFlipped > 1 && card.matchStats?.capturesMade > bestComeback) {
-                bestComeback = card.matchStats.capturesMade;
-                awards.comebackKid = card;
-            }
-        });
-
-        if (bestComeback === 0) {
-            awards.comebackKid = null;
-        }
-
-        matchCards.forEach(card => {
-            const specialAward = specialAwardDefinitions.find(def => def.name === card.name.toLowerCase());
-            if (specialAward) {
-                awards.specialAwards.push({
-                    card: card,
-                    award: specialAward.award,
-                });
-            }
-        });
+        if (bestSuperEffective === 0) awards.typeMaster = null;
+        if (bestComeback === 0) awards.comebackKid = null;
 
         const allPossibleAwards = [];
 
@@ -243,9 +239,6 @@ export default function Results() {
             {mounted && (
                 <div className="relative flex flex-col gap-4 m-8 justify-center fade-in">
                     <img loading="eager" draggable={false} width={1315} height={777} alt="Pokemon Flip logo" className="md:w-1/2 mx-auto drop-shadow-md/30" src={isPlayerVictory ? VictoryImage : (isPlayerVictory === false ? DefeatImage : TieImage)} />
-                    <div className="relative group text-center font-press-start text-lg">
-                        <button className={`${styles['nes-btn']} cursor-pointer font-press-start`} onClick={() => setIsSnapshotOpen(true)}>Show Board</button>
-                    </div>
                     <div className='bg-white border-4 border-block shadow-lg/30'>
                         <h2 className={`${isPlayerVictory ? 'bg-theme-blue' : isPlayerVictory === false ? 'bg-theme-red' : 'bg-neutral-400'} header-text text-white py-4 text-2xl font-press-start text-center`}>
                             {isPlayerVictory === false ? 'Penalty' : 'Rewards'}
@@ -339,7 +332,8 @@ export default function Results() {
                             )
                         }
                     </div >
-                    <div className="relative group text-center font-press-start text-lg">
+                    <div className="relative group text-center font-press-start text-lg flex flex-col md:flex-row justify-center gap-2 md:gap-4">
+                        <button className={`${styles['nes-btn']} cursor-pointer font-press-start`} onClick={() => setIsSnapshotOpen(true)}>Show Board</button>
                         <button className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`} onClick={handlePlayAgain}>Play Again</button>
                     </div>
                 </div >
