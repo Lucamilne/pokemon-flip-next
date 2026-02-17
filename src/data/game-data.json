@@ -3612,7 +3612,7 @@
     },
     "dig": {
       "name": "Dig",
-      "trigger": "onGridPlace",
+      "trigger": "onMatchStart",
       "description": "On match start, places a Ground-type tile on a random empty cell, with a chance to place an additional tile"
     },
     "disable": {
