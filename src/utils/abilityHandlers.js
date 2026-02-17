@@ -967,10 +967,7 @@ const bubble = (card, cellId, gameState) => {
         key => !modifiedCells[key].element && !modifiedCells[key].pokemonCard
     );
 
-    // 1 guaranteed tile + 50% chance for a 2nd
-    const tilesToPlace = 1 + (Math.random() < 0.5 ? 1 : 0);
-
-    for (let i = 0; i < tilesToPlace && emptyCells.length > 0; i++) {
+    for (let i = 0; i < 1 && emptyCells.length > 0; i++) {
         const randomIndex = Math.floor(Math.random() * emptyCells.length);
         modifiedCells[emptyCells[randomIndex]].element = card.types[0];
         emptyCells.splice(randomIndex, 1);

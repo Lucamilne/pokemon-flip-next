@@ -3568,7 +3568,7 @@
     "bubble": {
       "name": "Bubble",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Water-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Water-type tile on a random empty cell"
     },
     "chlorophyll": {
       "name": "Chlorophyll",
@@ -3613,7 +3613,7 @@
     "dig": {
       "name": "Dig",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Ground-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Ground-type tile on a random empty cell"
     },
     "disable": {
       "name": "Disable",
@@ -3643,7 +3643,7 @@
     "ember": {
       "name": "Ember",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Fire-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Fire-type tile on a random empty cell"
     },
     "evolve": {
       "name": "Evolve",
@@ -3838,7 +3838,7 @@
     "psywave": {
       "name": "Psywave",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Psychic-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Psychic-type tile on a random empty cell"
     },
     "prismaticPunch": {
       "name": "Prismatic Punch",
@@ -3873,7 +3873,7 @@
     "rockThrow": {
       "name": "Rock Throw",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Rock-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Rock-type tile on a random empty cell"
     },
     "sacredFire": {
       "name": "Sacred Fire",
@@ -3903,7 +3903,7 @@
     "sludge": {
       "name": "Sludge",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Poison-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Poison-type tile on a random empty cell"
     },
     "sing": {
       "name": "Sing",
@@ -3923,7 +3923,7 @@
     "spark": {
       "name": "Spark",
       "trigger": "onMatchStart",
-      "description": "On match start, places an Electric-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places an Electric-type tile on a random empty cell"
     },
     "softBoiled": {
       "name": "Soft Boiled",
