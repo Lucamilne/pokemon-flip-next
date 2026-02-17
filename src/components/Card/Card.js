@@ -264,8 +264,8 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             className={`relative select-none ${isDraggable ? "cursor-pointer touch-none" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`}
             ref={setNodeRef}
             style={style}
-            {...listeners}
-            {...attributes}
+            {...(isDraggable ? listeners : {})}
+            {...(isDraggable ? attributes : {})}
             {...handlers}
         >
             <div ref={cardRef} className="relative" style={{

@@ -4206,7 +4206,7 @@
     "bubble": {
       "name": "Bubble",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Water-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Water-type tile on a random empty cell"
     },
     "chlorophyll": {
       "name": "Chlorophyll",
@@ -4250,8 +4250,8 @@
     },
     "dig": {
       "name": "Dig",
-      "trigger": "onGridPlace",
-      "description": "On match start, places a Ground-type tile on a random empty cell, with a chance to place an additional tile"
+      "trigger": "onMatchStart",
+      "description": "On match start, places a guaranteed Ground-type tile on a random empty cell"
     },
     "disable": {
       "name": "Disable",
@@ -4286,7 +4286,7 @@
     "ember": {
       "name": "Ember",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Fire-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Fire-type tile on a random empty cell"
     },
     "evolve": {
       "name": "Evolve",
@@ -4369,9 +4369,9 @@
       "description": "A menacing presence that unnerves nearby foes. Lowers the facing stat of each adjacent enemy by 1"
     },
     "jumpKick": {
-      "name": "Jump Kick",
+      "name": "Hi Jump Kick",
       "trigger": "onGridPlace",
-      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
+      "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
     },
     "leafGuard": {
       "name": "Leaf Guard",
@@ -4396,7 +4396,7 @@
     "lick": {
       "name": "Lick",
       "trigger": "onGridPlace",
-      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
+      "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
     },
     "lightningRod": {
       "name": "Lightning Rod",
@@ -4491,7 +4491,7 @@
     "psywave": {
       "name": "Psywave",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Psychic-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Psychic-type tile on a random empty cell"
     },
     "prismaticPunch": {
       "name": "Prismatic Punch",
@@ -4526,7 +4526,7 @@
     "rockThrow": {
       "name": "Rock Throw",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Rock-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Rock-type tile on a random empty cell"
     },
     "sacredFire": {
       "name": "Sacred Fire",
@@ -4561,7 +4561,7 @@
     "sludge": {
       "name": "Sludge",
       "trigger": "onMatchStart",
-      "description": "On match start, places a Poison-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places a guaranteed Poison-type tile on a random empty cell"
     },
     "sing": {
       "name": "Sing",
@@ -4581,7 +4581,7 @@
     "spark": {
       "name": "Spark",
       "trigger": "onMatchStart",
-      "description": "On match start, places an Electric-type tile on a random empty cell, with a chance to place an additional tile"
+      "description": "On match start, places an Electric-type tile on a random empty cell"
     },
     "softBoiled": {
       "name": "Soft Boiled",
@@ -4636,7 +4636,7 @@
     "technician": {
       "name": "Technician",
       "trigger": "onGridPlace",
-      "description": "When placed, reduces all stats of 7 or higher by 1 on adjacent enemy cards"
+      "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
     },
     "teleport": {
       "name": "Teleport",

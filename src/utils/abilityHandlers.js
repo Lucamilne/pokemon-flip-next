@@ -480,12 +480,12 @@ const lick = (card, cellId, cells) => {
             const stats = adjacentCell.pokemonCard.stats;
             const highestStat = Math.max(...stats);
 
-            // Only reduce if the highest stat is 7 or over
-            if (highestStat < 7) return;
+            // Only reduce if the highest stat is 8 or over
+            if (highestStat < 8) return;
 
-            // Reduce all stats that are 7 or over by 1
+            // Reduce all stats that are 8 or over by 2
             const newStats = stats.map(stat =>
-                stat >= 7 ? stat - 1 : stat
+                stat >= 8 ? stat - 2 : stat
             );
 
             modifiedCells[adjacentCellId] = {
@@ -1042,10 +1042,7 @@ const bubble = (card, cellId, gameState) => {
         key => !modifiedCells[key].element && !modifiedCells[key].pokemonCard
     );
 
-    // 1 guaranteed tile + 50% chance for a 2nd
-    const tilesToPlace = 1 + (Math.random() < 0.5 ? 1 : 0);
-
-    for (let i = 0; i < tilesToPlace && emptyCells.length > 0; i++) {
+    for (let i = 0; i < 1 && emptyCells.length > 0; i++) {
         const randomIndex = Math.floor(Math.random() * emptyCells.length);
         modifiedCells[emptyCells[randomIndex]].element = card.types[0];
         emptyCells.splice(randomIndex, 1);

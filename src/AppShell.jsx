@@ -13,13 +13,18 @@ export default function AppShell({ children }) {
     if (isPlayerVictory === false && pathname.endsWith('/result')) {
       return 'bg-pokedex-red';
     }
+    if (isPlayerVictory === null && pathname.endsWith('/result')) {
+      return 'bg-neutral-100';
+    }
     if (pathname.endsWith('/select')) {
       return 'bg-pokedex-light-blue';
     }
     if (pathname.endsWith('/play')) {
       return 'bg-pokedex-red';
     }
+    
     if (pathname === '/') return 'bg-neutral-100';
+
     return 'bg-(--color-psychic-300)';
   };
 
