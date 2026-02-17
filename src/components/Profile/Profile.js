@@ -8,14 +8,15 @@ import { TYPES_PER_CARD } from '@/constants/index.js';
 import Loader from "@/components/Loader/Loader.js";
 import styles from "@/retro.module.css";
 import gameData from '@/data/game-data.json';
+import abilities from '@/data/ability-data.json';
 import PixelX from '@/assets/svg/PixelX';
 
-const { cards, abilities } = gameData;
+const { cards } = gameData;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, lastPokemonCardSelected, isOpen, onClose }) {
-    const { user, hasCard, signInWithGoogle, signOut, addAllCards, resetToStarters, collectionCount, userCollection } = useAuth();
+    const { user, hasCard, signInWithGoogle, signOut, addAllCards, resetToStarters, collectionCount, userCollection, gen2Unlocked, toggleGen2 } = useAuth();
     const { isMobile } = useGameContext();
 
     const scrollContainerRef = useRef(null);
@@ -337,10 +338,12 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             {showDebugButtons && (
                                 <>
                                     <h3 className="my-4 md:my-8">Debug functions:</h3>
+                                    <button onClick={() => toggleGen2(!gen2Unlocked)} className={`${styles['nes-btn']} ${gen2Unlocked ? styles['is-warning'] : styles['is-success']} cursor-pointer`}>
+                                        {gen2Unlocked ? 'Gen 2' : 'Gen 1'} Enabled
+                                    </button>
                                     <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-warning']} cursor-pointer`}>Add all cards</button>
                                     <button onClick={() => resetToStarters()} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Reset cards</button>
                                     <button onClick={() => setPlayerHand(fetchSecretCards())} className={`${styles['nes-btn']} cursor-pointer`}>Secret Cards</button>
-
                                 </>
                             )}
                         </div>

@@ -1,6 +1,5 @@
 import gameData from '@/data/game-data.json';
-
-const { abilities } = gameData;
+import abilities from '@/data/ability-data.json';
 
 const getAdjacentCells = (cellId, cells) => {
     const cell = cells[cellId];
@@ -111,21 +110,23 @@ const clearBody = (card, cellId, gameState) => {
 }
 
 const magicGuard = clearBody;
+const hiddenPower = clearBody;
 
 const evolve = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
-    const validElements = ['electric', 'fairy', 'fire', 'grass', 'ice', 'psychic', 'water'];
+    const validElements = ['dark', 'electric', 'fairy', 'fire', 'grass', 'ice', 'psychic', 'water'];
 
     if (!tileElement || !validElements.includes(tileElement)) return card;
 
     // Map tile elements to evolution cards
     const evolutionMap = {
+        dark: gameData.cards.umbreon,
         electric: gameData.cards.jolteon,
         fairy: gameData.eeveelutions.sylveon,
         fire: gameData.cards.flareon,
         grass: gameData.eeveelutions.leafeon,
         ice: gameData.eeveelutions.glaceon,
-        psychic: gameData.eeveelutions.espeon,
+        psychic: gameData.cards.espeon,
         water: gameData.cards.vaporeon,
     };
 
@@ -149,6 +150,7 @@ const swordsDance = (card, cellId, gameState) => {
 }
 
 const boneClub = swordsDance;
+const petalDance = swordsDance;
 
 const solarBeam = (card, cellId, gameState) => {
     const tileElement = gameState.cells[cellId].element;
@@ -202,6 +204,15 @@ const ancientPower = (card, cellId, gameState) => {
         stats: card.stats.map(stat => Math.min(stat + 1, 10))
     };
 }
+
+const gigaImpact = (card, cellId, gameState) => {
+    return {
+        ...card,
+        stats: card.stats.map(stat => Math.max(stat - 1, 1))
+    };
+}
+
+const seismicToss = gigaImpact;
 
 const familyBond = (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
@@ -271,6 +282,7 @@ const rest = (card, cellId, gameState) => {
 
 const harden = rest;
 const growth = rest;
+const milkDrink = rest;
 
 const pressure = (card, cellId, gameState) => {
     const adjacentCellIds = gameState.cells[cellId].adjacentCells;
@@ -315,8 +327,7 @@ const maternal = (card, cellId, gameState) => {
 
 const endure = maternal;
 
-
-const flamethrower = (card, cellId, gameState) => {
+const sacredFire = (card, cellId, gameState) => {
     const opponentHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
     const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
 
@@ -338,8 +349,7 @@ const flamethrower = (card, cellId, gameState) => {
     };
 };
 
-const sacredFire = flamethrower;
-const poisonPowder = flamethrower;
+const poisonPowder = sacredFire;
 
 const waterfall = (card, cellId, gameState) => {
     const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
@@ -364,6 +374,57 @@ const waterfall = (card, cellId, gameState) => {
 const roar = waterfall;
 const lightScreen = waterfall;
 
+const curse = (card, cellId, gameState) => {
+    const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
+    const otherHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
+
+    const cardIndex = gameState[ownHandKey].findIndex(c => c?.name === card.name);
+
+    const shuffleHand = (hand, preserveIndex = -1) => {
+        const shuffled = [...hand];
+        const movable = hand.map((_, i) => i).filter(i => i !== preserveIndex);
+        for (let i = movable.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[movable[i]], shuffled[movable[j]]] = [shuffled[movable[j]], shuffled[movable[i]]];
+        }
+        return shuffled;
+    };
+
+    return {
+        [ownHandKey]: shuffleHand(gameState[ownHandKey], cardIndex),
+        [otherHandKey]: shuffleHand(gameState[otherHandKey])
+    };
+};
+
+const whirlwind = curse;
+
+const whirlpool = (card, cellId, gameState) => {
+    const ownHandKey = card.isPlayerCard ? 'playerHand' : 'cpuHand';
+    const otherHandKey = card.isPlayerCard ? 'cpuHand' : 'playerHand';
+
+    const ownHand = [...gameState[ownHandKey]];
+    const otherHand = [...gameState[otherHandKey]];
+
+    const ownEligible = ownHand
+        .map((c, i) => ({ c, i }))
+        .filter(({ c }) => c !== null && c.name !== card.name);
+    const otherEligible = otherHand
+        .map((c, i) => ({ c, i }))
+        .filter(({ c }) => c !== null);
+
+    if (ownEligible.length === 0 || otherEligible.length === 0) {
+        return { [ownHandKey]: ownHand, [otherHandKey]: otherHand };
+    }
+
+    const { c: ownCard, i: ownIdx } = ownEligible[Math.floor(Math.random() * ownEligible.length)];
+    const { c: otherCard, i: otherIdx } = otherEligible[Math.floor(Math.random() * otherEligible.length)];
+
+    ownHand[ownIdx] = { ...otherCard, isPlayerCard: card.isPlayerCard };
+    otherHand[otherIdx] = { ...ownCard, isPlayerCard: !card.isPlayerCard };
+
+    return { [ownHandKey]: ownHand, [otherHandKey]: otherHand };
+};
+
 const earthquake = (card, cellId, cells) => {
     const modifiedCells = { ...cells };
 
@@ -378,6 +439,70 @@ const earthquake = (card, cellId, cells) => {
             if (modifiedCard !== currentCell.pokemonCard) {
                 modifiedCells[currentCellId] = { ...currentCell, pokemonCard: modifiedCard };
             }
+        }
+    });
+
+    return modifiedCells;
+};
+
+const screech = earthquake;
+
+const flash = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+
+    Object.keys(modifiedCells).forEach(currentCellId => {
+        const currentCell = modifiedCells[currentCellId];
+
+        if (currentCell?.pokemonCard && currentCell.pokemonCard.isPlayerCard === card.isPlayerCard) {
+            modifiedCells[currentCellId] = {
+                ...currentCell,
+                pokemonCard: {
+                    ...currentCell.pokemonCard,
+                    stats: currentCell.pokemonCard.stats.map(stat => stat < 10 ? stat + 1 : 10)
+                }
+            };
+        }
+    });
+
+    return modifiedCells;
+};
+
+const fireBlast = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+
+    Object.keys(modifiedCells).forEach(currentCellId => {
+        const currentCell = modifiedCells[currentCellId];
+
+        if (currentCell?.pokemonCard && currentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            modifiedCells[currentCellId] = {
+                ...currentCell,
+                pokemonCard: {
+                    ...currentCell.pokemonCard,
+                    stats: currentCell.pokemonCard.stats.map(stat => stat > 1 ? stat - 1 : 1)
+                }
+            };
+        }
+    });
+
+    return modifiedCells;
+};
+
+const perishSong = (card, cellId, cells) => {
+    const modifiedCells = { ...cells };
+
+    Object.keys(modifiedCells).forEach(currentCellId => {
+        if (currentCellId === cellId) return;
+
+        const currentCell = modifiedCells[currentCellId];
+
+        if (currentCell?.pokemonCard && Math.random() < 0.25) {
+            modifiedCells[currentCellId] = {
+                ...currentCell,
+                pokemonCard: {
+                    ...currentCell.pokemonCard,
+                    stats: [1, 1, 1, 1]
+                }
+            };
         }
     });
 
@@ -404,6 +529,16 @@ const selfDestruct = (card, cellId, gameState) => {
         stats: [1, 1, 1, 1]
     };
 }
+
+const doubleSlap = (card, cellId, gameState) => {
+    const indices = Math.random() < 0.5 ? [0, 2] : [1, 3];
+    return replaceCardInHands(card, {
+        ...card,
+        stats: card.stats.map((stat, i) => indices.includes(i) ? Math.min(stat + 1, 10) : stat)
+    }, gameState);
+};
+
+const furySwipes = doubleSlap;
 
 const desperation = (card, cellId, gameState) => {
     const emptySpaces = Object.values(gameState.cells)
@@ -542,6 +677,8 @@ const triAttack = (card, cellId, gameState) => {
     };
 };
 
+const tripleKick = triAttack;
+
 const wish = (card) => {
     if (Math.random() >= 0.15) return card;
 
@@ -550,6 +687,8 @@ const wish = (card) => {
         stats: card.stats.map(() => 10)
     };
 };
+
+const splash = wish;
 
 const lonely = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
@@ -600,6 +739,33 @@ const dragonDance = (card, cellId, gameState) => {
     }
 
     return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
+};
+
+const moonlight = dragonDance;
+
+const feintAttack = (card, cellId, gameState) => {
+    const adjacentCellIds = gameState.cells[cellId].adjacentCells;
+    const newStats = [...card.stats];
+
+    // Find which directions face an enemy card
+    const facingIndices = new Set();
+    adjacentCellIds.forEach((adjacentCellId, directionIndex) => {
+        if (adjacentCellId === null) return;
+        const adjacentCell = gameState.cells[adjacentCellId];
+        if (adjacentCell?.pokemonCard && adjacentCell.pokemonCard.isPlayerCard !== card.isPlayerCard) {
+            facingIndices.add(directionIndex);
+        }
+    });
+
+    for (let i = 0; i < newStats.length; i++) {
+        if (facingIndices.has(i)) {
+            newStats[i] = Math.min(newStats[i] + 2, 10);
+        } else {
+            newStats[i] = Math.max(newStats[i] - 2, 1);
+        }
+    }
+
+    return { ...card, stats: newStats };
 };
 
 const leechLife = (card, cellId, gameState) => {
@@ -897,6 +1063,18 @@ const mimic = (card, cellId, gameState) => {
     return replaceCardInHands(card, card, gameState);
 };
 
+const sketch = (card, cellId, gameState) => {
+    const currentHand = card.isPlayerCard ? gameState.playerHand : gameState.cpuHand;
+    const cardIndex = currentHand.findIndex(c => c.name === card.name);
+    const nextCard = currentHand[cardIndex + 1];
+
+    if (nextCard) {
+        return replaceCardInHands(card, { ...card, stats: [...nextCard.stats], types: [...nextCard.types] }, gameState);
+    }
+
+    return replaceCardInHands(card, card, gameState);
+};
+
 const conversion = (card, cellId, gameState) => {
     const adjacentCellIds = getAdjacentCells(cellId, gameState.cells);
     const adjacentCard = findStrongestAdjacentCard(adjacentCellIds, gameState.cells);
@@ -955,6 +1133,7 @@ const illuminate = (card, cellId, gameState) => {
 };
 
 const barrier = illuminate;
+const foresight = illuminate;
 
 const bubble = (card, cellId, gameState) => {
     const modifiedCells = {};
@@ -986,6 +1165,7 @@ const sludge = bubble;
 const overgrow = bubble;
 const psywave = bubble;
 const rockThrow = bubble;
+const darkPulse = bubble;
 
 const payDay = (card, cellId, gameState) => {
     const currentHand = card.isPlayerCard ? gameState.playerHand : gameState.cpuHand;
@@ -1068,6 +1248,33 @@ const metronome = (card, cellId, gameState) => {
 
 const mirrorMove = metronome;
 
+const cottonGuard = (card, cellId, gameState) => {
+    const cornerCells = ['A1', 'A3', 'C1', 'C3'];
+    if (!cornerCells.includes(cellId)) return card;
+    if (Math.random() >= 0.5) return card;
+
+    return {
+        ...card,
+        stats: card.stats.map(stat => Math.min(stat + 1, 10))
+    };
+};
+
+const haze = (card, cellId, cells) => {
+    const resetStats = (c) => ({ ...c, stats: [...c.originalStats] });
+
+    const newCells = {};
+    for (const key in cells) {
+        const cell = cells[key];
+        newCells[key] = cell.pokemonCard
+            ? { ...cell, pokemonCard: resetStats(cell.pokemonCard) }
+            : { ...cell };
+    }
+
+    return newCells;
+};
+
+const naturalCure = haze;
+
 export const selfAbilityHandlers = {
     absorb,
     acidArmor,
@@ -1080,21 +1287,28 @@ export const selfAbilityHandlers = {
     bubble,
     chlorophyll,
     clearBody,
+    cottonGuard,
     conversion,
+    curse,
     cuteCharm,
+    darkPulse,
     defenceCurl,
     desperation,
+    doubleSlap,
     dig,
     dragonDance,
     ember,
     endure,
+    feintAttack,
+    furySwipes,
     evolve,
     familyBond,
-    flamethrower,
     flashFire,
+    gigaImpact,
     growth,
     guts,
     harden,
+    hiddenPower,
     hydroPump,
     illuminate,
     leafGuard,
@@ -1108,13 +1322,16 @@ export const selfAbilityHandlers = {
     magnetPull,
     maternal,
     metronome,
+    milkDrink,
     mimic,
     mirrorMove,
+    moonlight,
     featherDance,
     oblivious,
+    overgrow,
     solarBeam,
     payDay,
-    overgrow,
+    petalDance,
     poisonPowder,
     pressure,
     prismaticPunch,
@@ -1127,12 +1344,15 @@ export const selfAbilityHandlers = {
     rockThrow,
     sacredFire,
     safeguard,
+    seismicToss,
     selfDestruct,
     shellArmor,
     shieldDust,
+    sketch,
     sludge,
     softBoiled,
     spark,
+    splash,
     staticElectricity,
     sturdy,
     swarm,
@@ -1144,14 +1364,21 @@ export const selfAbilityHandlers = {
     toxic,
     transform,
     triAttack,
+    tripleKick,
     twinNeedle,
     waterfall,
+    whirlpool,
+    whirlwind,
     wish
 };
 
 export const statusAbilityHandlers = {
     absorb: leechLifeStatus,
     confuseRay,
+    fireBlast,
+    flash,
+    haze,
+    naturalCure,
     confusion,
     earthquake,
     flameBody,
@@ -1160,12 +1387,14 @@ export const statusAbilityHandlers = {
     jumpKick,
     hornDrill,
     hyperFang,
+    perishSong,
     hypnosis,
     intimidate,
     lick,
     leechLife: leechLifeStatus,
     leechSeed: leechLifeStatus,
     leer,
+    screech,
     smog,
     stench,
     stunSpore,

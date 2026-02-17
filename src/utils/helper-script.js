@@ -48,3 +48,23 @@ const allocateStatsByPokemon = (pokemonName) => {
 
     return statsToReturn;
 }; // an old function I used to allocate stats. Retired but I may want to return to a random element
+
+// Primary Type Totals (Gen 2)
+// Primary Type	Count
+// Normal	18
+// Water	18
+// Flying	12
+// Bug	12
+// Grass	10
+// Psychic	10
+// Fire	8
+// Rock	6
+// Ground	5
+// Electric	5
+// Fighting	4
+// Poison	4
+// Ice	4
+// Dark	3
+// Steel	2
+// Dragon	2
+// Ghost	1

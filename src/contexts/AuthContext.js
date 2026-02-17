@@ -5,13 +5,15 @@ import {
   signInWithPopup
 } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { allPokemonNames } from "@/utils/cardHelpers.js";
+import { allPokemonNames, setEnabledGenerations } from "@/utils/cardHelpers.js";
 import {
   getUserCollection,
   addCardToCollection,
   addMultipleCards,
   removeCardFromCollection,
   removeMultipleCards,
+  getUserPreferences,
+  saveUserPreferences,
 } from '@/lib/userCollection';
 import {
   getLocalCollection,
@@ -19,7 +21,9 @@ import {
   mergeCollections,
   updateSyncState,
   clearSyncState,
-  getCollectionMetadata
+  getCollectionMetadata,
+  getLocalPreferences,
+  saveLocalPreferences,
 } from '@/utils/collectionStorage';
 import pokemon from '@/data/game-data.json';
 
@@ -33,6 +37,15 @@ export function AuthProvider({ children }) {
   const [userCollection, setUserCollection] = useState({});
   const [isLoadingCollection, setIsLoadingCollection] = useState(true);
   const [syncMetadata, setSyncMetadata] = useState(getCollectionMetadata());
+  const [gen2Unlocked, setGen2Unlocked] = useState(() => {
+    const prefs = getLocalPreferences();
+    setEnabledGenerations({ gen2Unlocked: prefs.gen2Unlocked });
+    return prefs.gen2Unlocked;
+  });
+
+  useEffect(() => {
+    setEnabledGenerations({ gen2Unlocked });
+  }, [gen2Unlocked]);
 
   useEffect(() => {
     const localCollection = getLocalCollection();
@@ -49,6 +62,13 @@ export function AuthProvider({ children }) {
 
           saveLocalCollection(merged, currentUser.uid);
           setUserCollection(merged);
+
+          // Sync gen2 preference from Firebase
+          const firebasePrefs = await getUserPreferences(currentUser.uid);
+          const localPrefs = getLocalPreferences();
+          const mergedGen2 = firebasePrefs.gen2Unlocked ?? localPrefs.gen2Unlocked ?? false;
+          setGen2Unlocked(mergedGen2);
+          saveLocalPreferences({ gen2Unlocked: mergedGen2 });
         } catch (error) {
           console.error('Error loading user collection:', error);
           setUserCollection(localCollection);
@@ -224,6 +244,14 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const toggleGen2 = async (enabled) => {
+    setGen2Unlocked(enabled);
+    saveLocalPreferences({ gen2Unlocked: enabled });
+    if (user) {
+      await saveUserPreferences(user.uid, { gen2Unlocked: enabled });
+    }
+  };
+
   const collectionCount = Object.keys(userCollection).length;
 
   const value = {
@@ -240,6 +268,9 @@ export function AuthProvider({ children }) {
     removeCard,
     addAllCards, // debug functions only
     resetToStarters, // debug functions only
+    // Gen 2 toggle
+    gen2Unlocked,
+    toggleGen2,
     collectionCount,
     // Sync state for UI indicators
     syncMetadata,
