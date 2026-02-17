@@ -8,9 +8,10 @@ import { TYPES_PER_CARD } from '@/constants/index.js';
 import Loader from "@/components/Loader/Loader.js";
 import styles from "@/retro.module.css";
 import gameData from '@/data/game-data.json';
+import abilities from '@/data/ability-data.json';
 import PixelX from '@/assets/svg/PixelX';
 
-const { cards, abilities } = gameData;
+const { cards } = gameData;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

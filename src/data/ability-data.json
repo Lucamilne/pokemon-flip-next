@@ -1,0 +1,778 @@
+{
+  "absorb": {
+    "name": "Absorb",
+    "trigger": "onGridPlace",
+    "type": "grass",
+    "description": "When placed, drains a random stat from adjacent enemy cards"
+  },
+  "acidArmor": {
+    "name": "Acid Armor",
+    "trigger": "onElementalTilePlace",
+    "type": "poison",
+    "description": "Boosts all stats by 3 when placed on Poison-type tiles"
+  },
+  "agility": {
+    "name": "Agility",
+    "trigger": "onGridPlace",
+    "type": "psychic",
+    "description": "Boosts all stats by 1 when placed as the first card in the arena"
+  },
+  "ancientPower": {
+    "name": "Ancient Power",
+    "trigger": "onCapture",
+    "type": "rock",
+    "description": "On successful capture, chance to boost all stats by 1"
+  },
+  "barrier": {
+    "name": "Barrier",
+    "trigger": "onGridPlace",
+    "type": "psychic",
+    "description": "Throw up a sturdy wall, gaining 1 stat for each adjacent empty cell"
+  },
+  "sketch": {
+    "name": "Sketch",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "At the start of the match, mimic the stats and types of the next card in your hand"
+  },
+  "skyAttack": {
+    "name": "Sky Attack",
+    "trigger": "onElementalTilePlace",
+    "type": "flying",
+    "description": "Boosts all stats by 3 when placed on a Flying-type tile"
+  },
+  "fireSpin": {
+    "name": "Fire Spin",
+    "trigger": "onElementalTilePlace",
+    "type": "fire",
+    "description": "Boosts all stats by 3 when placed on a Fire-type tile"
+  },
+  "furySwipes": {
+    "name": "Fury Swipes",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "On match start, boosts either the left & right stats or the top & bottom stats"
+  },
+  "blizzard": {
+    "name": "Blizzard",
+    "trigger": "onMatchStart",
+    "type": "ice",
+    "description": "Surround all other cards in a howling blizzard preventing their abilities from being used"
+  },
+  "boneClub": {
+    "name": "Bone Club",
+    "trigger": "onGridPlace",
+    "type": "ground",
+    "description": "Placing this unit at the center of the arena boosts all stats by 2"
+  },
+  "bubble": {
+    "name": "Bubble",
+    "trigger": "onMatchStart",
+    "type": "water",
+    "description": "On match start, places a guaranteed Water-type tile on a random empty cell"
+  },
+  "chlorophyll": {
+    "name": "Chlorophyll",
+    "trigger": "onMatchStart",
+    "type": "grass",
+    "description": "If 3 or more Grass-type cards are in the current match, all stats are increased by 1"
+  },
+  "clearBody": {
+    "name": "Clear Body",
+    "trigger": "onElementalTilePlace",
+    "type": "normal",
+    "description": "Inherits the type and stat bonus of any elemental tile it's placed on"
+  },
+  "curse": {
+    "name": "Curse",
+    "trigger": "onMatchStart",
+    "type": "ghost",
+    "description": "Shuffles both hands at the start of the match"
+  },
+  "cottonGuard": {
+    "name": "Cotton Guard",
+    "trigger": "onGridPlace",
+    "type": "grass",
+    "description": "When placed in a corner tile, has a chance to boost all stats by 1"
+  },
+  "confuseRay": {
+    "name": "Confuse Ray",
+    "trigger": "onGridPlace",
+    "type": "ghost",
+    "description": "Disorients adjacent enemies, shuffling their stats for better or worse"
+  },
+  "conversion": {
+    "name": "Conversion",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Adapts to counter the strongest adjacent card, changing type to one that opponent is weak to"
+  },
+  "confusion": {
+    "name": "Confusion",
+    "trigger": "onGridPlace",
+    "type": "psychic",
+    "description": "Confuses adjacent enemies, shuffling their stats for better or worse"
+  },
+  "cuteCharm": {
+    "name": "Cute Charm",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Charms those in contact, boosting the facing stat by 1 for each adjacent card"
+  },
+  "darkPulse": {
+    "name": "Dark Pulse",
+    "trigger": "onMatchStart",
+    "type": "dark",
+    "description": "On match start, places a guaranteed Dark-type tile on a random empty cell"
+  },
+  "doubleSlap": {
+    "name": "Double Slap",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "On match start, boosts either the left & right stats or the top & bottom stats"
+  },
+  "defenceCurl": {
+    "name": "Defence Curl",
+    "trigger": "onElementalTilePlace",
+    "type": "normal",
+    "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+  },
+  "desperation": {
+    "name": "Desperation",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Transforms into Gyarados when placed while losing with 3 or fewer empty spaces remaining"
+  },
+  "dig": {
+    "name": "Dig",
+    "trigger": "onMatchStart",
+    "type": "ground",
+    "description": "On match start, places a guaranteed Ground-type tile on a random empty cell"
+  },
+  "disable": {
+    "name": "Disable",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "Psychic interference prevents all other cards from using their abilities"
+  },
+  "download": {
+    "name": "Download",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Copies the stats of a stronger adjacent card when placed"
+  },
+  "dragonDance": {
+    "name": "Dragon Dance",
+    "trigger": "onMatchStart",
+    "type": "dragon",
+    "description": "Mystical power awakens! Gains a random stat for each elemental tile declared in the arena"
+  },
+  "earthquake": {
+    "name": "Earthquake",
+    "trigger": "onGridPlace",
+    "type": "ground",
+    "description": "Shakes the arena, reducing the stats of all cards in play by 1"
+  },
+  "endure": {
+    "name": "Endure",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "An unyielding presence that raises any weaker stats across your hand to 5"
+  },
+  "ember": {
+    "name": "Ember",
+    "trigger": "onMatchStart",
+    "type": "fire",
+    "description": "On match start, places a guaranteed Fire-type tile on a random empty cell"
+  },
+  "evolve": {
+    "name": "Evolve",
+    "trigger": "onElementalTilePlace",
+    "type": "normal",
+    "description": "Evolves into a different evolutionary form based on the elemental tile it's placed on"
+  },
+  "familyBond": {
+    "name": "Family Bond",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "Each Nido family card in play boosts a random stat by 2"
+  },
+  "fireBlast": {
+    "name": "Fire Blast",
+    "trigger": "onGridPlace",
+    "type": "fire",
+    "description": "When placed, scorches every enemy card on the board, reducing all their stats by 1"
+  },
+  "flash": {
+    "name": "Flash",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, boosts all stats for every friendly card currently on the board"
+  },
+  "flameBody": {
+    "name": "Flame Body",
+    "trigger": "onGridPlace",
+    "type": "fire",
+    "description": "Scorches nearby enemies. Lowers the facing stat of each adjacent foe by 1"
+  },
+  "flashFire": {
+    "name": "Flash Fire",
+    "trigger": "onMatchStart",
+    "type": "fire",
+    "description": "If 3 or more Fire-type cards are in the current match, all stats are increased by 1"
+  },
+  "foresight": {
+    "name": "Foresight",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Heightens awareness of surroundings, gaining 1 stat for each adjacent empty cell"
+  },
+  "gigaImpact": {
+    "name": "Giga Impact",
+    "trigger": "onCapture",
+    "type": "normal",
+    "description": "Overwhelming force leaves the user exhausted. On successful capture, reduces all stats by 1"
+  },
+  "growl": {
+    "name": "Growl",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "An intimidating snarl that weakens an adjacent foes facing stat when placed"
+  },
+  "growth": {
+    "name": "Growth",
+    "trigger": "onTurnStart",
+    "type": "normal",
+    "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts"
+  },
+  "guillotine": {
+    "name": "Guillotine",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, may reduce all stats of an adjacent enemy card to 1"
+  },
+  "guts": {
+    "name": "Guts",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards"
+  },
+  "haze": {
+    "name": "Haze",
+    "trigger": "onGridPlace",
+    "type": "ice",
+    "description": "When placed, resets all cards on the board to their original stats"
+  },
+  "harden": {
+    "name": "Harden",
+    "trigger": "onTurnStart",
+    "type": "normal",
+    "description": "While this card waits in your hand, it slowly hardens. For each turn after the game begins, a stat is increased by 1"
+  },
+  "hiddenPower": {
+    "name": "Hidden Power",
+    "trigger": "onElementalTilePlace",
+    "type": "normal",
+    "description": "Transforms to match the type and stat bonus of any elemental tile it's placed on"
+  },
+  "hornDrill": {
+    "name": "Horn Drill",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, may reduce all stats of an adjacent enemy card to 1"
+  },
+  "hydroPump": {
+    "name": "Hydro Pump",
+    "trigger": "onElementalTilePlace",
+    "type": "water",
+    "description": "Boosts all stats by 3 when placed on a Water-type tile"
+  },
+  "hyperFang": {
+    "name": "Hyper Fang",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, gain a chance to lower all stats by 1 on adjacent enemy cards"
+  },
+  "hypnosis": {
+    "name": "Hypnosis",
+    "trigger": "onGridPlace",
+    "type": "psychic",
+    "description": "May swap the highest and lowest stats of each adjacent enemy card"
+  },
+  "illuminate": {
+    "name": "Illuminate",
+    "trigger": "onGridPlace",
+    "type": "electric",
+    "description": "Sheds light on surrounding spaces, gaining 1 stat for each adjacent empty cell"
+  },
+  "intimidate": {
+    "name": "Intimidate",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "A menacing presence that unnerves nearby foes. Lowers the facing stat of each adjacent enemy by 1"
+  },
+  "jumpKick": {
+    "name": "Hi Jump Kick",
+    "trigger": "onGridPlace",
+    "type": "fighting",
+    "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
+  },
+  "leafGuard": {
+    "name": "Leaf Guard",
+    "trigger": "onElementalTilePlace",
+    "type": "grass",
+    "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+  },
+  "leechLife": {
+    "name": "Leech Life",
+    "trigger": "onGridPlace",
+    "type": "bug",
+    "description": "When placed, drains a random stat from adjacent enemy cards"
+  },
+  "leechSeed": {
+    "name": "Leech Seed",
+    "trigger": "onGridPlace",
+    "type": "grass",
+    "description": "When placed, drains a random stat from adjacent enemy cards"
+  },
+  "leer": {
+    "name": "Leer",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "A menacing glare that weakens an adjacent foes facing stat when placed"
+  },
+  "lick": {
+    "name": "Lick",
+    "trigger": "onGridPlace",
+    "type": "ghost",
+    "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
+  },
+  "lightningRod": {
+    "name": "Lightning Rod",
+    "trigger": "onElementalTilePlace",
+    "type": "electric",
+    "description": "Boosts all stats by 3 when placed on an Electric-type tile"
+  },
+  "lightScreen": {
+    "name": "Light Screen",
+    "trigger": "onMatchStart",
+    "type": "psychic",
+    "description": "Create a wall of light that boosts a random stat by 1 on every card in your hand"
+  },
+  "lonely": {
+    "name": "Lonely",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Doubles all stats when placed with no cards adjacent"
+  },
+  "lovelyKiss": {
+    "name": "Lovely Kiss",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Infatuates those in contact, boosting the facing stat for each adjacent card"
+  },
+  "magicGuard": {
+    "name": "Magic Guard",
+    "trigger": "onElementalTilePlace",
+    "type": "fairy",
+    "description": "Transforms to match the type and stat bonus of any elemental tile it's placed on"
+  },
+  "magnetPull": {
+    "name": "Magnet Pull",
+    "trigger": "onGridPlace",
+    "type": "electric",
+    "description": "Magnetic attraction boosts the facing stat for each adjacent card"
+  },
+  "maternal": {
+    "name": "Maternal",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "A nurturing presence that raises any weaker stats across your hand to 5"
+  },
+  "milkDrink": {
+    "name": "Milk Drink",
+    "trigger": "onTurnStart",
+    "type": "normal",
+    "description": "This card gains 1 stat for every turn it stays in your hand after the game starts"
+  },
+  "mimic": {
+    "name": "Mimic",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "At the start of the match, mimic the stats of the next card in your hand"
+  },
+  "mirrorMove": {
+    "name": "Mirror Move",
+    "trigger": "onMatchStart",
+    "type": "flying",
+    "description": "Copies a random ability from the opponent's hand at the start of the match"
+  },
+  "moonlight": {
+    "name": "Moonlight",
+    "trigger": "onMatchStart",
+    "type": "fairy",
+    "description": "Bathe in moonlight and gain a random stat for each elemental tile declared in the arena"
+  },
+  "featherDance": {
+    "name": "Feather Dance",
+    "trigger": "onMatchStart",
+    "type": "flying",
+    "description": "If 3 or more Flying-type cards are in the current match, all stats are increased by 1"
+  },
+  "feintAttack": {
+    "name": "Feint Attack",
+    "trigger": "onGridPlace",
+    "type": "dark",
+    "description": "When placed, stats facing an enemy card are boosted by 2, while all other stats are lowered by 2"
+  },
+  "metronome": {
+    "name": "Metronome",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "Copies the ability of the next card in your hand at the start of the match"
+  },
+  "naturalCure": {
+    "name": "Natural Cure",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, resets all cards on the board to their original stats"
+  },
+  "oblivious": {
+    "name": "Oblivious",
+    "trigger": "onElementalTilePlace",
+    "type": "normal",
+    "description": "Oblivious to its surroundings. Gains 1 to all stats on any elemental tile and is immune to stat-lowering effects"
+  },
+  "solarBeam": {
+    "name": "Solar Beam",
+    "trigger": "onElementalTilePlace",
+    "type": "grass",
+    "description": "Boosts all stats by 3 when placed on a Grass-type tile"
+  },
+  "payDay": {
+    "name": "Pay Day",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "On match start, all stats are increased by 1 for every 10 total stat points the next card in your hand has"
+  },
+  "perishSong": {
+    "name": "Perish Song",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, small chance for all other cards in play have their stats reduced to 1"
+  },
+  "petalDance": {
+    "name": "Petal Dance",
+    "trigger": "onGridPlace",
+    "type": "grass",
+    "description": "Placing this unit at the center of the arena boosts stats by 2"
+  },
+  "overgrow": {
+    "name": "Overgrow",
+    "trigger": "onMatchStart",
+    "type": "grass",
+    "description": "On match start, places an additional Grass-type tile on a random empty cell"
+  },
+  "poisonPowder": {
+    "name": "Poison Powder",
+    "trigger": "onMatchStart",
+    "type": "poison",
+    "description": "On match start, reduce a random stat on every card in the opponent's hand"
+  },
+  "pressure": {
+    "name": "Pressure",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Exerts intense pressure, boosting the facing stat for each adjacent card"
+  },
+  "psywave": {
+    "name": "Psywave",
+    "trigger": "onMatchStart",
+    "type": "psychic",
+    "description": "On match start, places a guaranteed Psychic-type tile on a random empty cell"
+  },
+  "prismaticPunch": {
+    "name": "Prismatic Punch",
+    "trigger": "onElementalTilePlace",
+    "type": "fighting",
+    "description": "When placed on an Electric, Fire or Ice elemental tile, increase all stats by 2"
+  },
+  "quickAttack": {
+    "name": "Quick Attack",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Boosts all stats by 1 when placed as the first card in the arena"
+  },
+  "rage": {
+    "name": "Rage",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, gain 2 to all stats when trailing by 2 or more cards"
+  },
+  "rest": {
+    "name": "Rest",
+    "trigger": "onTurnStart",
+    "type": "psychic",
+    "description": "This card gains 1 stat for every turn it stays in the player's hand after the game starts"
+  },
+  "roar": {
+    "name": "Roar",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "A mighty roar that boosts a random stat by 1 on every card in your hand"
+  },
+  "rockSlide": {
+    "name": "Rock Slide",
+    "trigger": "onMatchStart",
+    "type": "rock",
+    "description": "If 3 or more Rock-type cards are in the current match, all stats are increased by 1"
+  },
+  "rockThrow": {
+    "name": "Rock Throw",
+    "trigger": "onMatchStart",
+    "type": "rock",
+    "description": "On match start, places a guaranteed Rock-type tile on a random empty cell"
+  },
+  "sacredFire": {
+    "name": "Sacred Fire",
+    "trigger": "onMatchStart",
+    "type": "fire",
+    "description": "At the start of the match, a mystical fire reduces a random stat on each card in the opponent's hand"
+  },
+  "safeguard": {
+    "name": "Safeguard",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "A protective power that boosts all stats of adjacent cards in hand by 1"
+  },
+  "screech": {
+    "name": "Screech",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "A piercing screech that reduces stats of all cards in play by 1"
+  },
+  "seismicToss": {
+    "name": "Seismic Toss",
+    "trigger": "onCapture",
+    "type": "fighting",
+    "description": "A powerful throw that leaves the user weakened. On successful capture, reduces all stats by 1"
+  },
+  "selfDestruct": {
+    "name": "Self Destruct",
+    "trigger": "onCapture",
+    "type": "normal",
+    "description": "On successful capture, reduces all stats to 1"
+  },
+  "shellArmor": {
+    "name": "Shell Armor",
+    "trigger": "onElementalTilePlace",
+    "type": "normal",
+    "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+  },
+  "shieldDust": {
+    "name": "Shield Dust",
+    "trigger": "onElementalTilePlace",
+    "type": "bug",
+    "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+  },
+  "sludge": {
+    "name": "Sludge",
+    "trigger": "onMatchStart",
+    "type": "poison",
+    "description": "On match start, places a guaranteed Poison-type tile on a random empty cell"
+  },
+  "sing": {
+    "name": "Sing",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "Sing a soothing lullaby that puts all other cards to sleep, nullifying their abilities"
+  },
+  "smog": {
+    "name": "Smog",
+    "trigger": "onGridPlace",
+    "type": "poison",
+    "description": "When this card is placed, any enemy stat higher than this card's strongest stat is reduced by 1"
+  },
+  "smokeScreen": {
+    "name": "Smoke Screen",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "Engulf the arena in a thick smoke, blinding all other cards and nullifying their abilities"
+  },
+  "spark": {
+    "name": "Spark",
+    "trigger": "onMatchStart",
+    "type": "electric",
+    "description": "On match start, places an Electric-type tile on a random empty cell"
+  },
+  "splash": {
+    "name": "Splash",
+    "trigger": "onGridPlace",
+    "type": "water",
+    "description": "When placed, nothing happens...?"
+  },
+  "softBoiled": {
+    "name": "Soft Boiled",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "A healing presence that boosts all stats of adjacent cards in hand by 1"
+  },
+  "staticElectricity": {
+    "name": "Static",
+    "trigger": "onMatchStart",
+    "type": "electric",
+    "description": "If 3 or more Electric-type cards are in the current match, all stats are increased by 1"
+  },
+  "stunSpore": {
+    "name": "Stun Spore",
+    "trigger": "onGridPlace",
+    "type": "grass",
+    "description": "When placed, gain a chance to lower all stats by 1 on adjacent enemy cards"
+  },
+  "stench": {
+    "name": "Stench",
+    "trigger": "onGridPlace",
+    "type": "poison",
+    "description": "When this card is placed, any enemy stat higher than this card's strongest stat is reduced by 1"
+  },
+  "sturdy": {
+    "name": "Sturdy",
+    "trigger": "onElementalTilePlace",
+    "type": "rock",
+    "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+  },
+  "supersonic": {
+    "name": "Supersonic",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "May swap around the highest and lowest stats of each adjacent enemy card"
+  },
+  "swarm": {
+    "name": "Swarm",
+    "trigger": "onMatchStart",
+    "type": "bug",
+    "description": "If 3 or more Bug-type cards are in the current match, all stats are increased by 1"
+  },
+  "swordsDance": {
+    "name": "Swords Dance",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Placing this unit at the center of the arena boosts stats by 2"
+  },
+  "synchronise": {
+    "name": "Synchronise",
+    "trigger": "onMatchStart",
+    "type": "psychic",
+    "description": "If 3 or more Psychic-type cards are in the current match, all stats are increased by 1"
+  },
+  "tailWhip": {
+    "name": "Tail Whip",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, the user cutely wags its tail, lowering the facing stat of adjacent foes"
+  },
+  "technician": {
+    "name": "Technician",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, reduces all stats of 8 or higher by 2 on adjacent enemy cards"
+  },
+  "teleport": {
+    "name": "Teleport",
+    "trigger": "onGridPlace",
+    "type": "psychic",
+    "description": "Boosts all stats by 1 when placed as the first card in the arena"
+  },
+  "thickFat": {
+    "name": "Thick Fat",
+    "trigger": "onElementalTilePlace",
+    "type": "normal",
+    "description": "Protected from elemental type mismatches and is immune to stat-lowering effects"
+  },
+  "thunderWave": {
+    "name": "Thunder Wave",
+    "trigger": "onGridPlace",
+    "type": "electric",
+    "description": "Releases a paralyzing shock! Lowers the facing stat of each adjacent foe by 1"
+  },
+  "torrent": {
+    "name": "Torrent",
+    "trigger": "onMatchStart",
+    "type": "water",
+    "description": "If 3 or more Water-type cards are in the current match, all stats are increased by 1"
+  },
+  "toxic": {
+    "name": "Toxic",
+    "trigger": "onMatchStart",
+    "type": "poison",
+    "description": "If 3 or more Poison-type cards are in the current match, all stats are increased by 1"
+  },
+  "transform": {
+    "name": "Transform",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Transforms into the strongest adjacent card when placed"
+  },
+  "triAttack": {
+    "name": "Tri Attack",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "Doubles all stats when placed adjacent to 3 or more cards"
+  },
+  "tripleKick": {
+    "name": "Triple Kick",
+    "trigger": "onGridPlace",
+    "type": "fighting",
+    "description": "Doubles all stats when placed adjacent to 3 or more cards"
+  },
+  "twinNeedle": {
+    "name": "Twin Needle",
+    "trigger": "onGridPlace",
+    "type": "bug",
+    "description": "Boosts all stats by 1 when placed adjacent to 2 or more enemy cards"
+  },
+  "waterfall": {
+    "name": "Waterfall",
+    "trigger": "onMatchStart",
+    "type": "water",
+    "description": "A protective veil of water boosts a random stat by 1 on every card in your hand"
+  },
+  "whirlpool": {
+    "name": "Whirlpool",
+    "trigger": "onMatchStart",
+    "type": "water",
+    "description": "A powerful vortex swaps a random card from each hand"
+  },
+  "whirlwind": {
+    "name": "Whirlwind",
+    "trigger": "onMatchStart",
+    "type": "normal",
+    "description": "A fierce gust shuffles both hands at the start of the match"
+  },
+  "wish": {
+    "name": "Wish",
+    "trigger": "onGridPlace",
+    "type": "normal",
+    "description": "When placed, make a wish and a miracle might happen..."
+  },
+  "asleep": {
+    "name": "Asleep",
+    "trigger": "statusEffect",
+    "description": "Hypnotized by a soft melody, this card's ability cannot be used!"
+  },
+  "frozen": {
+    "name": "Frozen",
+    "trigger": "statusEffect",
+    "description": "Slowed by the cold, this card is unable to use its ability!"
+  },
+  "blinded": {
+    "name": "Blinded",
+    "trigger": "statusEffect",
+    "description": "Disoriented by smoke, this card is unable to use its ability!"
+  },
+  "disabled": {
+    "name": "Disabled",
+    "trigger": "statusEffect",
+    "description": "This card's ability has been disabled and cannot be used!"
+  }
+}

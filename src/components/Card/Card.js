@@ -10,8 +10,7 @@ import { useDraggable } from '@dnd-kit/core';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTooltip } from '@/hooks/useTooltip';
 import gameData from '@/data/game-data.json';
-
-const { abilities } = gameData;
+import abilities from '@/data/ability-data.json';
 
 // Abilities that get the sheen effect (defensive/armor abilities)
 const SHEEN_ABILITIES = ['shellArmor', 'defenceCurl', 'sturdy', 'thickFat', 'leafGuard', 'shieldDust'];
@@ -259,6 +258,10 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         };
     }, [pokemonCard.types]);
 
+    const abilityBgStyle = useMemo(() => {
+        return { backgroundColor: `var(--color-${abilities[pokemonCard.ability]?.type || "normal"}-500)` };
+    }, [pokemonCard.ability]);
+
     return (
         <div
             className={`relative select-none ${isDraggable ? "cursor-pointer touch-none" : "cursor-not-auto"} ${transform ? "z-20 shadow-lg/30 scale-105" : ""}`}
@@ -313,7 +316,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                     }`}>
                     <div className='border border-black tooltip p-1 w-[105px] md:w-[140px] shadow-md/30'>
                         {abilities[pokemonCard.ability]?.trigger !== 'statusEffect' && (
-                            <div className="truncate text-[8px] p-0.5 md:py-1 md:text-xs uppercase md:tracking-wider text-center font-bold text-white" style={nameBgStyle}>
+                            <div className="truncate text-[8px] p-0.5 md:py-1 md:text-xs uppercase md:tracking-wider text-center font-bold text-white" style={abilityBgStyle}>
                                 {abilities[pokemonCard.ability]?.name}
                             </div>
                         )}

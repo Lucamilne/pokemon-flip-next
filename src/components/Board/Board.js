@@ -19,9 +19,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import gameData from '@/data/game-data.json';
+import abilities from '@/data/ability-data.json';
 import styles from './background.module.css';
-
-const { abilities } = gameData;
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default function Board() {
