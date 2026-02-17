@@ -338,7 +338,7 @@ export default function Profile({ playerHand, lastSelectedHand, setPlayerHand, l
                             {showDebugButtons && (
                                 <>
                                     <h3 className="my-4 md:my-8">Debug functions:</h3>
-                                    <button onClick={() => toggleGen2(!gen2Unlocked)} className={`${styles['nes-btn']} ${gen2Unlocked ? styles['is-warning'] : styles['is-success']} cursor-pointer`}>
+                                    <button onClick={() => toggleGen2(!gen2Unlocked)} className={`${styles['nes-btn']} ${gen2Unlocked ? styles['is-primary'] : styles['is-success']} cursor-pointer`}>
                                         {gen2Unlocked ? 'Gen 2' : 'Gen 1'} Enabled
                                     </button>
                                     <button onClick={() => addAllCards()} className={`${styles['nes-btn']} ${styles['is-warning']} cursor-pointer`}>Add all cards</button>
