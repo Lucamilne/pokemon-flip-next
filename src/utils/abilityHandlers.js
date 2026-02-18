@@ -1237,7 +1237,10 @@ const metronome = (card, cellId, gameState) => {
     };
 
     // If the copied ability has trigger "onMatchStart" and is a self ability, apply it immediately
+    // Skip if the copied ability is also metronome/mirrorMove to prevent infinite recursion
     if (nextCard.ability &&
+        nextCard.ability !== 'metronome' &&
+        nextCard.ability !== 'mirrorMove' &&
         abilities[nextCard.ability]?.trigger === 'onMatchStart' &&
         selfAbilityHandlers[nextCard.ability]) {
         return selfAbilityHandlers[nextCard.ability](modifiedCard, cellId, gameState);
