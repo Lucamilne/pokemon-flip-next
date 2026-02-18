@@ -1460,7 +1460,7 @@ export const applyMatchStartAbilities = (gameState) => {
             card?.ability && card.ability !== nullifierAbility.name ? { ...card, ability: statusEffect } : card
         );
     } else {
-        allCards.forEach(card => {
+        allCards.reverse().forEach(card => {
             if (card?.ability && abilities[card.ability]?.trigger === 'onMatchStart' && selfAbilityHandlers[card.ability]) {
                 const currentCard = [...playerHand, ...cpuHand].find(c => c.name === card.name) || card;
                 const result = selfAbilityHandlers[card.ability](currentCard, null, { ...gameState, playerHand, cpuHand, cells });
