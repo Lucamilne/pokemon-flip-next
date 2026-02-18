@@ -69,7 +69,7 @@ export default function Matchups({ isOpen, onClose }) {
                                     Attacking Type
                                 </span>
                             </div>
-                            <div className={`grid rounded md:rounded-md grid-cols-17 gap-[1px] md:gap-1 grid-rows-17 ${styles['blue-red-divide-dark']} p-1 md:p-1 flex-1`}>
+                            <div className={`grid rounded md:rounded-md grid-cols-19 gap-[1px] md:gap-1 grid-rows-19 ${styles['blue-red-divide-dark']} p-1 md:p-1 flex-1`}>
                                 {/* Empty corner cell */}
                                 <div className={`${styles['blue-red-divide']} rounded md:rounded-md`} />
 
