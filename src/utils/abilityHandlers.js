@@ -1209,7 +1209,7 @@ const prismaticPunch = (card, cellId, gameState) => {
     if (validElements.includes(tileElement)) {
         return {
             ...card,
-            stats: card.stats.map(stat => stat < 10 ? stat + 2 : stat)
+            stats: card.stats.map(stat => Math.min(stat + 2, 10))
         };
     }
 
