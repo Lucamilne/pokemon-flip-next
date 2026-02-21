@@ -9,7 +9,7 @@ import HowToPlay from "@/components/HowToPlay/HowToPlay";
 import PixelGamepad from '@/assets/svg/PixelGamepad';
 import PixelCalculator from '@/assets/svg/PixelCalculator';
 
-import { applySelfAbilities, applyStatusAbilities, applyMatchStartAbilities } from '@/utils/abilityHandlers.js';
+import { applySelfAbilities, applyStatusAbilities, applyMatchStartAbilities, statLoweringImmunityAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect, useRef } from 'react'
 import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
@@ -66,6 +66,7 @@ export default function Board() {
 
         if (savedGameState) {
             // Restore saved game state
+            console.log(savedGameState)
             setCells(savedGameState.cells);
             setPlayerHand(savedGameState.playerHand);
             setCpuHand(savedGameState.cpuHand);
@@ -141,15 +142,22 @@ export default function Board() {
 
         // Check if card has an onElementalTilePlace ability first
         if (attackingCard.ability && abilities[attackingCard.ability]?.trigger === 'onElementalTilePlace') {
-            return applySelfAbilities(
+            const result = applySelfAbilities(
                 attackingCard,
                 'onElementalTilePlace',
                 cellTarget,
                 { cells: cellsToUse, playerHand, cpuHand }
             );
+
+            if (statLoweringImmunityAbilities.includes(attackingCard.ability)) {
+                return result;
+            }
+
+            const statsUnchanged = result.stats.every((stat, i) => stat === attackingCard.stats[i]);
+            if (!statsUnchanged) return result;
         }
 
-        // Normal pokemon are not affected by elemental tiles (unless they have an ability)
+        // Normal pokemon are not affected by elemental tiles (unless they have an ability) -- Maybe I should allow stat boosts from elemental tiles to affect normal types, but not stat reductions? For now, I'll just make them completely unaffected for simplicity
         if (attackingCard.types.some((type) => type === "normal")) {
             return attackingCard;
         }

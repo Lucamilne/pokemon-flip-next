@@ -71,7 +71,7 @@ const sturdy = shieldDust;
 const thickFat = shieldDust
 const leafGuard = shieldDust;
 
-const statLoweringImmunityAbilities = ["leafGuard", "oblivious", "shieldDust", "shellArmor", "defenceCurl", "sturdy", "thickFat"]
+export const statLoweringImmunityAbilities = ["leafGuard", "oblivious", "shieldDust", "shellArmor", "defenceCurl", "sturdy", "thickFat"]
 const abilityNullificationAbilities = [{ name: "sing", statusEffect: "asleep" }, { name: "blizzard", statusEffect: "frozen" }, { name: "smokeScreen", statusEffect: "blinded" }, { name: "disable", statusEffect: "disabled" }];
 
 const isImmuneToStatLowering = (card) =>
@@ -850,7 +850,7 @@ const confuseRay = (card, cellId, cells) => {
                 pokemonCard: {
                     ...adjacentCell.pokemonCard,
                     stats: shuffledStats,
-                    originalStats: shuffledStats
+                    // originalStats: shuffledStats
                 }
             };
         }
