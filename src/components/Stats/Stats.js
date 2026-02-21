@@ -1,10 +1,14 @@
 import { useMemo, useEffect } from 'react';
 
-export default function Stats({ stats, originalStats }) {
-    const sum = stats.reduce((acc, val) => acc + val, 0);
+export default function Stats({ stats, originalStats, onStatChange }) {
+    const statSum = stats.reduce((acc, val) => acc + val, 0);
+    const originalStatSum = originalStats.reduce((acc, val) => acc + val, 0);
+
     useEffect(() => {
-        console.log('Stats sum changed:', sum);
-    }, [sum]);
+        if (statSum !== originalStatSum) {
+            onStatChange?.(statSum - originalStatSum);
+        }
+    }, [statSum]);
 
     const conditionalClass = (index) => {
         const stat = stats[index];

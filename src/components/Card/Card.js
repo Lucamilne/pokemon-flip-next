@@ -5,15 +5,12 @@ import UltraBallSprite from '@/assets/icons/tiers/Bag_Ultra_Ball_Sprite.png'
 import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
 import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
 import Stats from '../Stats/Stats.js';
+import abilities from '@/data/ability-data.json';
 
 import { useDraggable } from '@dnd-kit/core';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTooltip } from '@/hooks/useTooltip';
-import gameData from '@/data/game-data.json';
-import abilities from '@/data/ability-data.json';
-
-// Abilities that get the sheen effect (defensive/armor abilities)
-const SHEEN_ABILITIES = ['shellArmor', 'defenceCurl', 'sturdy', 'thickFat', 'leafGuard', 'shieldDust'];
+import { statLoweringImmunityAbilities } from '@/utils/abilityHandlers';
 
 // Utility functions
 const sumUpNumbersInArray = (array) => {
@@ -43,7 +40,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     }
 
     const hasAbility = pokemonCard.ability;
-    const hasSheenAbility = SHEEN_ABILITIES.includes(pokemonCard.ability);
+    const hasSheenAbility = statLoweringImmunityAbilities.includes(pokemonCard.ability);
     const isOwned = hasCard(pokemonCard.name) || pokemonCard.starter;
 
     const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
@@ -158,6 +155,12 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     };
 
     const [showOverlay, setShowOverlay] = useState(false);
+    const [statDelta, setStatDelta] = useState(null);
+
+    const handleStatChange = (delta) => {
+        setStatDelta(delta);
+        setTimeout(() => setStatDelta(null), 1000);
+    };
 
     const runPlacementAnimations = async () => {
         if (!pokemonCard.isPlayerCard) {
@@ -284,7 +287,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                 >
                     <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden ${hasSheenAbility && isPlacedInGrid ? 'sheen-effect' : ''}`}>
                         <div className="relative h-full flex flex-col items-center justify-center">
-                            <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} />
+                            <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} onStatChange={handleStatChange} />
                             <ElementalTypes types={pokemonCard.types} />
                             <img loading="lazy" draggable={false} width={60} height={60} className="w-1/2 h-1/2 md:size-[60px] drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} />
                             <div className='absolute bottom-0'>
@@ -295,9 +298,15 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                         </div>
                     </div>
                     {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} />}
+
                     {showOverlay && (
                         <div id="effect-overlay" className={`z-20 absolute top-0 left-0 size-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
                             <span className='mt-4 '>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
+                        </div>
+                    )}
+                    {statDelta !== null && !snapshot && isPlacedInGrid && (
+                        <div className={`slide-top z-20 absolute inset-0 flex items-center justify-center pointer-events-none text-xs md:text-lg font-bold text-shadow-lg/50 font-press-start ${statDelta > 0 ? 'text-lime-500' : 'text-red-600'}`}>
+                            {statDelta > 0 ? `+${statDelta}` : statDelta}
                         </div>
                     )}
                 </div>
