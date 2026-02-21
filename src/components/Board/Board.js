@@ -66,7 +66,6 @@ export default function Board() {
 
         if (savedGameState) {
             // Restore saved game state
-            console.log(savedGameState)
             setCells(savedGameState.cells);
             setPlayerHand(savedGameState.playerHand);
             setCpuHand(savedGameState.cpuHand);
