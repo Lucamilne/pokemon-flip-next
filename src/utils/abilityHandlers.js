@@ -171,12 +171,11 @@ const lightningRod = solarBeam; // electric
 const acidArmor = solarBeam; // poison
 const skyAttack = solarBeam; // flying
 
-const chlorophyll = (card, cellId, gameState) => {
+const makeTypeCountAbility = (type) => (card, cellId, gameState) => {
     const collectiveHand = [...gameState.playerHand, ...gameState.cpuHand];
 
-    // Count matching type cards in both hands (including self)
     const matchingTypeCount = collectiveHand.filter(c =>
-        c.types.includes(card.types[0])
+        c.types.includes(type)
     ).length;
 
     if (matchingTypeCount < 3) return replaceCardInHands(card, card, gameState);
@@ -187,14 +186,15 @@ const chlorophyll = (card, cellId, gameState) => {
     }, gameState);
 }
 
-const flashFire = chlorophyll; // fire
-const featherDance = chlorophyll; // flying
-const rockSlide = chlorophyll; // rock
-const torrent = chlorophyll; // water
-const staticElectricity = chlorophyll; // electric
-const swarm = chlorophyll; // bug
-const toxic = chlorophyll; // poison
-const synchronise = chlorophyll; // psychic
+const chlorophyll = makeTypeCountAbility('grass');
+const flashFire = makeTypeCountAbility('fire');
+const featherDance = makeTypeCountAbility('flying');
+const rockSlide = makeTypeCountAbility('rock');
+const torrent = makeTypeCountAbility('water');
+const staticElectricity = makeTypeCountAbility('electric');
+const swarm = makeTypeCountAbility('bug');
+const toxic = makeTypeCountAbility('poison');
+const synchronise = makeTypeCountAbility('psychic');
 
 const ancientPower = (card, cellId, gameState) => {
     if (Math.random() >= 0.25) return card;

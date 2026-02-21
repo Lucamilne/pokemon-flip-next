@@ -1,13 +1,17 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 
 export default function Stats({ stats, originalStats, onStatChange }) {
     const statSum = stats.reduce((acc, val) => acc + val, 0);
     const originalStatSum = originalStats.reduce((acc, val) => acc + val, 0);
 
+    const prevStatSumRef = useRef(originalStatSum);
+
     useEffect(() => {
-        if (statSum !== originalStatSum) {
-            onStatChange?.(statSum - originalStatSum);
+        if (statSum !== prevStatSumRef.current) {
+            onStatChange?.(statSum - prevStatSumRef.current);
         }
+
+        prevStatSumRef.current = statSum;
     }, [statSum]);
 
     const conditionalClass = (index) => {
