@@ -66,7 +66,6 @@ export default function Board() {
 
         if (savedGameState) {
             // Restore saved game state
-            console.log(savedGameState)
             setCells(savedGameState.cells);
             setPlayerHand(savedGameState.playerHand);
             setCpuHand(savedGameState.cpuHand);
@@ -157,10 +156,10 @@ export default function Board() {
             if (!statsUnchanged) return result;
         }
 
-        // Normal pokemon are not affected by elemental tiles (unless they have an ability) -- Maybe I should allow stat boosts from elemental tiles to affect normal types, but not stat reductions? For now, I'll just make them completely unaffected for simplicity
-        if (attackingCard.types.some((type) => type === "normal")) {
-            return attackingCard;
-        }
+        // temporarily remove normal type immunity to elemental tiles to test out tile mechanics
+        // if (attackingCard.types.some((type) => type === "normal")) {
+        //     return attackingCard;
+        // }
 
         const updateStatOnElementalTile = (stat) => {
             if (attackingCard.types.includes(cellTargetObject.element) && stat < 10) {
@@ -341,10 +340,10 @@ export default function Board() {
             return card.stats;
         }
 
-        // Normal type pokemon aren't affected
-        if (card.types.some((type) => type === "normal")) {
-            return card.stats;
-        }
+        // Normal type pokemon aren't affected. Temporary removed
+        // if (card.types.some((type) => type === "normal")) {
+        //     return card.stats;
+        // }
 
         // Apply the same logic as applyTileStatModifiers
         return card.stats.map(stat => {

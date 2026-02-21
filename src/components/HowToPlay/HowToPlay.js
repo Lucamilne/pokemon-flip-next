@@ -7,6 +7,7 @@ import SlideD from "@/components/HowToPlay/Slides/D";
 import SlideE from "@/components/HowToPlay/Slides/E";
 import SlideF from "@/components/HowToPlay/Slides/F";
 import PixelX from '@/assets/svg/PixelX';
+import PixelCalculator from '@/assets/svg/PixelCalculator';
 
 import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
 import GreatBallSprite from '@/assets/icons/tiers/Bag_Great_Ball_Sprite.png'
@@ -102,7 +103,11 @@ export default function HowToPlay({ isOpen, onClose }) {
                     <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Core Combat</h2>
-                            <p>Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
+                            <p>
+                                Each card has four directional stats; when adjacent cards compare facing stats, the higher stat captures the other card.
+                            </p>
+                            <p>
+                                Stats range from 1 to 10. The higher, the better. A stat of 10 is shown as <span className="font-bold text-yellow-500 text-shadow-sm/50">A</span>, and cannot be surpassed.
                             </p>
                         </div>
                         <SlideB nextSlide={nextSlide} />
@@ -112,14 +117,9 @@ export default function HowToPlay({ isOpen, onClose }) {
                     <div className="min-w-full h-full flex flex-col gap-16 md:gap-8 justify-center md:justify-between pt-8 px-8 md:px-24">
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Elemental Tiles</h2>
-                            <p>Some grid spaces have elemental symbols. Placing a card on a
-                                matching elemental tile boosts its stats by <span className="text-green-600">+1</span>. Non-matching types
-                                get <span className="text-red-500">-1</span>.
-                            </p>
-                            <p>
-                                <span className="text-white py-1 px-3"
-                                    style={{ backgroundColor: `var(--color-normal-500)` }}
-                                >Normal</span> type Pokemon ignore tile effects.</p>
+                            <p>Some grid spaces have elemental symbols.</p>
+                            <p>Placing a matching card on one boosts each of its four stats by <span className="text-lime-500 font-bold">+1</span>. Non-matching types take <span className="text-red-600 font-bold">-1</span> to each stat instead.</p>
+                            <p>Use elemental tiles to your advantage. Lure your opponent onto a mismatched tile, or save a card for a tile that suits it!</p>
                         </div>
                         <SlideC nextSlide={nextSlide} />
                     </div>
@@ -129,7 +129,7 @@ export default function HowToPlay({ isOpen, onClose }) {
                         <div className='font-press-start grid grid-cols-1 gap-8 text-sm md:text-base'>
                             <h2 className='font-bold text-lg md:text-2xl text-center'>Card Abilities</h2>
                             <p>All Pokémon cards have unique abilities that reward thoughtful, strategic play.</p>
-                            <p>{ isMobile ? 'Tap' : 'Hover over'} a card below to see its ability and learn what it does!</p>
+                            <p>{isMobile ? 'Tap' : 'Hover over'} a card below to see its ability and learn what it does!</p>
                             <p>
                                 <button className="cursor-pointer text-blue-500" onClick={shuffleCards}>Click here</button> to shuffle some more cards.
                             </p>
@@ -163,7 +163,9 @@ export default function HowToPlay({ isOpen, onClose }) {
                                     style={{ backgroundColor: `var(--color-ground-500)` }}
                                 >Ground</span> vs <span className="text-white py-1 px-3"
                                     style={{ backgroundColor: `var(--color-flying-500)` }}
-                                >Flying</span>), and cannot flip defending cards regardless of the stat advantage.</p>
+                                >Flying</span>), and cannot flip defending cards regardless of the stat advantage.
+                            </p>
+                            <p>Use the type calculator <PixelCalculator className="inline w-5 h-5 align-middle" color="#000" />  to determine type effectiveness! It can be found on the top right of the arena during a match.</p>
                         </div>
                         <SlideF nextSlide={nextSlide} />
                     </div>
