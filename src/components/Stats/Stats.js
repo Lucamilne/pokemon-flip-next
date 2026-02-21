@@ -1,6 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 
 export default function Stats({ stats, originalStats }) {
+    const sum = stats.reduce((acc, val) => acc + val, 0);
+    useEffect(() => {
+        console.log('Stats sum changed:', sum);
+    }, [sum]);
+
     const conditionalClass = (index) => {
         const stat = stats[index];
         const originalStat = originalStats[index];

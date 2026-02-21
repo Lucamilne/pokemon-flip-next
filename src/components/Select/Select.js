@@ -2,17 +2,13 @@ import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchStarterCards, createCard } from '@/utils/cardHelpers.js';
 import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
-import Card from "../Card/Card.js";
-import Help from "../Help/Help.js";
 import Profile from "../Profile/Profile.js"
-import styles from '@/retro.module.css';
 import { useGameContext } from '@/contexts/GameContext';
 import { useAuth } from '@/contexts/AuthContext';
-import PixelX from '@/assets/svg/PixelX';
-import PixelSort from '@/assets/svg/PixelSort';
-import PixelDocument from '@/assets/svg/PixelDocument';
-
-const basePath = import.meta.env.PROD ? '/pokemon-flip-next' : '';
+import SearchBar from './SearchBar.js';
+import CardGrid from './CardGrid.js';
+import MobileProfileToggle from './MobileProfileToggle.js';
+import PlayerHand from './PlayerHand.js';
 
 export default function Select() {
     const location = useLocation();
@@ -23,6 +19,8 @@ export default function Select() {
     const { userCollection, isLoadingCollection } = useAuth();
 
     const cardGridRef = useRef(null);
+    const playerHandRef = useRef([null, null, null, null, null]);
+
     const [playerHand, setPlayerHand] = useState([null, null, null, null, null]);
     const [pokeballIsOpen, setPokeballIsOpen] = useState(false);
     const [isPokeballDisabled, setIsPokeballDisabled] = useState(true);
@@ -44,25 +42,19 @@ export default function Select() {
 
     useEffect(() => {
         sessionStorage.setItem('showProfilesOnMobile', showProfilesOnMobile);
-        
         if (!showProfilesOnMobile) {
             setShowProfile(false);
-        };
+        }
     }, [showProfilesOnMobile]);
 
     const handleCloseProfile = useCallback(() => setShowProfile(false), []);
 
     useEffect(() => {
         resetGameState();
-
-        if (!pokeballIsOpen) setPokeballIsOpen(true);
-
-        const helpTimer = setTimeout(() => {
-            setShowHelp(true);
-        }, 3000);
-
+        setPokeballIsOpen(true);
+        const helpTimer = setTimeout(() => { setShowHelp(true); }, 3000);
         return () => clearTimeout(helpTimer);
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (!isLoadingCollection && cardGridRef.current) {
@@ -72,55 +64,40 @@ export default function Select() {
 
     const playerCardLibrary = useMemo(() => {
         const ownedPokemonNames = Object.keys(userCollection);
-
         if (ownedPokemonNames.length > 0) {
             return ownedPokemonNames
                 .map(name => createCard(name, true))
                 .sort((a, b) => a.id - b.id);
         } else {
-            // Fallback to starters if collection is empty
             return fetchStarterCards(true);
         }
     }, [userCollection]);
 
-    const closePokeball = () => {
+    const closePokeball = useCallback(() => {
         setIsPokeballDisabled(false);
         setPokeballIsOpen(false);
-    }
+    }, []);
 
     useEffect(() => {
-        if (!isMobile && !showProfile) {
-            setShowProfile(true);
-        }
-    }, [isMobile]);
+        if (!isMobile) setShowProfile(true);
+        else if (searchString.trim()) setShowProfile(false);
+    }, [isMobile, searchString]);
 
     useEffect(() => {
+        playerHandRef.current = playerHand;
         const emptyHand = playerHand.every(card => card === null);
         const fullHand = playerHand.every(card => card !== null);
-
         if (emptyHand) setLastPokemonCardSelected(null);
-
         setShowConfirm(fullHand);
-
         if (fullHand) {
             setShowProfile(false);
             setSelectedPlayerHand(playerHand);
-        };
-    }, [playerHand])
-
-    const helperTextChars = useMemo(() => "Choose your hand!".split(''), []);
+        }
+    }, [playerHand]);
 
     const selectedCardIds = useMemo(() =>
         new Set(playerHand.filter(Boolean).map(card => card.id))
-        , [playerHand]);
-
-    const inputBorderStyle = useMemo(() => ({
-        borderImageSource: `url('${basePath}/images/border-image.png')`,
-        borderImageSlice: '12',
-        borderImageWidth: '12px',
-        borderImageOutset: '6px',
-        borderImageRepeat: 'initial'
-    }), []);
+    , [playerHand]);
 
     const filteredCards = useMemo(() => {
         const trimmedSearch = searchString.trim().toLowerCase();
@@ -130,158 +107,77 @@ export default function Select() {
             )
             : playerCardLibrary;
 
-        if (isMobile && trimmedSearch) {
-            setShowProfile(false);
-        }
-
         if (sortByStrength) {
             return [...cards].sort((a, b) => b.statWeight - a.statWeight);
         }
-
         return cards;
     }, [searchString, playerCardLibrary, sortByStrength]);
 
     const togglePokemonCardSelection = useCallback((pokemonCard) => {
         if (!pokemonCard) return;
-
-        setSearchString(""); // is this useful? Undecided.
-
-        const isCardInHand = playerHand.some(card => card?.id === pokemonCard.id);
+        setSearchString('');
+        const isCardInHand = playerHandRef.current.some(card => card?.id === pokemonCard.id);
 
         setPlayerHand(prev => {
             const cardIndex = prev.findIndex(card => card?.id === pokemonCard.id);
-
             if (cardIndex !== -1) {
-                // Card is in hand, unselect it
                 const newHand = [...prev];
                 newHand[cardIndex] = null;
                 return newHand;
             }
-
-            // Card not in hand, add it to first available slot
             const firstNullIndex = prev.findIndex(card => card === null);
-            if (firstNullIndex === -1) return prev; // Hand is full
-
+            if (firstNullIndex === -1) return prev;
             const newHand = [...prev];
             newHand[firstNullIndex] = pokemonCard;
             return newHand;
         });
 
-        // Only show profile on mobile when adding a card (not removing)
-        if (isMobile && !isCardInHand) {
-            setShowProfile(true);
-        }
-
+        if (isMobile && !isCardInHand) setShowProfile(true);
         setLastPokemonCardSelected(pokemonCard);
-    }, [playerHand, isMobile])
+    }, [isMobile]);
+
+    const handleToggleSort = useCallback(() => setSortByStrength(prev => !prev), []);
+
+    const handleClear = useCallback(() => setPlayerHand([null, null, null, null, null]), []);
+
+    const handleConfirm = useCallback(() => {
+        closePokeball();
+        setLastSelectedHand(playerHandRef.current);
+    }, [closePokeball, setLastSelectedHand]);
+
+    const handleShowProfile = useCallback(() => {
+        setLastPokemonCardSelected(null);
+        setShowProfile(true);
+    }, []);
+
+    const handleSetShowProfilesOnMobile = useCallback((value) => {
+        setShowProfilesOnMobile(value);
+        if (!value) handleCloseProfile();
+    }, [handleCloseProfile]);
 
     return (
-        <div className="relative overflow-y-hidden h-full flex flex-col bg-pokedex-lighter-blue" >
-            <div className="px-7 py-4 md:pb-6 flex justify-between gap-4 items-center hand-top-container pb-7 md:pb-8">
-                <div className="relative flex gap-2 font-press-start">
-                    <input
-                        type="text"
-                        id="search"
-                        className={`${styles['snes-input']} w-full md:w-auto`}
-                        autoComplete="off"
-                        style={inputBorderStyle}
-                        placeholder='Search Cards'
-                        value={searchString}
-                        onChange={(e) => setSearchString(e.target.value)}
-                        maxLength={12}
-                    />
-                    {searchString !== "" ? (
-                        <button
-                            onClick={() => setSearchString('')}
-                            className="px-1 cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-900 text-lg leading-none"
-                            aria-label="Clear search"
-                        >
-                            <PixelX className="w-7 h-7 stroke-neutral-600 hover:stroke-neutral-900 fill-neutral-600 hover:fill-neutral-900" />
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => setSortByStrength(!sortByStrength)}
-                            aria-label="Toggle sort"
-                            title="Toggle Sort by Strength"
-                            className="px-1 cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-900 text-lg leading-none"
-                        >
-                            <PixelSort className={`w-7 h-7 transition-colors stroke-neutral-900 fill-neutral-900 ${sortByStrength ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`} />
-                        </button>
-                    )}
-                </div>
-                <h1 className="hidden md:block text-right header-text text-xl lg:text-2xl text-hop">
-                    {helperTextChars.map((char, index) => (<span key={index} style={{
-                        animationDelay: `${(index + 1) * 50}ms`
-                    }}>{char}</span>))}
-
-                </h1>
-            </div>
+        <div className="relative overflow-y-hidden h-full flex flex-col bg-pokedex-lighter-blue">
+            <SearchBar
+                searchString={searchString}
+                onSearchChange={setSearchString}
+                sortByStrength={sortByStrength}
+                onToggleSort={handleToggleSort}
+            />
             <div className="relative grow md:flex overflow-y-auto">
-                <div ref={cardGridRef} tabIndex={0} className={`h-full relative hide-scrollbar p-2 pb-[52px] md:p-4 md:pb-4 ${isLoadingCollection ? 'overflow-y-hidden' : 'overflow-y-auto'} focus:outline-none`}>
-                    <div className="grid grid-cols-[repeat(4,82px)] place-content-center md:grid-cols-[repeat(4,124px)] auto-rows-min gap-1 md:gap-4">
-                        {isLoadingCollection ? (
-                            <>
-                                {Array.from({ length: 24 }).map((_, index) => (
-                                    <div
-                                        key={index}
-                                        className="fade-in-out aspect-square bg-pokedex-inner-blue/15 rounded-md"
-                                        style={{
-                                            animationDelay: `${index * 50}ms`,
-                                            opacity: 0
-                                        }}
-                                    />
-                                ))}
-                                <p className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl header-text text-hop flex'>{"...".split('').map((char, index) => (<span key={index} style={{
-                                    animationDelay: `${(index + 1) * 50}ms`
-                                }}> {char}</span>))}</p>
-                            </>
-                        ) : (
-                            <>
-                                {
-                                    filteredCards.map((pokemonCard, index) => {
-                                        const isInHand = pokemonCard && selectedCardIds.has(pokemonCard.id);
-
-                                        return (
-                                            <button
-                                                className={`cursor-pointer relative rounded-md aspect-square transition-transform shadow-md/15 ${isInHand ? 'ring-3 md:ring-5 ring-lime-300' : ''}`}
-                                                key={pokemonCard.id}
-                                                onClick={() => togglePokemonCardSelection(pokemonCard)}
-                                            >
-                                                {pokemonCard && (
-                                                    <Card isUnselected={!isInHand} pokemonCard={pokemonCard} index={index} isDraggable={false} />
-                                                )}
-                                            </button>
-                                        )
-                                    })
-                                }
-                            </>
-                        )}
-                    </div>
-                </div>
+                <CardGrid
+                    isLoadingCollection={isLoadingCollection}
+                    filteredCards={filteredCards}
+                    selectedCardIds={selectedCardIds}
+                    onCardSelect={togglePokemonCardSelection}
+                    cardGridRef={cardGridRef}
+                />
                 {isMobile && (
-                    <div className='absolute bottom-0 bg-black/50 border-t-4 border-black w-full'>
-                        <div className='font-press-start text-white text-sm py-2.5 px-3 gap-2 flex justify-between items-center'>
-                            <div className='flex items-center gap-2'>
-                                <button title="Menu" aria-label="Menu" disabled={!showProfilesOnMobile} onClick={() => { setLastPokemonCardSelected(null); setShowProfile(true); }} className={`flex items-center justify-center overflow-hidden ${showProfilesOnMobile ? 'cursor-pointer opacity-100' : 'opacity-50'}`}>
-                                    <PixelDocument className="w-5 h-5 mb-1" />
-                                </button>
-                                <span>Show Profiles?</span>
-                            </div>
-                            <div className='flex gap-2'>
-                                <label>
-                                    <input type="radio" className={`${styles['nes-radio']} ${styles['is-dark']}`} name="answer" checked={showProfilesOnMobile} onChange={() => setShowProfilesOnMobile(true)} />
-                                    <span>Yes</span>
-                                </label>
-
-                                <label>
-                                    <input type="radio" className={`${styles['nes-radio']} ${styles['is-dark']}`} name="answer" checked={!showProfilesOnMobile} onChange={() => { setShowProfilesOnMobile(false); handleCloseProfile(); }} />
-                                    <span>No</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    <MobileProfileToggle
+                        showProfilesOnMobile={showProfilesOnMobile}
+                        onSetShowProfilesOnMobile={handleSetShowProfilesOnMobile}
+                        onShowProfile={handleShowProfile}
+                    />
                 )}
-
                 {(!isMobile || showProfilesOnMobile) && (
                     <Profile
                         playerHand={playerHand}
@@ -292,36 +188,19 @@ export default function Select() {
                         onClose={isMobile ? handleCloseProfile : undefined}
                     />
                 )}
-
             </div>
             {showConfirm && (
                 <div className="absolute inset-0 bg-black/60 pointer-events-none md:pointer-events-auto" />
             )}
-            <div className={`${showConfirm ? '-translate-y-20' : 'translate-y-0'} transition-transform relative grid grid-cols-[repeat(5,72px)] md:grid-cols-[repeat(5,124px)] items-center gap-1 md:gap-4 hand-bottom-container pt-7 p-3 md:pt-8 md:p-4 w-full justify-center`}>
-                {playerHand.map((pokemonCard, index) => {
-                    return (
-                        <button className={`relative aspect-square ${pokemonCard ? "cursor-pointer" : ""}`} key={index} onClick={() => togglePokemonCardSelection(pokemonCard)}>
-                            <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue flex justify-center items-center">
-                                <span className='header-text text-xl md:text-2xl'>{index + 1}</span>
-                            </div>
-
-                            {pokemonCard && (
-                                <div className='slide-in-blurred-top'>
-                                    <Card pokemonCard={pokemonCard} index={index} isDraggable={false} />
-                                </div>
-                            )}
-                        </button>
-                    )
-                })}
-                {playerHand.every(card => card === null) && showHelp && (
-                    <Help customClass="fade-in-b !hidden md:!block !absolute !-top-16 !left-1/2" text="Add cards to your hand!" />
-                )}
-                <div className='bg-linear-to-b from-pokedex-blue to-pokedex-dark-blue h-20 w-full absolute -bottom-20 flex gap-4 justify-center items-center font-press-start'>
-                    <button onClick={() => { setPlayerHand([null, null, null, null, null]); }} className={`${styles['nes-btn']} ${styles['is-error']} cursor-pointer`}>Clear</button>
-                    <button onClick={() => { closePokeball(); setLastSelectedHand(playerHand) }} className={`${styles['nes-btn']} ${styles['is-success']} cursor-pointer`}>Confirm</button>
-                </div>
-            </div>
+            <PlayerHand
+                playerHand={playerHand}
+                showConfirm={showConfirm}
+                showHelp={showHelp}
+                onCardClick={togglePokemonCardSelection}
+                onClear={handleClear}
+                onConfirm={handleConfirm}
+            />
             <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText='Fight!' />
-        </div >
-    )
+        </div>
+    );
 }
