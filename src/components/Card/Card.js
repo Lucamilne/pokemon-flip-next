@@ -305,7 +305,7 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                         </div>
                     )}
                     {statDelta !== null && !snapshot && isPlacedInGrid && (
-                        <div className={`slide-top z-20 absolute inset-0 flex items-center justify-center pointer-events-none text-xs md:text-lg font-bold text-shadow-lg/50 font-press-start ${statDelta > 0 ? 'text-lime-500' : 'text-red-600'}`}>
+                        <div className={`slide-top z-20 absolute inset-0 flex items-center justify-center pointer-events-none text-xs md:text-lg font-bold text-shadow-sm/50 md:text-shadow-lg/50 font-press-start ${statDelta > 0 ? 'text-lime-500' : 'text-red-600'}`}>
                             {statDelta > 0 ? `+${statDelta}` : statDelta}
                         </div>
                     )}
