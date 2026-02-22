@@ -279,6 +279,10 @@ export const fetchFossilCards = (isPlayerCard = true) => {
         .map((pokemonName) => createCard(pokemonName, isPlayerCard));
 }
 
+export const sumUpNumbersInArray = (array) => {
+    return array.reduce((acc, val) => acc + val, 0);
+};
+
 export const specialAwardDefinitions = [
     { name: 'jigglypuff', award: 'Worst Karaoke' },
     { name: 'magikarp', award: 'Most Useless...?' },

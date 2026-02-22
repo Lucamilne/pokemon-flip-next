@@ -1,7 +1,7 @@
 import { useGameContext } from '@/contexts/GameContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { clearLocalStorage } from '@/utils/gameStorage';
 import { specialAwardDefinitions } from '@/utils/cardHelpers';
 
@@ -14,8 +14,29 @@ import Snapshot from '../Board/Snapshot.js';
 import styles from '@/retro.module.css';
 import pokemon from '@/data/game-data.json';
 
+const tieText = [
+    "A tie means no cards change hands. Battle again for victory!",
+    "No cards were won or lost in this draw.",
+    "The match was a draw. No cards were exchanged.",
+    "It's a stalemate! Try again to claim some cards.",
+    "No cards won in a tie. Battle again!",
+    "So close! A tie means everyone keeps their cards.",
+    "An even match! No spoils for either side."
+];
+
+const victoryText = [
+    "Your spoils of victory! These cards now belong to you.",
+    "Congratulations! You've earned these new cards.",
+    "Victory is yours! Claim your prize cards.",
+    "Well fought! These cards are now part of your collection.",
+    "A well-deserved win! Add these cards to your deck.",
+    "You've proven your skill! These cards are yours.",
+    "The spoils of battle! New cards for your collection."
+];
+
+const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
 export default function Results() {
-    const location = useLocation();
     const navigate = useNavigate();
 
     const { isPlayerVictory, matchCards, score } = useGameContext();
@@ -27,28 +48,10 @@ export default function Results() {
     const [mounted, setMounted] = useState(false);
     const [isPokeballOpen, setIsPokeballOpen] = useState(true);
     const [isSnapshotOpen, setIsSnapshotOpen] = useState(false);
+    const victoryMessage = useMemo(() => pickRandom(victoryText), []);
+    const tieMessage = useMemo(() => pickRandom(tieText), []);
 
     const penaltyCardRef = useRef(null);
-
-    const tieText = [
-        "A tie means no cards change hands. Battle again for victory!",
-        "No cards were won or lost in this draw.",
-        "The match was a draw. No cards were exchanged.",
-        "It's a stalemate! Try again to claim some cards.",
-        "No cards won in a tie. Battle again!",
-        "So close! A tie means everyone keeps their cards.",
-        "An even match! No spoils for either side."
-    ];
-
-    const victoryText = [
-        "Your spoils of victory! These cards now belong to you.",
-        "Congratulations! You've earned these new cards.",
-        "Victory is yours! Claim your prize cards.",
-        "Well fought! These cards are now part of your collection.",
-        "A well-deserved win! Add these cards to your deck.",
-        "You've proven your skill! These cards are yours.",
-        "The spoils of battle! New cards for your collection."
-    ];
 
     const handlePlayAgain = () => {
         setIsPokeballOpen(false);
@@ -248,7 +251,7 @@ export default function Results() {
                                 {rewardCards.length > 0 ? (
                                     <>
                                         <div className='font-press-start text-center text-sm md:text-base'>
-                                            <p>{victoryText[Math.floor(Math.random() * victoryText.length)]}</p>
+                                            <p>{victoryMessage}</p>
                                         </div>
                                         <div className="grid grid-cols-[repeat(auto-fit,72px)] md:grid-cols-[repeat(auto-fit,124px)] place-content-center gap-1 md:gap-4 mt-8">
                                             {rewardCards.map((pokemonCard, index) => {
@@ -296,7 +299,7 @@ export default function Results() {
                         ) : (
                             <div className="p-8">
                                 <div className="md:py-18 text-center font-press-start text-sm md:text-base">
-                                    <p>{tieText[Math.floor(Math.random() * tieText.length)]}</p>
+                                    <p>{tieMessage}</p>
                                 </div>
                             </div>
                         )}

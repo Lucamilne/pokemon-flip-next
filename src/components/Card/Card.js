@@ -1,28 +1,15 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import PokemonBallSprite from '@/assets/icons/tiers/Bag_Poké_Ball_Sprite.png'
-import GreatBallSprite from '@/assets/icons/tiers/Bag_Great_Ball_Sprite.png'
-import UltraBallSprite from '@/assets/icons/tiers/Bag_Ultra_Ball_Sprite.png'
-import MasterBallSprite from '@/assets/icons/tiers/Bag_Master_Ball_Sprite.png'
-import ElementalTypes from '../ElementalTypes/ElementalTypes.js';
-import Stats from '../Stats/Stats.js';
 import abilities from '@/data/ability-data.json';
 
 import { useDraggable } from '@dnd-kit/core';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTooltip } from '@/hooks/useTooltip';
+import { useCardAnimations } from '@/hooks/useCardAnimations';
 import { statLoweringImmunityAbilities } from '@/utils/abilityHandlers';
 
-// Utility functions
-const sumUpNumbersInArray = (array) => {
-    return array.reduce((acc, val) => acc + val, 0);
-};
-
-const getBallSprite = (statWeight) => {
-    if (statWeight < 395) return PokemonBallSprite;
-    if (statWeight < 500) return GreatBallSprite;
-    if (statWeight < 600) return UltraBallSprite;
-    return MasterBallSprite;
-};
+import CardFront from './CardFront.js';
+import CardBack from './CardBack.js';
+import CardTooltip from './CardTooltip.js';
 
 function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInGrid = false, roundCorners = true, startsFaceUp = true, isUnselected = false, snapshot = false, showTooltip = true }) {
     const { isVisible, handlers } = useTooltip();
@@ -32,8 +19,6 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     const [isFlipped, setIsFlipped] = useState(startsFaceUp);
 
     const cardRef = useRef(null);
-    const prevIsPlayerCard = useRef();
-    const prevStats = useRef();
 
     if (!pokemonCard) {
         return null;
@@ -52,11 +37,11 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
         }
     });
 
-    // Apply transform to show dragging movement
     const style = transform ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
     } : undefined;
 
+    const { statDelta, showOverlay, handleStatChange } = useCardAnimations(cardRef, pokemonCard, isPlacedInGrid, snapshot);
 
     const bgGradient = useMemo(() => {
         if (isUnselected) {
@@ -66,191 +51,6 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
             ? 'bg-gradient-to-b from-theme-blue to-theme-blue-100'
             : 'bg-gradient-to-b from-theme-red to-theme-red-100';
     }, [pokemonCard.isPlayerCard, isUnselected]);
-
-    const weakenCard = () => {
-        const animClass = 'shake-vertical';
-
-        return new Promise((resolve) => {
-            if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
-                // Remove slide-in animation that may conflict
-                cardRef.current.classList.remove('slide-in-blurred-top');
-                cardRef.current.classList.add(animClass);
-                setTimeout(() => {
-                    cardRef.current?.classList.remove(animClass);
-                    resolve();
-                }, 600);
-            } else {
-                resolve();
-            }
-        });
-    };
-
-    const strengthenCard = () => {
-        const animClass = 'jello-horizontal';
-
-        return new Promise((resolve) => {
-            if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
-                // Remove slide-in animation that may conflict
-                cardRef.current.classList.remove('slide-in-blurred-top');
-                cardRef.current.classList.add(animClass);
-                setTimeout(() => {
-                    cardRef.current?.classList.remove(animClass);
-                    resolve();
-                }, 500);
-            } else {
-                resolve();
-            }
-        });
-    };
-
-    const presentCard = () => {
-        const animClass = 'pulsate-fwd';
-
-        return new Promise((resolve) => {
-            if (cardRef.current && !cardRef.current.classList.contains(animClass)) {
-                // Remove slide-in animation that may conflict
-                cardRef.current.classList.remove('slide-in-blurred-top');
-                cardRef.current.classList.add(animClass);
-                setTimeout(() => {
-                    cardRef.current?.classList.remove(animClass);
-                    resolve();
-                }, 500);
-            } else {
-                resolve();
-            }
-        });
-    };
-
-    const dropCard = () => {
-        return new Promise((resolve) => {
-            if (cardRef.current) {
-                cardRef.current.classList.add('slide-in-blurred-top')
-                setTimeout(resolve, 400);
-            } else {
-                resolve();
-            }
-        });
-    };
-
-    const defeatCard = () => {
-        return new Promise((resolve) => {
-            if (cardRef.current) {
-                cardRef.current.classList.remove('slide-in-blurred-top');
-
-                // Force a reflow to ensure the browser has committed the current state. This is to fix a transition property issue with animations playing instantly
-                cardRef.current.offsetHeight;
-
-                // Use requestAnimationFrame to ensure the browser has painted before changing state
-                requestAnimationFrame(() => {
-                    cardRef.current.classList.add('rotate-vert-center', 'z-50')
-                    setTimeout(() => {
-                        cardRef.current.classList.remove('rotate-vert-center', 'z-50')
-                        resolve();
-                    }, 400);
-                });
-            } else {
-                resolve();
-            }
-        });
-    };
-
-    const [showOverlay, setShowOverlay] = useState(false);
-    const [statDelta, setStatDelta] = useState(null);
-
-    const handleStatChange = (delta) => {
-        setStatDelta(delta);
-        setTimeout(() => setStatDelta(null), 1000);
-    };
-
-    const runPlacementAnimations = async () => {
-        if (!pokemonCard.isPlayerCard) {
-            await dropCard(); // Wait for drop to finish
-        }
-
-        // Check if this card made a super effective capture
-        if (pokemonCard.wasSuperEffective) {
-            setShowOverlay(true);
-            setTimeout(() => setShowOverlay(false), 400);
-        }
-
-        // Check if this card's attack was immune
-        if (pokemonCard.wasNoEffect) {
-            setShowOverlay(true);
-            setTimeout(() => setShowOverlay(false), 400);
-        }
-
-        runStatAnimations(pokemonCard.originalStats);
-    };
-
-    const runStatAnimations = async (prevStatsArray) => {
-        const statsToCompare = sumUpNumbersInArray(prevStatsArray || pokemonCard.originalStats);
-        const totalStats = sumUpNumbersInArray(pokemonCard.stats);
-
-        if (totalStats < statsToCompare) {
-            await weakenCard();
-        } else if (totalStats > statsToCompare) {
-            await strengthenCard();
-        } else if (totalStats === statsToCompare) {
-            await presentCard();
-        }
-    }
-
-    useEffect(() => {
-        if (isPlacedInGrid && !snapshot) {
-            runPlacementAnimations();
-        }
-    }, [isPlacedInGrid])
-
-    useEffect(() => {
-        // Capture previous values synchronously before any async operations
-        const prevStatsSnapshot = prevStats.current ? [...prevStats.current] : undefined;
-        const prevOwnerSnapshot = prevIsPlayerCard.current;
-
-        // Update refs immediately to prevent race conditions
-        prevIsPlayerCard.current = pokemonCard.isPlayerCard;
-        prevStats.current = [...pokemonCard.stats];
-
-        if (!snapshot) {
-            const runAnimations = async () => {
-                // Check if card ownership changed (defeat animation)
-                const ownershipChanged = prevOwnerSnapshot !== undefined &&
-                    prevOwnerSnapshot !== pokemonCard.isPlayerCard;
-
-                if (ownershipChanged && isPlacedInGrid) {
-                    await defeatCard();
-                }
-
-                // Check if stats changed (stat animation) - only for cards on the grid
-                if (isPlacedInGrid && prevStatsSnapshot !== undefined) {
-                    const statsChanged = prevStatsSnapshot.some((stat, i) => stat !== pokemonCard.stats[i]);
-                    if (statsChanged) {
-                        await runStatAnimations(prevStatsSnapshot);
-                    }
-                }
-            };
-
-            runAnimations();
-        }
-    }, [pokemonCard.isPlayerCard, pokemonCard.stats])
-
-    useEffect(() => {
-        if (!startsFaceUp) {
-            const animationDelay = 150;
-
-            setTimeout(() => {
-                setIsFlipped(true)
-            }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
-        }
-    }, [])
-
-    useEffect(() => {
-        if (isVisible && cardRef.current) {
-            const rect = cardRef.current.getBoundingClientRect();
-            const cardCenterY = rect.top + rect.height / 2;
-
-            setTooltipPosition(cardCenterY < window.innerHeight / 3 ? 'bottom' : 'top');
-        }
-    }, [isVisible])
 
     const nameBgStyle = useMemo(() => {
         if (pokemonCard.types.length === 1) {
@@ -264,6 +64,23 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
     const abilityBgStyle = useMemo(() => {
         return { backgroundColor: `var(--color-${abilities[pokemonCard.ability]?.type || "normal"}-500)` };
     }, [pokemonCard.ability]);
+
+    useEffect(() => {
+        if (!startsFaceUp) {
+            const animationDelay = 150;
+            setTimeout(() => {
+                setIsFlipped(true);
+            }, index * animationDelay + (pokemonCard.isPlayerCard ? 0 : animationDelay * 5));
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isVisible && cardRef.current) {
+            const rect = cardRef.current.getBoundingClientRect();
+            const cardCenterY = rect.top + rect.height / 2;
+            setTooltipPosition(cardCenterY < window.innerHeight / 3 ? 'bottom' : 'top');
+        }
+    }, [isVisible]);
 
     return (
         <div
@@ -279,77 +96,31 @@ function Card({ pokemonCard, index = 0, cellKey, isDraggable = true, isPlacedInG
                 transform: `${isFlipped ? 'rotateY(0deg)' : 'rotateY(180deg)'}`,
                 transition: 'transform 0.3s ease-out'
             }}>
-                <div className={`relative p-[5.5px] md:p-[9px] border-front ${roundCorners ? "rounded-md" : ""} aspect-square`}
-                    style={{
-                        backfaceVisibility: 'hidden',
-                        WebkitBackfaceVisibility: 'hidden',
-                    }}
-                >
-                    <div className={`${bgGradient} relative w-full aspect-square rounded-sm border-1 shadow-inner border-black/80 overflow-hidden ${hasSheenAbility && isPlacedInGrid ? 'sheen-effect' : ''}`}>
-                        <div className="relative h-full flex flex-col items-center justify-center">
-                            <Stats stats={pokemonCard.stats} originalStats={pokemonCard.originalStats} onStatChange={handleStatChange} />
-                            <ElementalTypes types={pokemonCard.types} />
-                            <img loading="lazy" draggable={false} width={60} height={60} className="w-1/2 h-1/2 md:size-[60px] drop-shadow-md/40 z-10" alt={pokemonCard.name} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCard.id}.png`} style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} />
-                            <div className='absolute bottom-0'>
-                                <svg className="w-full drop-shadow-md -mb-px rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 0v4c250 0 250 96 500 96S750 4 1000 4V0H0Z" fill={isUnselected ? "#d4d4d4" : (pokemonCard.isPlayerCard ? "#7dbdff" : "#ff6d64")}></path></svg>
-                                <div className={`pt-7 text-center w-full ${isUnselected ? "bg-neutral-300" : (pokemonCard.isPlayerCard ? "bg-theme-blue-accent" : "bg-theme-red-accent")}`} />
-                                <div className="px-2 py-0.5 w-full text-center uppercase text-white text-[6px] md:text-[10px] font-bold truncate text-shadow-sm/30 tracking-widest border-t-1 border-black/80" style={nameBgStyle}>{pokemonCard.name}</div>
-                            </div>
-                        </div>
-                    </div>
-                    {isOwned && <img width={24} height={24} alt="Player owned card" className="size-[14px] md:size-[24px] absolute bottom-0 right-0" src={getBallSprite(pokemonCard.statWeight)} style={{ WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} />}
-
-                    {showOverlay && (
-                        <div id="effect-overlay" className={`z-20 absolute top-0 left-0 size-full bg-linear-to-b from-black/40 via-black-30 to-black/60 text-shadow-md/60 font-press-start flex justify-center items-center text-center text-white text-[6px] md:text-[10px] p-4 ${roundCorners ? "rounded-md" : ""}`}>
-                            <span className='mt-4 '>{pokemonCard.wasSuperEffective ? "SUPER EFFECTIVE!" : pokemonCard.wasNoEffect ? "NO EFFECT!" : "NOT EFFECTIVE!"}</span>
-                        </div>
-                    )}
-                    {statDelta !== null && !snapshot && isPlacedInGrid && (
-                        <div className={`slide-top z-20 absolute inset-0 flex items-center justify-center pointer-events-none text-xs md:text-lg font-bold text-shadow-sm/50 md:text-shadow-lg/50 font-press-start ${statDelta > 0 ? 'text-lime-500' : 'text-red-600'}`}>
-                            {statDelta > 0 ? `+${statDelta}` : statDelta}
-                        </div>
-                    )}
-                </div>
-                <div className={`border-back absolute top-0 left-0 w-full rounded-md p-[5px] sm:p-[9px] select-none aspect-square shadow`} style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                    <div className="bg-[url('@/assets/textures/card-back.png')] bg-center bg-cover aspect-square">
-                    </div>
-                </div>
+                <CardFront
+                    pokemonCard={pokemonCard}
+                    bgGradient={bgGradient}
+                    isOwned={isOwned}
+                    hasSheenAbility={hasSheenAbility}
+                    isPlacedInGrid={isPlacedInGrid}
+                    roundCorners={roundCorners}
+                    showOverlay={showOverlay}
+                    statDelta={statDelta}
+                    snapshot={snapshot}
+                    nameBgStyle={nameBgStyle}
+                    handleStatChange={handleStatChange}
+                    isUnselected={isUnselected}
+                />
+                <CardBack roundCorners={roundCorners} />
             </div>
 
-            {/* Ability Tooltip */}
-            {hasAbility && showTooltip && isVisible && !isDragging && (
-                <div className={`fade-in-b absolute z-10 text-xs pointer-events-none ${tooltipPosition === 'top' ? 'left-1/2 -translate-x-1/2 bottom-full mb-2' :
-                    tooltipPosition === 'bottom' ? 'left-1/2 -translate-x-1/2 top-full mt-2' :
-                        tooltipPosition === 'left' ? 'right-full mr-2 top-1/2 -translate-y-1/2' :
-                            'left-full ml-2 top-1/2 -translate-y-1/2'
-                    }`}>
-                    <div className='border border-black tooltip p-1 w-[105px] md:w-[140px] shadow-md/30'>
-                        {abilities[pokemonCard.ability]?.trigger !== 'statusEffect' && (
-                            <div className="truncate text-[8px] p-0.5 md:py-1 md:text-xs uppercase md:tracking-wider text-center font-bold text-white" style={abilityBgStyle}>
-                                {abilities[pokemonCard.ability]?.name}
-                            </div>
-                        )}
-                        <p className="text-[8px] md:text-[10px] py-1 md:py-2 px-[1px] text-center">
-                            {abilities[pokemonCard.ability]?.description}
-                            {pokemonCard.wasMetronome && ' (via Metronome)'}
-                            {pokemonCard.wasMirrorMove && ' (via Mirror Move)'}
-                        </p>
-                        {/* Arrow */}
-                        {tooltipPosition === 'top' && (
-                            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-black" />
-                        )}
-                        {tooltipPosition === 'bottom' && (
-                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-black" />
-                        )}
-                        {tooltipPosition === 'left' && (
-                            <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[8px] border-l-black" />
-                        )}
-                        {tooltipPosition === 'right' && (
-                            <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-black" />
-                        )}
-                    </div>
-                </div>
-            )}
+            <CardTooltip
+                pokemonCard={pokemonCard}
+                isVisible={isVisible}
+                isDragging={isDragging}
+                tooltipPosition={tooltipPosition}
+                abilityBgStyle={abilityBgStyle}
+                showTooltip={showTooltip}
+            />
         </div>
     );
 }
