@@ -163,9 +163,9 @@
   },
   "dragonDance": {
     "name": "Dragon Dance",
-    "trigger": "onMatchStart",
+    "trigger": "onGridPlace",
     "type": "dragon",
-    "description": "Mystical power awakens! Gains a random stat for each elemental tile declared in the arena"
+    "description": "Mystical power awakens! Gains a random stat for each elemental tile type in the arena when placed"
   },
   "earthquake": {
     "name": "Earthquake",
@@ -409,9 +409,9 @@
   },
   "moonlight": {
     "name": "Moonlight",
-    "trigger": "onMatchStart",
+    "trigger": "onGridPlace",
     "type": "fairy",
-    "description": "Bathe in moonlight and gain a random stat for each elemental tile declared in the arena"
+    "description": "Bathe in moonlight and gain a random stat for each elemental tile type in the arena when placed"
   },
   "featherDance": {
     "name": "Feather Dance",

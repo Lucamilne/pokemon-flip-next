@@ -709,10 +709,12 @@ const lonely = (card, cellId, gameState) => {
 };
 
 const dragonDance = (card, cellId, gameState) => {
-    // Count cells with elemental tiles (not null)
-    const elementalTilesCount = Object.values(gameState.cells).filter(cell =>
-        cell.element !== null && cell.element !== undefined
-    ).length;
+    // Count unique elemental tile types (ignore duplicates)
+    const elementalTilesCount = new Set(
+        Object.values(gameState.cells)
+            .map(cell => cell.element)
+            .filter(element => element !== null && element !== undefined)
+    ).size;
 
     // If no elemental tiles, return card unchanged
     if (elementalTilesCount === 0) return replaceCardInHands(card, card, gameState);
