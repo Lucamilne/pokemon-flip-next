@@ -717,7 +717,7 @@ const dragonDance = (card, cellId, gameState) => {
     ).size;
 
     // If no elemental tiles, return card unchanged
-    if (elementalTilesCount === 0) return replaceCardInHands(card, card, gameState);
+    if (elementalTilesCount === 0) return card;
 
     // Create a new stats array
     const newStats = [...card.stats];
@@ -740,7 +740,7 @@ const dragonDance = (card, cellId, gameState) => {
         newStats[statIndexToBoost] += 1;
     }
 
-    return replaceCardInHands(card, { ...card, stats: newStats }, gameState);
+    return { ...card, stats: newStats };
 };
 
 const moonlight = dragonDance;
