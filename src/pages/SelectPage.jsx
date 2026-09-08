@@ -1,4 +1,4 @@
-import Select from "@/components/Select/Select";
+import Select from "@/features/selection/Select";
 
 export default function SelectPage() {
   return (
