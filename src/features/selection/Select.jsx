@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import PokeballSplash from '@/components/PokeballSplash/PokeballSplash.js';
 import Profile from '@/components/Profile/Profile.js';
@@ -12,6 +12,9 @@ import useCardLibrary from './hooks/useCardLibrary.js';
 import useSelectHand from './hooks/useSelectHand.js';
 import useSelectPreferences from './hooks/useSelectPreferences.js';
 
+const SelectionProfile = memo(Profile);
+const SelectionPokeballSplash = memo(PokeballSplash);
+
 export default function Select() {
     const { pathname } = useLocation();
     const rootPath = `/${pathname.split('/').filter(Boolean)[0]}`;
@@ -23,9 +26,9 @@ export default function Select() {
     const [searchString, setSearchString] = useState('');
     const [showHelp, setShowHelp] = useState(false);
 
-    const preferences = useSelectPreferences({ isMobile, searchString });
-    const hand = useSelectHand({ isMobile, setSelectedPlayerHand });
-    const { filteredCards } = useCardLibrary({ userCollection, searchString, sortByStrength: preferences.sortByStrength });
+    const { sortByStrength, toggleSort, showProfilesOnMobile, setShowProfilesOnMobile, showProfile, closeProfile, openProfile } = useSelectPreferences({ isMobile, searchString });
+    const { playerHand, playerHandRef, setPlayerHand, selectedCardIds, lastPokemonCardSelected, setLastPokemonCardSelected, isHandEmpty, isHandFull, togglePokemonCardSelection, clearHand } = useSelectHand({ isMobile, setSelectedPlayerHand });
+    const { filteredCards } = useCardLibrary({ userCollection, searchString, sortByStrength });
 
     useEffect(() => {
         resetGameState();
@@ -45,35 +48,35 @@ export default function Select() {
 
     const handleCardSelect = useCallback((pokemonCard) => {
         setSearchString('');
-        if (hand.togglePokemonCardSelection(pokemonCard)) preferences.openProfile();
-    }, [hand, preferences]);
+        if (togglePokemonCardSelection(pokemonCard)) openProfile();
+    }, [openProfile, togglePokemonCardSelection]);
 
     const handleConfirm = useCallback(() => {
         closePokeball();
-        setLastSelectedHand(hand.playerHandRef.current);
-    }, [closePokeball, hand.playerHandRef, setLastSelectedHand]);
+        setLastSelectedHand(playerHandRef.current);
+    }, [closePokeball, playerHandRef, setLastSelectedHand]);
 
     const handleShowProfile = useCallback(() => {
-        hand.setLastPokemonCardSelected(null);
-        preferences.openProfile();
-    }, [hand, preferences]);
+        setLastPokemonCardSelected(null);
+        openProfile();
+    }, [openProfile, setLastPokemonCardSelected]);
 
     const handleSetShowProfilesOnMobile = useCallback((value) => {
-        preferences.setShowProfilesOnMobile(value);
-        if (!value) preferences.closeProfile();
-    }, [preferences]);
+        setShowProfilesOnMobile(value);
+        if (!value) closeProfile();
+    }, [closeProfile, setShowProfilesOnMobile]);
 
     return (
         <div className="relative overflow-y-hidden h-full flex flex-col bg-pokedex-lighter-blue">
-            <SelectionToolbar searchString={searchString} onSearchChange={setSearchString} sortByStrength={preferences.sortByStrength} onToggleSort={preferences.toggleSort} />
+            <SelectionToolbar searchString={searchString} onSearchChange={setSearchString} sortByStrength={sortByStrength} onToggleSort={toggleSort} />
             <div className="relative grow md:flex overflow-y-auto">
-                <CardLibrary isLoadingCollection={isLoadingCollection} filteredCards={filteredCards} selectedCardIds={hand.selectedCardIds} onCardSelect={handleCardSelect} cardGridRef={cardGridRef} />
-                {isMobile && <MobileProfileControls showProfilesOnMobile={preferences.showProfilesOnMobile} onSetShowProfilesOnMobile={handleSetShowProfilesOnMobile} onShowProfile={handleShowProfile} />}
-                {(!isMobile || preferences.showProfilesOnMobile) && <Profile playerHand={hand.playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={hand.setPlayerHand} lastPokemonCardSelected={hand.lastPokemonCardSelected} isOpen={preferences.showProfile && !hand.showConfirm} onClose={isMobile ? preferences.closeProfile : undefined} />}
+                <CardLibrary isLoadingCollection={isLoadingCollection} filteredCards={filteredCards} selectedCardIds={selectedCardIds} onCardSelect={handleCardSelect} cardGridRef={cardGridRef} />
+                {isMobile && <MobileProfileControls showProfilesOnMobile={showProfilesOnMobile} onSetShowProfilesOnMobile={handleSetShowProfilesOnMobile} onShowProfile={handleShowProfile} />}
+                {(!isMobile || showProfilesOnMobile) && <SelectionProfile playerHand={playerHand} lastSelectedHand={lastSelectedHand} setPlayerHand={setPlayerHand} lastPokemonCardSelected={lastPokemonCardSelected} isOpen={showProfile && !isHandFull} onClose={isMobile ? closeProfile : undefined} />}
             </div>
-            {hand.showConfirm && <div className="absolute inset-0 bg-black/60 pointer-events-none md:pointer-events-auto" />}
-            <HandBuilder playerHand={hand.playerHand} showConfirm={hand.showConfirm} showHelp={showHelp} onCardClick={handleCardSelect} onClear={hand.clearHand} onConfirm={handleConfirm} />
-            <PokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText="Fight!" />
+            {isHandFull && <div className="absolute inset-0 bg-black/60 pointer-events-none md:pointer-events-auto" />}
+            <HandBuilder playerHand={playerHand} isHandEmpty={isHandEmpty} showConfirm={isHandFull} showHelp={showHelp} onCardClick={handleCardSelect} onClear={clearHand} onConfirm={handleConfirm} />
+            <SelectionPokeballSplash pokeballIsOpen={pokeballIsOpen} disabled={isPokeballDisabled} href={isPokeballDisabled ? null : `${rootPath}/play`} buttonText="Fight!" />
         </div>
     );
 }

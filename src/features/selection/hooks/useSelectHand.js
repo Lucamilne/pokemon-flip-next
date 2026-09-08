@@ -6,16 +6,16 @@ export default function useSelectHand({ isMobile, setSelectedPlayerHand }) {
     const playerHandRef = useRef(EMPTY_HAND);
     const [playerHand, setPlayerHand] = useState(EMPTY_HAND);
     const [lastPokemonCardSelected, setLastPokemonCardSelected] = useState(null);
-    const [showConfirm, setShowConfirm] = useState(false);
+    const { isHandEmpty, isHandFull } = useMemo(() => ({
+        isHandEmpty: playerHand.every(card => card === null),
+        isHandFull: playerHand.every(card => card !== null)
+    }), [playerHand]);
 
     useEffect(() => {
         playerHandRef.current = playerHand;
-        const isHandEmpty = playerHand.every(card => card === null);
-        const isHandFull = playerHand.every(card => card !== null);
         if (isHandEmpty) setLastPokemonCardSelected(null);
-        setShowConfirm(isHandFull);
         if (isHandFull) setSelectedPlayerHand(playerHand);
-    }, [playerHand, setSelectedPlayerHand]);
+    }, [isHandEmpty, isHandFull, playerHand, setSelectedPlayerHand]);
 
     const selectedCardIds = useMemo(() => new Set(playerHand.filter(Boolean).map(card => card.id)), [playerHand]);
 
@@ -43,5 +43,5 @@ export default function useSelectHand({ isMobile, setSelectedPlayerHand }) {
 
     const clearHand = useCallback(() => setPlayerHand(EMPTY_HAND), []);
 
-    return { playerHand, playerHandRef, setPlayerHand, selectedCardIds, lastPokemonCardSelected, setLastPokemonCardSelected, showConfirm, togglePokemonCardSelection, clearHand };
+    return { playerHand, playerHandRef, setPlayerHand, selectedCardIds, lastPokemonCardSelected, setLastPokemonCardSelected, isHandEmpty, isHandFull, togglePokemonCardSelection, clearHand };
 }
