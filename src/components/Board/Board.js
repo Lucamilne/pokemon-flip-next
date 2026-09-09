@@ -1,17 +1,7 @@
-import Grid from "../Grid/Grid.js";
-import Card from "../Card/Card.js";
-import Balance from "../Balance/Balance.js"
-import PokeballSplash from "../PokeballSplash/PokeballSplash.js";
-import ResultTransition from '../ResultTransition/ResultTransition.js';
-import Coin from "../Coin/Coin.js";
-import Matchups from "@/components/Matchups/Matchups";
-import HowToPlay from "@/components/HowToPlay/HowToPlay";
-import PixelGamepad from '@/assets/svg/PixelGamepad';
-import PixelCalculator from '@/assets/svg/PixelCalculator';
+import BoardLayout from './components/BoardLayout.jsx';
 
 import { applySelfAbilities, applyStatusAbilities, applyMatchStartAbilities, statLoweringImmunityAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect, useRef } from 'react'
-import { DndContext } from '@dnd-kit/core';
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 import { fetchCpuCardsByPlayerStrength, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
 import { useGameContext } from '@/contexts/GameContext';
@@ -20,7 +10,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import gameData from '@/data/game-data.json';
 import abilities from '@/data/ability-data.json';
-import styles from './background.module.css';
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default function Board() {
@@ -734,134 +723,24 @@ export default function Board() {
         }
     }, [isPlayerTurn])
 
-    if (isMobile) {
-        return (
-            <DndContext onDragEnd={handleDragEnd}>
-                <div className="overflow-hidden relative h-full flex flex-col justify-between" >
-                    <div className="relative grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-top-container p-2 pb-6 pt-4">
-                        {cpuHand.map((pokemonCard, index) => {
-                            return (
-                                <div className="relative aspect-square" key={index}>
-                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
-
-                                    {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={!isPlayerTurn} startsFaceUp={false} />
-                                    )}
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {/* Arena */}
-                    <div className={`grow ${styles.arena} flex items-center justify-center overflow-hidden`}>
-                        <div className={styles.wrap}>
-                            <div className={styles['top-plane']} />
-                            <div className={styles['bottom-plane']} />
-                        </div>
-                        <Balance score={score} />
-                        <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
-                        <div className="absolute top-3 right-3">
-                            <div className="flex flex-col items-center">
-                                <button title="How to Play" onClick={() => setIsHowToPlayOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
-                                    <PixelGamepad className="w-6 h-6 drop-shadow" />
-                                </button>
-                                <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`cursor-pointer flex items-center justify-center overflow-hidden`}>
-                                    <PixelCalculator className="w-6 h-6 drop-shadow" />
-                                </button>
-                            </div>
-                        </div>
-                        {hasWonCoinToss !== null && (
-                            <Coin hasWonCoinToss={hasWonCoinToss} />
-                        )}
-                    </div>
-                    <div className="grid grid-cols-[repeat(5,72px)] place-content-center gap-1 hand-bottom-container p-2 pt-6 pb-4">
-                        {playerHand.map((pokemonCard, index) => {
-                            return (
-                                <div className="relative aspect-square" key={index}>
-                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
-
-                                    {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
-                                    )}
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {isHowToPlayOpen && (
-                        <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
-                    )}
-                    {isMatchupsOpen && (
-                        <Matchups isOpen={isMatchupsOpen} onClose={() => setIsMatchupsOpen(false)} />
-                    )}
-                    <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
-                    {isGameComplete && <ResultTransition />}
-                </div>
-            </DndContext>
-        )
-    }
-
     return (
-        <DndContext onDragEnd={handleDragEnd}>
-            <div className={`${isGameComplete ? 'overflow-hidden' : ''} relative h-full flex justify-between`} >
-                <>
-                    <div className="relative grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-left-container pl-4 pr-8 p-2 h-full">
-                        {playerHand.map((pokemonCard, index) => {
-                            return (
-                                <div className="relative aspect-square" key={index}>
-                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-blue" />
-
-                                    {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} index={index} isDraggable={isPlayerTurn} />
-                                    )}
-                                </div>
-                            )
-                        })}
-
-                    </div>
-                    {/* Arena */}
-                    <div className={`grow ${styles.arena} flex items-center justify-center overflow-hidden`}>
-                        <div className={styles.wrap}>
-                            <div className={styles['top-plane']} />
-                            <div className={styles['bottom-plane']} />
-                        </div>
-                        <Balance score={score} />
-                        <Grid cells={cells} isPlayerTurn={isPlayerTurn} hasWonCoinToss={hasWonCoinToss} />
-                        <div className="absolute top-3 right-3">
-                            <div className="flex flex-col items-center">
-                                <button title="How to Play" onClick={() => setIsHowToPlayOpen(true)} className={`hover:scale-110 transition-transform cursor-pointer flex items-center justify-center overflow-hidden`}>
-                                    <PixelGamepad className="w-7 h-7 drop-shadow" />
-                                </button>
-                                <button title="Type Matchups" onClick={() => setIsMatchupsOpen(true)} className={`hover:scale-110 transition-transform cursor-pointer flex items-center justify-center overflow-hidden`}>
-                                    <PixelCalculator className="w-7 h-7 drop-shadow" />
-                                </button>
-                            </div>
-                        </div>
-                        {hasWonCoinToss !== null && (
-                            <Coin hasWonCoinToss={hasWonCoinToss} />
-                        )}
-                    </div>
-                    <div className="grid grid-rows-[repeat(5,124px)] place-content-center gap-2 hand-right-container pl-8 pr-4 p-2 h-full">
-                        {cpuHand.map((pokemonCard, index) => {
-                            return (
-                                <div className="relative aspect-square" key={index}>
-                                    <div className="absolute top-1 left-1 bottom-1 right-1 rounded-md m-1 bg-pokedex-inner-red" />
-
-                                    {pokemonCard && pokeballIsOpen && (
-                                        <Card pokemonCard={pokemonCard} isPlayerCard={false} index={index} isDraggable={false} startsFaceUp={false} />
-                                    )}
-                                </div>
-                            )
-                        })}
-                    </div>
-                </>
-                {isHowToPlayOpen && (
-                    <HowToPlay isOpen={isHowToPlayOpen} onClose={() => setIsHowToPlayOpen(false)} />
-                )}
-                {isMatchupsOpen && (
-                    <Matchups isOpen={isMatchupsOpen} onClose={() => setIsMatchupsOpen(false)} />
-                )}
-                <PokeballSplash pokeballIsOpen={pokeballIsOpen} />
-                {isGameComplete && <ResultTransition />}
-            </div>
-        </DndContext>
-    )
+        <BoardLayout
+            cells={cells}
+            cpuHand={cpuHand}
+            playerHand={playerHand}
+            score={score}
+            isMobile={isMobile}
+            isPlayerTurn={isPlayerTurn}
+            hasWonCoinToss={hasWonCoinToss}
+            pokeballIsOpen={pokeballIsOpen}
+            isGameComplete={isGameComplete}
+            isHowToPlayOpen={isHowToPlayOpen}
+            isMatchupsOpen={isMatchupsOpen}
+            onDragEnd={handleDragEnd}
+            onOpenHowToPlay={() => setIsHowToPlayOpen(true)}
+            onCloseHowToPlay={() => setIsHowToPlayOpen(false)}
+            onOpenMatchups={() => setIsMatchupsOpen(true)}
+            onCloseMatchups={() => setIsMatchupsOpen(false)}
+        />
+    );
 }
