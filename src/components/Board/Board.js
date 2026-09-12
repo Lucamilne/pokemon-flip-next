@@ -1,6 +1,7 @@
 import BoardLayout from './components/BoardLayout.jsx';
+import { resolveCardPlacement } from '@/features/game/gameRules.js';
 
-import { applySelfAbilities, applyStatusAbilities, applyMatchStartAbilities, statLoweringImmunityAbilities } from '@/utils/abilityHandlers.js';
+import { applySelfAbilities, applyMatchStartAbilities } from '@/utils/abilityHandlers.js';
 import { useState, useEffect, useRef } from 'react'
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 import { fetchCpuCardsByPlayerStrength, allocateCpuCardsFromPool } from "@/utils/cardHelpers.js";
@@ -125,7 +126,7 @@ export default function Board() {
         return () => clearTimeout(timer);
     }, [hasWonCoinToss])
 
-    const applyTileStatModifiers = (attackingCard, cellTarget, cellsToUse) => {
+    /* const applyTileStatModifiers = (attackingCard, cellTarget, cellsToUse) => {
         const cellTargetObject = cellsToUse[cellTarget];
 
         // Check if card has an onElementalTilePlace ability first
@@ -262,7 +263,7 @@ export default function Board() {
         });
 
         return { attackingCard, capturedCells };
-    }
+    } */
 
     function handleDragEnd(event) {
         const { active, over } = event;
@@ -285,37 +286,13 @@ export default function Board() {
 
         // Update cells to identify where the card is placed (logic handled in the-grid.js)
         // Force re-render by creating a new cells object so React detects defending card changes
-        setCells(prev => {
-            let newCells = { ...prev };
-
-            newCells = applyStatusAbilities(
-                attackingCard,
-                'onGridPlace',
-                cellTarget,
-                newCells
-            );
-
-            const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard, newCells);
-
-            // Update captured cells (flip their ownership)
-            Object.keys(capturedCells).forEach(key => {
-                newCells[key] = {
-                    ...newCells[key],
-                    pokemonCard: {
-                        ...newCells[key].pokemonCard,
-                        isPlayerCard: capturedCells[key]
-                    }
-                };
-            });
-
-            // Place the attacking card
-            newCells[cellTarget] = {
-                ...prev[cellTarget],
-                pokemonCard: modifiedCard
-            };
-
-            return newCells;
-        });
+        setCells(prev => resolveCardPlacement({
+            cells: prev,
+            attackingCard,
+            cellTarget,
+            playerHand,
+            cpuHand
+        }));
 
 
         setIsPlayerTurn(false)
@@ -654,37 +631,13 @@ export default function Board() {
 
         // Place the card in the selected cell
         // Force re-render by creating a new cells object so React detects defending card changes
-        setCells(prev => {
-            let newCells = { ...prev };
-
-            newCells = applyStatusAbilities(
-                attackingCard,
-                'onGridPlace',
-                cellTarget,
-                newCells
-            );
-
-            const { attackingCard: modifiedCard, capturedCells } = placeAttackingCard(cellTarget, attackingCard, newCells);
-
-            // Update captured cells (flip their ownership)
-            Object.keys(capturedCells).forEach(key => {
-                newCells[key] = {
-                    ...newCells[key],
-                    pokemonCard: {
-                        ...newCells[key].pokemonCard,
-                        isPlayerCard: capturedCells[key]
-                    }
-                };
-            });
-
-            // Place the attacking card
-            newCells[cellTarget] = {
-                ...prev[cellTarget],
-                pokemonCard: modifiedCard
-            };
-
-            return newCells;
-        });
+        setCells(prev => resolveCardPlacement({
+            cells: prev,
+            attackingCard,
+            cellTarget,
+            playerHand,
+            cpuHand
+        }));
 
 
         setIsPlayerTurn(true); // end the turn!

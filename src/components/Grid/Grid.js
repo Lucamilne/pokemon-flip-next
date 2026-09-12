@@ -1,8 +1,10 @@
 import { typeTiles } from '@/utils/typeIcons'
-import { useDroppable } from '@dnd-kit/core';
+import { useDndContext, useDroppable } from '@dnd-kit/core';
 import Card from '../Card/Card.js';
+import CardHoverOverlay from './CardHoverOverlay.jsx';
 
 function DroppableCell({ cellKey, cellData, snapshot }) {
+    const { active } = useDndContext();
     const { isOver, setNodeRef } = useDroppable({
         id: cellKey,
         disabled: !!cellData.pokemonCard, // Disable dropping on occupied cells
@@ -20,7 +22,7 @@ function DroppableCell({ cellKey, cellData, snapshot }) {
         >
             {/* Hover overlay */}
             {isOver && (
-                <div className="absolute inset-0 bg-blue-500/30 pointer-events-none z-10" />
+                <CardHoverOverlay type={active?.data.current?.pokemonCard?.types?.[0]} />
             )}
 
             {cellData.element && (

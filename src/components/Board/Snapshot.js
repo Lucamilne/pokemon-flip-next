@@ -2,39 +2,36 @@ import Grid from "../Grid/Grid.js";
 import Balance from "../Balance/Balance.js"
 import PixelX from '@/assets/svg/PixelX';
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { loadGameStateFromLocalStorage } from '@/utils/gameStorage';
 import { useGameContext } from '@/contexts/GameContext';
 
 export default function Snapshot({ isOpen, onClose }) {
     const {
-        cells,
-        setCells,
         isMobile,
-        setPlayerHand,
-        setCpuHand,
-        score,
         isPlayerVictory
     } = useGameContext();
+    const [snapshot, setSnapshot] = useState(null);
 
     //on mount
     useEffect(() => {
         const savedGameState = loadGameStateFromLocalStorage();
 
-        if (savedGameState) {
-            setCells(savedGameState.cells);
-            setPlayerHand(savedGameState.playerHand);
-            setCpuHand(savedGameState.cpuHand);
-            return;
-        }
+        if (savedGameState) setSnapshot(savedGameState);
     }, []);
+
+    const snapshotCells = snapshot?.cells;
+    const score = snapshot
+        ? Object.values(snapshot.cells).filter(cell => cell.pokemonCard?.isPlayerCard).length
+            + (snapshot.playerHand?.filter(card => card !== null).length ?? 0)
+        : 0;
 
     const mobileLayout = (
         <div className="overflow-hidden relative h-full flex flex-col justify-between" >
             {/* Arena */}
             <div className={`grow flex items-center justify-center overflow-hidden`}>
                 <Balance score={score} />
-                <Grid cells={cells} ref="grid" isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} snapshot />
+                {snapshotCells && <Grid cells={snapshotCells} isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} snapshot />}
             </div>
         </div>
     )
@@ -45,7 +42,7 @@ export default function Snapshot({ isOpen, onClose }) {
                 {/* Arena */}
                 <div className={`grow flex items-center justify-center overflow-hidden`}>
                     <Balance score={score} />
-                    <Grid cells={cells} isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} snapshot />
+                    {snapshotCells && <Grid cells={snapshotCells} isPlayerTurn={isPlayerVictory} hasWonCoinToss={null} snapshot />}
                 </div>
             </>
         </div>
